@@ -1,9 +1,11 @@
-# local session/state
+# local state
 session.json
 
-# local Chroma DB (generated, large)
+# local Chroma DBs & zips
+preprocessing/chroma_db/
 preprocessing/chroma_db_clean/
 preprocessing/chroma_db_clean.zip
 
+# (optional) checkpoints and caches
 __pycache__/
 *.pyc
