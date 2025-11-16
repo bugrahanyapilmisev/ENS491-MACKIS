@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 START_URL       = "https://mysu.sabanciuniv.edu/surecharitasi/tr/surec-tablosu"
 ALLOWED_NETLOC  = "mysu.sabanciuniv.edu"
 ALLOWED_PREFIX  = "/surecharitasi/"
-STATE_FILE = r"C:\\Users\\kosot\\OneDrive\\Masaüstü\\CS\\bitirme\\crawler_for_srdoc\\session.json"  # your saved storage_state
+STATE_FILE = r"C:\\Users\\kosot\\Documents\\bitirme\\crawler_for_srdoc\\session.json"  # your saved storage_state
 OUT_DIR         = "mysu_dump2"
 CATALOG         = os.path.join(OUT_DIR, "catalog.csv")
 

@@ -23,8 +23,8 @@ EMBED_MODELS = {
 }
 
 # Paths
-ROOT_DIR   = r"C:\\Users\\kosot\\OneDrive\\Masaüstü\\CS\\bitirme\\crawler_for_srdoc\\mysu_dump2"
-CHROMA_DIR = r"C:\\Users\\kosot\\OneDrive\\Masaüstü\\CS\\bitirme\\preprocessing\\chroma_db"
+ROOT_DIR   = r":\\Users\\kosot\\Documents\\bitirme\\crawler_for_srdoc\\mysu_dump2"
+CHROMA_DIR = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\chroma_db_clean"
 
 # One Chroma collection per model
 COLL_NAMES = {
@@ -33,7 +33,7 @@ COLL_NAMES = {
 }
 
 # Checkpointing & logs
-CHECKPOINT_DIR = r"C:\\Users\\kosot\\OneDrive\\Masaüstü\\CS\\bitirme\\preprocessing\\checkpoints"
+CHECKPOINT_DIR = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\chechkpoints"
 PARQUET_OUT_TR = os.path.join(CHECKPOINT_DIR, "parquet_bge")       # bge-m3 shards
 PARQUET_OUT_EN = os.path.join(CHECKPOINT_DIR, "parquet_nomic")     # nomic shards
 MANIFEST_DB    = os.path.join(CHECKPOINT_DIR, "manifest.sqlite3")

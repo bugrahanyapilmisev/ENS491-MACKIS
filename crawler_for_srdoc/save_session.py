@@ -2,7 +2,7 @@
 from playwright.sync_api import sync_playwright
 
 START_URL = "https://mysu.sabanciuniv.edu/surecharitasi/tr/surec-tablosu"
-STATE_FILE = r"C:\\Users\\kosot\\OneDrive\\Masaüstü\\CS\\bitirme\\crawler_for_srdoc\\session.json"
+STATE_FILE = r"C:\\Users\\kosot\\Documents\\bitirme\\crawler_for_srdoc\\session.json"
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)  # visible so you can MFA
