@@ -3,9 +3,9 @@ session.json
 
 # local Chroma DBs & zips
 preprocessing/chroma_db/
-preprocessing/chroma_db_clean/
+preprocessing/version_1/chroma_db_clean
 preprocessing/chroma_db_clean.zip
-
+preprocessing/version_plus/chroma_db_clean_plus
 # (optional) checkpoints and caches
 __pycache__/
 *.pyc
