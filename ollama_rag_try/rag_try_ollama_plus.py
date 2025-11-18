@@ -1,6 +1,6 @@
-# rag_try_ollama_plus.py (generic, block-based enumeration extraction)
-# RAG: Chroma + BM25 + HyDE + MMR + (optional) cross-encoder rerank
-# Block detection for lists, generic noise filtering, multilingual de-dup, language-aware output.
+# rag_try_ollama_plus.py (generic + language-gated retrieval)
+# RAG: Chroma + BM25 + HyDE + MMR + (optional) multilingual cross-encoder rerank
+# Language-gated retrieval (EN/TR), block-based list extraction, multilingual dedupe.
 
 import os, sys, json, pickle, re, argparse
 import numpy as np
@@ -13,6 +13,28 @@ TR_CHARS = "çğıöşüÇĞİÖŞÜ"
 # -------------------- utils --------------------
 def looks_turkish(s: str) -> bool:
     return any(ch in s for ch in TR_CHARS)
+
+def lang_of_text(s: str) -> str:
+    """Cheap heuristic: 'tr' if TR chars or common TR stopwords; else 'en'."""
+    if not s: return "en"
+    tr_char_hits = sum(ch in TR_CHARS for ch in s)
+    lowered = s.lower()
+    tr_tokens = sum(t in lowered for t in [" ve ", " ile ", " bir ", " için ", " veya ", " ödül ", " üniversite "])
+    return "tr" if (tr_char_hits + tr_tokens) >= 2 else "en"
+
+def path_lang_hint(path: str) -> str | None:
+    p = (path or "").replace("\\", "/").lower()
+    if "/tr/" in p: return "tr"
+    if "/en/" in p: return "en"
+    return None
+
+def hit_lang(h) -> str:
+    m = (h.get("metadata") or {})
+    path = m.get("doc_path", "")
+    hinted = path_lang_hint(path)
+    if hinted: return hinted
+    # fall back to content language on small slice (fast)
+    return lang_of_text((h.get("document") or "")[:400])
 
 def log(msg: str): print(f"[RAG] {msg}", flush=True)
 
@@ -34,9 +56,9 @@ def parse_args():
     p.add_argument("--mmr-keep", type=int, default=12)
     p.add_argument("--rerank-keep", type=int, default=12)
     p.add_argument("--temperature", type=float, default=0.0)
-    p.add_argument("--neighbor-span", type=int, default=8)
+    p.add_argument("--neighbor-span", type=int, default=10)
     p.add_argument("--max-snip", type=int, default=2000)
-    p.add_argument("--dedupe-sim", type=float, default=0.82)
+    p.add_argument("--dedupe-sim", type=float, default=0.86)
     return p.parse_args()
 
 # -------------------- ollama --------------------
@@ -74,8 +96,10 @@ def tiny_translate_if_needed(host, gen_model, title, prefer_tr):
     if (not prefer_tr) and (not is_tr): return title
     tgt = "Turkish" if prefer_tr else "English"
     prompt = f"Translate this item title into {tgt}. Keep it short and official:\n{title}\nAnswer:"
-    try: return ollama_generate(host, gen_model, prompt, temp=0.0).splitlines()[0].strip(" -–—")
-    except Exception: return title
+    try:
+        return ollama_generate(host, gen_model, prompt, temp=0.0).splitlines()[0].strip(" -–—")
+    except Exception:
+        return title
 
 # -------------------- retrieval pieces --------------------
 def load_bm25(path):
@@ -99,8 +123,9 @@ def mmr_select(emb_q, emb_docs, k=10, lambda_mult=0.6):
     return selected
 
 def load_reranker(name):
-    tok = AutoTokenizer.from_pretrained(name)
-    model = AutoModelForSequenceClassification.from_pretrained(name)
+    # multilingual rerankers like jina-* require trust_remote_code
+    tok = AutoTokenizer.from_pretrained(name, trust_remote_code=True)
+    model = AutoModelForSequenceClassification.from_pretrained(name, trust_remote_code=True)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model.to(device).eval()
     return tok, model, device
@@ -119,10 +144,13 @@ def multi_query(host, gen_model, base_q, use_hyde=True):
     try:
         paras = [l.strip("- ").strip() for l in ollama_generate(host, gen_model, p_prompt).splitlines() if l.strip()]
         paras = paras[:2] if paras else [base_q]
-    except Exception: paras = [base_q]
+    except Exception:
+        paras = [base_q]
     h_prompt = f"Write a short hypothetical answer (2–3 sentences, same language):\nQuestion: {base_q}\nAnswer:"
-    try: hyde = ollama_generate(host, gen_model, h_prompt).strip()
-    except Exception: hyde = ""
+    try:
+        hyde = ollama_generate(host, gen_model, h_prompt).strip()
+    except Exception:
+        hyde = ""
     return [base_q] + paras + ([hyde] if hyde else [])
 
 # -------------------- context --------------------
@@ -145,7 +173,7 @@ def build_context(cands, keep, max_snip=2000):
 def answer_prompt(query, context):
     return f"""You are a precise policy/document assistant.
 
-Use ONLY the facts in the Context. If the question asks for categories/types/lists, enumerate all items with brief 1–2 line descriptions. Do not add outside knowledge.
+Use ONLY the facts in the Context. If the question asks for categories/types/lists, enumerate all items with brief 1–2 line descriptions. Do not add outside knowledge. Keep the answer strictly in the language of the question.
 
 Question:
 {query}
@@ -160,10 +188,11 @@ Output format:
 
 # -------------------- generic list extraction (block-based) --------------------
 ENUM_PATTERNS = [
-    r"^\s*[A-Z]\.\s+",      # A. B. C.
-    r"^\s*\d+\.\s+",        # 1. 2. 3.
-    r"^\s*[ivxIVX]+\.\s+",  # i. ii. iii.
-    r"^\s*[-•]\s+",         # - item / • item
+    r"^\s*[A-Z]\.\s+",       # A. B. C.
+    r"^\s*[A-Z]\.\d+\.\s+",  # A.1. A.2. ...
+    r"^\s*\d+\.\s+",         # 1. 2. 3.
+    r"^\s*[ivxIVX]+\.\s+",   # i. ii. iii.
+    r"^\s*[-•]\s+",          # - item / • item
 ]
 _ENUM_RE = [re.compile(p) for p in ENUM_PATTERNS]
 
@@ -173,30 +202,26 @@ def is_title_like(s: str) -> bool:
     if not s: return False
     if len(s) > 120: return False
     if s.strip().endswith(('.', '?', '!')): return False
-    # heuristic: many TitleCase / UPPER words
     words = [w for w in re.findall(r"[A-Za-zÇĞİÖŞÜçğıöşü0-9()&’'/-]+", s)]
     if not words: return False
     upperish = sum(1 for w in words if (w.isupper() or (len(w)>1 and w[0].isupper())))
     return (upperish / max(1,len(words))) >= 0.6
 
 def looks_code_like(s: str) -> bool:
-    # Generic code-ish lines (course codes, short acronyms with digits)
     if re.search(r"[A-Z]{2,}\s?\d{2,3}", s): return True
     if len(s.split()) <= 2 and re.match(r"^[A-Z/& -]{2,}$", s): return True
     return False
 
 def looks_boilerplate_heading(s: str) -> bool:
-    # Generic plumbing: Related/Relevant/Owner/Forms/Procedures… (language-agnostic-ish)
     return bool(re.search(r"\b(Related|Relevant|Owner|Owners|Forms?|Procedures?|Outputs?|Timing|Unit|Director)\b", s, flags=re.I))
 
 def normalize_title(s: str) -> str:
     s = s.strip()
-    s = re.sub(r"^\s*(?:[A-Z]\.|[ivxIVX]+\.|-|\d+\.|•)\s+", "", s)  # strip bullet marker
+    s = re.sub(r"^\s*(?:[A-Z]\.|\d+\.|[ivxIVX]+\.|-|•)(?:\d+\.)?\s+", "", s)
     s = s.strip("–—-:;·• ")
     return s
 
 def extract_blocks_from_hit(hit, max_items_per_block=40):
-    """Return blocks: list of dicts {path, items:[(title,line_idx)], block_key} within this hit."""
     text = (hit.get("document") or "")
     if not text.strip(): return []
     path = (hit.get("metadata") or {}).get("doc_path", "")
@@ -210,35 +235,35 @@ def extract_blocks_from_hit(hit, max_items_per_block=40):
         if is_title_like(s): return True
         return False
 
-    blocks = []
-    cur = []
+    blocks, cur = [], []
     for idx, raw in enumerate(lines):
         s = raw.strip()
         if is_item_line(s):
             t = normalize_title(s)
-            if not t: 
-                continue
-            # generic noise filters (shape-based)
-            if looks_boilerplate_heading(t): 
-                continue
-            if looks_code_like(t):
-                continue
-            if len(t) < 3:
-                continue
+            if not t: continue
+            if looks_boilerplate_heading(t) or looks_code_like(t) or len(t) < 3: continue
             cur.append((t, idx))
             if len(cur) >= max_items_per_block:
-                blocks.append({"path": path, "items": cur[:]})
-                cur = []
+                blocks.append({"path": path, "items": cur[:]}); cur = []
         else:
             if cur:
-                blocks.append({"path": path, "items": cur[:]})
-                cur = []
+                blocks.append({"path": path, "items": cur[:]}); cur = []
     if cur:
         blocks.append({"path": path, "items": cur[:]})
-    # keep only multi-item blocks
-    return [b for b in blocks if len(b["items"]) >= 2]
 
-def expand_neighbors(coll, hit, span=8, limit=16):
+    # language annotation per block
+    enriched = []
+    for b in blocks:
+        titles = [t for t,_ in b["items"]]
+        votes = {"tr": 0, "en": 0}
+        for t in titles: votes[lang_of_text(t)] += 1
+        hinted = path_lang_hint(path)
+        if hinted: votes[hinted] += 2
+        lang = "tr" if votes["tr"] > votes["en"] else "en"
+        enriched.append({"path": b["path"], "items": b["items"], "lang": lang})
+    return [b for b in enriched if len(b["items"]) >= 2]
+
+def expand_neighbors(coll, hit, span=10, limit=20):
     m = hit.get("metadata") or {}
     path = m.get("doc_path"); idx = m.get("chunk_index")
     if path is None or idx is None: return []
@@ -266,37 +291,47 @@ def expand_neighbors(coll, hit, span=8, limit=16):
 # -------------------- block selection & de-dup --------------------
 def _cos(a,b): return float(np.dot(a,b))
 
-def pick_best_block(blocks, embed_host, embed_model, embed_dim):
-    """Pick the longest block; tie-break by mean pairwise cosine similarity."""
+def pick_best_block_language_aware(blocks, prefer_tr, embed_host, embed_model, embed_dim):
     if not blocks: return None
-    blocks = sorted(blocks, key=lambda b: len(b["items"]), reverse=True)
-    best = [blocks[0]]
-    # collect ties by size
-    for b in blocks[1:]:
-        if len(b["items"]) == len(best[0]["items"]):
-            best.append(b)
-        else:
-            break
-    if len(best) == 1: 
-        return best[0]
-    # tie-break by coherence
-    best_score, best_block = -1.0, None
-    for b in best:
-        titles = [t for t,_ in b["items"]]
-        vecs = [ollama_embed(embed_host, embed_model, embed_dim, t) for t in titles[:20]]  # cap for speed
-        if len(vecs) < 2:
-            score = 0.0
-        else:
-            s = 0.0; c = 0
-            for i in range(len(vecs)):
-                for j in range(i+1, len(vecs)):
-                    s += _cos(vecs[i], vecs[j]); c += 1
-            score = s / max(1,c)
-        if score > best_score:
-            best_score, best_block = score, b
-    return best_block
+    want_lang = "tr" if prefer_tr else "en"
 
-def group_semantic(items, embed_host, embed_model, embed_dim, sim_thresh=0.82):
+    def block_size(b): return len(b["items"])
+
+    def block_coherence(b):
+        titles = [t for t,_ in b["items"]][:20]
+        vecs = [ollama_embed(embed_host, embed_model, embed_dim, t) for t in titles]
+        if len(vecs) < 2: return 0.0
+        s = 0.0; c = 0
+        for i in range(len(vecs)):
+            for j in range(i+1, len(vecs)):
+                s += float(np.dot(vecs[i], vecs[j])); c += 1
+        return s / max(1, c)
+
+    def lettered_ratio(b):
+        cnt = 0
+        for t,_ in b["items"]:
+            if re.match(r"^\s*[A-Z]\.", t): cnt += 1
+        return cnt / max(1, len(b["items"]))
+
+    def path_bonus(b):
+        hinted = path_lang_hint(b["path"])
+        return 0.15 if hinted == b["lang"] else 0.0
+
+    for target_lang in (want_lang, ("en" if want_lang=="tr" else "tr")):
+        cand = [b for b in blocks if b["lang"] == target_lang]
+        if not cand: continue
+        scored = []
+        for b in cand:
+            scored.append((
+                block_size(b),
+                block_coherence(b) + path_bonus(b) + 0.2*lettered_ratio(b),
+                b
+            ))
+        scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
+        return scored[0][2]
+    return None
+
+def group_semantic(items, embed_host, embed_model, embed_dim, sim_thresh=0.86):
     if not items: return []
     vecs = [ollama_embed(embed_host, embed_model, embed_dim, it["title"]) for it in items]
     used = [False]*len(items); groups=[]
@@ -327,7 +362,7 @@ def choose_title(group, items, prefer_tr, host, gen_model):
         t0 = items[group["lead"]]["title"]; p0 = items[group["lead"]].get("path")
         return tiny_translate_if_needed(host, gen_model, t0, False), p0
 
-def dedupe_and_localize_block(block, embed_host, embed_model, embed_dim, prefer_tr, gen_host, gen_model, sim_thresh=0.82):
+def dedupe_and_localize_block(block, embed_host, embed_model, embed_dim, prefer_tr, gen_host, gen_model, sim_thresh=0.86):
     items = [{"title": t, "path": block["path"]} for t,_ in block["items"]]
     groups = group_semantic(items, embed_host, embed_model, embed_dim, sim_thresh)
     merged=[]
@@ -361,12 +396,15 @@ def main():
     query = input("Soru / Question: ").strip()
     if not query: log("empty query; exiting."); return
     prefer_tr = looks_turkish(query)
+    want_lang = "tr" if prefer_tr else "en"
 
+    # multi-query
     log("building multi-query …")
     mq = multi_query(args.ollama_host, args.gen_model,
                      ("(Türkçe yanıtla) " + query) if prefer_tr else query,
                      use_hyde=not args.no_hyde)
 
+    # vector search (language-gated post-filter)
     log("vector search …")
     all_vec=[]
     for q in mq:
@@ -377,18 +415,39 @@ def main():
         ids=res["ids"][0]; docs=res["documents"][0]; metas=res["metadatas"][0]
         vembs=[np.array(e,dtype=np.float32) for e in res["embeddings"][0]]
         for i in range(len(ids)):
-            all_vec.append({"id":ids[i], "document":docs[i], "metadata":metas[i], "emb":vembs[i]})
-    if not all_vec: log("no vector hits from Chroma"); return
+            hit = {"id":ids[i], "document":docs[i], "metadata":metas[i], "emb":vembs[i]}
+            if hit_lang(hit) == want_lang:
+                all_vec.append(hit)
+    if not all_vec:
+        log("no language-matching vector hits from Chroma"); return
 
+    # BM25 search -> enrich with metadatas to language-gate
     log("BM25 search …")
     simple_tok = lambda s: [t.lower() for t in s.split()]
     bm_scores = bm25.get_scores(simple_tok(query))
     top_bm_idx = np.argsort(-bm_scores)[:args.topk_bm25]
-    bm_hits = [{"id": bm_ids[i], "document": bm_docs[i], "metadata": {}, "emb": None} for i in top_bm_idx]
+    top_ids = [bm_ids[i] for i in top_bm_idx]
+    meta_lookup = {}
+    if top_ids:
+        got = coll.get(ids=top_ids, include=["metadatas"])
+        for i, _id in enumerate(got.get("ids", []) or []):
+            meta_lookup[_id] = (got["metadatas"][i] or {})
+    bm_hits = []
+    for i in top_bm_idx:
+        _id = bm_ids[i]
+        _doc = bm_docs[i]
+        _meta = meta_lookup.get(_id, {})
+        hit = {"id": _id, "document": _doc, "metadata": _meta, "emb": None}
+        if hit_lang(hit) == want_lang:
+            bm_hits.append(hit)
 
-    # merge
+    # merge (de-dup by id)
     union = {h["id"]:h for h in (all_vec + bm_hits)}
     hits = list(union.values())
+    if len(hits) < 3:
+        # fall back: allow cross-language if recall too low
+        union2 = {h["id"]:h for h in (all_vec + [{"id": bm_ids[i], "document": bm_docs[i], "metadata": meta_lookup.get(bm_ids[i], {}), "emb": None} for i in top_bm_idx])}
+        hits = list(union2.values())
 
     # MMR
     log("MMR selection …")
@@ -401,11 +460,14 @@ def main():
     mmr_idx = mmr_select(emb_q, emb_docs, k=args.mmr_keep, lambda_mult=0.6)
     mmr_hits = [hits[i] for i in mmr_idx]
 
-    # neighbors
+    # neighbors (language-preserving)
     expanded=[]
     for h in mmr_hits:
         expanded.append(h)
-        expanded.extend(expand_neighbors(coll, h, span=args.neighbor_span, limit=16))
+        neigh = expand_neighbors(coll, h, span=args.neighbor_span, limit=20)
+        for n in neigh:
+            if hit_lang(n) == want_lang:
+                expanded.append(n)
 
     # de-dup by id
     seen, mmr_hits = set(), []
@@ -421,15 +483,15 @@ def main():
     else:
         final_hits = mmr_hits[:args.rerank_keep]
 
-    # ---- block-based extraction ----
+    # ---- block-based extraction (already single-language) ----
     all_blocks=[]
     for h in final_hits:
         all_blocks.extend(extract_blocks_from_hit(h))
-    # if nothing, try once more: larger neighbor window (fallback)
-    if not all_blocks:
-        for h in final_hits:
-            all_blocks.extend(extract_blocks_from_hit(h))
-    best = pick_best_block(all_blocks, args.ollama_host, args.embed_model, args.embed_dim)
+    best = pick_best_block_language_aware(
+        all_blocks,
+        prefer_tr=prefer_tr,
+        embed_host=args.ollama_host, embed_model=args.embed_model, embed_dim=args.embed_dim
+    )
 
     if best:
         merged = dedupe_and_localize_block(
@@ -438,7 +500,7 @@ def main():
             prefer_tr=prefer_tr, gen_host=args.ollama_host, gen_model=args.gen_model,
             sim_thresh=args.dedupe_sim
         )
-        # keep order as in block; remove exact dup titles
+        # keep order; remove exact dups
         seen_titles=set(); cleaned=[]
         for it in merged:
             t = it["title"]
@@ -455,8 +517,12 @@ def main():
             print()
             return
 
-    # ---- LLM fallback (generic) ----
+    # ---- LLM fallback (language-gated context) ----
     log("building context + generating …")
+    # keep only hits in the requested language for fallback too
+    same_lang = [h for h in final_hits if hit_lang(h) == want_lang]
+    if len(same_lang) >= 3:
+        final_hits = same_lang
     ctx, used = build_context(final_hits, keep=args.rerank_keep, max_snip=args.max_snip)
     if not ctx.strip():
         print("\n=== Answer ===\nNot found in provided documents.\n"); return
