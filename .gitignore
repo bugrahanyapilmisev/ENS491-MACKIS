@@ -1,3 +1,12 @@
+# Virtual Environments
+.venv/
+venv/
+env/
+*venv*/
+mackis/
+
+
+
 # local state
 session.json
 
