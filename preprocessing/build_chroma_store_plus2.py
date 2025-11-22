@@ -36,7 +36,7 @@ OLLAMA_HOST = "http://localhost:11434"
 EMBED_MODEL = "bge-m3"
 EMBED_DIM   = 1024
 
-ROOT_DIR    = r"C:\\Users\\kosot\\Documents\\bitirme\\crawler_for_srdoc\\mysu_dump_plus2"
+ROOT_DIR    = os.getenv("ROOT_DIR")
 CHROMA_DIR  = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\chroma_db_mysu"
 CHECKPOINT_DIR = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\checkpoints_plus2"
 
