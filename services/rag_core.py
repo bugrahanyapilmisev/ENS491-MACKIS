@@ -25,13 +25,11 @@ CHAT_MODEL  = "llama3.2"  # change if you use something else
 PREPROCESSING_DIR = os.getenv("PREPROCESSING_PATH")
 
 # 2. Chroma Klasör Adını Al (YENİ KISIM)
-# .env'de varsa onu kullanır, yoksa varsayılan 'chroma_db_mysu'yu kullanır.
-CHROMA_FOLDER_NAME = os.getenv("CHROMA_FOLDER_NAME", "chroma_db_mysu")
 
-# 3. Yolları Birleştir
-# Artık ".../preprocessing/chroma_db_mysu_RESTORE" yoluna gidecek
-CHROMA_DIR     = os.path.join(PREPROCESSING_DIR, CHROMA_FOLDER_NAME)
-CHECKPOINT_DIR = os.path.join(PREPROCESSING_DIR, "checkpoints_plus2")
+
+
+CHROMA_DIR     = os.getenv("CHROMA_DIR") or os.path.join(PREPROCESSING_DIR, "chroma_db_mysu_plus2")
+CHECKPOINT_DIR = os.getenv("CHECKPOINT_DIR") 
 BM25DIR        = PREPROCESSING_DIR
 
 BM25_PKL       = os.path.join(BM25DIR, "bm25_plus2.pkl")
