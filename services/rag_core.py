@@ -482,52 +482,40 @@ def mmr_select(candidates: List[Dict],
 
 # =============== OLLAMA CHAT ==================
 
-def call_ollama_chat(prompt: str,
-                     system_prompt: str = "",
-                     model: str = CHAT_MODEL) -> str:
-    """
-    Try /api/chat first; if Ollama version doesn't support it (404),
-    fall back to /api/generate.
-    """
+def call_ollama_chat(prompt: str, system_prompt: str = "", model: str = CHAT_MODEL) -> str:
     url_chat = f"{OLLAMA_HOST}/api/chat"
-
-    # First try /api/chat (for newer Ollama versions)
+    
+    # Mesaj yapısı
     messages = []
     if system_prompt:
         messages.append({"role": "system", "content": system_prompt})
     messages.append({"role": "user", "content": prompt})
 
+    # Payload
+    payload = {
+        "model": model,
+        "messages": messages,
+        "stream": False
+    }
+
     try:
-        resp = requests.post(
-            url_chat,
-            json={"model": model, "messages": messages, "stream": False},
-            timeout=300,
-        )
+        print(f"📤 Ollama'ya İstek Gönderiliyor... Model: {model}")
+        
+        # İsteği at
+        resp = requests.post(url_chat, json=payload, timeout=300)
+        
+        # Hata varsa detayını al
+        if resp.status_code != 200:
+            print(f"❌ OLLAMA HATASI (Status: {resp.status_code}): {resp.text}")
+            return f"Ollama Hatası: {resp.text}"
 
-        resp.raise_for_status()
+        # Cevabı al
         data = resp.json()
-        return data.get("message", {}).get("content", "")
-    except requests.HTTPError as e:
-        print("beceremedimm")
-        # If /api/chat doesn't exist, fall back to /api/generate
-        if e.response is not None and e.response.status_code == 404:
-            gen_url = f"{OLLAMA_HOST}/api/generate"
-            if system_prompt:
-                full_prompt = f"System: {system_prompt}\n\nUser: {prompt}"
-            else:
-                full_prompt = prompt
+        return data.get("message", {}).get("content", "Boş cevap döndü.")
 
-            resp2 = requests.post(
-                gen_url,
-                json={"model": model, "prompt": full_prompt, "stream": False},
-                timeout=300,
-            )
-            resp2.raise_for_status()
-            data2 = resp2.json()
-            return data2.get("response", "")
-
-        # other HTTP errors still bubble up
-        raise
+    except Exception as e:
+        print(f"❌ Bağlantı Hatası: {e}")
+        return "Üzgünüm, yapay zeka servisine bağlanılamadı."
 
 
 # =============== CONTEXT CONSTRUCTION =========
@@ -686,10 +674,19 @@ def answer_with_rag(query: str,
     # system prompt: answer in the same language as query
     if q_lang == "tr":
         sys_prompt = (
-            "Sen Sabancı Üniversitesi yönergeleri, yönetmelikleri ve süreçleri hakkında "
-            "sadece verilen bağlamı kullanarak cevap veren yardımcı bir asistansın. "
-            "Bağlamda yoksa 'bilmiyorum' de. Cevaplarını Türkçe ver."
-        )
+        "Sen Sabancı Üniversitesi öğrencileri için geliştirilmiş, sadece TÜRKÇE konuşan profesyonel bir asistansın.\n\n"
+        
+        "GÖREVİN:\n"
+        "Sana verilen 'Context' (Bağlam) içindeki bilgileri kullanarak kullanıcının sorusunu cevaplamaktır.\n\n"
+        
+        "KESİN KURALLAR (ASLA İHLAL ETME):\n"
+        "1. DİL: Cevabın %100 AKICI VE DÜZGÜN İSTANBUL TÜRKÇESİ olmalıdır.\n"
+        "2. YASAK: Cümle içinde ASLA İngilizce kelime (determine, prior, date, begin vb.) KULLANMA. Hepsini Türkçeye çevir.\n"
+        "3. YASAK: 'Beginir', 'withdrawa' gibi uydurma ekler ve kelimeler kullanma.\n"
+        "4. SADAKAT: Sadece Context içindeki bilgiyi kullan. Bilgi yoksa uydurma, 'Bilgi bulunamadı' de.\n"
+        "5. ÜSLUP: Resmi, net ve anlaşılır ol.\n"
+        "6. TERİMLER: 'Withdraw' kavramını 'Dersten Çekilme' olarak, 'Add-Drop' kavramını 'Ders Ekleme-Bırakma' olarak kullan.\n"
+    )
     elif q_lang == "en":
         sys_prompt = (
             "You are a helpful assistant answering questions about Sabancı University "
@@ -727,7 +724,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--mode",
         choices=["chroma", "chroma-mmr", "bm25", "hybrid", "hybrid-mmr"],
-        default="hybrid-mmr",
+        default="chroma-mmr",
         help="retrieval mode"
     )
     args = parser.parse_args()

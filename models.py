@@ -16,6 +16,7 @@ class User(Base):
     user_id = Column(UUID(as_uuid=True), primary_key=True, server_default=text("gen_random_uuid()"))
     email = Column(String, unique=True)
     display_name = Column(String)
+    password_hash = Column(String)
     # role ve status için CheckConstraint veritabanı seviyesinde kontrol sağlar
     role = Column(String, nullable=False, server_default='student')
     status = Column(String, nullable=False, server_default='active')

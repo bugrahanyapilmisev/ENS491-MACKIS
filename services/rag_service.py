@@ -35,14 +35,14 @@ class RAGService:
         """
         FastAPI'den gelen isteği senin orijinal fonksiyonuna iletir.
         """
-        print(f"🔍 Analiz Ediliyor (Hybrid-MMR): {user_query}")
+        print(f"🔍 Analiz Ediliyor (chroma-mmr): {user_query}")
         
         try:
             # Senin gelişmiş fonksiyonunu çağırıyoruz
             # mode="hybrid-mmr" olarak sabitledim, istersen değiştirebilirsin.
             answer_text = answer_with_rag(
                 query=user_query,
-                mode="hybrid-mmr", 
+                mode="chroma-mmr", 
                 bm25_pack=self.bm25_pack,
                 coll=self.coll,
                 history=history # Az önce eklediğimiz parametre
