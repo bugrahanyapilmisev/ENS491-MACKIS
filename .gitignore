@@ -7,6 +7,31 @@ preprocessing/chroma_db_clean
 preprocessing/chroma_db_mysu/
 preprocessing/chroma_db_clean.zip
 preprocessing/version_plus/chroma_db_clean_plus
-# (optional) checkpoints and caches
+
+
+
+# --- Python & Mac Gereksizleri ---
 __pycache__/
-*.pyc
+*.py[cod]
+.DS_Store
+.env
+venv/
+.venv/
+
+# --- Veritabanı ve Büyük Dosyalar ---
+*.sqlite3
+*.db
+*.bin
+*.pickle
+*.parquet
+
+# --- ChromaDB ve RAG Verileri ---
+
+preprocessing/chroma_db_mysu_RESTORE/
+preprocessing/checkpoints_plus2/
+chroma_db_mysu/
+chroma_db_mysu_RESTORE/
+
+mackis/
+
+preprocessing/corpus_browser/
