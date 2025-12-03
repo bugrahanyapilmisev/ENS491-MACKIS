@@ -3,9 +3,13 @@ import json
 import numpy as np
 import pyarrow.parquet as pq
 import chromadb
+from dotenv import load_dotenv
 
-CHROMA_DIR = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\chroma_db_mysu_RESTORE"
-CHECKPOINT_DIR = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\checkpoints_plus2"
+
+load_dotenv()
+
+CHROMA_DIR = os.getenv("CHROMA_DIR")
+CHECKPOINT_DIR = os.getenv("CHECKPOINT_DIR")
 VECTORS_PARQUET = os.path.join(CHECKPOINT_DIR, "vectors_plus2.parquet")
 
 COLL_NAME = "mysu_surecharitasi_bge_m3_v1"

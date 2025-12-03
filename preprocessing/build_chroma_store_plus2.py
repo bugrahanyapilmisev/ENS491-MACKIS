@@ -1,4 +1,15 @@
 # build_chroma_store_plus2.py
+#
+# - Reads preprocessed JSON docs from PREPROCESSED_ROOT (output of preprocess_docs.py)
+# - Chunks text, embeds with OLLAMA bge-m3
+# - Upserts into Chroma collection
+# - Writes two checkpoints:
+#     * chunks_plus2.parquet  (chunk text + metadata)
+#     * vectors_plus2.parquet (embeddings + metadata)
+#
+# Now with:
+# - LLM-based OPEN-ENDED semantic tags per document (metadata["tags"])
+
 import os
 import re
 import json
@@ -6,55 +17,50 @@ import time
 import math
 import hashlib
 import pathlib
+import textwrap
 from typing import List, Dict, Tuple
 
 import numpy as np
 import pandas as pd
 import requests
-from pypdf import PdfReader
-from bs4 import BeautifulSoup
-
-try:
-    import docx  # for .docx
-except ImportError:
-    docx = None
-
-try:
-    import textract  # optional, for legacy .doc
-except ImportError:
-    textract = None
-
-print(textract)
 import chromadb
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+from dotenv import load_dotenv
 
 # ================= CONFIG =================
-OLLAMA_HOST = "http://localhost:11434"
-EMBED_MODEL = "bge-m3"
-EMBED_DIM   = 1024
+load_dotenv()
 
-ROOT_DIR    = r"C:\\Users\\kosot\\Documents\\bitirme\\crawler_for_srdoc\\mysu_dump_plus2"
-CHROMA_DIR  = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\chroma_db_mysu"
-CHECKPOINT_DIR = r"C:\\Users\\kosot\\Documents\\bitirme\\preprocessing\\checkpoints_plus2"
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "bge-m3")
+EMBED_DIM   = int(os.getenv("EMBED_DIM", "1024"))
+CHAT_MODEL  = os.getenv("CHAT_MODEL", "llama3.2")  # used for tag LLM
+
+# Paths / dirs
+BASE_DIR = os.getenv("PROJECT_ROOT") or os.getcwd()
+PREPROCESSING_DIR = os.getenv("PREPROCESSING_PATH") or os.path.join(BASE_DIR, "preprocessing")
+PRE_ROOT = os.getenv("PREPROCESSED_ROOT") or os.path.join(PREPROCESSING_DIR, "preprocessed_docs")
+
+CHROMA_DIR = os.getenv("CHROMA_DIR") or os.path.join(PREPROCESSING_DIR, "chroma_db_mysu")
+CHECKPOINT_DIR = os.getenv("CHECKPOINT_DIR") or os.path.join(PREPROCESSING_DIR, "checkpoints_plus2")
 
 CHUNK_PARQUET   = os.path.join(CHECKPOINT_DIR, "chunks_plus2.parquet")
 VECTORS_PARQUET = os.path.join(CHECKPOINT_DIR, "vectors_plus2.parquet")
 
-COLL_NAME   = "mysu_surecharitasi_bge_m3_v1"
+COLL_NAME   = os.getenv("COLL_NAME", "mysu_surecharitasi_bge_m3_v1")
 
 # performance
-MAX_WORKERS_EMBED = 6
-BATCH_UPSERT      = 64
-REQUEST_TIMEOUT_S = 120
-RETRY_MAX         = 4
-BACKOFF_BASE      = 0.7
+MAX_WORKERS_EMBED = int(os.getenv("MAX_WORKERS_EMBED", "6"))
+BATCH_UPSERT      = int(os.getenv("BATCH_UPSERT", "64"))
+REQUEST_TIMEOUT_S = int(os.getenv("REQUEST_TIMEOUT_S", "120"))
+RETRY_MAX         = int(os.getenv("RETRY_MAX", "4"))
+BACKOFF_BASE      = float(os.getenv("BACKOFF_BASE", "0.7"))
 
-CHUNK_SIZE    = 900
-CHUNK_OVERLAP = 180
-MIN_TEXT_LEN  = 50
+CHUNK_SIZE    = int(os.getenv("CHUNK_SIZE", "900"))
+CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "180"))
+MIN_TEXT_LEN  = int(os.getenv("MIN_TEXT_LEN", "50"))
 
 TR_DIACRITICS = "çğıöşüÇĞİÖŞÜ"
 
@@ -62,6 +68,7 @@ os.makedirs(CHROMA_DIR, exist_ok=True)
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 # ================ UTILS ====================
+
 def sha1_bytes(b: bytes) -> str:
     return hashlib.sha1(b).hexdigest()
 
@@ -74,20 +81,8 @@ def normalize_ws_keep_diacritics(text: str) -> str:
     text = re.sub(r"\s*\n\s*\n\s*\n+", "\n\n", text)
     return text.strip()
 
-def glue_codes(text: str) -> str:
-    text = re.sub(r"(\w)-\n(\w)", r"\1\2", text)
-    return text
-
-def fix_pdf_wrapping(text: str) -> str:
-    text = glue_codes(text)
-    text = re.sub(
-        r"(?<![\.!?:])\n(?!\s*[A-Z" + TR_DIACRITICS + r"0-9])",
-        " ",
-        text,
-    )
-    return normalize_ws_keep_diacritics(text)
-
 # ============ LANGUAGE DETECTION ============
+
 try:
     from langdetect import detect as ld_detect
 except ImportError:
@@ -112,23 +107,13 @@ def guess_lang_from_text(text: str) -> str:
         return "tr"
     return "en"
 
-def detect_html_lang_from_soup(soup: BeautifulSoup) -> str:
-    html_lang = ""
-    html_tag = soup.find("html")
-    if html_tag is not None:
-        lang_attr = html_tag.get("lang") or html_tag.get("xml:lang")
-        if lang_attr:
-            code = lang_attr.split("-")[0].lower()
-            if code in ("tr", "en"):
-                html_lang = code
-    return html_lang
-
-def decide_doc_lang(html_lang: str, text_lang: str) -> str:
+def decide_doc_lang(lang_field: str, text_lang: str) -> str:
     """
-    IMPORTANT: we DO NOT trust path /en or /tr here.
-    Only HTML lang + text lang.
+    lang_field: 'lang' from preprocess_docs JSON (may be 'tr'/'en')
+    text_lang: language guessed from text content
+    Priority: lang_field if valid, else text_lang, else 'en'
     """
-    for c in (html_lang, text_lang):
+    for c in (lang_field, text_lang):
         if not c:
             continue
         c = c.lower()
@@ -138,116 +123,8 @@ def decide_doc_lang(html_lang: str, text_lang: str) -> str:
             return "en"
     return "en"
 
-# ================ LOADERS ===================
-def load_pdf_text(path: str) -> Tuple[str, str]:
-    reader = PdfReader(path)
-    pages = [(p.extract_text() or "") for p in reader.pages]
-    text = "\n".join(pages)
-    text = fix_pdf_wrapping(text)
-    title = ""
-    return text, title
-
-def load_html_sections(path: str):
-    """
-    Return:
-      full_text, sections, title, html_lang
-    sections: list of {h1,h2,h3,text}
-    """
-    html = pathlib.Path(path).read_text(encoding="utf-8", errors="ignore")
-    soup = BeautifulSoup(html, "lxml")
-
-    html_lang = detect_html_lang_from_soup(soup)
-
-    for tag in soup(["script", "style", "noscript"]):
-        tag.decompose()
-    for sel in [
-        "nav", "footer", "header", ".menu", ".navbar", ".breadcrumb", ".sidebar",
-        "#cookie-banner", ".cookie", ".cookies", ".site-footer", ".site-header",
-        ".social-share", ".pagination", ".advert", ".ad", ".banner"
-    ]:
-        for node in soup.select(sel):
-            node.decompose()
-
-    title = (soup.title.string.strip() if soup.title and soup.title.string else "")
-    body = soup.select_one("main") or soup.select_one("article") or soup
-
-    sections = []
-    cur = {"h1": "", "h2": "", "h3": "", "text": []}
-
-    def close_section():
-        if cur["text"]:
-            sections.append({
-                "h1": cur["h1"],
-                "h2": cur["h2"],
-                "h3": cur["h3"],
-                "text": normalize_ws_keep_diacritics("\n".join(cur["text"])),
-            })
-            cur["text"] = []
-
-    for node in body.descendants:
-        if not getattr(node, "name", None):
-            continue
-        name = node.name.lower()
-        if name in ["h1", "h2", "h3"]:
-            close_section()
-            heading_text = normalize_ws_keep_diacritics(node.get_text(" ").strip())
-            if name == "h1":
-                cur["h1"], cur["h2"], cur["h3"] = heading_text, "", ""
-            elif name == "h2":
-                cur["h2"], cur["h3"] = heading_text, ""
-            else:
-                cur["h3"] = heading_text
-        elif name in ["p", "li", "td", "th", "blockquote", "pre"]:
-            t = normalize_ws_keep_diacritics(node.get_text(" ").strip())
-            if len(t) >= 1:
-                cur["text"].append(t)
-    close_section()
-
-    full_text = normalize_ws_keep_diacritics(body.get_text("\n"))
-    full_text = glue_codes(full_text)
-
-    return full_text, sections, title, html_lang
-
-def load_docx_text(path: str) -> Tuple[str, str]:
-    if docx is None:
-        raise RuntimeError("python-docx not installed; cannot read .docx")
-    d = docx.Document(path)
-    parts = []
-    for p in d.paragraphs:
-        if p.text:
-            parts.append(p.text)
-    text = normalize_ws_keep_diacritics("\n".join(parts))
-    title = os.path.splitext(os.path.basename(path))[0]
-    return text, title
-
-def load_legacy_doc_text(path: str) -> Tuple[str, str]:
-    if textract is None:
-        raise RuntimeError("textract not installed; cannot read .doc")
-    raw = textract.process(path)
-    text = normalize_ws_keep_diacritics(raw.decode("utf-8", errors="ignore"))
-    title = os.path.splitext(os.path.basename(path))[0]
-    return text, title
-
-def load_excel_text(path: str) -> Tuple[str, str]:
-    import pandas as pd
-    xls = pd.ExcelFile(path)
-    parts = []
-    for sheet in xls.sheet_names:
-        df = xls.parse(sheet)
-        parts.append(f"Sheet: {sheet}")
-        parts.append(df.to_string(index=False))
-    text = normalize_ws_keep_diacritics("\n".join(parts))
-    title = os.path.splitext(os.path.basename(path))[0]
-    return text, title
-
-def load_csv_text(path: str) -> Tuple[str, str]:
-    import pandas as pd
-    df = pd.read_csv(path)
-    text = normalize_ws_keep_diacritics(df.to_string(index=False))
-    title = os.path.splitext(os.path.basename(path))[0]
-    return text, title
-
 # =============== CHUNKING ===================
+
 SENT_SPLIT = re.compile(r"(?<=[\.!?…])\s+(?=[A-Z" + TR_DIACRITICS + r"0-9])")
 
 def sentence_split(text: str) -> List[str]:
@@ -328,6 +205,7 @@ def dedupe_chunks(chunks: List[Dict]) -> List[Dict]:
     return ded
 
 # ============ EMBEDDINGS (OLLAMA) ============
+
 def embed_one(text: str) -> np.ndarray:
     url = f"{OLLAMA_HOST}/api/embeddings"
     for attempt in range(RETRY_MAX):
@@ -358,22 +236,156 @@ def embed_many_parallel(texts: List[str]) -> np.ndarray:
             vecs[i] = fut.result()
     return np.vstack(vecs)
 
+# ============ LLM TAGGING (OPEN-ENDED TAGS) ============
+
+def call_ollama_json(prompt: str, system_prompt: str = "") -> dict:
+    """
+    Call Ollama /api/chat and expect STRICT JSON in the response.
+    If anything goes wrong, return {}.
+    """
+    url = f"{OLLAMA_HOST}/api/chat"
+
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": prompt})
+
+    payload = {
+        "model": CHAT_MODEL,
+        "messages": messages,
+        "stream": False,
+        "options": {
+            "temperature": 0.0,
+        },
+    }
+
+    try:
+        resp = requests.post(url, json=payload, timeout=300)
+        resp.raise_for_status()
+        data = resp.json()
+        text = (data.get("message", {}) or {}).get("content", "").strip()
+        if not text:
+            return {}
+
+        # Try direct JSON first
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            m = re.search(r"\{.*\}", text, flags=re.DOTALL)
+            if not m:
+                return {}
+            return json.loads(m.group(0))
+    except Exception as e:
+        print(f"[tagger-llm error] {e}")
+        return {}
+
+def infer_doc_tags_llm(title: str, doc_text: str, doc_lang: str) -> Dict:
+    """
+    Use an LLM to infer OPEN-ENDED semantic tags for a university document.
+
+    Output schema:
+    {
+      "tags": ["short_snake_case_tag1", "tag2", ...]
+    }
+
+    - tags is an *unbounded* vocabulary: the model can invent any tag string.
+    - We only suggest some canonical labels (erasmus_study, erasmus_internship, ...)
+      in the prompt, but we DO NOT restrict the set of possible tags.
+    """
+
+    body_sample = (doc_text or "")[:2500]
+    lang_hint = doc_lang or "unknown"
+
+    sys_prompt = textwrap.dedent("""
+        You are an expert classifier for internal university documents.
+        Your ONLY job is to read the document title and a text excerpt and
+        return a JSON object describing what the document is about via TAGS.
+
+        JSON schema (STRICT):
+        {
+          "tags": ["short_snake_case_tag1", "tag2", ...]
+        }
+
+        Rules for tags:
+        - 3 to 12 tags is ideal, but NOT a hard limit.
+        - Tags must be SHORT, lowercase, snake_case strings.
+        - Tags should be semantically informative:
+            * topics (e.g. "erasmus_plus", "student_mobility", "scholarships")
+            * document role (e.g. "procedure", "directive", "regulation", "form")
+            * target audience (e.g. "undergraduate_students", "graduate_students")
+            * important programs or units (e.g. "faculty_of_engineering", "international_office")
+        - Use English tags even if the document is in Turkish.
+        - Do NOT include extremely generic tags like "document", "general", "other".
+
+        IMPORTANT CONVENTION (NOT a hard restriction):
+        - If the document is clearly about Erasmus *study* / exchange mobility,
+          please include a tag "erasmus_study".
+        - If the document is clearly about Erasmus *internship* / traineeship,
+          please include a tag "erasmus_internship".
+        - If the document is clearly about student admission, add something like
+          "undergraduate_admission" or "graduate_admission", as appropriate.
+
+        However, these are ONLY conventions. You are free to invent any additional tags
+        that make sense. The overall tag vocabulary is OPEN-ENDED and unbounded.
+
+        Output requirements:
+        - Output STRICT JSON ONLY, no explanation, no markdown.
+        - Make sure the JSON is valid and matches the schema.
+    """).strip()
+
+    user_prompt = textwrap.dedent(f"""
+        Language: {lang_hint}
+
+        Title:
+        {title or "(no title)"}
+
+        Excerpt:
+        {body_sample}
+    """).strip()
+
+    raw = call_ollama_json(user_prompt, system_prompt=sys_prompt)
+
+    tags = raw.get("tags", [])
+    if not isinstance(tags, list):
+        tags = []
+
+    clean_tags = []
+    seen = set()
+    for t in tags:
+        if not isinstance(t, str):
+            continue
+        tt = t.strip().lower()
+        if not tt:
+            continue
+        if tt in seen:
+            continue
+        seen.add(tt)
+        clean_tags.append(tt)
+
+    return {
+        "tags": clean_tags,
+    }
+
 # ================ MAIN ======================
+
 def main():
+    # 1) Collect all preprocessed JSON files
+    json_files: List[str] = []
+    for root, _, fnames in os.walk(PRE_ROOT):
+        for fn in fnames:
+            if not fn.lower().endswith(".json"):
+                continue
+            json_files.append(os.path.join(root, fn))
+    json_files.sort()
+
+    print(f"[info] Found {len(json_files)} preprocessed JSON docs under {PRE_ROOT}")
+
+    # 2) Create Chroma collection
     client = chromadb.PersistentClient(path=CHROMA_DIR)
     coll = client.get_or_create_collection(
         name=COLL_NAME,
         metadata={"hnsw:space": "cosine"},
     )
-
-    exts = {".pdf", ".html", ".htm", ".docx", ".doc", ".xlsx", ".xls", ".csv"}
-    files = []
-    for root, _, fnames in os.walk(ROOT_DIR):
-        for fn in fnames:
-            ext = os.path.splitext(fn)[1].lower()
-            if ext in exts:
-                files.append(os.path.join(root, fn))
-    files.sort()
 
     global_seen_chunks = set()  # SHA1(text) for global dedupe
     chunk_rows = []             # for chunks_plus2.parquet
@@ -382,44 +394,46 @@ def main():
     total_upserts = 0
     started = time.time()
 
-    for fi, path in enumerate(files, 1):
+    for fi, path in enumerate(json_files, 1):
         try:
-            ext = os.path.splitext(path)[1].lower()
-            size_bytes = os.path.getsize(path)
+            # ---------- LOAD JSON ----------
+            with open(path, "r", encoding="utf-8") as f:
+                doc = json.load(f)
 
-            # ---------- LOAD ----------
-            if ext in [".html", ".htm"]:
-                doc_text, sections, title, html_lang = load_html_sections(path)
-            elif ext == ".pdf":
-                doc_text, title = load_pdf_text(path)
-                sections = [{"h1": "", "h2": "", "h3": "", "text": doc_text}]
-                html_lang = ""
-            elif ext == ".docx":
-                doc_text, title = load_docx_text(path)
-                sections = [{"h1": "", "h2": "", "h3": "", "text": doc_text}]
-                html_lang = ""
-            elif ext == ".doc":
-                doc_text, title = load_legacy_doc_text(path)
-                sections = [{"h1": "", "h2": "", "h3": "", "text": doc_text}]
-                html_lang = ""
-            elif ext in [".xlsx", ".xls"]:
-                doc_text, title = load_excel_text(path)
-                sections = [{"h1": "", "h2": "", "h3": "", "text": doc_text}]
-                html_lang = ""
-            elif ext == ".csv":
-                doc_text, title = load_csv_text(path)
-                sections = [{"h1": "", "h2": "", "h3": "", "text": doc_text}]
-                html_lang = ""
-            else:
-                continue
-
+            doc_text = normalize_ws_keep_diacritics(doc.get("text", "") or "")
             if len(doc_text) < MIN_TEXT_LEN:
-                print(f"[skip] too short: {path}")
+                print(f"[skip] too short text in {path}")
                 continue
 
-            # ---------- LANG ----------
+            title       = (doc.get("title") or "").strip()
+            html_lang   = (doc.get("html_lang") or "").strip()
+            lang_field  = (doc.get("lang") or "").strip()
+            source_path = (doc.get("source_path") or "").strip()
+
+            # Fallbacks
+            if not source_path:
+                # relative path of this JSON inside PRE_ROOT
+                source_path = os.path.relpath(path, PRE_ROOT).replace("\\", "/")
+
             text_lang = guess_lang_from_text(doc_text)
-            doc_lang = decide_doc_lang(html_lang, text_lang)
+            doc_lang  = decide_doc_lang(lang_field, text_lang)
+
+            # ---------- LLM-BASED SEMANTIC TAGGING (OPEN-ENDED) ----------
+            tag_info = infer_doc_tags_llm(
+                title=title,
+                doc_text=doc_text,
+                doc_lang=doc_lang,
+            )
+            tags = tag_info.get("tags", [])
+            tags_str = ",".join(tags)
+
+            # Treat the whole document as one section; h1 = title
+            sections = [{
+                "h1": title,
+                "h2": "",
+                "h3": "",
+                "text": doc_text,
+            }]
 
             # ---------- CHUNKING ----------
             chunks = chunk_sections(sections, CHUNK_SIZE, CHUNK_OVERLAP, doc_text)
@@ -428,8 +442,11 @@ def main():
                 continue
 
             # ---------- EMBED + UPSERT ----------
+            size_bytes = len(doc_text.encode("utf-8", errors="ignore"))
+            json_rel   = os.path.relpath(path, PRE_ROOT).replace("\\", "/")
+
             for i in range(0, len(chunks), BATCH_UPSERT):
-                batch = chunks[i : i + BATCH_UPSERT]
+                batch = chunks[i: i + BATCH_UPSERT]
 
                 texts = []
                 ids = []
@@ -443,10 +460,12 @@ def main():
                     global_seen_chunks.add(ch_sha)
 
                     chunk_index = ch["index"]
-                    chunk_id = sha1_text(f"{path}::{chunk_index}")
+                    chunk_id = sha1_text(f"{source_path}::{chunk_index}")
 
                     meta = {
-                        "doc_path": path,
+                        "chunk_id": chunk_id,
+                        "source_path": source_path,          # original relative path from preprocess
+                        "json_path": json_rel,               # path of this JSON under PRE_ROOT
                         "title": title,
                         "h1": ch.get("h1", ""),
                         "h2": ch.get("h2", ""),
@@ -454,17 +473,23 @@ def main():
                         "chunk_index": int(chunk_index),
                         "start": int(ch.get("start", 0)),
                         "end": int(ch.get("end", 0)),
-                        "content_lang": doc_lang,   # we keep content_lang, but it is doc-level here
+                        "content_lang": doc_lang,
                         "html_lang": html_lang,
                         "doc_lang": doc_lang,
-                        "doctype": ext.lstrip("."),
+                        "doctype": pathlib.Path(source_path).suffix.lstrip(".") or "txt",
                         "bytes": int(size_bytes),
+
+                        # OPEN-ENDED TAGS LIST
+                        # OPEN-ENDED TAGS, BUT AS STRINGS (Chroma doesn't allow list in metadata)
+                        "tags": tags_str,  # e.g. "erasmus_study,faculty_of_engineering"
+                        "tags_json": json.dumps(tags, ensure_ascii=False),
                     }
 
                     chunk_rows.append({
                         "chunk_id": chunk_id,
                         "content": ch_text,
-                        "doc_path": path,
+                        "source_path": source_path,
+                        "json_path": json_rel,
                         "title": title,
                         "h1": meta["h1"],
                         "h2": meta["h2"],
@@ -477,6 +502,9 @@ def main():
                         "doc_lang": doc_lang,
                         "doctype": meta["doctype"],
                         "bytes": int(size_bytes),
+
+                        # tags stored as CSV string for quick inspection
+                        "tags": tags_str,
                     })
 
                     texts.append(ch_text)
@@ -506,7 +534,8 @@ def main():
 
             if fi % 20 == 0:
                 elapsed = time.time() - started
-                print(f"[progress] files={fi}/{len(files)} upserts={total_upserts} elapsed={elapsed:.1f}s")
+                print(f"[progress] json files={fi}/{len(json_files)} "
+                      f"upserts={total_upserts} elapsed={elapsed:.1f}s")
 
         except Exception as e:
             print(f"[error] {path}: {e}")
