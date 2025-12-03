@@ -3,61 +3,75 @@ import os
 import sys
 from typing import List, Dict
 
-# Kendi dizinimizdeki modülü import edebilmek için
+# Kendi dizinimizdeki modülü import edebilmek için path ayarı
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# Senin 700 satırlık doslandan gerekli fonksiyonları çekiyoruz
+# --- DÜZELTME: BM25 İMPORTLARINI KALDIRDIK ---
+# Yeni rag_core.py dosyasında artık sadece bunlar var:
 from rag_core import (
-    get_chroma_collection, 
-    load_bm25_index, 
-    load_doc_chunk_stats, 
+    get_chroma_collection,
+    load_doc_chunk_stats,
     answer_with_rag,
-    CHROMA_DIR, 
-    BM25_PKL
+    CHROMA_DIR
 )
 
 class RAGService:
     def __init__(self):
-        print("🚀 Gelişmiş RAG Motoru (MMR + Hybrid) Yükleniyor...")
+        print("🚀 Gelişmiş RAG Motoru (Chroma + Cross-Encoder) Yükleniyor...")
         
-        # 1. Senin kodundaki yükleme fonksiyonlarını kullanıyoruz
-        # Dosya yollarının (Path) doğru olduğundan emin ol!
-        if not os.path.exists(CHROMA_DIR) or not os.path.exists(BM25_PKL):
-            print("⚠️ UYARI: Chroma veya BM25 dosyaları bulunamadı! rag_core.py içindeki yolları kontrol et.")
+        # 1. Dosya Kontrolü
+        if not os.path.exists(CHROMA_DIR):
+            print(f"⚠️ UYARI: ChromaDB klasörü bulunamadı: {CHROMA_DIR}")
+            print("Lütfen .env dosyasındaki PREPROCESSING_PATH ayarını kontrol et.")
         
-        self.coll = get_chroma_collection()
-        self.bm25_pack = load_bm25_index()
-        load_doc_chunk_stats() # Global değişkeni doldurur
+        # 2. ChromaDB Bağlantısı
+        try:
+            self.coll = get_chroma_collection()
+            print("✅ ChromaDB Bağlantısı Başarılı.")
+        except Exception as e:
+            print(f"❌ ChromaDB Hatası: {e}")
+            self.coll = None
+
+        # 3. İstatistikleri Yükle (BM25 artık yok)
+        try:
+            load_doc_chunk_stats()
+            print("✅ Döküman İstatistikleri Yüklendi.")
+        except Exception as e:
+            print(f"⚠️ İstatistik yükleme uyarısı: {e}")
         
         print("✅ RAG Motoru Hazır!")
 
     def query(self, user_query: str, history: List[Dict] = []):
         """
-        FastAPI'den gelen isteği senin orijinal fonksiyonuna iletir.
+        FastAPI'den gelen isteği rag_core'a iletir.
         """
-        print(f"🔍 Analiz Ediliyor (chroma-mmr): {user_query}")
+        print(f"🔍 Analiz Ediliyor (Reranker): {user_query}")
         
+        if not self.coll:
+            return "Veritabanı bağlantısı olmadığı için cevap veremiyorum.", []
+
         try:
-            # Senin gelişmiş fonksiyonunu çağırıyoruz
-            # mode="hybrid-mmr" olarak sabitledim, istersen değiştirebilirsin.
+            # --- DÜZELTME: PARAMETRELERİ GÜNCELLEDİK ---
+            # Yeni answer_with_rag fonksiyonu 'bm25_pack' parametresi ALMIYOR.
             answer_text = answer_with_rag(
                 query=user_query,
-                mode="chroma-mmr", 
-                bm25_pack=self.bm25_pack,
+                mode="chroma-mmr",  # Yeni sistemin varsayılan modu
                 coll=self.coll,
-                history=history # Az önce eklediğimiz parametre
+                history=history
             )
             
-            # Senin kodun şu an sadece 'answer' dönüyor, kaynakları (sources) return etmiyor.
-            # Eğer kaynakları da Frontend'de göstermek istersen rag_core.py'yi 
-            # (answer, retrieved_docs) döndürecek şekilde güncellemen gerekir.
-            # Şimdilik kaynakları boş dönüyoruz hata vermesin diye.
+            # Not: Şu anki rag_core.py sadece metin (string) dönüyor.
+            # Kaynakları (sources) da döndürmek istersen rag_core.py'yi düzenlemen gerekir.
+            # Şimdilik boş liste dönüyoruz.
             sources = [] 
             
             return answer_text, sources
 
         except Exception as e:
             print(f"❌ RAG Core Hatası: {e}")
+            # Hatanın detayını konsola bas ki görelim
+            import traceback
+            traceback.print_exc()
             return "Üzgünüm, sistemi çalıştırırken teknik bir hata oluştu.", []
 
 # Global Instance
