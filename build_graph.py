@@ -11,7 +11,7 @@ from database import SessionLocal
 from services.graph_service import GraphService
 from dotenv import load_dotenv
 
-load_dotenv("backend/.env")
+load_dotenv()
 
 CHUNK_PATH = os.path.join(os.getenv("PREPROCESSING_PATH"), "checkpoints_plus2", "chunks_plus2.parquet")
 
