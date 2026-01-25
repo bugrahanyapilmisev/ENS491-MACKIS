@@ -1,78 +1,134 @@
 # backend/services/rag_service.py
+"""
+RAG Service - Uses improved rag_core with hybrid search
+
+Features:
+- BM25 + Vector hybrid search
+- Query expansion and HyDE
+- Cross-encoder reranking
+- Multi-query retrieval
+"""
+
 import os
 import sys
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
-# Kendi dizinimizdeki modülü import edebilmek için path ayarı
+# Add services directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# --- DÜZELTME: BM25 İMPORTLARINI KALDIRDIK ---
-# Yeni rag_core.py dosyasında artık sadece bunlar var:
 from rag_core import (
     get_chroma_collection,
-    load_doc_chunk_stats,
+    load_bm25_index,
     answer_with_rag,
-    CHROMA_DIR
+    CHROMA_DIR,
+    BM25_INDEX_PATH,
 )
+
 
 class RAGService:
     def __init__(self):
-        print("🚀 Gelişmiş RAG Motoru (Chroma + Cross-Encoder) Yükleniyor...")
+        print("🚀 RAG Engine (Hybrid Search + Reranking) Loading...")
         
-        # 1. Dosya Kontrolü
+        # 1. Check directories
         if not os.path.exists(CHROMA_DIR):
-            print(f"⚠️ UYARI: ChromaDB klasörü bulunamadı: {CHROMA_DIR}")
-            print("Lütfen .env dosyasındaki PREPROCESSING_PATH ayarını kontrol et.")
+            print(f"⚠️ WARNING: ChromaDB folder not found: {CHROMA_DIR}")
+            print("Please run build_chroma_store.py first.")
         
-        # 2. ChromaDB Bağlantısı
+        # 2. ChromaDB Connection
         try:
             self.coll = get_chroma_collection()
-            print("✅ ChromaDB Bağlantısı Başarılı.")
+            count = self.coll.count()
+            print(f"✅ ChromaDB Connected: {count} chunks indexed")
         except Exception as e:
-            print(f"❌ ChromaDB Hatası: {e}")
+            print(f"❌ ChromaDB Error: {e}")
             self.coll = None
 
-        # 3. İstatistikleri Yükle (BM25 artık yok)
+        # 3. Load BM25 Index
         try:
-            load_doc_chunk_stats()
-            print("✅ Döküman İstatistikleri Yüklendi.")
+            bm25, chunk_ids = load_bm25_index()
+            if bm25:
+                print(f"✅ BM25 Index Loaded: {len(chunk_ids)} documents")
+            else:
+                print("⚠️ BM25 index not available (will use vector-only search)")
         except Exception as e:
-            print(f"⚠️ İstatistik yükleme uyarısı: {e}")
+            print(f"⚠️ BM25 loading warning: {e}")
         
-        print("✅ RAG Motoru Hazır!")
+        print("✅ RAG Engine Ready!")
 
-    def query(self, user_query: str, history: List[Dict] = []):
+    def query(self, user_query: str, history: List[Dict] = []) -> Tuple[str, List[Dict]]:
         """
-        FastAPI'den gelen isteği rag_core'a iletir.
+        Process user query through the RAG pipeline.
+        
+        Args:
+            user_query: The user's question
+            history: Previous conversation messages
+            
+        Returns:
+            Tuple of (answer_text, sources)
         """
-        print(f"🔍 Analiz Ediliyor (Reranker): {user_query}")
+        print(f"🔍 Processing Query: {user_query[:100]}...")
         
         if not self.coll:
-            return "Veritabanı bağlantısı olmadığı için cevap veremiyorum.", []
+            return "Database connection unavailable.", []
 
         try:
-            # --- DÜZELTME: PARAMETRELERİ GÜNCELLEDİK ---
-            # Yeni answer_with_rag fonksiyonu 'bm25_pack' parametresi ALMIYOR.
+            # Call the  RAG pipeline
             answer_text = answer_with_rag(
                 query=user_query,
-                mode="chroma-mmr",  # Yeni sistemin varsayılan modu
                 coll=self.coll,
-                history=history
+                history=history,
+                use_hybrid=True  # Enable hybrid search
             )
             
-            # Not: Şu anki rag_core.py sadece metin (string) dönüyor.
-            # Kaynakları (sources) da döndürmek istersen rag_core.py'yi düzenlemen gerekir.
-            # Şimdilik boş liste dönüyoruz.
-            sources = [] 
+            # TODO: Extract sources from the answer if needed
+            # For now, return empty sources list
+            sources = []
             
             return answer_text, sources
 
         except Exception as e:
-            print(f"❌ RAG Core Hatası: {e}")
-            # Hatanın detayını konsola bas ki görelim
+            print(f"❌ RAG Pipeline Error: {e}")
             import traceback
             traceback.print_exc()
-            return "Üzgünüm, sistemi çalıştırırken teknik bir hata oluştu.", []
+            return "Sorry, a technical error occurred while processing your question.", []
 
-# Global Instance
+    def search_only(self, user_query: str, top_k: int = 5) -> List[Dict]:
+        """
+        Perform search without generating an answer.
+        Useful for debugging and testing.
+        """
+        from rag_core import hybrid_search, cross_encoder_rerank
+        
+        if not self.coll:
+            return []
+        
+        try:
+            # Get candidates via hybrid search
+            candidates = hybrid_search(user_query, self.coll)
+            
+            # Rerank
+            reranked = cross_encoder_rerank(user_query, candidates)
+            
+            # Return top results
+            results = []
+            for c in reranked[:top_k]:
+                meta = c.get("meta", {})
+                results.append({
+                    "title": meta.get("title", ""),
+                    "source_path": meta.get("source_path", ""),
+                    "text_preview": c.get("text", "")[:200],
+                    "score": c.get("final_score", 0),
+                })
+            
+            return results
+        except Exception as e:
+            print(f"Search error: {e}")
+            return []
+
+
+# Global Instance - Can be imported by FastAPI app
 rag_engine = RAGService()
+
+
+# For backward compatibility, also export as rag_engine
+rag_engine = rag_engine
