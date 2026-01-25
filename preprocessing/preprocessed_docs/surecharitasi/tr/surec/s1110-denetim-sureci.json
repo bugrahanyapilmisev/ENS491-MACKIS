@@ -3,5 +3,17 @@
   "title": "S1110 Denetim Süreci | Yönerge",
   "lang": "tr",
   "html_lang": "",
-  "text": "Künye Bilgisini Göster İlgili Birimler Süreç Sahibi: Array Süreç Sorumluları: Süreç Tedarikçileri Süreç Girdisi: İlgili Tedarikçi Süreç Müşterileri Süreç Çıktısı İlgili Müşteri Performans Göstergeleri Raporlama Periyodu Yönerge Prosedür Form Denetim Yönergesi (IIA-S1110-01) Dil Türkçe"
+  "doc_type": "directive",
+  "metadata": {
+    "procedure_code": "IIA-S1110-01"
+  },
+  "summary": "Belge: S1110 Denetim Süreci | Yönerge",
+  "sections": [
+    {
+      "header": "Introduction",
+      "level": 0,
+      "text": "Süreç Sahibi: Array Süreç Sorumluları: Süreç Girdisi: İlgili Tedarikçi Süreç Çıktısı İlgili Müşteri Yönerge Prosedür Form Denetim Yönergesi (IIA-S1110-01) Dil"
+    }
+  ],
+  "full_text": "Süreç Sahibi: Array Süreç Sorumluları: Süreç Girdisi: İlgili Tedarikçi Süreç Çıktısı İlgili Müşteri Yönerge Prosedür Form Denetim Yönergesi (IIA-S1110-01) Dil"
 }
