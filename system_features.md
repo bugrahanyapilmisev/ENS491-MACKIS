@@ -30,9 +30,20 @@ Instead of flat text, documents are parsed hierarchically:
 
 ## 2. Knowledge Graph Architecture (`creating_kg/`)
 
-The system uses a **Hybrid Knowledge Graph** to ground answers in verified facts.
+The system uses a **Hybrid Knowledge Graph** that combines two distinct data structures to maximize coverage:
 
-*   **Extraction**: An LLM extracts `(Entity) -> [Relation] -> (Entity)` triples.
+### 2.1. Dual Data Structure
+1.  **KG Triples (Entity-Relation-Entity)**: 
+    *   *Structure*: `(Node A) -> [Relation] -> (Node B)`
+    *   *Example*: `(Student) -> [must_consult] -> (Advisor)` or `(Internship) -> [requires] -> (Insurance)`
+    *   *Purpose*: Captures the *logic* and *connections* between university concepts.
+2.  **KG Facts (Topic-Attribute-Value)**:
+    *   *Structure*: `(Topic) -> {Attribute: Value}`
+    *   *Example*: `(Erasmus_Internship) -> {min_gpa: 2.50, duration: 2 months}`
+    *   *Purpose*: Captures *concrete values* and *parameters* that are often lost in pure vector search. **This allows the system to answer "What is the minimum GPA?" with 100% precision.**
+
+### 2.2. Validation Pipeline
+*   **Extraction**: An LLM extracts both formats simultaneously.
 *   **Validation Layer** (`validate_kg_facts.py`):
     *   **LLM Validator**: A specialized prompt critiques every extracted fact. It rejects "dates" misinterpreted as "durations" or "placeholders" extracted as "values".
 *   **Pattern-Based Validation** (`rebuild_kg_index_pattern.py`): Rebuilds the embedding index only from facts that pass strict regex validation rules.
@@ -85,7 +96,7 @@ The heart of the system is a 4-Stage "Recall-Rerank-Synthesize" pipeline.
 *   **Tag Boosting**: Chunks with metadata tags matching the query topic get a multiplier boost.
 
 ### Stage 4: Generation
-*   **Context Assembly**: Combines top text chunks + **Verified KG Facts**.
+*   **Context Assembly**: Combines top text chunks + **Verified KG Facts** + **Relevant KG Triples**.
 *   **Citation**: The prompt enforces citing the `Source Path` for every claim.
 *   **Hallucination Check** (`verify_answer_numbers`): A strict regex-based safety check ensures any number/date in the final answer actually exists in the context.
 
@@ -114,7 +125,7 @@ The heart of the system is a 4-Stage "Recall-Rerank-Synthesize" pipeline.
 | **Parsing** | BeautifulSoup, pypdf, LibreOffice | `preprocess_docs.py` |
 | **Embeddings** | BAAI/bge-m3 | `build_chroma_store.py` |
 | **Vector DB** | ChromaDB & pgvector | `rag_core.py`, `models.py` |
-| **Graph** | Validated Hybrid KG | `creating_kg/` |
+| **Graph** | Validated Hybrid KG (Triples + Facts) | `creating_kg/` |
 | **Reranking** | Cross-Encoder (bge-reranker-v2-m3) | `rag_core.py` |
 | **Validation** | Regex & LLM Critics | `validate_kg_facts.py`, `rag_core.py` |
 | **Testing** | Golden Dataset Suite | `test_rag_detailed.py` |
