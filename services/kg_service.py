@@ -8,6 +8,7 @@ Key changes from original:
 2. Uses embedding similarity to match queries to topics
 3. Format facts for RAG context without domain-specific assumptions
 4. Works for any domain automatically
+5. Uses centralized configuration from services/config/settings.py
 """
 
 import os
@@ -25,19 +26,42 @@ load_dotenv()
 
 # =================== CONFIG ===================
 
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-EMBED_MODEL = os.getenv("EMBED_MODEL", "bge-m3")
+# Import centralized configuration
+from services.config.settings import RAGConfig
 
-PREPROCESSING_DIR = os.getenv("PREPROCESSING_PATH") or os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "preprocessing"
-)
+# Load configuration
+_config = RAGConfig.from_env()
 
-KG_OUTPUT_DIR = os.getenv("KG_OUTPUT_DIR") or os.path.join(PREPROCESSING_DIR, "knowledge_graph")
-# Use validated files (cleaned by validate_kg_facts.py)
-KG_FACTS_PATH = os.path.join(KG_OUTPUT_DIR, "kg_facts_cleaned.json")
-KG_TRIPLES_PATH = os.path.join(KG_OUTPUT_DIR, "kg_triples_cleaned.json")
-KG_INDEX_PATH = os.path.join(KG_OUTPUT_DIR, "kg_index_cleaned.pkl")
+OLLAMA_HOST = _config.ollama.host
+EMBED_MODEL = _config.ollama.embed_model
+
+# KG paths from config based on active source
+KG_OUTPUT_DIR = _config.kg.kg_output_dir
+
+def _get_kg_paths() -> Tuple[str, str, str]:
+    """Get the KG file paths based on active source configuration."""
+    source = _config.kg.active_source.lower()
+
+    if source == "llm":
+        return (
+            _config.kg.kg_facts_llm_validated,
+            _config.kg.kg_triples_llm_validated,
+            _config.kg.kg_index_llm_validated,
+        )
+    elif source == "pattern":
+        return (
+            _config.kg.kg_facts_pattern_validated,
+            _config.kg.kg_triples_pattern_validated,
+            _config.kg.kg_index_pattern_validated,
+        )
+    else:  # raw
+        return (
+            _config.kg.kg_facts,
+            _config.kg.kg_triples,
+            os.path.join(KG_OUTPUT_DIR, "kg_index.pkl"),  # No raw index, fallback
+        )
+
+KG_FACTS_PATH, KG_TRIPLES_PATH, KG_INDEX_PATH = _get_kg_paths()
 
 # Service state - Facts (Topic -> Fact)
 _kg_facts: Dict[str, List[Dict]] = {}

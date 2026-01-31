@@ -46,7 +46,7 @@ CREATING_DB_DIR = os.path.dirname(os.path.abspath(__file__))
 CHROMA_DIR_V2 = os.getenv("CHROMA_DIR_V2") or os.path.join(CREATING_DB_DIR, "chroma_db_v2")
 CHECKPOINT_DIR_V2 = os.getenv("CHECKPOINT_DIR_V2") or os.path.join(CREATING_DB_DIR, "checkpoints_v2")
 
-COLL_NAME = os.getenv("COLL_NAME_V2", "mysu_v2_bge_m3")
+COLL_NAME = os.getenv("CHROMA_COLLECTION_NAME_V2", "mysu_v2_bge_m3")
 
 # Checkpoint file for resume
 TAG_UPDATE_CHECKPOINT = os.path.join(CHECKPOINT_DIR_V2, "tag_update_checkpoint.json")
