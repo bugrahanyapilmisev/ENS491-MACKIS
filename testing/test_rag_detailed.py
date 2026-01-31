@@ -286,17 +286,19 @@ def run_detailed_test():
     print(f"📊 Total Questions: {len(TEST_QUESTIONS)}")
     print("=" * 80)
     
-    # Load RAG
+    # Load RAG Pipeline (new modular architecture)
     try:
-        from services.rag_core import get_chroma_collection, answer_with_rag, CHAT_MODEL
-        print(CHAT_MODEL)
+        from services.pipeline.rag_pipeline import RAGPipeline
+        from services.config.settings import RAGConfig
+        config = RAGConfig.from_env()
+        pipeline = RAGPipeline(config)
+        print(f"🤖 Using model: {config.ollama.chat_model}")
     except ImportError as e:
         print(f"❌ Import error: {e}")
         return
-    
-    coll = get_chroma_collection()
-    print(f"✅ ChromaDB connected: {coll.count()} chunks")
-    print(f"🤖 Using model: {CHAT_MODEL}\n")
+
+    print(f"✅ ChromaDB connected: {pipeline.vector_store.count} chunks")
+    print(f"✅ BM25 loaded: {pipeline.bm25_service.document_count} documents\n")
     
     results = []
     category_scores = {}
@@ -312,7 +314,7 @@ def run_detailed_test():
         
         start = time.time()
         try:
-            answer = answer_with_rag(test['question'], coll, history=[])
+            answer = pipeline.answer(test['question'], history=[])
             latency = time.time() - start
             
             print(f"\n🤖 RAG ANSWER ({latency:.1f}s):")
@@ -410,17 +412,19 @@ def run_detailed_test():
 
 def run_single_question(question: str):
     """Run a single question and show detailed output."""
-    
+
     print("=" * 80)
     print(f"❓ Question: {question}")
     print("=" * 80)
-    
-    from services.rag_core import get_chroma_collection, answer_with_rag
-    
-    coll = get_chroma_collection()
-    
+
+    from services.pipeline.rag_pipeline import RAGPipeline
+    from services.config.settings import RAGConfig
+
+    config = RAGConfig.from_env()
+    pipeline = RAGPipeline(config)
+
     start = time.time()
-    answer = answer_with_rag(question, coll, history=[])
+    answer = pipeline.answer(question, history=[])
     latency = time.time() - start
     
     print(f"\n🤖 ANSWER ({latency:.1f}s):")

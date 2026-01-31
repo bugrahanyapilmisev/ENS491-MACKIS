@@ -9,10 +9,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ================= CONFIG =================
-
-# Directory setup relative to this script
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-CHROMA_DIR_V2 =  os.path.join(CURRENT_DIR, "chroma_db_v3")
+# Directory setup relative to this script
+CHROMA_DIR_V2 =  os.getenv("CHROMA_DIR_V2", "chroma_db_v3")
 CHECKPOINT_DIR_V2 = os.getenv("CHECKPOINT_DIR_V2") or os.path.join(CURRENT_DIR, "checkpoints_v2")
 
 VECTORS_PARQUET = os.path.join(CHECKPOINT_DIR_V2, "vectors_v2.parquet")

@@ -1,89 +1,103 @@
 # backend/services/rag_service.py
 """
-RAG Service - Uses improved rag_core with hybrid search
+RAG Service - Uses modular RAG pipeline with hybrid search
 
 Features:
 - BM25 + Vector hybrid search
 - Query expansion and HyDE
 - Cross-encoder reranking
 - Multi-query retrieval
+- Knowledge graph augmentation
+
+This service wraps the modular RAGPipeline for use in FastAPI endpoints.
 """
 
-import os
-import sys
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
-# Add services directory to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-from rag_core import (
-    get_chroma_collection,
-    load_bm25_index,
-    answer_with_rag,
-    CHROMA_DIR,
-    BM25_INDEX_PATH,
-)
+from services.pipeline.rag_pipeline import RAGPipeline, get_pipeline
+from services.config.settings import RAGConfig
 
 
 class RAGService:
-    def __init__(self):
-        print("🚀 RAG Engine (Hybrid Search + Reranking) Loading...")
-        
-        # 1. Check directories
-        if not os.path.exists(CHROMA_DIR):
-            print(f"⚠️ WARNING: ChromaDB folder not found: {CHROMA_DIR}")
-            print("Please run build_chroma_store.py first.")
-        
-        # 2. ChromaDB Connection
-        try:
-            self.coll = get_chroma_collection()
-            count = self.coll.count()
-            print(f"✅ ChromaDB Connected: {count} chunks indexed")
-        except Exception as e:
-            print(f"❌ ChromaDB Error: {e}")
-            self.coll = None
+    """
+    RAG Service wrapper for FastAPI integration.
 
-        # 3. Load BM25 Index
+    Provides a simple interface to the modular RAG pipeline.
+    """
+
+    def __init__(self, config: Optional[RAGConfig] = None):
+        """
+        Initialize RAG Service.
+
+        Args:
+            config: Optional configuration. If None, loads from environment.
+        """
+        print("🚀 RAG Engine (Modular Architecture) Loading...")
+
         try:
-            bm25, chunk_ids = load_bm25_index()
-            if bm25:
-                print(f"✅ BM25 Index Loaded: {len(chunk_ids)} documents")
+            # Initialize the modular pipeline
+            self.pipeline = RAGPipeline(config)
+
+            # Get collection reference for backward compatibility
+            self.coll = self.pipeline.get_chroma_collection()
+
+            print(f"✅ ChromaDB Connected: {self.pipeline.vector_store.count} chunks indexed")
+
+            if self.pipeline.bm25_service.is_loaded:
+                print(f"✅ BM25 Index Loaded: {self.pipeline.bm25_service.document_count} documents")
             else:
                 print("⚠️ BM25 index not available (will use vector-only search)")
-        except Exception as e:
-            print(f"⚠️ BM25 loading warning: {e}")
-        
-        print("✅ RAG Engine Ready!")
 
-    def query(self, user_query: str, history: List[Dict] = []) -> Tuple[str, List[Dict]]:
+            # Report feature status
+            stats = self.pipeline.get_stats()
+            print(f"✅ Features: HyDE={stats['features']['use_hyde']}, "
+                  f"QueryExpansion={stats['features']['use_query_expansion']}, "
+                  f"MultiQuery={stats['features']['use_multi_query']}")
+
+            if stats.get('kg_available'):
+                print("✅ Knowledge Graph: Available")
+
+            print("✅ RAG Engine Ready!")
+
+        except Exception as e:
+            print(f"❌ RAG Engine Initialization Error: {e}")
+            import traceback
+            traceback.print_exc()
+            self.pipeline = None
+            self.coll = None
+
+    def query(
+        self,
+        user_query: str,
+        history: Optional[List[Dict]] = None
+    ) -> Tuple[str, List[Dict]]:
         """
         Process user query through the RAG pipeline.
-        
+
         Args:
             user_query: The user's question
             history: Previous conversation messages
-            
+
         Returns:
             Tuple of (answer_text, sources)
         """
+        history = history or []
         print(f"🔍 Processing Query: {user_query[:100]}...")
-        
-        if not self.coll:
+
+        if not self.pipeline:
             return "Database connection unavailable.", []
 
         try:
-            # Call the  RAG pipeline
-            answer_text = answer_with_rag(
+            # Call the modular RAG pipeline
+            answer_text = self.pipeline.answer(
                 query=user_query,
-                coll=self.coll,
                 history=history,
-                use_hybrid=True  # Enable hybrid search
             )
-            
-            # TODO: Extract sources from the answer if needed
+
+            # TODO: Extract sources from the pipeline if needed
             # For now, return empty sources list
             sources = []
-            
+
             return answer_text, sources
 
         except Exception as e:
@@ -92,43 +106,67 @@ class RAGService:
             traceback.print_exc()
             return "Sorry, a technical error occurred while processing your question.", []
 
-    def search_only(self, user_query: str, top_k: int = 5) -> List[Dict]:
+    def search_only(
+        self,
+        user_query: str,
+        top_k: int = 5,
+        language: Optional[str] = None
+    ) -> List[Dict]:
         """
         Perform search without generating an answer.
         Useful for debugging and testing.
+
+        Args:
+            user_query: Search query
+            top_k: Number of results to return
+            language: Optional language filter
+
+        Returns:
+            List of search results with metadata
         """
-        from rag_core import hybrid_search, cross_encoder_rerank
-        
-        if not self.coll:
+        if not self.pipeline:
             return []
-        
+
         try:
-            # Get candidates via hybrid search
-            candidates = hybrid_search(user_query, self.coll)
-            
-            # Rerank
-            reranked = cross_encoder_rerank(user_query, candidates)
-            
-            # Return top results
-            results = []
-            for c in reranked[:top_k]:
+            # Use pipeline's search_only method
+            results = self.pipeline.search_only(user_query, top_k, language)
+
+            # Format results
+            formatted = []
+            for c in results:
                 meta = c.get("meta", {})
-                results.append({
+                formatted.append({
+                    "chunk_id": c.get("chunk_id", ""),
                     "title": meta.get("title", ""),
+                    "section": meta.get("section_header", ""),
                     "source_path": meta.get("source_path", ""),
                     "text_preview": c.get("text", "")[:200],
-                    "score": c.get("final_score", 0),
+                    "score": c.get("hybrid_score", c.get("score", 0)),
                 })
-            
-            return results
+
+            return formatted
+
         except Exception as e:
             print(f"Search error: {e}")
             return []
 
+    def get_stats(self) -> Dict:
+        """
+        Get service statistics.
+
+        Returns:
+            Dict with pipeline statistics
+        """
+        if not self.pipeline:
+            return {"status": "unavailable"}
+
+        return self.pipeline.get_stats()
+
+    @property
+    def is_available(self) -> bool:
+        """Check if service is available."""
+        return self.pipeline is not None
+
 
 # Global Instance - Can be imported by FastAPI app
 rag_engine = RAGService()
-
-
-# For backward compatibility, also export as rag_engine
-rag_engine = rag_engine
