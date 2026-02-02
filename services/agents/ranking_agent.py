@@ -41,6 +41,18 @@ class RankingAgent:
         self.config = config
         self._reranker: Optional[CrossEncoder] = None
 
+    def _truncate_text(self, text: str) -> str:
+        """Truncate text to max characters to avoid OOM in cross-encoder."""
+        max_chars = self.config.reranking.max_text_length
+        if len(text) <= max_chars:
+            return text
+        # Truncate at word boundary
+        truncated = text[:max_chars]
+        last_space = truncated.rfind(' ')
+        if last_space > max_chars * 0.8:
+            truncated = truncated[:last_space]
+        return truncated + "..."
+
     def _get_reranker(self) -> CrossEncoder:
         """Lazy-load cross-encoder model."""
         if self._reranker is None:
@@ -104,6 +116,7 @@ class RankingAgent:
             Reranked candidates with updated scores.
         """
         max_candidates = self.config.reranking.max_candidates
+        batch_size = self.config.reranking.batch_size
         weight_ce = self.config.reranking.weight
 
         # Take top candidates for reranking
@@ -112,10 +125,20 @@ class RankingAgent:
         if not subset:
             return []
 
-        # Get cross-encoder scores
+        # Get cross-encoder scores in batches to avoid OOM
         model = self._get_reranker()
-        pairs = [(query, c["text"]) for c in subset]
-        ce_scores = model.predict(pairs)
+
+        # Truncate text to avoid memory issues (cross-encoder has ~512 token limit)
+        pairs = [(query, self._truncate_text(c["text"])) for c in subset]
+
+        # Batch prediction to avoid memory issues
+        ce_scores_list = []
+        for i in range(0, len(pairs), batch_size):
+            batch_pairs = pairs[i:i + batch_size]
+            batch_scores = model.predict(batch_pairs)
+            ce_scores_list.extend(batch_scores)
+
+        ce_scores = np.array(ce_scores_list)
 
         # Add scores to candidates
         for i, c in enumerate(subset):

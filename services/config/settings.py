@@ -48,7 +48,9 @@ class RetrievalConfig:
 class RerankingConfig:
     """Cross-encoder reranking parameters."""
     model_name: str = "BAAI/bge-reranker-v2-m3"
-    max_candidates: int = 32
+    max_candidates: int = 24  # Reduced from 32
+    batch_size: int = 4       # Reduced from 8
+    max_text_length: int = 1500  # Truncate text for cross-encoder
     weight: float = 0.6
     score_threshold: float = 0.65
     tag_boost_positive: float = 0.20
@@ -179,7 +181,9 @@ class RAGConfig:
             ),
             reranking=RerankingConfig(
                 model_name=os.getenv("RERANKER_MODEL_NAME", "BAAI/bge-reranker-v2-m3"),
-                max_candidates=int(os.getenv("CROSS_MAX_CANDIDATES", "32")),
+                max_candidates=int(os.getenv("CROSS_MAX_CANDIDATES", "24")),
+                batch_size=int(os.getenv("RERANKER_BATCH_SIZE", "4")),
+                max_text_length=int(os.getenv("RERANKER_MAX_TEXT_LENGTH", "1500")),
                 weight=float(os.getenv("CROSS_WEIGHT", "0.6")),
                 score_threshold=float(os.getenv("CE_SCORE_THRESHOLD", "0.65")),
                 tag_boost_positive=float(os.getenv("TAG_BOOST_POSITIVE", "0.20")),
