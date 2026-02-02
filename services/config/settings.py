@@ -18,7 +18,7 @@ class OllamaConfig:
     host: str = "http://localhost:11434"
     embed_model: str = "bge-m3"
     embed_dim: int = 1024
-    chat_model: str = "qwen2.5:7b"
+    chat_model: str = "llama3.1:latest"
     timeout: int = 120
     chat_timeout: int = 300
     max_retries: int = 3
