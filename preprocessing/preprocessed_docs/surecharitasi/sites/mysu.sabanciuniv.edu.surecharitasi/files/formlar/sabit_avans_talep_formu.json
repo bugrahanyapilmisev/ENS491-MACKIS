@@ -3,5 +3,15 @@
   "title": "sabit_avans_talep_formu",
   "lang": "tr",
   "html_lang": "",
-  "text": "*Sabit avanslar her akademik yıl sonunda iade edilir. Tekrar talep edilmesi halinde yeni akademik yıl başlangıcında sabit avansların ödemesi gerçekleşir."
+  "doc_type": "form",
+  "metadata": {},
+  "summary": "Belge: sabit_avans_talep_formu",
+  "sections": [
+    {
+      "header": "Introduction",
+      "level": 0,
+      "text": "*Sabit avanslar her akademik yıl sonunda iade edilir. Tekrar talep edilmesi halinde yeni akademik yıl başlangıcında sabit avansların ödemesi gerçekleşir."
+    }
+  ],
+  "full_text": "*Sabit avanslar her akademik yıl sonunda iade edilir. Tekrar talep edilmesi halinde yeni akademik yıl başlangıcında sabit avansların ödemesi gerçekleşir."
 }
