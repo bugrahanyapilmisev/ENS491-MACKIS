@@ -1,18 +1,18 @@
-"""test_rag_detailed.py - Detailed RAG Test with Full Answers"""
+"""test_rag_detailed.py - Multi-Metric RAG Evaluation
 
-"""
-test_rag_detailed.py - Detailed RAG Test with Full Answers
-
-Shows complete answers for manual evaluation.
+Integrates the Evaluator class for comprehensive quality assessment.
 Run: python test_rag_detailed.py
 All terminal output is also recorded to rag_test_output.txt
-"""
 
+Flags:
+  --eval         Use multi-metric Evaluator (default: True)
+  --no-eval      Legacy keyword-coverage-only mode
+  -q QUESTION    Ask a single question interactively
+"""
 
 import os
 import sys
 import time
-
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -70,8 +70,8 @@ TEST_QUESTIONS = [
         "id": "Q4",
         "category": "Erasmus",
         "question": "Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?",
-        "expected_answer": "Hibe miktarı gidilen ülkeye göre belirlenir ve aylık olarak ödenir.",
-        "source": "Erasmus Hibe Sözleşmesi"
+        "expected_answer": "Erasmus+ hibesi Ulusal Ajans (UA) tarafından her akademik yıl belirlenen miktarlar üzerinden hesaplanır. Hibe ödemesi iki taksit olarak yapılır. Öğrenciler hibe almadan önce üniversiteyle bir Öğrenci Sözleşmesi imzalar. Nihai ödeme öğrencinin karşı kurumda kaldığı gün sayısına göre yapılır.",
+        "source": "IIRO-C420-01 Değişim Programları Kapsamında Giden Öğrenci Yönergesi"
     },
     
     # =================== LIBRARY ===================
@@ -79,14 +79,14 @@ TEST_QUESTIONS = [
         "id": "Q5",
         "category": "Library",
         "question": "Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?",
-        "expected_answer": "Paket 2 kullanıcıları 30 gün süre ile 10 adet kitap ödünç alabilir.",
+        "expected_answer": "Öğrenciler (lisans, lisansüstü, değişim) 60 gün süre ile 60 adet kitap ödünç alabilir. Ayrıca 5 multimedya kaynağı 7 gün, 2 ciltli süreli yayın 7 gün ve 5 popüler dergi 3 gün süreliğine ödünç alınabilir.",
         "source": "IIC-C840-02 Ödünç Verme ve Yararlanma Yönergesi"
     },
     {
         "id": "Q6",
         "category": "Library",
         "question": "Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?",
-        "expected_answer": "Diğer kütüphanelerden kitap ve makale temin edilebilir.",
+        "expected_answer": "Kütüphanelerarası ödünç alma (ILL) hizmeti ile Bilgi Merkezi koleksiyonunda bulunmayan kitap ve makaleler diğer kütüphanelerden temin edilebilir. Başvuru Bilgi Merkezi üzerinden yapılır.",
         "source": "IIC-C820-01 Kütüphanelerarası Ödünç Yönergesi"
     },
     
@@ -102,15 +102,15 @@ TEST_QUESTIONS = [
         "id": "Q8",
         "category": "Discipline",
         "question": "Disiplin soruşturması ne kadar sürede sonuçlanmalı?",
-        "expected_answer": "Soruşturmanın tamamlandığı günden itibaren en geç 10 gün içinde karar verilmelidir.",
+        "expected_answer": "Disiplin soruşturmasında karar en geç 10 gün içinde bildirilmelidir. Disiplin cezası gerektiren fiillerin işlendiği tarihten itibaren 2 yıl geçmesi halinde zamanaşımı oluşur.",
         "source": "PSR-C210-0101"
     },
     {
         "id": "Q9",
         "category": "Discipline",
         "question": "Kopya çekmek hangi disiplin cezasını gerektirir?",
-        "expected_answer": "Sınavlarda kopya çekmek disiplin suçudur.",
-        "source": "ISR-C210-01"
+        "expected_answer": "Sınavlarda kopyaya teşebbüs etmek kınama cezası gerektirir. Kopya çekmek veya çektirmek bir yarıyıl uzaklaştırma cezası gerektirir. Tehditle kopya çekmek, kopya çeken öğrencilerin sınav salonundan çıkarılmasına engel olmak veya başkasının yerine sınava girmek iki yarıyıl uzaklaştırma cezası gerektirir.",
+        "source": "ISR-C210-01 Öğrenci Disiplin Yönergesi Madde 3"
     },
     
     # =================== SCHOLARSHIPS & FINANCIAL ===================
@@ -125,7 +125,7 @@ TEST_QUESTIONS = [
         "id": "Q11",
         "category": "Scholarship",
         "question": "Burs devam şartları nelerdir?",
-        "expected_answer": "Akademik başarı ve disiplin durumu değerlendirilir.",
+        "expected_answer": "Burs devam şartları bursun türüne göre değişir. Üstün Akademik Başarı Bursu için GNO en az 3.00, ilk yıl 34 SÜ / sonraki yıllar 30 SÜ kredi gerekir. Akademik Başarı ve İhtiyaç Bursu için GNO en az 2.50 ve 34 SÜ kredi gerekir. İlk giriş bursları akademik başarı durumuna bakılmaksızın normal öğrenim süresince devam eder. Disiplin cezalarında: kınama ve kısa süreli uzaklaştırmada burs devam eder, 1-2 yarıyıl uzaklaştırmada o dönem kesilir ama sonra yeniden bağlanır, çıkarmada tamamen kesilir.",
         "source": "ISR-C160-01 Burs ve Mali Destek Yönergesi"
     },
     
@@ -148,8 +148,8 @@ TEST_QUESTIONS = [
         "id": "Q14",
         "category": "Graduate",
         "question": "Tez savunması için jüri kaç kişiden oluşur?",
-        "expected_answer": "Tez savunma jürisi en az 3 öğretim üyesinden oluşur.",
-        "source": "Lisansüstü Yönetmeliği"
+        "expected_answer": "Yüksek lisans tez savunma jürisi, biri tez danışmanı ve en az biri üniversite dışından olmak üzere üç veya beş öğretim üyesinden oluşur. Doktora tez savunma jürisi, danışman dahil beş öğretim üyesinden oluşur ve en az ikisi başka bir yükseköğretim kurumunun öğretim üyesi olmalıdır.",
+        "source": "Lisansüstü Yönetmeliği Madde 33 ve Madde 38"
     },
     
     # =================== UNDERGRADUATE ===================
@@ -157,21 +157,21 @@ TEST_QUESTIONS = [
         "id": "Q15",
         "category": "Undergraduate",
         "question": "Yatay geçiş başvurusu için GNO şartı nedir?",
-        "expected_answer": "Yatay geçiş için minimum GNO şartı aranır.",
-        "source": "Lisans Programlarına Yatay Geçiş"
+        "expected_answer": "Yatay geçiş başvurusu için başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca ÖSYM puanının taban puanına eşit veya yüksek olması şartı aranır.",
+        "source": "Lisans Yönetmeliği Madde 9"
     },
     {
         "id": "Q16",
         "category": "Undergraduate",
         "question": "Çift anadal programına nasıl başvurulur?",
-        "expected_answer": "Çift anadal programı için belirli GNO şartı ve başvuru süreci vardır.",
-        "source": "Diploma Programı Yönergesi"
+        "expected_answer": "Çift anadal programına başvuru için GNO en az 3.20 olmalı ve öğrenci sınıfının ilk %20'sinde yer almalıdır. Tüm dersleri geçmiş olmalıdır. Başvuru en erken 2. dönem, en geç 4. dönemde yapılabilir. En fazla bir diploma programına daha kayıt yaptırılabilir.",
+        "source": "ISR-C290-02 Çift Anadal Yönergesi ve Lisans Yönetmeliği Madde 34"
     },
     {
         "id": "Q17",
         "category": "Undergraduate",
         "question": "Ders ekleme-bırakma süresi ne kadar?",
-        "expected_answer": "Her yarıyıl başında belirlenen süre içinde ders ekleme-bırakma yapılabilir.",
+        "expected_answer": "Ders ekleme-bırakma işlemi, sonbahar ve ilkbahar dönemlerinde derslerin başladığı haftayı takip eden ikinci hafta içinde, akademik takvimde belirtilen tarihlerde yapılır.",
         "source": "Akademik Takvim"
     },
     
@@ -187,8 +187,8 @@ TEST_QUESTIONS = [
         "id": "Q19",
         "category": "Registration",
         "question": "Kayıt dondurma şartları nelerdir?",
-        "expected_answer": "Geçerli mazeretler ile kayıt dondurulabilir.",
-        "source": "Kayıt Yönergesi"
+        "expected_answer": "Dönem izni (kayıt dondurma); sağlık, maddi, aile, kişisel, akademik ve beklenmedik zorunlu olaylar gibi nedenlerle, ayrıca askerlik, gözaltı, tutukluluk veya mahkûmiyet durumlarında verilebilir. İzin gerekçesine ilişkin belgeler eklenerek dilekçe ile derslerin başlamasını takip eden 4. haftanın son iş gününe kadar ilgili fakülte dekanlığına başvurulur. Bir defada en çok 2 dönem, toplam 4 dönem izin verilebilir.",
+        "source": "Lisans Yönetmeliği Madde 39-41, ISR-C210-02"
     },
     
     # =================== ENGLISH QUESTIONS ===================
@@ -203,7 +203,7 @@ TEST_QUESTIONS = [
         "id": "Q21",
         "category": "English",
         "question": "How many books can I borrow from the library?",
-        "expected_answer": "Package 2 users can borrow up to 10 books for 30 days.",
+        "expected_answer": "Undergraduate, graduate, and exchange students can borrow 60 books for 60 days, 5 multimedia items for 7 days, and 2 bound periodicals for 7 days.",
         "source": "Library Lending Policy"
     },
     {
@@ -219,15 +219,15 @@ TEST_QUESTIONS = [
         "id": "Q23",
         "category": "Numeric",
         "question": "Lisans mezuniyeti için kaç kredi gerekiyor?",
-        "expected_answer": "Lisans programı için belirli sayıda kredi tamamlanmalıdır.",
-        "source": "Lisans Yönetmeliği"
+        "expected_answer": "Lisans mezuniyeti için kayıtlı olunan diploma programının gerektirdiği tüm mezuniyet yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
+        "source": "Lisans Yönetmeliği Madde 35"
     },
     {
         "id": "Q24",
         "category": "Numeric",
         "question": "Bir dersin kaç kez tekrar edilebilir?",
-        "expected_answer": "Başarısız olunan dersler tekrar alınabilir.",
-        "source": "Eğitim-Öğretim Yönetmeliği"
+        "expected_answer": "Geçer not alınan dersler, notun alındığı dönemi izleyen en çok 3 dönem içinde tekrar edilebilir (izinli dönemler ve yaz dönemleri hariç). Bu bir zaman sınırıdır, tekrar sayısı sınırı değildir. Başarısız olunan zorunlu dersler ise mezuniyete kadar tekrar edilerek başarılmalıdır.",
+        "source": "Lisans Yönetmeliği Madde 30"
     },
     
     # =================== PROCEDURAL QUESTIONS ===================
@@ -242,15 +242,15 @@ TEST_QUESTIONS = [
         "id": "Q26",
         "category": "Procedure",
         "question": "Transkript nasıl alınır?",
-        "expected_answer": "Transkript ÖBS üzerinden veya Öğrenci İşleri'nden alınabilir.",
-        "source": "Öğrenci İşleri Prosedürleri"
+        "expected_answer": "Transkript, MySU'daki online belge talep formu doldurularak Öğrenci Kaynakları'ndan (ÖK) talep edilir. ÖK raporlama yazılımı ile hazırlar. Basılı kopya ücretlidir, e-imzalı transkript ücretsizdir. Transkriptte öğrencinin tüm dersleri, kodları, SÜ ve AKTS kredileri, notları, DNO ve GNO bilgileri yer alır.",
+        "source": "PSR-C230-0103 Transkript Düzenleme Prosedürü"
     },
     {
         "id": "Q27",
         "category": "Procedure",
         "question": "Öğrenci belgesi nereden alınır?",
-        "expected_answer": "Öğrenci belgesi ÖBS üzerinden alınabilir.",
-        "source": "Öğrenci İşleri"
+        "expected_answer": "Öğrenci belgesi, Öğrenci Kaynakları (ÖK) birimi tarafından hazırlanır. MySU'daki online Belge Talep Formu doldurularak başvuru yapılır. Belge 2 iş günü içinde hazırlanır ve en fazla 2 hafta muhafaza edilir; bu sürede teslim alınmazsa imha edilir.",
+        "source": "PSR-C210-0402 Öğrenci Belgesi Düzenleme Prosedürü"
     },
     
     # =================== EDGE CASES ===================
@@ -258,14 +258,14 @@ TEST_QUESTIONS = [
         "id": "Q28",
         "category": "Edge",
         "question": "Cinsel taciz şikayeti nasıl yapılır?",
-        "expected_answer": "Şikayet ilgili birime yazılı olarak yapılır.",
+        "expected_answer": "Cinsel taciz şikayeti Cinsel Tacize Karşı Önlem ve Destek Komitesi'ne telefon, e-posta, yüz yüze görüşme veya yazılı olarak yapılabilir. Başvuranın ispatla yükümlülüğü yoktur.",
         "source": "Cinsel Taciz Yönergesi"
     },
     {
         "id": "Q29",
         "category": "Edge",
         "question": "İtiraz süresi ne kadar?",
-        "expected_answer": "Kararlara itiraz belirli süre içinde yapılmalıdır.",
+        "expected_answer": "Disiplin kararlarına itiraz süresi, cezanın tebliğ tarihinden itibaren 15 gündür. İdari yargı yoluna başvuru süresi 60 gündür.",
         "source": "Disiplin Prosedürü"
     },
     {
@@ -278,140 +278,229 @@ TEST_QUESTIONS = [
 ]
 
 
-def run_detailed_test():
-    """Run tests and show full answers for evaluation."""
-    
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper: wraps text at width chars with a leading indent
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _wrap(text: str, width: int = 74, indent: str = "   ") -> str:
+    """Word-wrap *text* and prefix each line with *indent*."""
+    import textwrap
+    return "\n".join(
+        indent + line
+        for line in textwrap.wrap(text, width=width) or [""]
+    )
+
+
+def _build_context_from_chunks(chunks):
+    """Convert a list of chunk dicts (from search_only) to a context string."""
+    parts = []
+    for i, c in enumerate(chunks, 1):
+        meta = c.get("meta", {}) or {}
+        title   = meta.get("title", "")
+        section = meta.get("section_header", "")
+        text    = c.get("text", "")
+        header  = f"[{i}] {title}" + (f" | {section}" if section else "")
+        parts.append(header + "\n" + text)
+    return "\n\n-----\n\n".join(parts)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MAIN TEST RUNNER  (multi-metric)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_detailed_test(use_evaluator: bool = True):
+    """
+    Run all TEST_QUESTIONS through the RAG pipeline.
+
+    When *use_evaluator* is True (default), the Evaluator class is used to
+    compute Answer Similarity, Faithfulness, Relevance, Factual Accuracy, and
+    a composite score.  Keyword coverage is also computed for side-by-side
+    comparison with the legacy metric.
+
+    When *use_evaluator* is False, only legacy keyword coverage is computed
+    (original behaviour).
+    """
+
     print("=" * 80)
-    print("🔬 RAG DETAILED TEST - Full Answers for Evaluation")
+    mode_label = "MULTI-METRIC" if use_evaluator else "LEGACY KEYWORD-COVERAGE"
+    print(f"🔬 RAG EVALUATION — {mode_label} MODE")
     print(f"📊 Total Questions: {len(TEST_QUESTIONS)}")
     print("=" * 80)
-    
-    # Load RAG Pipeline (new modular architecture)
+
+    # ── Load RAG Pipeline ────────────────────────────────────────────────────
     try:
         from services.pipeline.rag_pipeline import RAGPipeline
         from services.config.settings import RAGConfig
         config = RAGConfig.from_env()
         pipeline = RAGPipeline(config)
-        print(f"🤖 Using model: {config.ollama.chat_model}")
+        print(f"🤖 LLM model  : {config.ollama.chat_model}")
+        print(f"🔢 Embed model: {config.ollama.embed_model}")
     except ImportError as e:
         print(f"❌ Import error: {e}")
         return
 
-    print(f"✅ ChromaDB connected: {pipeline.vector_store.count} chunks")
-    print(f"✅ BM25 loaded: {pipeline.bm25_service.document_count} documents\n")
-    
-    results = []
-    category_scores = {}
-    
-    for i, test in enumerate(TEST_QUESTIONS, 1):
-        category = test.get('category', 'Other')
-        print("=" * 80)
-        print(f"📝 TEST {i}/{len(TEST_QUESTIONS)}: {test['id']} [{category}]")
-        print("=" * 80)
-        print(f"\n❓ QUESTION:\n   {test['question']}\n")
-        print(f"📚 EXPECTED SOURCE: {test['source']}")
-        print(f"\n✅ EXPECTED ANSWER:\n   {test['expected_answer']}\n")
-        
-        start = time.time()
+    print(f"✅ ChromaDB connected : {pipeline.vector_store.count} chunks")
+    print(f"✅ BM25 loaded        : {pipeline.bm25_service.document_count} docs\n")
+
+    # ── Load Evaluator ───────────────────────────────────────────────────────
+    evaluator = None
+    if use_evaluator:
         try:
-            answer = pipeline.answer(test['question'], history=[])
-            latency = time.time() - start
-            
-            print(f"\n🤖 RAG ANSWER ({latency:.1f}s):")
-            print("-" * 60)
-            # Print full answer with word wrap
-            words = answer.split()
-            line = "   "
-            for word in words:
-                if len(line) + len(word) > 75:
-                    print(line)
-                    line = "   " + word
-                else:
-                    line += " " + word if line.strip() else word
-            if line.strip():
-                print(line)
-            print("-" * 60)
-            
-            # Simple evaluation
-            expected_keywords = test['expected_answer'].lower().split()
-            answer_lower = answer.lower()
-            found = sum(1 for kw in expected_keywords if kw in answer_lower)
-            coverage = found / len(expected_keywords) * 100
-            
-            print(f"\n📊 Keyword coverage: {coverage:.0f}%")
-            
-            results.append({
-                "id": test['id'],
-                "category": category,
-                "question": test['question'],
-                "expected": test['expected_answer'],
-                "actual": answer,
-                "latency": latency,
-                "coverage": coverage
-            })
-            
-            # Track category scores
-            if category not in category_scores:
-                category_scores[category] = []
-            category_scores[category].append(coverage)
-            
+            from testing.evaluator import Evaluator
+        except ImportError:
+            try:
+                from evaluator import Evaluator
+            except ImportError:
+                print("⚠️  evaluator.py not found – falling back to legacy mode")
+                use_evaluator = False
+
+        if use_evaluator:
+            evaluator = Evaluator(
+                ollama_host=config.ollama.host,
+                embed_model=config.ollama.embed_model,
+                chat_model=config.ollama.chat_model,
+                pass_threshold=0.70,
+            )
+            print(f"✅ Evaluator ready (ollama_embed={evaluator._ollama_embed_ok}, "
+                  f"ollama_llm={evaluator._ollama_llm_ok})\n")
+
+    # ── Result containers ────────────────────────────────────────────────────
+    eval_results   = []   # EvaluationResult objects (new path)
+    legacy_results = []   # plain dicts             (old path / comparison)
+
+    total_start = time.time()
+
+    for i, test in enumerate(TEST_QUESTIONS, 1):
+        qid      = test["id"]
+        category = test.get("category", "Other")
+        question = test["question"]
+        expected = test["expected_answer"]
+
+        print("=" * 80)
+        print(f"📝 TEST {i}/{len(TEST_QUESTIONS)}: {qid} [{category}]")
+        print("=" * 80)
+        print(f"\n❓ QUESTION:")
+        print(_wrap(question))
+        print(f"\n📚 SOURCE   : {test['source']}")
+        print(f"\n✅ EXPECTED :")
+        print(_wrap(expected))
+
+        # ── Run pipeline ─────────────────────────────────────────────────────
+        t0 = time.time()
+        try:
+            answer  = pipeline.answer(question, history=[])
+            latency = time.time() - t0
         except Exception as e:
-            print(f"\n❌ ERROR: {e}")
-            results.append({
-                "id": test['id'],
-                "category": category,
-                "error": str(e)
-            })
-        
-        print("\n")
-    
-    # Summary
+            latency = time.time() - t0
+            print(f"\n❌ PIPELINE ERROR: {e}")
+            legacy_results.append({"id": qid, "category": category, "error": str(e)})
+            print()
+            continue
+
+        print(f"\n🤖 RAG ANSWER ({latency:.1f}s):")
+        print("-" * 60)
+        print(_wrap(answer, width=74))
+        print("-" * 60)
+
+        # ── Legacy keyword coverage (always computed for comparison) ──────────
+        kws      = expected.lower().split()
+        ans_low  = answer.lower()
+        kw_found = sum(1 for kw in kws if kw in ans_low)
+        kw_cov   = kw_found / len(kws) * 100 if kws else 0
+
+        print(f"\n📊 Keyword coverage (legacy): {kw_cov:.0f}%")
+
+        legacy_entry = {
+            "id": qid,
+            "category": category,
+            "question": question,
+            "expected": expected,
+            "actual": answer,
+            "latency": latency,
+            "coverage": kw_cov,
+        }
+        legacy_results.append(legacy_entry)
+
+        # ── Multi-metric evaluation ───────────────────────────────────────────
+        if evaluator is not None:
+            # Get context chunks for faithfulness scoring
+            try:
+                chunks  = pipeline.search_only(question, top_k=10)
+                context = _build_context_from_chunks(chunks)
+            except Exception:
+                context = ""
+
+            result = evaluator.evaluate(
+                question_id=qid,
+                category=category,
+                question=question,
+                answer=answer,
+                expected=expected,
+                context=context,
+                latency=latency,
+            )
+            eval_results.append(result)
+
+            s = result.scores
+            print(f"\n📐 Multi-metric scores:")
+            print(f"   Answer Similarity : {s.answer_similarity:.3f}")
+            print(f"   Faithfulness      : {s.faithfulness:.3f}")
+            print(f"   Answer Relevance  : {s.answer_relevance:.3f}")
+            print(f"   Factual Accuracy  : {s.factual_accuracy:.3f}")
+            print(f"   ─────────────────────────────────────────")
+            comp_icon = "✅" if s.composite_score >= 0.70 else "❌"
+            print(f"   Composite Score   : {s.composite_score:.3f}  {comp_icon}")
+            kw_icon   = "✅" if kw_cov >= 50 else "❌"
+            print(f"   Keyword Coverage  : {kw_cov:.0f}%  {kw_icon}  (legacy)")
+
+        print()
+
+    total_elapsed = time.time() - total_start
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # LEGACY SUMMARY  (always shown for comparison)
+    # ─────────────────────────────────────────────────────────────────────────
+    valid_legacy = [r for r in legacy_results if "coverage" in r]
+
     print("=" * 80)
-    print("📊 SUMMARY BY QUESTION")
+    print("📊 LEGACY SUMMARY (keyword coverage)")
     print("=" * 80)
-    
-    for r in results:
-        if "error" in r:
-            print(f"❌ {r['id']} [{r['category']}]: ERROR")
-        else:
-            status = "✅" if r['coverage'] >= 50 else "⚠️"
-            print(f"{status} {r['id']} [{r['category']}]: {r['coverage']:.0f}% coverage, {r['latency']:.1f}s")
-    
-    # Category summary
-    print("\n" + "=" * 80)
-    print("📊 SUMMARY BY CATEGORY")
-    print("=" * 80)
-    
-    for cat, scores in sorted(category_scores.items()):
-        avg = sum(scores) / len(scores) if scores else 0
-        passed = sum(1 for s in scores if s >= 50)
-        status = "✅" if avg >= 50 else "⚠️"
-        print(f"{status} {cat}: {avg:.0f}% avg ({passed}/{len(scores)} passed)")
-    
-    # Overall stats
-    valid_results = [r for r in results if 'coverage' in r]
-    avg_coverage = sum(r['coverage'] for r in valid_results) / len(valid_results) if valid_results else 0
-    avg_latency = sum(r['latency'] for r in valid_results) / len(valid_results) if valid_results else 0
-    passed_count = sum(1 for r in valid_results if r['coverage'] >= 50)
-    
-    print("\n" + "=" * 80)
-    print("📊 OVERALL RESULTS")
-    print("=" * 80)
-    print(f"✅ Passed (≥50%): {passed_count}/{len(valid_results)} ({100*passed_count/len(valid_results):.0f}%)")
-    print(f"📈 Average coverage: {avg_coverage:.0f}%")
-    print(f"⏱️  Average latency: {avg_latency:.1f}s")
-    print(f"⏱️  Total time: {sum(r.get('latency', 0) for r in results):.0f}s")
-    
-    # Close output file properly
+    cat_kw: dict = {}
+    for r in valid_legacy:
+        c = r["category"]
+        cat_kw.setdefault(c, []).append(r["coverage"])
+        status = "✅" if r["coverage"] >= 50 else "⚠️"
+        print(f"  {status} {r['id']:<6} [{r['category']:<14}]  "
+              f"{r['coverage']:>5.0f}%  ({r['latency']:.1f}s)")
+
+    if valid_legacy:
+        avg_kw  = sum(r["coverage"] for r in valid_legacy) / len(valid_legacy)
+        old_pass = sum(1 for r in valid_legacy if r["coverage"] >= 50)
+        print(f"\n  Average: {avg_kw:.0f}%  |  Passed (≥50%): {old_pass}/{len(valid_legacy)}")
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # MULTI-METRIC REPORT
+    # ─────────────────────────────────────────────────────────────────────────
+    if evaluator is not None and eval_results:
+        test_results_dir = os.path.join(os.path.dirname(__file__), "test_results")
+        evaluator.generate_report(eval_results, output_dir=test_results_dir)
+
+    print(f"\n⏱️  Total wall-clock time: {total_elapsed:.0f}s")
+
+    # ── Close output file ─────────────────────────────────────────────────────
     output_file.close()
-    sys.stdout = sys.__stdout__
-    sys.stderr = sys.__stderr__
-    
-    return results
+    sys.stdout = original_stdout
+    sys.stderr = original_stderr
+
+    return eval_results if evaluator is not None else legacy_results
 
 
-def run_single_question(question: str):
-    """Run a single question and show detailed output."""
+# ─────────────────────────────────────────────────────────────────────────────
+# SINGLE-QUESTION MODE
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_single_question(question: str, use_evaluator: bool = True):
+    """Run a single question; optionally score with the Evaluator."""
 
     print("=" * 80)
     print(f"❓ Question: {question}")
@@ -420,32 +509,73 @@ def run_single_question(question: str):
     from services.pipeline.rag_pipeline import RAGPipeline
     from services.config.settings import RAGConfig
 
-    config = RAGConfig.from_env()
+    config   = RAGConfig.from_env()
     pipeline = RAGPipeline(config)
 
-    start = time.time()
-    answer = pipeline.answer(question, history=[])
-    latency = time.time() - start
-    
+    t0      = time.time()
+    answer  = pipeline.answer(question, history=[])
+    latency = time.time() - t0
+
     print(f"\n🤖 ANSWER ({latency:.1f}s):")
     print("-" * 60)
     print(answer)
     print("-" * 60)
-    
-    # Close output file properly
-    output_file.close()
-    sys.stdout = sys.__stdout__
-    sys.stderr = sys.__stderr__
 
+    if use_evaluator:
+        try:
+            from testing.evaluator import Evaluator
+        except ImportError:
+            from evaluator import Evaluator
+
+        evaluator = Evaluator(
+            ollama_host=config.ollama.host,
+            embed_model=config.ollama.embed_model,
+            chat_model=config.ollama.chat_model,
+        )
+        chunks  = pipeline.search_only(question, top_k=10)
+        context = _build_context_from_chunks(chunks)
+
+        result = evaluator.evaluate(
+            question_id="Q?",
+            category="adhoc",
+            question=question,
+            answer=answer,
+            expected="",   # no ground-truth in ad-hoc mode
+            context=context,
+            latency=latency,
+        )
+        s = result.scores
+        print(f"\n📐 Scores:")
+        print(f"   Faithfulness   : {s.faithfulness:.3f}")
+        print(f"   Answer Relevance: {s.answer_relevance:.3f}")
+        print(f"   Factual Accuracy: {s.factual_accuracy:.3f}  (no ground-truth)")
+        print(f"   Composite       : {s.composite_score:.3f}")
+
+    output_file.close()
+    sys.stdout = original_stdout
+    sys.stderr = original_stderr
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ENTRY POINT
+# ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     import argparse
-    
-    parser = argparse.ArgumentParser()
+
+    parser = argparse.ArgumentParser(
+        description="MACKIS RAG Evaluation Suite"
+    )
     parser.add_argument("-q", "--question", type=str, help="Ask a single question")
+    parser.add_argument(
+        "--no-eval", dest="no_eval", action="store_true",
+        help="Disable multi-metric evaluator; use legacy keyword coverage only",
+    )
     args = parser.parse_args()
-    
+
+    use_eval = not args.no_eval
+
     if args.question:
-        run_single_question(args.question)
+        run_single_question(args.question, use_evaluator=use_eval)
     else:
-        run_detailed_test()
+        run_detailed_test(use_evaluator=use_eval)
