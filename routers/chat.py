@@ -106,7 +106,7 @@ def chat_endpoint(req: schemas.ChatRequest, db: Session = Depends(get_db)):
     db_answer = models.Answer(
         query_id=query_event.query_id,
         text=answer_text,
-        model_name="llama3" # Kullandığın model
+        model_name=(req.model or schemas.ChatModel.LLAMA31).value
     )
     db.add(db_answer)
     db.commit()
