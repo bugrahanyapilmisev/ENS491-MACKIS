@@ -29,8 +29,9 @@ class SourceReference(BaseModel):
 class ChatRequest(BaseModel):
     """Kullanıcıdan gelen mesaj formatı"""
     query: str
-    model: Optional[ChatModel] = ChatModel.LLAMA31  # null veya eksik olursa llama3.1 kullanılır
-    conversation_id: Optional[int] = None            # Eğer devam eden bir sohbetse ID gelir
+    conversation_id: Optional[int] = None
+    user_id: Optional[UUID] = None
+    session_id: Optional[int] = None
 
 # -----------------------------------
 # 3. Cevap Modelleri (Response)
@@ -39,8 +40,32 @@ class ChatResponse(BaseModel):
     """Frontend'e dönecek nihai cevap"""
     answer: str
     sources: List[SourceReference] = []
-    conversation_id: int          # Yeni başladıysa oluşan ID'yi döneriz
-    query_id: int                 # Traceability için sorgu ID'si
-    message_id: int               # Oluşan asistan mesajının ID'si
+    conversation_id: int
+    query_id: int
+    message_id: int
     confidence: float = 0.0
+
+# -----------------------------------
+# 4. Chat Geçmişi Modelleri (History)
+# -----------------------------------
+class MessageOut(BaseModel):
+    """Tek bir mesaj - frontend Message interface'i ile birebir uyumlu"""
+    id: int              # message_id → id
+    role: str            # "user" | "assistant"
+    content: str
+    timestamp: str       # ISO string, frontend bunu görüntüler
+
+    class Config:
+        from_attributes = True
+
+class ConversationOut(BaseModel):
+    """Tek bir konuşma - frontend ConversationData interface'i ile birebir uyumlu"""
+    id: int              # conversation_id → id
+    title: str
+    timestamp: str       # ISO string (konuşmanın son güncelleme zamanı)
+    preview: str         # Son mesajın kısa hali
+    messages: List[MessageOut]
+
+    class Config:
+        from_attributes = True
 
