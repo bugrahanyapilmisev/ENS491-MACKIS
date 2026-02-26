@@ -2,6 +2,15 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Any
 from datetime import datetime
 from uuid import UUID
+from enum import Enum
+
+# -----------------------------------
+# 0. Enums
+# -----------------------------------
+class ChatModel(str, Enum):
+    LLAMA31       = "llama3.1:latest"
+    QWEN25_7B     = "qwen2.5:7b"
+    GPT_OSS_120B  = "gpt-oss:120b-cloud"
 
 # -----------------------------------
 # 1. Temel Parçalar
