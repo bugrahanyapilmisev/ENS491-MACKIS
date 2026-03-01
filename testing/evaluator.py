@@ -520,6 +520,32 @@ class Evaluator:
         score, note = self._parse_llm_score(raw, key="score")
         return score / 10.0, note
 
+    # ── Number-word mappings for Turkish and English ──────────────────────
+    _NUM_WORD_TO_DIGIT: Dict[str, str] = {
+        # Turkish
+        "bir": "1", "iki": "2", "üç": "3", "uc": "3",
+        "dört": "4", "dort": "4", "beş": "5", "bes": "5",
+        "altı": "6", "alti": "6", "yedi": "7", "sekiz": "8",
+        "dokuz": "9", "on": "10", "yirmi": "20", "otuz": "30",
+        "kırk": "40", "kirk": "40", "elli": "50", "altmış": "60",
+        "altmis": "60", "yetmiş": "70", "yetmis": "70",
+        "seksen": "80", "doksan": "90", "yüz": "100", "yuz": "100",
+        # English
+        "one": "1", "two": "2", "three": "3", "four": "4",
+        "five": "5", "six": "6", "seven": "7", "eight": "8",
+        "nine": "9", "ten": "10", "twenty": "20", "thirty": "30",
+        "forty": "40", "fifty": "50", "sixty": "60", "seventy": "70",
+        "eighty": "80", "ninety": "90", "hundred": "100",
+    }
+    _DIGIT_TO_NUM_WORDS: Dict[str, List[str]] = {}  # built at class load
+
+    @classmethod
+    def _build_digit_to_words(cls):
+        if cls._DIGIT_TO_NUM_WORDS:
+            return
+        for word, digit in cls._NUM_WORD_TO_DIGIT.items():
+            cls._DIGIT_TO_NUM_WORDS.setdefault(digit, []).append(word)
+
     def _score_factual_accuracy(
         self, answer: str, expected: str
     ) -> Tuple[float, str]:
@@ -530,8 +556,14 @@ class Evaluator:
         strings from *expected* and checks how many appear verbatim in
         *answer*.  Returns (ratio, note_string).
 
-        Turkish-aware: checks both normalised and original forms.
+        Turkish-aware: checks both normalised and original forms,
+        handles comma/dot decimal variants, and maps number-words
+        (e.g. "altı" ↔ "6", "three" ↔ "3").
+        Uses word-boundary matching to avoid substring false positives
+        (e.g. "5" should NOT match inside "15" or "50").
         """
+        self._build_digit_to_words()
+
         if not expected.strip():
             return 1.0, "no expected provided; perfect score assumed"
 
@@ -558,14 +590,43 @@ class Evaluator:
             return overlap, f"no numeric facts; char-4gram overlap={overlap:.2f}"
 
         answer_lower = answer.lower()
-        expected_lower = expected.lower()
+
+        def _word_boundary_present(token: str, text: str) -> bool:
+            """Check if token appears in text at a word boundary."""
+            # Escape special regex chars in the token, then wrap with \b
+            escaped = re.escape(token)
+            return bool(re.search(r'(?<!\d)' + escaped + r'(?!\d)', text))
 
         found = []
         missing = []
         for num in expected_nums:
-            # Normalize: replace comma with period
-            num_norm = num.replace(",", ".")
-            if num_norm in answer_lower or num in answer_lower:
+            # Strip trailing unit suffixes for pure numeric matching
+            pure_num = re.sub(r'\s*(ay|month|yıl|year|%)$', '', num,
+                              flags=re.IGNORECASE).strip()
+
+            # Build all variants to check
+            variants = {num, pure_num}
+            # Comma↔dot normalization (handles Turkish 2,20 ↔ 2.20)
+            variants.add(num.replace(",", "."))
+            variants.add(num.replace(".", ","))
+            variants.add(pure_num.replace(",", "."))
+            variants.add(pure_num.replace(".", ","))
+
+            # Number-word variants: if pure_num is a plain integer,
+            # also check for its Turkish/English word equivalents
+            if pure_num.isdigit() and pure_num in self._DIGIT_TO_NUM_WORDS:
+                for word in self._DIGIT_TO_NUM_WORDS[pure_num]:
+                    variants.add(word)
+
+            matched = False
+            for v in variants:
+                if not v:
+                    continue
+                if _word_boundary_present(v, answer_lower):
+                    matched = True
+                    break
+
+            if matched:
                 found.append(num)
             else:
                 missing.append(num)
@@ -617,7 +678,12 @@ class Evaluator:
     # ─────────────────────────────────────────────────────────────────────────
 
     def _embed(self, text: str) -> Optional[np.ndarray]:
-        """Embed text → normalized numpy vector (uses cache)."""
+        """Embed text → normalized numpy vector (uses cache).
+
+        If Ollama embedding fails mid-run, we permanently switch to the
+        SentenceTransformer fallback and flush the cache to avoid
+        dimension mismatches (Ollama bge-m3 = 1024-d vs ST = 384-d).
+        """
         import hashlib
         key = hashlib.sha1(text.encode("utf-8", errors="ignore")).hexdigest()
         if key in self._embed_cache:
@@ -626,6 +692,13 @@ class Evaluator:
         vec = None
         if self._ollama_embed_ok:
             vec = self._ollama_embed(text)
+            if vec is None:
+                # Ollama embed just failed — disable it and flush cache
+                # so we don't mix 1024-d (Ollama) with 384-d (ST) vectors.
+                print("[Evaluator] Ollama embed failed mid-run; "
+                      "switching to SentenceTransformer and flushing cache")
+                self._ollama_embed_ok = False
+                self._embed_cache.clear()
         if vec is None:
             vec = self._st_embed(text)
         if vec is not None:
