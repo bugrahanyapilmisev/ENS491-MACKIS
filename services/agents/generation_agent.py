@@ -87,7 +87,10 @@ class GenerationAgent:
         max_summary_chars: int = 300
     ) -> str:
         """
-        Build context string from chunks with formatting.
+        Build structured context from chunks with document grouping and chunk cap.
+
+        Groups chunks by source document using XML-like tags so the LLM can
+        clearly see document boundaries and section context.
 
         Args:
             chunks: List of chunk dicts.
@@ -95,17 +98,35 @@ class GenerationAgent:
             max_summary_chars: Max characters for summary truncation.
 
         Returns:
-            Formatted context string.
+            Structured context string with document/chunk markers.
         """
-        parts = []
-        doc_summaries_added: Set[str] = set()
+        # Enforce chunk cap from config
+        max_chunks = self.config.retrieval.max_docs_context
+        chunks = chunks[:max_chunks]
 
+        # Group chunks by source document (preserving order)
+        from collections import OrderedDict
+        doc_groups: OrderedDict = OrderedDict()
         for i, ch in enumerate(chunks):
             meta = ch.get("meta", {}) or {}
-            path = meta.get("source_path") or meta.get("doc_path", "")
-            title = meta.get("title", "")
-            section = meta.get("section_header", "")
-            lang = meta.get("doc_lang", "")
+            path = meta.get("source_path") or meta.get("doc_path", "unknown")
+            if path not in doc_groups:
+                doc_groups[path] = {
+                    "title": meta.get("title", ""),
+                    "chunks": [],
+                }
+            doc_groups[path]["chunks"].append((i, ch))
+
+        parts = []
+        doc_summaries_added: Set[str] = set()
+        chunk_num = 0
+
+        for path, group in doc_groups.items():
+            title = group["title"]
+            doc_lines = []
+
+            # Document header
+            doc_lines.append(f'<document title="{title}">')
 
             # Add document summary once per document
             if (
@@ -119,22 +140,25 @@ class GenerationAgent:
                     truncated = summary[:max_summary_chars]
                     if len(summary) > max_summary_chars:
                         truncated += "..."
-                    parts.append(f"[Document Overview: {title}]\n{truncated}")
+                    doc_lines.append(f"  <summary>{truncated}</summary>")
                     doc_summaries_added.add(path)
 
-            # Build chunk header
-            header_parts = [f"[{i + 1}]"]
-            if title:
-                header_parts.append(f"Title: {title}")
-            if section:
-                header_parts.append(f"Section: {section}")
-            if lang:
-                header_parts.append(f"Lang: {lang}")
+            # Add chunks with section context
+            for _, ch in group["chunks"]:
+                chunk_num += 1
+                meta = ch.get("meta", {}) or {}
+                section = meta.get("section_header", "")
+                text = ch.get("text", "")
 
-            header = " | ".join(header_parts)
-            parts.append(header + "\n" + ch.get("text", ""))
+                section_attr = f' section="{section}"' if section else ""
+                doc_lines.append(f'  <chunk id="{chunk_num}"{section_attr}>')
+                doc_lines.append(f"    {text}")
+                doc_lines.append("  </chunk>")
 
-        return "\n\n-----\n\n".join(parts)
+            doc_lines.append("</document>")
+            parts.append("\n".join(doc_lines))
+
+        return "\n\n".join(parts)
 
     def _get_system_prompt(self, language: Optional[str]) -> str:
         """
@@ -156,12 +180,15 @@ class GenerationAgent:
                 3) SAYI veya DEĞERLERİ KENDİN UYDURMA - Context'te yazanı yaz.
                 4) Context'te olmayan bilgileri KESİNLİKLE UYDURMA.
                 5) SADECE hiçbir yerde bulamadığında "bu bilgi bağlamda yok" de.
-                6) Cevapların kısa ve net olsun.
 
-                DİKKAT: "GNO", "not ortalaması", "minimum" gibi kelimeler Context'te farklı şekillerde geçebilir.
-                Lisans=undergrad, Lisansüstü=graduate için farklı değerler olabilir, İKİSİNİ de belirt.
-
-                ÖRNEK: Context'te "Lisans için 2.20, Lisansüstü için 2.5" varsa, tam olarak bunu yaz.
+                YANIT BİÇİMİ KURALLARI:
+                6) Soru birden fazla madde/öğe soruyorsa (ör: "nelerdir", "hangileri", "kaç tür",
+                   "sıralayınız", "listele"), TÜM maddeleri numaralı liste halinde ver.
+                7) Context'teki TÜM ilgili bilgileri dahil et - yalnızca bir kısmını verme.
+                8) Soru belirli bir grup hakkındaysa (ör: lisans/lisansüstü, öğrenci/akademisyen),
+                   Context'te o gruba ait doğru satırı/bölümü bul ve oradan yanıtla.
+                9) En az 2 cümle ile yanıt ver (basit evet/hayır soruları hariç).
+                10) Farklı gruplar için farklı değerler varsa (lisans/lisansüstü vb.), HEPSİNİ belirt.
             """).strip()
         else:
             return textwrap.dedent("""
@@ -173,12 +200,15 @@ class GenerationAgent:
                 3) Do NOT invent numbers - use what's written in the context.
                 4) Do NOT invent information not in the context.
                 5) ONLY say "not in context" if you truly cannot find it anywhere.
-                6) Be brief and direct.
 
-                NOTE: Terms like "GPA", "GNO", "minimum" may appear in different forms.
-                Undergrad vs Graduate may have different values - mention BOTH if present.
-
-                EXAMPLE: If context has "2.20 for undergrad, 2.5 for graduate", write exactly that.
+                ANSWER FORMAT RULES:
+                6) If the question asks for multiple items (e.g. "what are", "which ones",
+                   "how many types", "list"), provide ALL items as a numbered list.
+                7) Include ALL relevant information from the context - do not give partial answers.
+                8) If the question is about a specific group (e.g. undergrad/graduate,
+                   student/faculty), find the correct row/section for that group and answer from it.
+                9) Provide at least 2 sentences (except for simple yes/no questions).
+                10) If different values apply to different groups, mention ALL of them.
             """).strip()
 
     def _build_prompt(
@@ -188,16 +218,24 @@ class GenerationAgent:
         kg_facts: str = ""
     ) -> str:
         """
-        Build full prompt with context and optional KG facts.
+        Build full prompt with structured context and optional KG facts.
 
         Args:
             query: User question.
-            context: Formatted context string.
+            context: Structured context string with document/chunk markers.
             kg_facts: Optional knowledge graph facts.
 
         Returns:
             Full prompt string.
         """
+        instructions = """INSTRUCTIONS:
+1. Read ALL <document> blocks and ALL <chunk> elements carefully.
+2. Look for specific numbers, values, requirements, conditions, durations, or limits.
+3. If different conditions apply to different groups (e.g. lisans/lisansüstü, undergrad/graduate), state ALL of them.
+4. If the question asks for a list of items, enumerate ALL items found in the context.
+5. Use ONLY information from the context. Do NOT add information from your own knowledge.
+6. EXTRACT and state the relevant information directly from the context."""
+
         if kg_facts:
             return f"""{kg_facts}
 
@@ -206,13 +244,10 @@ Context:
 
 Question: {query}
 
-INSTRUCTIONS:
-1. The facts above MAY be helpful hints. CROSS-CHECK them against the Context below.
-2. If a fact seems inconsistent with the Context (e.g., GPA > 4.0), IGNORE IT and use the Context instead.
-3. SEARCH the context for specific numbers, values, requirements, conditions, durations, or limits.
-4. If the question asks about GNO/GPA, look for phrases like "en az", "minimum", "2.20", "2.5", etc.
-5. If different conditions apply to different groups (lisans/lisansüstü), mention ALL of them.
-6. EXTRACT and state the relevant information directly from the Context.
+IMPORTANT: The facts above MAY be helpful hints. CROSS-CHECK them against the Context.
+If a fact seems inconsistent with the Context, IGNORE the fact and use the Context instead.
+
+{instructions}
 
 Answer:"""
         else:
@@ -221,12 +256,7 @@ Answer:"""
 
 Question: {query}
 
-INSTRUCTIONS:
-1. SEARCH the entire context above for information related to the question.
-2. Look for specific numbers, values, requirements, conditions, durations, or limits.
-3. If the question asks about GNO/GPA, look for phrases like "en az", "minimum", "2.20", "2.5", etc.
-4. If different conditions apply to different groups (lisans/lisansüstü), mention ALL of them.
-5. EXTRACT and state the relevant information directly.
+{instructions}
 
 Answer:"""
 
@@ -238,9 +268,8 @@ Answer:"""
     ) -> str:
         """
         Verify that numbers in answer exist in context.
-
-        Logs warnings for potential hallucinated numbers but doesn't
-        modify the answer (to avoid removing valid content).
+        If hallucinated numbers are detected, re-generate with an explicit
+        number guard to correct them.
 
         Args:
             answer: Generated answer.
@@ -248,7 +277,7 @@ Answer:"""
             language: Detected language.
 
         Returns:
-            Original answer (unchanged, but warnings logged).
+            Original answer if clean, or corrected answer if hallucination detected.
         """
         # Extract numbers from answer and context
         answer_numbers = set(re.findall(r'\d+[.,]?\d*', answer))
@@ -274,12 +303,73 @@ Answer:"""
             if normalize_num(n) not in context_numbers_normalized
         }
 
-        if hallucinated:
-            print(f"[Generation] WARNING: Possible hallucinated numbers: {hallucinated}")
-            print(f"[Generation] Numbers in context: "
-                  f"{sorted(list(context_numbers_normalized)[:20])}")
+        if not hallucinated:
+            return answer
 
-        return answer
+        print(f"[Generation] WARNING: Possible hallucinated numbers: {hallucinated}")
+        print(f"[Generation] Numbers in context: "
+              f"{sorted(list(context_numbers_normalized)[:20])}")
+
+        # Active correction: re-prompt the LLM to fix hallucinated numbers
+        print("[Generation] Re-generating with number guard...")
+
+        context_nums_display = ", ".join(sorted(context_numbers)[:40])
+
+        if language == "tr":
+            guard_system = (
+                "Verilen yanıttaki yanlış sayıları düzelt. "
+                "Sadece kaynak bağlamda geçen sayıları kullan."
+            )
+            guard_prompt = (
+                f"Aşağıdaki yanıtta kaynak bağlamda BULUNMAYAN sayılar olabilir.\n\n"
+                f"Yanıt:\n{answer}\n\n"
+                f"Kaynak bağlamda geçen sayılar: {context_nums_display}\n\n"
+                f"Yanıtı aynı yapıda tut, ancak kaynak bağlamda olmayan sayıları "
+                f"kaynak bağlamdan doğru sayı ile değiştir veya çıkar.\n\n"
+                f"Düzeltilmiş yanıt:"
+            )
+        else:
+            guard_system = (
+                "Correct wrong numbers in the given answer. "
+                "Use only numbers that appear in the source context."
+            )
+            guard_prompt = (
+                f"The following answer may contain numbers NOT found in the source context.\n\n"
+                f"Answer:\n{answer}\n\n"
+                f"Numbers found in source context: {context_nums_display}\n\n"
+                f"Keep the same structure but replace numbers not in the source context "
+                f"with the correct number from the context, or remove them.\n\n"
+                f"Corrected answer:"
+            )
+
+        try:
+            corrected = self.llm.chat(guard_prompt, guard_system, temperature=0.0)
+        except Exception as e:
+            print(f"[Generation] Number guard LLM call failed: {e}")
+            return answer
+
+        if not corrected or corrected.startswith(("Ollama Error", "LLM error", "Connection")):
+            print("[Generation] Number guard failed, keeping original.")
+            return answer
+
+        # Verify the correction actually improved things
+        corrected_nums = set(re.findall(r'\d+[.,]?\d*', corrected))
+        corrected_significant = {
+            n for n in corrected_nums
+            if float(normalize_num(n)) >= 5 or '.' in n or ',' in n
+        }
+        corrected_hallucinated = {
+            n for n in corrected_significant
+            if normalize_num(n) not in context_numbers_normalized
+        }
+
+        if len(corrected_hallucinated) < len(hallucinated):
+            print(f"[Generation] Number guard applied. "
+                  f"Hallucinated: {len(hallucinated)} -> {len(corrected_hallucinated)}")
+            return corrected
+        else:
+            print("[Generation] Number guard did not improve. Keeping original.")
+            return answer
 
     def generate_with_citations(
         self,

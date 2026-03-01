@@ -32,7 +32,9 @@ class Tee:
         self.file_handle.flush()
 
 output_file_path = os.path.join(os.path.dirname(__file__), "rag_test_output.txt")
-output_file = open(output_file_path, "w", encoding="utf-8")
+# Check for --append flag early to decide file open mode
+_append_mode = "--append" in sys.argv
+output_file = open(output_file_path, "a" if _append_mode else "w", encoding="utf-8")
 original_stdout = sys.stdout
 original_stderr = sys.stderr
 sys.stdout = Tee(original_stdout, output_file)
@@ -419,9 +421,9 @@ def _build_context_from_chunks(chunks):
 # MAIN TEST RUNNER  (multi-metric)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def run_detailed_test(use_evaluator: bool = True):
+def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
     """
-    Run all TEST_QUESTIONS through the RAG pipeline.
+    Run TEST_QUESTIONS through the RAG pipeline.
 
     When *use_evaluator* is True (default), the Evaluator class is used to
     compute Answer Similarity, Faithfulness, Relevance, Factual Accuracy, and
@@ -430,6 +432,9 @@ def run_detailed_test(use_evaluator: bool = True):
 
     When *use_evaluator* is False, only legacy keyword coverage is computed
     (original behaviour).
+
+    When *start_from* > 1, skips questions before that index (1-based).
+    Useful for resuming after a crash.
     """
 
     print("=" * 80)
@@ -482,6 +487,8 @@ def run_detailed_test(use_evaluator: bool = True):
     total_start = time.time()
 
     for i, test in enumerate(TEST_QUESTIONS, 1):
+        if i < start_from:
+            continue
         qid      = test["id"]
         category = test.get("category", "Other")
         question = test["question"]
@@ -688,6 +695,14 @@ if __name__ == "__main__":
         "--no-eval", dest="no_eval", action="store_true",
         help="Disable multi-metric evaluator; use legacy keyword coverage only",
     )
+    parser.add_argument(
+        "--start-from", type=int, default=1,
+        help="Start from question N (1-based). Skips earlier questions.",
+    )
+    parser.add_argument(
+        "--append", action="store_true",
+        help="Append to rag_test_output.txt instead of overwriting.",
+    )
     args = parser.parse_args()
 
     use_eval = not args.no_eval
@@ -695,4 +710,4 @@ if __name__ == "__main__":
     if args.question:
         run_single_question(args.question, use_evaluator=use_eval)
     else:
-        run_detailed_test(use_evaluator=use_eval)
+        run_detailed_test(use_evaluator=use_eval, start_from=args.start_from)

@@ -1,0 +1,204 @@
+{
+  "generated_at": "20260228_215813",
+  "pass_threshold": 0.7,
+  "ollama_host": "http://localhost:11434",
+  "chat_model": "llama3.1:latest",
+  "composite_formula": "0.30×similarity + 0.30×faithfulness + 0.25×factual_accuracy + 0.15×relevance | gate: if faithfulness<0.35 → composite×=(faith/0.35)²",
+  "overall": {
+    "total": 7,
+    "passed": 3,
+    "failed": 4,
+    "pass_rate": 0.429,
+    "avg_answer_similarity": 0.8185,
+    "avg_faithfulness": 0.7143,
+    "avg_answer_relevance": 0.7429,
+    "avg_factual_accuracy": 0.5002,
+    "avg_keyword_coverage": 0.5517,
+    "avg_composite_score": 0.6963,
+    "avg_latency": 189.98
+  },
+  "by_category": {
+    "List": {
+      "n": 2,
+      "passed": 1,
+      "pass_rate": 0.5,
+      "avg": {
+        "answer_similarity": 0.7802,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.75,
+        "factual_accuracy": 0.4513,
+        "keyword_coverage": 0.5544,
+        "composite_score": 0.6994
+      }
+    },
+    "MultiHop": {
+      "n": 5,
+      "passed": 2,
+      "pass_rate": 0.4,
+      "avg": {
+        "answer_similarity": 0.8339,
+        "faithfulness": 0.68,
+        "answer_relevance": 0.74,
+        "factual_accuracy": 0.5197,
+        "keyword_coverage": 0.5506,
+        "composite_score": 0.6951
+      }
+    }
+  },
+  "questions": [
+    {
+      "question_id": "Q39",
+      "category": "List",
+      "question": "Sabancı Üniversitesi'nde kaç fakülte vardır?",
+      "expected": "Sabancı Üniversitesi'nde üç fakülte vardır: Mühendislik ve Doğa Bilimleri Fakültesi (FENS), Sanat ve Sosyal Bilimler Fakültesi (FASS) ve Yönetim Bilimleri Fakültesi (SOM).",
+      "actual": "Sabancı Üniversitesi'nde 3 fakülte vardır:\n\n1. Mühendislik ve Doğa Bilimleri Fakültesi\n2. Sanat ve Sosyal Bilimler Fakültesi\n3. Yönetim Bilimleri Fakültesi",
+      "latency": 125.061,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.9229,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.736,
+        "keyword_coverage": 0.8421,
+        "composite_score": 0.8509
+      },
+      "notes": [
+        "faithfulness note: The system answer lists specific faculty names, but the retrieved context only mentions that Sabancı Üniversitesi has fa",
+        "relevance note: The answer directly and completely lists the number of faculties at Sabancı Üniversitesi and names each one.",
+        "factual note: no numeric facts; char-4gram overlap=0.74"
+      ]
+    },
+    {
+      "question_id": "Q40",
+      "category": "List",
+      "question": "How many books can alumni borrow from the library?",
+      "expected": "Alumni and retirees can borrow 2 books for 30 days, 1 multimedia item for 7 days, 1 bound periodical for 7 days, and 5 popular magazines for 3 days.",
+      "actual": "According to the extracted facts, there is no specific information about how many books Sabancı University Alumni can borrow from the library. However, it is mentioned that \"The 'qualified membership right to benefit from the circulation service' of Sabancı University Alumni... will be revoked and their subsequent applications will not be accepted for 1 year\" if they do not pay fees. This implies that alumni may have some borrowing privileges, but there is no information about the number of books they can borrow.",
+      "latency": 252.281,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6375,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.1667,
+        "keyword_coverage": 0.2667,
+        "composite_score": 0.5479
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER incorrectly implies that the context mentions a specific consequence for alumni who do not pay fees, w",
+        "relevance note: The answer partially addresses the question by mentioning borrowing privileges, but does not directly provide informatio",
+        "factual note: found 1/6 facts; missing: ['7', '2', '5', '30', '3']"
+      ]
+    },
+    {
+      "question_id": "Q41",
+      "category": "MultiHop",
+      "question": "Disiplin cezası alan öğrencinin bursu kesilir mi?",
+      "expected": "Disiplin cezasının bursa etkisi cezanın türüne göre değişir. Kınama ve kısa süreli uzaklaştırmada (1 hafta-1 ay) burs devam eder. 1-2 yarıyıl uzaklaştırma cezasında burs o dönem kesilir ancak ceza bitiminde yeniden bağlanır. Yükseköğretim kurumundan çıkarma cezasında burs tamamen kesilir.",
+      "actual": "Disiplin cezası alan öğrencilerin bursluluk durumlarına ilişkin kurallar normal öğrenim süresi içinde uygulanır. Bir Dönem veya İki Dönem Uzaklaştırma: Uzaklaştırma cezası alınan dönemler için burs kesilir; mevcut burs kapsamında ödemekle yükümlü olunan öğrenim ücreti tutarının %25’i ödenir.\n\nAşağıdaki durumlar için burs kesintisiz devam eder:\n- Kınama\n- Bir Haftadan Bir Aya Kadar Uzaklaştırma",
+      "latency": 167.867,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8962,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.3333,
+        "keyword_coverage": 0.3824,
+        "composite_score": 0.7122
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains a specific claim about the percentage of tuition fee to be paid during the period of one or t",
+        "relevance note: The answer provides a clear explanation of the rules regarding bursu kesintisi for students who receive disiplin cezası,",
+        "factual note: found 1/3 facts; missing: ['1', '1 ay']"
+      ]
+    },
+    {
+      "question_id": "Q42",
+      "category": "MultiHop",
+      "question": "Can a suspended student take courses at another university and transfer credits back to Sabancı?",
+      "expected": "No. Even if students who have received suspension or dismissal take courses from another university during the suspension period, they may not have these courses substituted with their programs at Sabancı University.",
+      "actual": "According to the extracted facts, there is no specific information about students who have been suspended from their current institution being able to apply as special students or transfer credits to Sabancı University. However, it can be inferred that if a student meets the requirements for special student admission (such as being enrolled in a master's program at another higher education institution), they may be able to take courses and potentially transfer credits back to Sabancı University.\n\nTo clarify, the extracted facts do not explicitly state whether suspended students are eligible to apply as special students or transfer credits.",
+      "latency": 193.707,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7817,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.4918,
+        "keyword_coverage": 0.5926,
+        "composite_score": 0.6125
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains an unsupported claim about inferring eligibility based on specific circumstances, which is no",
+        "relevance note: The answer partially addresses the question by mentioning special student admission, but it does not directly and clearl",
+        "factual note: no numeric facts; char-4gram overlap=0.49"
+      ]
+    },
+    {
+      "question_id": "Q43",
+      "category": "MultiHop",
+      "question": "Kütüphane gecikme borcu mezuniyeti engeller mi?",
+      "expected": "Evet, gecikme borcu olan öğrencilerin öğrenci belgesi, transkript ve mezuniyet için gerekli diğer belgeleri alması engellenir. Gecikme ücreti ödenene kadar ödünç alma hizmetleri de askıya alınır.",
+      "actual": "Kütüphane gecikme borcu mezuniyeti engeller. Mezuniyet için gerekli işlemler, bu işlemler tamamlanana kadar askıya alınır. Geciken bilgi kaynaklarına “Ödünç Verme Prosedürü (PIC-C840-0201)” doğrultusunda gecikme bedeli işlemleri uygulanır ve öğrencilerin, öğrenci belgesi, transkript ve mezuniyet için gerekli belgelerin alımı engellenir.",
+      "latency": 241.713,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8717,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.6163,
+        "keyword_coverage": 0.6667,
+        "composite_score": 0.7756
+      },
+      "notes": [
+        "faithfulness note: The system answer contains claims that are not explicitly supported by the retrieved context, specifically regarding the",
+        "relevance note: The answer directly addresses the question, but could be more concise and clear in its explanation of how a library fine",
+        "factual note: no numeric facts; char-4gram overlap=0.62"
+      ]
+    },
+    {
+      "question_id": "Q44",
+      "category": "MultiHop",
+      "question": "Hangi disiplin cezaları Öğrenci Konseyi adaylığına engel olur?",
+      "expected": "Uyarma dışındaki tüm disiplin cezaları Öğrenci Konseyi adaylığına engel olur. Yani kınama, uzaklaştırma (kısa ve uzun süreli) ve yükseköğretim kurumundan çıkarma cezası alan öğrenciler aday olamaz.",
+      "actual": "Uyarma cezası dışında disiplin cezası almamış olması koşulu gereği, öğrencinin herhangi bir disiplin cezası alması adaylığına engel olur.",
+      "latency": 179.521,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8138,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.2889,
+        "keyword_coverage": 0.3333,
+        "composite_score": 0.6764
+      },
+      "notes": [
+        "faithfulness note: The system answer's claim is partially supported by the context, as it mentions that a student must not have received an",
+        "relevance note: The answer directly addresses the question by specifying which type of disciplinary actions would prevent a student from",
+        "factual note: no numeric facts; char-4gram overlap=0.29"
+      ]
+    },
+    {
+      "question_id": "Q45",
+      "category": "MultiHop",
+      "question": "Uzaklaştırma cezası alan öğrenci ücret iadesi alabilir mi?",
+      "expected": "Hayır, uzaklaştırma cezası alan öğrencilere herhangi bir ücret iadesi yapılmaz.",
+      "actual": "Uzaklaştırma cezası alan öğrenciler için herhangi bir ücret iadesi yapılmaz. Disiplin suçu nedeniyle Üniversiteden uzaklaştırılan öğrencilerin ödemekle yükümlü oldukları dönem öğrenim ücretinin %25'i ödenmelidir.",
+      "latency": 169.732,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.806,
+        "faithfulness": 0.4,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.8684,
+        "keyword_coverage": 0.7778,
+        "composite_score": 0.6989
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains a claim about the percentage of tuition fee that must be paid by students who are expelled du",
+        "relevance note: The answer directly addresses the question of whether a student who received an expulsion penalty can get a refund, but ",
+        "factual note: no numeric facts; char-4gram overlap=0.87"
+      ]
+    }
+  ]
+}

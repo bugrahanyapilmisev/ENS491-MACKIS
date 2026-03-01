@@ -132,6 +132,7 @@ class RAGPipeline:
         anchor = analysis["anchor_query"]
         query_tags = analysis["tags"]
         negated_terms = analysis["negated_terms"]
+        expanded_queries = analysis.get("expanded_queries", [query])
 
         print(f"[RAGPipeline] language={language}, intent={intent}, followup={is_followup}")
         print(f"[RAGPipeline] tags={query_tags}")
@@ -141,12 +142,14 @@ class RAGPipeline:
         # 2. Build retrieval query
         retrieval_query = self.query_agent.build_retrieval_query(query, analysis)
 
-        # 3. Retrieval
+        # 3. Retrieval — pass pre-expanded queries + intent-based HyDE skip
+        skip_hyde = intent in {"count_items", "list_names"}
         candidates = self.retrieval_agent.retrieve(
             retrieval_query,
             language=language,
             use_expansion=self.config.features.use_query_expansion,
-            use_hyde=self.config.features.use_hyde
+            use_hyde=self.config.features.use_hyde and not skip_hyde,
+            pre_expanded=expanded_queries if self.config.features.use_query_expansion else None
         )
 
         if not candidates:
@@ -173,7 +176,10 @@ class RAGPipeline:
         # 5. Filter by threshold
         strong = self.ranking_agent.filter_by_threshold(reranked)
 
-        # 6. Intent-aware selection
+        # 6. Document-level diversity + chunk cap
+        max_ctx = self.config.retrieval.max_docs_context
+        max_per_doc = max(3, max_ctx // 3)
+
         if intent in {"list_names", "count_items"} and reranked:
             # Use all chunks from top document for factual queries
             best_chunk = reranked[0]
@@ -183,15 +189,15 @@ class RAGPipeline:
             if best_path:
                 print(f"[RAGPipeline] Single-doc mode for intent={intent}")
                 retrieved = self.data_loader.get_all_chunks_for_doc(best_path)
-                retrieved = retrieved[:self.config.retrieval.top_k_final_max]
+                retrieved = retrieved[:max_ctx]
             else:
-                retrieved = strong[:self.config.retrieval.top_k_final_max]
+                retrieved = self.ranking_agent.document_level_select(
+                    strong, max_chunks=max_ctx, max_per_doc=max_per_doc
+                )
         else:
-            # MMR selection for diversity
-            retrieved = self.ranking_agent.mmr_select(
-                strong,
-                retrieval_query,
-                k=min(len(strong), self.config.retrieval.top_k_final_max)
+            # Document-level diversity selection
+            retrieved = self.ranking_agent.document_level_select(
+                strong, max_chunks=max_ctx, max_per_doc=max_per_doc
             )
 
         print(f"[RAGPipeline] Final context chunks: {len(retrieved)}")

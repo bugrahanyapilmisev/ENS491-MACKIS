@@ -1,0 +1,1196 @@
+{
+  "generated_at": "20260227_025431",
+  "pass_threshold": 0.7,
+  "ollama_host": "http://localhost:11434",
+  "chat_model": "llama3.1:latest",
+  "composite_formula": "0.30×similarity + 0.30×faithfulness + 0.25×factual_accuracy + 0.15×relevance | gate: if faithfulness<0.35 → composite×=(faith/0.35)²",
+  "overall": {
+    "total": 45,
+    "passed": 24,
+    "failed": 21,
+    "pass_rate": 0.533,
+    "avg_answer_similarity": 0.7795,
+    "avg_faithfulness": 0.74,
+    "avg_answer_relevance": 0.7778,
+    "avg_factual_accuracy": 0.5654,
+    "avg_keyword_coverage": 0.5532,
+    "avg_composite_score": 0.7139,
+    "avg_latency": 178.05
+  },
+  "by_category": {
+    "Erasmus": {
+      "n": 4,
+      "passed": 3,
+      "pass_rate": 0.75,
+      "avg": {
+        "answer_similarity": 0.8147,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.9,
+        "factual_accuracy": 0.8755,
+        "keyword_coverage": 0.8125,
+        "composite_score": 0.8083
+      }
+    },
+    "Library": {
+      "n": 2,
+      "passed": 2,
+      "pass_rate": 1.0,
+      "avg": {
+        "answer_similarity": 0.8367,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.6594,
+        "keyword_coverage": 0.6333,
+        "composite_score": 0.7758
+      }
+    },
+    "Discipline": {
+      "n": 3,
+      "passed": 3,
+      "pass_rate": 1.0,
+      "avg": {
+        "answer_similarity": 0.7887,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.7667,
+        "factual_accuracy": 0.83,
+        "keyword_coverage": 0.7485,
+        "composite_score": 0.7991
+      }
+    },
+    "Scholarship": {
+      "n": 2,
+      "passed": 0,
+      "pass_rate": 0.0,
+      "avg": {
+        "answer_similarity": 0.5912,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.4,
+        "factual_accuracy": 0.1666,
+        "keyword_coverage": 0.1316,
+        "composite_score": 0.489
+      }
+    },
+    "Graduate": {
+      "n": 3,
+      "passed": 0,
+      "pass_rate": 0.0,
+      "avg": {
+        "answer_similarity": 0.6532,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.5333,
+        "factual_accuracy": 0.1141,
+        "keyword_coverage": 0.2103,
+        "composite_score": 0.5445
+      }
+    },
+    "Undergraduate": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333,
+      "avg": {
+        "answer_similarity": 0.8267,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8667,
+        "factual_accuracy": 0.3726,
+        "keyword_coverage": 0.427,
+        "composite_score": 0.7112
+      }
+    },
+    "Registration": {
+      "n": 2,
+      "passed": 1,
+      "pass_rate": 0.5,
+      "avg": {
+        "answer_similarity": 0.7712,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.6731,
+        "keyword_coverage": 0.4869,
+        "composite_score": 0.6996
+      }
+    },
+    "English": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333,
+      "avg": {
+        "answer_similarity": 0.7253,
+        "faithfulness": 0.7333,
+        "answer_relevance": 0.7667,
+        "factual_accuracy": 0.569,
+        "keyword_coverage": 0.8016,
+        "composite_score": 0.6948
+      }
+    },
+    "Numeric": {
+      "n": 2,
+      "passed": 1,
+      "pass_rate": 0.5,
+      "avg": {
+        "answer_similarity": 0.8483,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.65,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 0.3454,
+        "composite_score": 0.717
+      }
+    },
+    "Procedure": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333,
+      "avg": {
+        "answer_similarity": 0.7769,
+        "faithfulness": 0.7333,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.5802,
+        "keyword_coverage": 0.474,
+        "composite_score": 0.7181
+      }
+    },
+    "Edge": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333,
+      "avg": {
+        "answer_similarity": 0.8098,
+        "faithfulness": 0.6667,
+        "answer_relevance": 0.8667,
+        "factual_accuracy": 0.4337,
+        "keyword_coverage": 0.5353,
+        "composite_score": 0.6814
+      }
+    },
+    "Negation": {
+      "n": 5,
+      "passed": 5,
+      "pass_rate": 1.0,
+      "avg": {
+        "answer_similarity": 0.8121,
+        "faithfulness": 0.82,
+        "answer_relevance": 0.96,
+        "factual_accuracy": 0.6497,
+        "keyword_coverage": 0.708,
+        "composite_score": 0.796
+      }
+    },
+    "List": {
+      "n": 5,
+      "passed": 3,
+      "pass_rate": 0.6,
+      "avg": {
+        "answer_similarity": 0.7651,
+        "faithfulness": 0.72,
+        "answer_relevance": 0.72,
+        "factual_accuracy": 0.6805,
+        "keyword_coverage": 0.5083,
+        "composite_score": 0.7237
+      }
+    },
+    "MultiHop": {
+      "n": 5,
+      "passed": 2,
+      "pass_rate": 0.4,
+      "avg": {
+        "answer_similarity": 0.8193,
+        "faithfulness": 0.68,
+        "answer_relevance": 0.78,
+        "factual_accuracy": 0.5181,
+        "keyword_coverage": 0.5558,
+        "composite_score": 0.6963
+      }
+    }
+  },
+  "questions": [
+    {
+      "question_id": "Q1",
+      "category": "Erasmus",
+      "question": "Erasmus staj programına başvurmak için minimum GNO ne olmalı?",
+      "expected": "Lisans için en az 2.20, Lisansüstü için en az 2.5 GNO gereklidir.",
+      "actual": "Erasmus staj programına başvurmak için minimum GNO:\n\n* Lisans öğrencileri için en az 2,20\n* Lisansüstü öğrencileri için en az 2,5\n\nBu bilgi, Context'teki \"GNO\" tanımından ve lisans/lisansüstü öğrencileri için farklı GNO limitleri belirten bölümlerden elde edilmiştir.\n\nKaynak:\n* <document title=\"Erasmus Staj Hareketliliğine Giden Öğrenci Prosedürü (PIPAR-C710-0201) | Yönerge\">\n  * <chunk id=\"2\" section=\"Introduction\">... Lisans öğrencileri için en az: 2.20 / Lisansüstü öğrencileri için en az: 2.5 dur.\n* <document title=\"Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yönerge\">\n  * <chunk id=\"3\" section=\"Introduction\">... Lisans için en az 2.20 / Lisansüstü için en az 2.5 GNO sağlamış olmak\n* <document title=\"Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yönerge\">\n  * <chunk id=\"4\" section=\"Introduction\">... Lisans öğrencileri için ENG 101 -102 ders puanları veya SPS ve AL ders puanları hesaplanır, Yükseköğretim Kurulunun önerdiği Yabancı Dil Sınavları Eşdeğerlilikleri puan dönüştürme tablosu doğrultusunda dil puanı hesaplanır. Yüksek Lisans/Doktora öğrencileri, TOEFL/YDS/ELAE gibi sınav sonuçları Yükseköğretim Kurulunun Yabancı Dil Sınavları Eşdeğerlilikleri puan dönüştürme tablosu doğrultusunda dil puanı hesaplanır.\n* <document title=\"Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yönerge\">\n  * <chunk id=\"5\" section=\"Introduction\">... Kurallar 1.Genel Kurallar 1.2. Kariyer Geliştirme ve Staj Ofisi 2 farklı kanaldan öğrencilere yurtdışında staj olanakları sağlamaktadır. a) Kuruluşlarla yapılan ikili anlaşmalar b) Erasmus+ Staj Hareketliliği Programı",
+      "latency": 221.791,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7338,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.75,
+        "composite_score": 0.8601
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER's specific numbers (2.20 and 2.5) are not explicitly mentioned in the RETRIEVED CONTEXT, although it d",
+        "relevance note: The answer directly and completely addresses the question by providing the minimum GPA requirements for Erasmus internsh",
+        "factual note: found 2/2 facts"
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "category": "Erasmus",
+      "question": "Erasmus staj hareketliliği minimum süresi ne kadar?",
+      "expected": "Staj hareketliliği süresi minimum 2 aydır.",
+      "actual": "Erasmus staj hareketliliği minimum süresi 2 aydır.\n\nBu bilgi, Context'teki \"3.9 Staj hareketliliği süresi minimum 2 aydır.\" satırından elde edilmiştir.\n\nDiğer kaynaklarda da bu süre teyit edilmektedir:\n\n* \"Minimum Gno: 2.20 (lisans)\" ve \"Minimum Gno: 2.5 (lisansustu)\" gibi ifadeler, staj için minimum GPA gereksinimini belirtmekle birlikte, minimum süreyi belirtmemektedir.\n* \"Dil kursunun bitişi ile Hareketlilik döneminin başlangıcı arasındaki 7 takvim gününe kadar olan boşluklara hibe verilir, 7 takvim gününden fazla boşluklar için hiç hibe verilmez.\" ifadesi, hareketlilik süresinin minimum 2 ay olması gerektiğini ima etmektedir.\n* \"Hareketlilik döneminin bitiş tarihi, katılımcının ev sahibi kuruluşta hazır bulunması gereken son gündür.\" ifadesi de, minimum süre ile ilgilidir.\n\nAncak, Context'teki en açık ifade, \"3.9 Staj hareketliliği süresi minimum 2 aydır.\" satırından elde edilmiştir.",
+      "latency": 156.597,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.822,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.8866
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 8,\n  \"unsupported_claims\": [\n    \"Minimum Gno: 2.20 (lisans)\" and \"",
+        "relevance note: The ANSWER directly and explicitly states the minimum duration of Erasmus internship mobility, which is exactly what the",
+        "factual note: found 1/1 facts"
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "category": "Erasmus",
+      "question": "How can I apply for Erasmus internship program?",
+      "expected": "Students submit their application documents (CV, transcript) together with a minimum 2-month acceptance letter from the host organization to the Internship Office. Minimum GPA requirement is 2.20 for undergraduates and 2.5 for graduate students.",
+      "actual": "To apply for the Erasmus internship program, follow these steps:\n\n1. An announcement regarding the application requirements and necessary documents is published on the internal web and internship websites at the end of October (chunk id=\"2\" section=\"Introduction\").\n2. Students who receive an acceptance letter with a minimum duration of 2 months from the host organization and meet the required GPA, submit their application documents (CV, transcript) together with the acceptance letter to the Internship Office (chunk id=\"1\" section=\"Introduction\"). The required GPAs are:\n\t* Minimum GPA: 2.20 for undergraduates\n\t* Minimum GPA: 2.5 for graduate students\n3. Students must have their Erasmus+ Internship Mobility Agreement signed by the host organization before starting their internship (chunk id=\"4\" section=\"Introduction\").\n4. The Learning Agreement, Grant Agreement, and Travel and Insurance documents must be completed.\n5. Students submit their Learning Agreements to the relevant faculty member via SUFORM to get academic approval for internship content and upload all documents to the application system.\n\nNote: The acceptance letter should have a minimum duration of 2 months (chunk id=\"4\" section=\"Introduction\").",
+      "latency": 199.809,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8234,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.797
+      },
+      "notes": [
+        "faithfulness note: Some claims in the SYSTEM ANSWER are not explicitly supported by the RETRIEVED CONTEXT, specifically those related to th",
+        "relevance note: The answer provides a clear and step-by-step guide on how to apply for the Erasmus internship program, but it could be m",
+        "factual note: found 3/3 facts"
+      ]
+    },
+    {
+      "question_id": "Q4",
+      "category": "Erasmus",
+      "question": "Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?",
+      "expected": "Erasmus+ hibesi Ulusal Ajans (UA) tarafından her akademik yıl belirlenen miktarlar üzerinden hesaplanır. Hibe ödemesi iki taksit olarak yapılır. Öğrenciler hibe almadan önce üniversiteyle bir Öğrenci Sözleşmesi imzalar. Nihai ödeme öğrencinin karşı kurumda kaldığı gün sayısına göre yapılır.",
+      "actual": "Erasmus öğrenim hareketliliğinde hibe hesaplanırken, Ulusal Ajans tarafından her yıl duyurulan miktarda hibe verilir. Hibe miktarı ve ödeme şekli de Ulusal Ajans tarafından belirlenir ve üniversitelere bildirilir. \n\nHibe hesaplama kuralları çerçevesinde personele yapılacak hibe ödemelerinin hesaplanması yapılır. Hibeler, değişimin sebep olacağı ilave harcamaları dengelemeyi amaçlamaktadır.\n\nAyrıca, öğrenciler staja gitmeden önce staja gidecekleri ev sahibi kuruluşa Erasmus+ Staj Hareketliliği Sözleşmesini imzalatmak zorundadırlar. Öğrenciler tüm evraklarını başvuru sistemine yükler ve SUFORM üzerinden ilgili fakülte üyesinden Öğrenim Staj Sözleşmesi için onay alırlar.\n\nHareketlilik dönemi nin bitiş tarihi, katılımcının ev sahibi kuruluşta hazır bulunması gereken son gündür. Katılımcı, Erasmus+ AB fonlarından [ay] ve [gün] için mali destek alır.",
+      "latency": 167.945,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8795,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.5019,
+        "keyword_coverage": 0.5,
+        "composite_score": 0.6893
+      },
+      "notes": [
+        "faithfulness note: The system answer contains claims that are not explicitly supported by the retrieved context, specifically regarding the",
+        "relevance note: The answer provides a clear explanation of how the Erasmus grant is calculated, but does not directly address the questi",
+        "factual note: no numeric facts; char-4gram overlap=0.50"
+      ]
+    },
+    {
+      "question_id": "Q5",
+      "category": "Library",
+      "question": "Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?",
+      "expected": "Öğrenciler (lisans, lisansüstü, değişim) 60 gün süre ile 60 adet kitap ödünç alabilir. Ayrıca 5 multimedya kaynağı 7 gün, 2 ciltli süreli yayın 7 gün ve 5 popüler dergi 3 gün süreliğine ödünç alınabilir.",
+      "actual": "Kütüphaneden ödünç alabilme koşulları ve süreleri aşağıdaki gibidir:\n\n1. **Paket 2 kullanıcıları**:\n * 30 gün süre ile 10 adet kitap ödünç alabilirler.\n * Başkalarınca istenmedikçe, aynı süreler ile bir kez yenileyebilirler.\n\n2. **Diğer üniversitelerin mensupları**:\n * 15 gün süre ile 2 adet kitap ödünç alabilirler.\n * Başkalarınca istenmedikçe, aynı süreler ile bir kez yenileyebilirler.\n\n3. **Lisans ve değişim öğrencileri**:\n * Web sitesi üzerinden \"Ödünç Kitap İstek Formu (FIC-C82004-01)\" doldurularak istek yapılır.\n * Aynı anda 3 bilgi kaynağı ile sınırlıdır.\n\n4. **Lisansüstü öğrencileri**:\n * Web sitesi üzerinden \"Ödünç Kitap İstek Formu (FIC-C82004-01)\" doldurularak istek yapılır.\n * Aynı anda 5 bilgi kaynağı ile sınırlıdır.\n\n5. **Kütüphanelerarası ödünç (ILL)**:\n * İstekler, web sitesi üzerinden \"Ödünç Kitap İstek Formu (FIC-C82004-01)\" doldurularak yapılır.\n * 3 iş günü ila 15 gün içerisinde sağlanır.\n * Yurtdışından sağlanacak isteklerdeki posta ulaşım süresi bu süreye dahil değildir.\n\n6. **Ödünç süreleri**:\n * Kütüphane ve Bilgi Merkezlerinde mevcut ve ödünç alınabilir ise 3 iş günü ila 15 gün içerisinde sağlanır.\n * Yurtdışından sağlanacak isteklerdeki posta ulaşım süresi bu süreye dahil değildir.\n\n7. **İade süreleri**:\n * Sağlanan bilgi kaynağı geldiğinde istek sahibine duyurulur.\n * 1 hafta içerisinde alınmayanlar için ikinci duyuru yapılarak bilgi kaynağının bir hafta sonra iade edileceği bildirilir.",
+      "latency": 416.519,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.838,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.8,
+        "keyword_coverage": 0.6667,
+        "composite_score": 0.8114
+      },
+      "notes": [
+        "faithfulness note: The system answer contains claims that are not explicitly supported by the retrieved context, specifically regarding lic",
+        "relevance note: The answer provides detailed information about the conditions and durations for borrowing books from the library, but it",
+        "factual note: found 4/5 facts; missing: ['60']"
+      ]
+    },
+    {
+      "question_id": "Q6",
+      "category": "Library",
+      "question": "Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?",
+      "expected": "Kütüphanelerarası ödünç alma (ILL) hizmeti ile Bilgi Merkezi koleksiyonunda bulunmayan kitap ve makaleler diğer kütüphanelerden temin edilebilir. Başvuru Bilgi Merkezi üzerinden yapılır.",
+      "actual": "Kütüphanelerarası ödünç alma (ILL) hizmeti aşağıdaki adımları takip eder:\n\n1. **İsteklerin Alınması**: Bilgi Merkezi Web sayfasındaki \"Ödünç Kitap İstek Formu (FIC-C82004-01)\" doldurularak, e-posta ile gönderilerek veya Çağrı Takip Sistemi'nden iş açarak istekler alınır.\n2. **İsteklerin Değerlendirilmesi ve İstenmesi**: İstekler \"Kütüphanelerarası Ödünç Uygulama Talimatı (FIC-C82004-02)\" doğrultusunda değerlendirilir ve diğer kurumlardan istenir.\n3. **Bilgi Kaynağının Seçimi**: Bilgi Merkezi'nden ödünç alınan bilgi kaynaklarının hasar görmesine neden olan veya kaybeden kurumların işlemi \"Ödünç Verme Prosedürü (PIC-C840-0201)\" doğrultusunda yapılır.\n4. **İade Süresi**: Ödünç alınan bilgi kaynakları süresi sonunda iade edilir.\n5. **Raporlama ve İstatistikler**: Faaliyetler ve istatistikler aylık/yıllık olarak Docserver'a yüklenerek Yönetim'e rapor edilir.\n\nKütüphanelerarası ödünç alma hizmeti, Bilgi Merkezi Direktörü tarafından yönetilir ve \"Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-04)\" doğrultusunda uygulanır.",
+      "latency": 214.706,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8353,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.5188,
+        "keyword_coverage": 0.6,
+        "composite_score": 0.7403
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains several claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically regar",
+        "relevance note: The answer provides a clear and detailed explanation of the steps involved in the Kütüphanelerarası ödünç alma (ILL) ser",
+        "factual note: no numeric facts; char-4gram overlap=0.52"
+      ]
+    },
+    {
+      "question_id": "Q7",
+      "category": "Discipline",
+      "question": "Öğrenci disiplin cezaları nelerdir?",
+      "expected": "Uyarma, kınama, 1 haftadan 1 aya kadar uzaklaştırma, 1-2 yarıyıl uzaklaştırma, yükseköğretim kurumundan çıkarma.",
+      "actual": "Öğrenci disiplin cezaları aşağıdaki gibidir:\n\n1. Uyarma cezası\n2. Kınama cezası\n3. Yükseköğretim kurumundan bir haftadan bir aya kadar uzaklaştırma cezası\n4. 1 veya 2 yarıyıl uzaklaştırma cezası\n5. Yükseköğretim kurumundan çıkarma cezası\n\nBu cezalar, öğrencinin davranışları ve tutumu dikkate alınarak verilebilir. Disiplin amirleri ve kurullarınca verilen disiplin cezalarına karşı onbeş gün içinde üniversite yönetim kuruluna itiraz edilebilir.\n\nAyrıca, yurt başvurusunu engelleyecek tutum ve davranışlar şunlardır:\n\n* Yurda yerleşmiş olmasına rağmen yurt ücretini geç yatırmak\n* Depozito ücretini zamanında yatırmamak\n* Oda teslimini belirtilen zamanda yapmamak\n* Kendisine tahsis edilen yurt odasını başkasına kullandırmak\n\nBu tutum ve davranışlar, disiplin kurulu tarafından cezalandırılabilir.",
+      "latency": 175.312,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7337,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.8301
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER includes specific durations for the expulsion penalty, which are not explicitly mentioned in the RETRI",
+        "relevance note: The answer provides a clear and comprehensive list of student disciplinary penalties, but does not directly address the ",
+        "factual note: found 2/2 facts"
+      ]
+    },
+    {
+      "question_id": "Q8",
+      "category": "Discipline",
+      "question": "Disiplin soruşturması ne kadar sürede sonuçlanmalı?",
+      "expected": "Disiplin soruşturmasında karar en geç 10 gün içinde bildirilmelidir. Disiplin cezası gerektiren fiillerin işlendiği tarihten itibaren 2 yıl geçmesi halinde zamanaşımı oluşur.",
+      "actual": "Disiplin soruşturması sonunda verilen ceza, ÖK’ya bildirilir. ÖK, öğrencilere verilen disiplin cezalarını Disiplin Cezalarının Sisteme Girilmesi Talimatı (FSR-C21001-12) çerçevesinde sisteme işler.\n\nAncak, cinsel taciz ile ilgili ceza öğretim görevinden ve kamu görevinden çıkarmadır. Öğretim elemanlarının ve idari personelin işlediği bu tip suçlarla ilgili, eylemin işlendiği tarihten itibaren en geç 2 yıl içinde soruşturma tamamlanmalı ve karara bağlanmalıdır.\n\nDisiplin cezası vermeye yetkili amirler; uyarma, kınama, yükseköğretim kurumundan bir haftadan bir aya kadar uzaklaştırma cezalarına, soruşturmanın tamamlandığı günden itibaren en geç 10 (on) gün içinde karar vermek zorundadırlar.\n\nBu bilgiler doğrultusunda, disiplin soruşturması sonunda verilen ceza için herhangi bir süre limiti belirtilmemiştir. Ancak, soruşturma tamamlanması ve karara bağlanması için bazı süreler belirlenmiştir:\n\n* Cinsel taciz ile ilgili ceza öğretim görevinden ve kamu görevinden çıkarmadır. Öğretim elemanlarının ve idari personelin işlediği bu tip suçlarla ilgili, eylemin işlendiği tarihten itibaren en geç 2 yıl içinde soruşturma tamamlanmalı ve karara bağlanmalıdır.\n* Disiplin cezası vermeye yetkili amirler; uyarma, kınama, yükseköğretim kurumundan bir haftadan bir aya kadar uzaklaştırma cezalarına, soruşturmanın tamamlandığı günden itibaren en geç 10 (on) gün içinde karar vermek zorundadırlar.\n\nBu bilgiler doğrultusunda, disiplin soruşturması sonunda verilen ceza için herhangi bir süre limiti belirtilmemiştir. Ancak, soruşturma tamamlanması ve karara bağlanması için bazı süreler belirlenmiştir:\n\n* Cinsel taciz ile ilgili ceza öğretim görevinden ve kamu görevinden çıkarmadır. Öğretim elemanlarının ve idari personelin işlediği bu tip suçlarla ilgili, eylemin işlendiği tarihten itibaren en geç 2 yıl içinde soruşturma tamamlanmalı ve karara bağlanmalıdır.\n* Disiplin cezası vermeye yetkili amirler; uyarma, kınama, yükseköğretim kurumundan bir haftadan bir aya kadar uzaklaştırma cezalarına, soruşturmanın tamamlandığı günden itibaren en geç 10 (on) gün içinde karar vermek zorundadırlar.\n\nYani, disiplin soruşturması sonunda verilen ceza için herhangi bir süre limiti belirtilmemiştir.",
+      "latency": 225.817,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7148,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.5789,
+        "composite_score": 0.7794
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains a claim about the time limit for investigating sexual harassment cases, which is not explicit",
+        "relevance note: The answer partially addresses the question by mentioning that there is no specified time limit for disiplin soruşturmas",
+        "factual note: found 3/3 facts"
+      ]
+    },
+    {
+      "question_id": "Q9",
+      "category": "Discipline",
+      "question": "Kopya çekmek hangi disiplin cezasını gerektirir?",
+      "expected": "Sınavlarda kopyaya teşebbüs etmek kınama cezası gerektirir. Kopya çekmek veya çektirmek bir yarıyıl uzaklaştırma cezası gerektirir. Tehditle kopya çekmek, kopya çeken öğrencilerin sınav salonundan çıkarılmasına engel olmak veya başkasının yerine sınava girmek iki yarıyıl uzaklaştırma cezası gerektirir.",
+      "actual": "Kopya çekmek 1) Sınavlarda kopya çekmek veya çektirmek, 2) Sınavlarda kopyaya teşebbüs etmek disiplin cezasını gerektirir. Bu cezalar öğrenciye iki yarıyıl uzaklaştırma cezası ile sonuçlanabilir.\n\nYanlış anlamayı önlemek için Context'te geçen ilgili bölümler:\n\n* \"Sınavlarda kopya çekmek veya çektirmek\" (chunk id: 1)\n* \"Sınavlarda kopyaya teşebbüs etmek\" (chunk id: 2)",
+      "latency": 105.772,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.9175,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.4901,
+        "keyword_coverage": 0.6667,
+        "composite_score": 0.7878
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains a claim that is not explicitly supported by the RETRIEVED CONTEXT, which only mentions 'Sınav",
+        "relevance note: The answer directly addresses the question by specifying the specific actions that result in disiplin cezası, and also p",
+        "factual note: no numeric facts; char-4gram overlap=0.49"
+      ]
+    },
+    {
+      "question_id": "Q10",
+      "category": "Scholarship",
+      "question": "Burs başvurusu nasıl yapılır?",
+      "expected": "Burs başvurusu ilan edilen tarihlerde başvuru sistemi üzerinden yapılır. Akademik Başarı ve İhtiyaç Bursu için ihtiyacı kanıtlayıcı belgeler sunulması gerekir. Üstün Akademik Başarı Bursu için herhangi bir başvuru yapılmasına gerek yoktur.",
+      "actual": "Connection timeout: LLM request took too long.",
+      "latency": 371.23,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.4448,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.0,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.0,
+        "composite_score": 0.3734
+      },
+      "notes": [
+        "faithfulness note: The system answer contains a generic error message and a task description, which are not supported by the retrieved cont",
+        "relevance note: The answer is unrelated to the question about how to make a burs application and instead mentions a technical error.",
+        "factual note: no numeric facts; char-4gram overlap=0.00"
+      ]
+    },
+    {
+      "question_id": "Q11",
+      "category": "Scholarship",
+      "question": "Burs devam şartları nelerdir?",
+      "expected": "Burs devam şartları bursun türüne göre değişir. Üstün Akademik Başarı Bursu için GNO en az 3.00, ilk yıl 34 SÜ / sonraki yıllar 30 SÜ kredi gerekir. Akademik Başarı ve İhtiyaç Bursu için GNO en az 2.50 ve 34 SÜ kredi gerekir. İlk giriş bursları akademik başarı durumuna bakılmaksızın normal öğrenim süresince devam eder. Disiplin cezalarında: kınama ve kısa süreli uzaklaştırmada burs devam eder, 1-2 yarıyıl uzaklaştırmada o dönem kesilir ama sonra yeniden bağlanır, çıkarmada tamamen kesilir.",
+      "actual": "Burs devam şartları aşağıdaki gibidir:\n\n1. Lisansüstü bursların süresi ve devam koşulları, her akademik dönemin başında Enstitü Yönetim Kurulu kararı ile yeniden belirlenir (Chunk 2, a).\n2. Lisansüstü burslar kapsamındaki aylık nakit ödemeler, yüksek lisans öğrencileri için en fazla 10 ay (Eylül-Haziran), doktora öğrencileri için ise 12 ay (Eylül-Ağustos) süreyle yapılır (Chunk 2, b).\n3. SÜ dışındaki gerçek ve tüzel kişi ya da kurumlar tarafından sağlanan lisansüstü burslarda nakit burs ödeme süreleri değişiklik gösterebilir (Chunk 2, c).\n4. Lisansüstü programlara burslu statüde yerleşen öğrencilere farklı oda kategorilerinde yurtta konaklama desteği sağlanabilir (Chunk 2, a).\n5. Öğrencilerin burs devamlılığı her akademik dönem başında Lisansüstü Bursluluk Devam Koşulları Tablosu (FSR-C16001-18) ’na göre değerlendirilerek karara bağlanır ve ÖK’ya iletilir (Chunk 4, 6.2).\n6. SÜ dışındaki resmi kurum ve kuruluşlar (TÜBİTAK vb.) tarafından sağlanan burs değişiklikleri ÖK’ya bildilir (Chunk 4, 6.3).\n\nBu şartlar, lisansüstü öğrencilerin burslarını devam ettirebilmeleri için gereken koşulları belirlemektedir.",
+      "latency": 210.745,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7376,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.3333,
+        "keyword_coverage": 0.2632,
+        "composite_score": 0.6046
+      },
+      "notes": [
+        "faithfulness note: The system answer contains several claims that are not explicitly supported by the retrieved context.",
+        "relevance note: The answer provides a clear and detailed explanation of the conditions for continuing burs support, directly addressing ",
+        "factual note: found 2/6 facts; missing: ['3.00', '30', '34', '2.50']"
+      ]
+    },
+    {
+      "question_id": "Q12",
+      "category": "Graduate",
+      "question": "Yüksek lisans programı kaç yarıyıl sürer?",
+      "expected": "Tezli yüksek lisans en fazla 6 yarıyıl, tezsiz yüksek lisans en fazla 3 yarıyıldır.",
+      "actual": "Yüksek lisans programı süresi, bilimsel hazırlık süresi hariç, her dönem için kayıt yaptırıp yaptırmadığına bakılmaksızın dört dönem olup, azami süre altı dönemdir.",
+      "latency": 109.083,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8252,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.4,
+        "composite_score": 0.6076
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER claims that the duration is four periods without considering registration status, but the RETRIEVED CO",
+        "relevance note: The answer provides a clear and relevant response to the question about the duration of the master's program, but does n",
+        "factual note: found 0/2 facts; missing: ['3', '6']"
+      ]
+    },
+    {
+      "question_id": "Q13",
+      "category": "Graduate",
+      "question": "Doktora yeterlik sınavı ne zaman yapılır?",
+      "expected": "Derslerini ve seminerini tamamlayan öğrenciler doktora yeterlik sınavına girebilir. Bir yılda en fazla iki kez girebilirler.",
+      "actual": "Doktora yeterlik sınavı, ilgili enstitü yönetim kurulu tarafından onaylanan doktora yeterlik komitesi tarafından düzenlenir ve yürütülür. Komite, farklı alanlardaki sınavları hazırlamak, uygulamak ve değerlendirmek amacıyla sınav jürileri kurar.\n\nSınavlar, yazılı ve sözlü olarak iki bölüm halinde yapılır. Yazılı sınavda başarılı olan öğrenci sözlü sınava alınır. Sınavların ağırlıkları ile notlarının hesaplanmasında ilgili enstitü kurulu kararına göre işlem yapılır.\n\nYeterlik sınavı toplantıları dinleyicilere açık olarak yapılır ve sınav jürileri öğrencinin yazılı ve sözlü sınavlardaki başarı durumunu değerlendirerek öğrencinin başarılı veya başarısız olduğuna salt çoğunlukla karar verir.",
+      "latency": 118.543,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7408,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.3423,
+        "keyword_coverage": 0.2308,
+        "composite_score": 0.6678
+      },
+      "notes": [
+        "faithfulness note: The system answer contains two claims that are not explicitly supported by the retrieved context: the first claim is too",
+        "relevance note: The answer provides a clear explanation of the process and structure of the doktora yeterlik sınavı, but does not direct",
+        "factual note: no numeric facts; char-4gram overlap=0.34"
+      ]
+    },
+    {
+      "question_id": "Q14",
+      "category": "Graduate",
+      "question": "Tez savunması için jüri kaç kişiden oluşur?",
+      "expected": "Yüksek lisans tez savunma jürisi, biri tez danışmanı ve en az biri üniversite dışından olmak üzere üç veya beş öğretim üyesinden oluşur. Doktora tez savunma jürisi, danışman dahil beş öğretim üyesinden oluşur ve en az ikisi başka bir yükseköğretim kurumunun öğretim üyesi olmalıdır.",
+      "actual": "Connection timeout: LLM request took too long.",
+      "latency": 373.989,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.3937,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.0,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.0,
+        "composite_score": 0.3581
+      },
+      "notes": [
+        "faithfulness note: The system answer does not contain any factual claims that are explicitly supported by the retrieved context, but it doe",
+        "relevance note: The answer is unrelated to the question about the composition of a thesis defense jury and instead mentions a technical ",
+        "factual note: no numeric facts; char-4gram overlap=0.00"
+      ]
+    },
+    {
+      "question_id": "Q15",
+      "category": "Undergraduate",
+      "question": "Yatay geçiş başvurusu için GNO şartı nedir?",
+      "expected": "Yatay geçiş başvurusu için başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca ÖSYM puanının taban puanına eşit veya yüksek olması şartı aranır.",
+      "actual": "Yatay geçiş başvurusu için GNO şartı %60'dır. Bu koşul, lisans programlarına yatay geçiş başvurularında aranmaktadır.",
+      "latency": 95.243,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7752,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.1435,
+        "keyword_coverage": 0.1667,
+        "composite_score": 0.6584
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER is mostly supported by the RETRIEVED CONTEXT, but it incorrectly assumes that the GNO condition is spe",
+        "relevance note: The answer directly addresses the question by providing a specific percentage value for the GNO requirement.",
+        "factual note: no numeric facts; char-4gram overlap=0.14"
+      ]
+    },
+    {
+      "question_id": "Q16",
+      "category": "Undergraduate",
+      "question": "Çift anadal programına nasıl başvurulur?",
+      "expected": "Çift anadal programına başvuru için GNO en az 3.20 olmalı ve öğrenci sınıfının ilk %20'sinde yer almalıdır. Tüm dersleri geçmiş olmalıdır. Başvuru en erken 2. dönem, en geç 4. dönemde yapılabilir. En fazla bir diploma programına daha kayıt yaptırılabilir.",
+      "actual": "Çift anadal programına başvurular, Akademik Takvim’de belirtilen tarihlerde, ilgili çift anadal diploma programının bağlı olduğu Fakülteye dilekçe ile yapılır. Öğrenciler, lisans öğrenimlerinin en erken üçüncü, en geç beşinci dönemlerinin başında programa başlayacakları şekilde; en erken ikinci en geç dördüncü dönemlerinde çift anadal başvurusu yapabilirler.\n\nAyrıca, öğrencinin çift anadal diploma programına başvurusunun geçerli olabilmesi için aşağıdaki koşulları sağlaması gerekir:\n\n* Başarı sıralaması şartı aranan programlarda çift anadal yapmak isteyen öğrencinin çift anadal yapacağı program için, kayıt olduğu yıla ait YKS başarı sıralaması şartını sağlamış olması.\n\nBu bilgiler, Çift Anadal Yönergesi (ISR-C290-02) | Yönerge belgesinden alınmıştır.",
+      "latency": 131.684,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8507,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.25,
+        "keyword_coverage": 0.4643,
+        "composite_score": 0.6777
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains a claim about the requirement for students to meet the YKS success score condition for the pr",
+        "relevance note: The answer provides clear and specific information on how to apply for a double major program, including the required do",
+        "factual note: found 1/4 facts; missing: ['3.20', '4', '20']"
+      ]
+    },
+    {
+      "question_id": "Q17",
+      "category": "Undergraduate",
+      "question": "Ders ekleme-bırakma süresi ne kadar?",
+      "expected": "Ders ekleme-bırakma işlemi, sonbahar ve ilkbahar dönemlerinde derslerin başladığı haftayı takip eden ikinci hafta içinde, akademik takvimde belirtilen tarihlerde yapılır.",
+      "actual": "Ders ekleme-bırakma süresi için çeşitli bilgiler mevcuttur:\n\n* Güz ve Bahar dönemlerinde, lisans ve lisansüstü öğrenciler derslerin başlamasını izleyen 2. haftanın içinde, isteğe bağlı yaz okulunda ise derslerin başladığı ilk hafta içinde akademik takvimde ilan edilen ders-ekleme bırakma tarihlerinde, danışmanlarının görüşünü alarak Information System üzerinden kayıtlı oldukları derslerde değişiklik ya da yeni ders kaydı yapabilirler.\n* Ders ekleme-bırakma süresi bitiminden itibaren, iki haftadan fazla geçmemiş olması koşulu ile yapılabilir.\n* İsteğe bağlı yaz dönemi için ders kayıtlarını, en geç ders ekleme -bırakma son gününde de gerçekleştiremeyen öğrenciler; ders-ekleme bırakma son gününü takip eden ilk iş gününde, kayıt olamama gerekçeleri ile birlikte yazılı olarak başvurmaları ve mazeretlerinin Enstitü Yönetim Kurulu tarafından uygun görülmesi ve ders kayıt ücretini kendilerine verilen süre içinde ödemeleri halinde ders kayıtları yapılır.\n\nBu bilgilerden yola çıkarak, ders ekleme-bırakma süresi Güz ve Bahar dönemlerinde 2 hafta, isteğe bağlı yaz döneminde ise ilk hafta olarak belirlenmiştir.",
+      "latency": 147.656,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8543,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.7244,
+        "keyword_coverage": 0.65,
+        "composite_score": 0.7974
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains some claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically those re",
+        "relevance note: The answer provides a clear and detailed explanation of the course addition-drop period, but does not directly state the",
+        "factual note: no numeric facts; char-4gram overlap=0.72"
+      ]
+    },
+    {
+      "question_id": "Q18",
+      "category": "Registration",
+      "question": "Mezuniyet başvurusu nasıl yapılır?",
+      "expected": "Mezuniyet başvurusu ÖBS üzerinden yapılır.",
+      "actual": "Mezuniyet başvurusu yapabilmek için öğrenciler, akademik takvimde belirtilen tarih aralığında ÖBS üzerinden ÖK'ya başvuru yapmaları gerekir. Başvuru yapan mezun adaylarından, dönem sonunda mezuniyet hakkı elde edemeyenlerin bir sonraki dönem başvurularını yenilemeleri gerekir.\n\nAyrıca, öğrencilerin mezuniyet koşullarını tamamlama durumlarına ilişkin Mezuniyet Listeleri, Enstitü Müdürü onaylı olarak, Enstitüler tarafından ÖK’ya iletilir. Mezun adayı olunabilmesi için ilgili dönemde ders/dönem kaydının yapılmış olması veya değişim programı kapsamında öğrenim görüyor olunması gerekir.\n\nMezuniyet başvurusunda bulunan öğrencilerin listesi e-posta ve danışman bilgileri ile birlikte Enstitülere gönderilir. Akademik Danışman, öğrencinin mezuniyet koşullarını yerine getirip getirmediği konusunda bilgi istendiğinde Enstitüye görüş bildirir.\n\nÖzetle, mezuniyet başvurusu için öğrencilerin ÖBS üzerinden başvuru yapmaları ve ilgili tarih aralığında başvurularının olması gerekir.",
+      "latency": 149.572,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8206,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.8462,
+        "keyword_coverage": 0.8,
+        "composite_score": 0.7577
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically regarding the",
+        "relevance note: The answer provides a clear and detailed explanation of the steps required for graduation application, but could be more",
+        "factual note: no numeric facts; char-4gram overlap=0.85"
+      ]
+    },
+    {
+      "question_id": "Q19",
+      "category": "Registration",
+      "question": "Kayıt dondurma şartları nelerdir?",
+      "expected": "Dönem izni (kayıt dondurma); sağlık, maddi, aile, kişisel, akademik ve beklenmedik zorunlu olaylar gibi nedenlerle, ayrıca askerlik, gözaltı, tutukluluk veya mahkûmiyet durumlarında verilebilir. İzin gerekçesine ilişkin belgeler eklenerek dilekçe ile derslerin başlamasını takip eden 4. haftanın son iş gününe kadar ilgili fakülte dekanlığına başvurulur. Bir defada en çok 2 dönem, toplam 4 dönem izin verilebilir.",
+      "actual": "Kayıt dondurma şartları hakkında bilgi almak için, Context'te \"kayıt dondurma\" kelimesini arıyoruz. Bu kelime, \"Dönem Kayıtları Yönergesi (ISR-C220-01)\" belgesinin 1.2. bölümünde geçmektedir.\n\nBelgeden aldığımız bilgiye göre:\n\n* Lisans ve lisansüstü öğrenciler, akademik takvimde ilan edilen ders ekleme-bırakma süresi içinde kayıt yapabilirler.\n* Bu süre içinde dönem kayıtlarını yapamayan öğrenciler, ders ekleme-bırakma süresi içinde kayıt yapabilirler.\n* Lisans ve lisansüstü öğrencilerin, ders ekleme-bırakma süresi içinde kayıt yapabilmesi için, ödemekle yükümlü oldukları dönem öğrenim ücretlerini ödemeleri ve varsa ders kayıtlarına engel teşkil eden, diğer yükümlülüklerini tamamlamaları gerekir.\n\nBu bilgilerden yola çıkarak, kayıt dondurma şartları aşağıdaki gibidir:\n\n* Lisans ve lisansüstü öğrenciler için:\n + Ders ekleme-bırakma süresi içinde kaydı yapabilirler.\n + Ödemekle yükümlü oldukları dönem öğrenim ücretlerini ödemeli ve varsa ders kayıtlarına engel teşkil eden diğer yükümlülüklerini tamamlamalıdırlar.\n\nDikkat edileceği gibi, bu şartlar sadece lisans ve lisansüstü öğrenciler için geçerlidir.",
+      "latency": 160.024,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7219,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 0.1739,
+        "composite_score": 0.6416
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains several claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically regar",
+        "relevance note: The answer provides a clear and relevant explanation of the conditions for freezing registration, but it could be more c",
+        "factual note: found 1/2 facts; missing: ['4']"
+      ]
+    },
+    {
+      "question_id": "Q20",
+      "category": "English",
+      "question": "What is the minimum GPA requirement for Erasmus?",
+      "expected": "Minimum GPA is 2.20 for undergrad and 2.5 for graduate students.",
+      "actual": "After carefully reading the provided documents and chunks, I have extracted the relevant information regarding the minimum GPA requirement for Erasmus:\n\nFor undergraduates:\n- Minimum GPA: 2.20 (as mentioned in chunk #1 of document \"Procedure for Students Participating in Erasmus Internship Mobility\")\n- Minimum GPA: 2.20/4.0 (as mentioned in chunk #5 of document \"Instruction letter for Outgoing Students within the Scope of Exchange Programs\")\n\nFor graduate students:\n- Minimum GPA: 2.50 (as mentioned in chunk #1 of document \"Procedure for Students Participating in Erasmus Internship Mobility\")\n- Minimum GPA: 2.50/4.0 (as mentioned in chunk #5 of document \"Instruction letter for Outgoing Students within the Scope of Exchange Programs\")\n\nTherefore, the minimum GPA requirements for Erasmus are:\n\n1. For undergraduates: 2.20\n2. For graduate students: 2.50",
+      "latency": 113.966,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7755,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.8727
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains two claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically the inclu",
+        "relevance note: The answer directly and thoroughly addresses the question, providing clear and specific information about the minimum GP",
+        "factual note: found 2/2 facts"
+      ]
+    },
+    {
+      "question_id": "Q21",
+      "category": "English",
+      "question": "How many books can I borrow from the library?",
+      "expected": "Undergraduate, graduate, and exchange students can borrow 60 books for 60 days, 5 multimedia items for 7 days, and 2 bound periodicals for 7 days.",
+      "actual": "After carefully reading the context, I was unable to find any specific information about the number of books that can be borrowed from the library. The context mentions various rules and limits for borrowing different types of resources, but it does not provide a general limit on the number of books that can be borrowed.\n\nHowever, I did find some relevant information in chunk #8:\n\n\"Academic and teaching “Emeritus” employees, administrative staff, undergraduate, graduate and exchange students can request resources from the “General Book Collection”, “Oversize Book Collection” and “Multimedia Collection” by filling out the Request via Cargo Form.\"\n\nThis suggests that there is no specific limit on the number of books that can be borrowed for these groups. However, it does not provide a general answer to the question.\n\nTherefore, I must conclude that the context does not provide enough information to determine how many books can be borrowed from the library.",
+      "latency": 115.152,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6998,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.5714,
+        "composite_score": 0.5249
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER's claim about the implication of the Request via Cargo Form is not explicitly supported by the RETRIEV",
+        "relevance note: The answer partially addresses the question by providing some relevant information, but it does not directly and complet",
+        "factual note: found 0/4 facts; missing: ['7', '5', '2', '60']"
+      ]
+    },
+    {
+      "question_id": "Q22",
+      "category": "English",
+      "question": "What are the disciplinary penalties for students?",
+      "expected": "Warning, reprimand, suspension, and expulsion from university.",
+      "actual": "After carefully reading the provided documents and chunks, I have extracted the following disciplinary penalties for students:\n\n**Warning and Reprimand**\n\n* Can be inflicted by the Dormitory Manager (Student Housing Instruction Letter)\n* Students can object to warning and reprimand punishments by appealing to the Disciplinary Board within 5 working days (Student Housing Instruction Letter)\n\n**Suspension**\n\n* Punishment for sexual harassment or assault: suspension for two semesters or expulsion (A510 Procedures and Measures against Sexual Harassment)\n* Can be imposed for disciplinary offenses requiring suspension from the higher education institution (Disciplinary Procedure of Students)\n* Prescription period: within 1 month for suspension (Disciplinary Procedure of Students)\n\n**Dismissal**\n\n* Punishment for sexual harassment or assault: suspension for two semesters or expulsion (A510 Procedures and Measures against Sexual Harassment)\n* Can be imposed for disciplinary offenses requiring dismissal from the higher education institution (Disciplinary Procedure of Students)\n* Prescription period: within 3 months for dismissal (Disciplinary Procedure of Students)\n\n**Repayment of Tuition Fees**\n\n* Students who are suspended due to disciplinary infraction have to pay their tuition fees for the academic term which is their obligation (Instruction Letter for Student Discipline)\n\nNote that these penalties may apply to different groups, such as undergraduate and graduate students. However, specific conditions or requirements for each group are not mentioned in the context.\n\nAlso, it's worth noting that the prescription periods mentioned in the context are:\n\n* 1 month for warning, reprimand, and suspension\n* 3 months for suspension from the higher education institution for one or two semesters and dismissal from the higher education institution",
+      "latency": 137.748,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7006,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.7069,
+        "keyword_coverage": 0.8333,
+        "composite_score": 0.6869
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically those related",
+        "relevance note: The answer provides a clear and comprehensive list of disciplinary penalties for students, but does not explicitly state",
+        "factual note: no numeric facts; char-4gram overlap=0.71"
+      ]
+    },
+    {
+      "question_id": "Q23",
+      "category": "Numeric",
+      "question": "Lisans mezuniyeti için kaç kredi gerekiyor?",
+      "expected": "Lisans mezuniyeti için kayıtlı olunan diploma programının gerektirdiği tüm mezuniyet yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
+      "actual": "Lisans mezuniyeti için öğrencilerin alması gereken toplam kredi limiti, SÜ'de kayıtlı olduğu diploma programından mezun olabilmek için alması gereken toplam kredisinin %12'sini geçmemek üzere; özel öğrenci olarak aldığı dersler ile ulusal ve uluslararası öğrenci değişim programları kapsamında aynı düzeyde başka bir yükseköğretim kurumundan aldığı ders veya uygulamaların kredi toplamı, öğrencinin kayıtlı olduğu diploma programının mezuniyet toplam kredisinin %33’ünü geçemez.\n\nBu nedenle, lisans mezuniyeti için gereken kredi limiti, SÜ'de kayıtlı olduğu diploma programından mezun olabilmek için alması gereken toplam kredisinin 12%'si olarak hesaplanmalıdır.",
+      "latency": 142.214,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8419,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.3158,
+        "composite_score": 0.5676
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains a paraphrased version of the claim, but the original context only mentions that the total cre",
+        "relevance note: The answer partially addresses the question by providing a general rule for calculating the required credits, but it doe",
+        "factual note: found 0/1 facts; missing: ['2.00']"
+      ]
+    },
+    {
+      "question_id": "Q24",
+      "category": "Numeric",
+      "question": "Bir dersin kaç kez tekrar edilebilir?",
+      "expected": "Geçer not alınan dersler, notun alındığı dönemi izleyen en çok 3 dönem içinde tekrar edilebilir (izinli dönemler ve yaz dönemleri hariç). Bu bir zaman sınırıdır, tekrar sayısı sınırı değildir. Başarısız olunan zorunlu dersler ise mezuniyete kadar tekrar edilerek başarılmalıdır.",
+      "actual": "Bir dersin kaç kez tekrar edilebileceği hususunda çeşitli kurallar mevcuttur. Lisans öğrencileri, daha önce geçer not aldıkları derslere en çok 3 dönem içinde tekrar kayıt olabilirler (4.2.a). Lisansüstü öğrenciler ise, \"C, C+\" veya \"B-\" notu aldıkları derslere en geç kayıtlı olunan programdaki dersleri tamamlama süresinin sonuna kadar isteğe bağlı olarak tekrar kayıt olabilirler (4.2.b).\n\nAyrıca, lisans öğrencilerinin birinci sınıfta verilen üniversite derslerinin, dersin açıldığı ilk dönemde alınması gerekir (4.2.d). Lisansüstü öğrencilerin ise \"S, B, B+, A-\" veya \"A\" notu aldıkları derslere tekrar kayıt olmalarına izin verilmez (4.2.b).\n\nDers tekrarının genel kuralları da mevcuttur: Tekrarlanan ders, doğrudan, daha önce alınan dersin yerine sayıldığından öğrencilerin ayrıca bir işlem yapması gerekmez (3.g). Diğer üniversitelerden \"T\" notu ile transfer edilen dersler, ders tekrarı işleminde kullanılamaz (3.i).\n\nBu kurallar çerçevesinde, lisans öğrencileri en çok 3 dönem içinde bir dersi tekrar edebilirken, lisansüstü öğrenciler ise daha önce aldıkları derslere isteğe bağlı olarak tekrar kayıt olabilirler.",
+      "latency": 219.919,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8547,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.375,
+        "composite_score": 0.8664
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically regarding the",
+        "relevance note: The answer provides a clear and detailed explanation of the rules governing course repetition, directly addressing the q",
+        "factual note: found 1/1 facts"
+      ]
+    },
+    {
+      "question_id": "Q25",
+      "category": "Procedure",
+      "question": "Staj başvurusu nasıl yapılır?",
+      "expected": "Staj başvurusu Kariyer Geliştirme ve Staj Ofisi üzerinden yapılır. Uluslararası staj süreci IPAR'a bağlı bu ofis tarafından yürütülür.",
+      "actual": "Staj başvurusu nasıl yapılır?\n\n1. İlgili Öğretim Üyeleri Mülakat Değerlendirme Formu (FIPAR-C71002-02) doldurulur.\n2. Öğrenciler özgeçmişlerini, transkriptlerini ve varsa ikili anlaşmada belirtilen EK bilgileri Kariyer Geliştirme ve Staj Ofisine göndererek başvurularını yaparlar.\n3. Başvuru koşullarını sağlayan öğrenciler, staj yapılacak kuruluştan minimum 2 aylık kabul belgesi alan ve gerekli GNO'yu sağlayan öğrencilerdir (GNO Lisans öğrencileri için en az: 2.20 / Lisansüstü öğrencileri için en az: 2.5).\n4. Öğrenciler başvuru evraklarını (özgeçmiş, transkript) Kariyer Geliştirme ve Staj Ofisi'ne teslim eder.\n5. Staj hareketliliğine gidecek öğrencilerle Hibe Sözleşmesi imzalanır ve hibe ödemesi 2 taksitle yapılır.\n\nStaj başvurusu için gereken belgeler:\n\n* Özgeçmiş\n* Transkript\n* İkili anlaşmada belirtilen EK bilgiler (varsa)\n* Kabul belgesi (staj yapılacak kuruluştan minimum 2 aylık)\n\nStaj başvurusu için gereken GNO değerleri:\n\n* Lisans öğrencileri için en az: 2.20\n* Lisansüstü öğrencileri için en az: 2.5",
+      "latency": 284.844,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6972,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.3871,
+        "keyword_coverage": 0.625,
+        "composite_score": 0.6059
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically regarding the",
+        "relevance note: The answer provides a clear and detailed explanation of the staj application process, but it does not directly address h",
+        "factual note: no numeric facts; char-4gram overlap=0.39"
+      ]
+    },
+    {
+      "question_id": "Q26",
+      "category": "Procedure",
+      "question": "Transkript nasıl alınır?",
+      "expected": "Transkript, MySU'daki online belge talep formu doldurularak Öğrenci Kaynakları'ndan (ÖK) talep edilir. ÖK raporlama yazılımı ile hazırlar. Basılı kopya ücretlidir, e-imzalı transkript ücretsizdir. Transkriptte öğrencinin tüm dersleri, kodları, SÜ ve AKTS kredileri, notları, DNO ve GNO bilgileri yer alır.",
+      "actual": "Transkript alma prosedürü hakkında bilgi almak için, \"Transkript Düzenleme Prosedürü (PSR-C230-0103)\" ve \"Akademik Durum Değerlendirme Prosedürü (PSR-C230-0102)\" belgelerini incelememiz gerekir.\n\n\"Transkript Düzenleme Prosedürü (PSR-C230-0103)\" belgesinde, öğrenciler transkript talebinde bulunmak için online belge talep formunu doldurabilirler. Basılı kopya transkript talebi için ise Mütevelli Heyeti Kararı ile o yıl için belirlenen transkript ücretini Akbank Merkez Şube 9999 hesabına açıklamalı olarak yatırarak bankadan dekont alması gerekir.\n\nAyrıca, \"Akademik Durum Değerlendirme Prosedürü (PSR-C230-0102)\" belgesinde, öğrenciler transkript talebi olduğunda online belge talep formu ile basılı kopya transkript başvurusu yapan öğrencilerin ücreti ödemiş olduklarını gösteren banka dekontunu ilgili forma yüklemesi gerekir.\n\nTranskript alma prosedürü aşağıdaki adımları içerir:\n\n1. Online belge talep formunu doldurmak (online transkript talebi)\n2. Mütevelli Heyeti Kararı ile o yıl için belirlenen transkript ücretini Akbank Merkez Şube 9999 hesabına açıklamalı olarak yatırmak (basılı kopya transkript talebi)\n3. Bankadan dekont almak\n4. Online belge talep formu ile basılı kopya transkript başvurusu yapan öğrencilerin ücreti ödemiş olduklarını gösteren banka dekontunu ilgili forma yüklemek\n\nTranskript alma süresi, 1-2 gün arasında değişebilir.\n\nBu prosedürde, öğrenciler için farklı gruplar için farklı koşullar uygulanabilir. Örneğin, lisans/lisansüstü öğrencileri için farklı transkript ücretleri ve farklı teslim süreleri olabilir.\n\nSonuç olarak, transkript alma prosedürü öğrencilerin taleplerine göre değişebilir. Öğrenciler online belge talep formunu doldurabilirler veya Mütevelli Heyeti Kararı ile o yıl için belirlenen transkript ücretini Akbank Merkez Şube 9999 hesabına açıklamalı olarak yatırmak suretiyle basılı kopya transkript talebi yapabilirler.",
+      "latency": 405.318,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7516,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.3536,
+        "keyword_coverage": 0.3143,
+        "composite_score": 0.6739
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains some claims that are not explicitly supported by the RETRIEVED CONTEXT. Specifically, the dur",
+        "relevance note: The answer provides a clear and detailed explanation of the transkript alma prosedürü, including online and basılı kopya",
+        "factual note: no numeric facts; char-4gram overlap=0.35"
+      ]
+    },
+    {
+      "question_id": "Q27",
+      "category": "Procedure",
+      "question": "Öğrenci belgesi nereden alınır?",
+      "expected": "Öğrenci belgesi, Öğrenci Kaynakları (ÖK) birimi tarafından hazırlanır. MySU'daki online Belge Talep Formu doldurularak başvuru yapılır. Belge 2 iş günü içinde hazırlanır ve en fazla 2 hafta muhafaza edilir; bu sürede teslim alınmazsa imha edilir.",
+      "actual": "Öğrenci belgesi nereden alınır?\n\n1. Öğrenci, gerek olduğunda Öğrenci Belgesi Öğrenci Kaynakları Web Sitesi'nde yer alan online Belge Talep Formu'nu kullanarak ÖK'ya iletir.\n2. Öğrenci Belgesi isteği,i belge talep formu aracılığıyla online olarak ÖK'ya iletilir.\n3. Öğrenci, Öğrenci Belgesi’nin bir kişi ya da kuruma posta yolu ile iletilmesini istiyorsa, bunu yazılı olarak söz konusu adresi de belirterek ÖK'ya bildirmelidir.\n\nÖğrenci belgesinin hazırlanması ve teslimi için en fazla 2 iş günü ve 2 hafta içinde alınmalıdır.",
+      "latency": 157.43,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8819,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.4828,
+        "composite_score": 0.8746
+      },
+      "notes": [
+        "faithfulness note: The system answer contains two claims that are not explicitly supported by the retrieved context: the first claim mentio",
+        "relevance note: The answer provides a clear and step-by-step process for obtaining a student ID, but could be more concise and directly ",
+        "factual note: found 1/1 facts"
+      ]
+    },
+    {
+      "question_id": "Q28",
+      "category": "Edge",
+      "question": "Cinsel taciz şikayeti nasıl yapılır?",
+      "expected": "Cinsel taciz şikayeti Cinsel Tacize Karşı Önlem ve Destek Komitesi'ne telefon, e-posta, yüz yüze görüşme veya yazılı olarak yapılabilir. Başvuranın ispatla yükümlülüğü yoktur.",
+      "actual": "Cinsel taciz şikayeti nasıl yapılır sorusuna yanıt olarak, aşağıdaki adımları takip etmek gerekir:\n\n1. Şikayetçi olunan kişi veya grup Kurallar Cinsel Taciz Durumunu Bildirmek ve Başvuru bölümünde belirtilen adımları izlemek.\n2. Olayın niteliğinden emin olunmasa dahi, başvuruda bulunabilirler.\n3. Başvuran ilgili disiplin sürecini başlatmamış olsa da adli mercilere başvurabilir.\n4. Başvuran en geç 6 ay içinde şikayetçi olmaz ise sonrasında soruşturma ve kovuşturma yapılamaz.\n\nYani, cinsel taciz şikayeti nasıl yapılır sorusuna yanıt olarak, yukarıdaki adımları takip etmek gerekir.",
+      "latency": 417.998,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7819,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.2716,
+        "keyword_coverage": 0.2727,
+        "composite_score": 0.6625
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains some invented details and paraphrasing that are not explicitly supported by the RETRIEVED CON",
+        "relevance note: The answer provides a clear and step-by-step guide on how to file a complaint for sexual harassment, directly addressing",
+        "factual note: no numeric facts; char-4gram overlap=0.27"
+      ]
+    },
+    {
+      "question_id": "Q29",
+      "category": "Edge",
+      "question": "İtiraz süresi ne kadar?",
+      "expected": "Disiplin kararlarına itiraz süresi, cezanın tebliğ tarihinden itibaren 15 gündür. İdari yargı yoluna başvuru süresi 60 gündür.",
+      "actual": "İtiraz süresi 15 gün, 2 ay veya 5 iş günü olabilir. \n\n- Öğrenci Disiplin Prosedürü (PSR-C210-0101) belgesinde, disiplin cezalarına karşı onbeş gün içinde Üniversite Yönetim Kuruluna itiraz edilebilir.\n- Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme Prosedürü belgesinde, hak sahipliği kararından itibaren 2 ay içerisinde İtiraz bildiriminden itibaren 2 ay içerisinde itiraz edilebilir.\n- Üniversite İhale Yönetmeliğinde, ihale sürecindeki hukuka aykırı işlem veya eylemler nedeniyle hak kaybına ya da zarara uğradığını iddia eden aday veya istekliler, ihale sürecindeki işlemlerin hukuka aykırılığı iddiasıyla 5 iş günü içinde itiraz edebilirler.\n- Yurtlar Yönergesi (ISER-C910-01) belgesinde, uyarma ve kınama cezalarına karşı disiplin kuruluna, kurumdan çıkarma cezasına karşı kurumun bağlı bulunduğu il müdürlüğüne, cezanın tebliğ tarihinden itibaren 5 iş günü içinde itirazda bulunulabilir.",
+      "latency": 157.081,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8003,
+        "faithfulness": 0.4,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 0.5333,
+        "composite_score": 0.6051
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically regarding the",
+        "relevance note: The answer provides multiple relevant examples of different procedures and their respective appeal periods, but could be",
+        "factual note: found 1/2 facts; missing: ['60']"
+      ]
+    },
+    {
+      "question_id": "Q30",
+      "category": "Edge",
+      "question": "Sabancı Üniversitesi nerede?",
+      "expected": "Sabancı Üniversitesi İstanbul Tuzla'da bulunmaktadır.",
+      "actual": "Sabancı Üniversitesi'nin adresi, Context'te verilen bilgilerden yola çıkarak, \"Orta Mahalle, Üniversite Caddesi No: 27 34956 Tuzla-İstanbul\" olarak belirlenmektedir.",
+      "latency": 101.46,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8471,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5294,
+        "keyword_coverage": 0.8,
+        "composite_score": 0.7765
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER is mostly supported by the RETRIEVED CONTEXT, but the postal code '34956' and the district name 'Tuzla",
+        "relevance note: The answer directly provides the location of Sabancı Üniversitesi, addressing the question's request for its whereabouts",
+        "factual note: no numeric facts; char-4gram overlap=0.53"
+      ]
+    },
+    {
+      "question_id": "Q31",
+      "category": "Negation",
+      "question": "Can audience students borrow books from the library?",
+      "expected": "No, audience students cannot use borrowing services. They can only access the Information Center and use information resources on-site. They also cannot access electronic resources from off-campus.",
+      "actual": "Based on the provided context, specifically chunk id=\"1\" section=\"Introduction\", it is stated that:\n\n\"...Users with Audience Student status can use the Information Center's services and facilities on-site, but they cannot use borrowing services.\"\n\nThis implies that audience students cannot borrow books from the library. \n\nAdditionally, in chunk id=\"2\" section=\"Introduction\", it is mentioned that \"Package 2 users can access publications on-site or borrow 10 books for 30 days.\" However, this information does not apply to audience students as they are a separate group.\n\nTherefore, based solely on the context provided, the answer is:\n\nNo, audience students cannot borrow books from the library.",
+      "latency": 97.99,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.828,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.6115,
+        "keyword_coverage": 0.72,
+        "composite_score": 0.7913
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER's claim that 'this information does not apply to audience students' is an inference and not explicitly",
+        "relevance note: The answer directly addresses the question by providing a clear and specific statement about audience students' borrowin",
+        "factual note: no numeric facts; char-4gram overlap=0.61"
+      ]
+    },
+    {
+      "question_id": "Q32",
+      "category": "Negation",
+      "question": "Üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalabilir mi?",
+      "expected": "Hayır, üniversiteden uzaklaştırma cezası alan öğrenciler ceza süresi boyunca yurtlarda konaklayamaz.",
+      "actual": "Üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalabilir mi?\n\nYurtlara kabul edilen öğrencilerin oda atamaları, öncelik ilkeleri doğrultusunda, Yurt Yönetimi kontrolünde yapılır. 1.2.5. Üniversite'den uzaklaştırma cezası alan öğrenciler, ceza süresi boyunca yurtlarda konaklayamaz.\n\nBu nedenle, üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalamaz.",
+      "latency": 117.222,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.849,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.9149,
+        "keyword_coverage": 0.9091,
+        "composite_score": 0.8434
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER claims that the room assignments for students accepted to the dorms are made by the Dorm Management in",
+        "relevance note: The answer directly addresses the question and provides a clear explanation, but could be more concise in its response.",
+        "factual note: no numeric facts; char-4gram overlap=0.91"
+      ]
+    },
+    {
+      "question_id": "Q33",
+      "category": "Negation",
+      "question": "Kafeteryadan paket yemek servisi yapılır mı?",
+      "expected": "Hayır, kafeteryada paket yemek servisi yapılmaz. Bu kural yalnızca pandemi veya doğal afet gibi olağanüstü durumlarda esnetilebilir.",
+      "actual": "Kafeteryadan paket yemek servisi yapılır mı?\n\nContext'te bu soruya yanıt bulmak için \"Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (ISER-C960-01)\" belgesini inceledim. Belgede, 3.4. Üniversite Merkezinde, kafeteryada paket yemek servisi yapılmaz. Özel durumlarda (afet, pandemi vb.) YİH tarafından bu kurala istisna getirilebilir.\n\nYanıt: Hayır, kafeteryadan paket yemek servisi yapılmaz.",
+      "latency": 113.869,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8261,
+        "faithfulness": 0.9,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5827,
+        "keyword_coverage": 0.625,
+        "composite_score": 0.8135
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER accurately reflects the information provided in the RETRIEVED CONTEXT, specifically from section 3.4 o",
+        "relevance note: The answer directly addresses the question and provides a clear explanation based on a relevant policy document.",
+        "factual note: no numeric facts; char-4gram overlap=0.58"
+      ]
+    },
+    {
+      "question_id": "Q34",
+      "category": "Negation",
+      "question": "Can students access the Faculty Reserve Collection?",
+      "expected": "No, students cannot benefit from the Faculty Reserve Collection. Only academic staff and emeritus faculty can access it.",
+      "actual": "According to the Context, students cannot access the Faculty Reserve Collection. The relevant information is stated in Chunk 1 of the document:\n\n\"Only Academic and teaching “Emeritus” employees can access and borrow the \"Faculty Reserve Collection,\"...\"\n\nThis indicates that only academic and teaching \"Emeritus\" employees have access to the Faculty Reserve Collection, not students.\n\nAdditionally, Chunk 2 states:\n\n\"...Users cannot access the \"Faculty Reserve Collection,\"...\".\n\nThis further confirms that students do not have access to the Faculty Reserve Collection.",
+      "latency": 94.167,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8442,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.6636,
+        "keyword_coverage": 0.7857,
+        "composite_score": 0.8091
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER's claim about students not having access is supported by Chunk 1 of the document, but the additional e",
+        "relevance note: The answer directly addresses the question by providing a clear and specific explanation of who has access to the Facult",
+        "factual note: no numeric facts; char-4gram overlap=0.66"
+      ]
+    },
+    {
+      "question_id": "Q35",
+      "category": "Negation",
+      "question": "Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu nedir?",
+      "expected": "Adayların uyarma cezası dışında disiplin cezası almamış olması gerekir. Ayrıca siyasi parti organlarında üye veya görevli olmaması zorunludur.",
+      "actual": "Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu, adayların \"Uyarma cezası dışında disiplin cezası almamış olması\"dır.\n\nBu bilgi, Context'teki 2.2. Öğrenci Konseyi İşleyiş Organlarına Üyelik için Temel Koşullar: a) bölümünden elde edilmiştir.",
+      "latency": 101.613,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.713,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.4758,
+        "keyword_coverage": 0.5,
+        "composite_score": 0.7228
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER partially matches the context, but it does not explicitly state that 'Uyarma cezası dışında disiplin c",
+        "relevance note: The answer directly addresses the question by providing a clear and specific condition for being an election candidate i",
+        "factual note: no numeric facts; char-4gram overlap=0.48"
+      ]
+    },
+    {
+      "question_id": "Q36",
+      "category": "List",
+      "question": "How many types of disciplinary penalties exist for students?",
+      "expected": "There are 5 types: (1) Warning, (2) Reprimand, (3) Suspension from university for 1 week to 1 month, (4) Suspension from university for 1 or 2 semesters, (5) Dismissal from the higher education institution.",
+      "actual": "After carefully reading the provided context, I was unable to find any specific information about the types of disciplinary penalties that exist for students. The context discusses the procedures for handling student discipline, including the roles of various individuals and the steps involved in investigating allegations of misconduct. However, it does not provide a list or description of specific disciplinary penalties.\n\nTherefore, I must answer: \"not in context\".",
+      "latency": 101.539,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.5998,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.1579,
+        "composite_score": 0.4949
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER claims that the context does not provide a list or description of specific disciplinary penalties, but",
+        "relevance note: The answer partially addresses the question by acknowledging that information about disciplinary penalties is not presen",
+        "factual note: found 0/6 facts; missing: ['4', '5', '2', '3', '1 month']"
+      ]
+    },
+    {
+      "question_id": "Q37",
+      "category": "List",
+      "question": "Yurt disiplin cezaları nelerdir?",
+      "expected": "Yurt disiplin cezaları üç türdür: (1) Uyarma, (2) Kınama, (3) Kurumdan çıkarma. Uyarma ve kınama müdür tarafından, kurumdan çıkarma ise disiplin kurulu kararıyla verilir.",
+      "actual": "Yurt disiplin cezaları aşağıdaki gibidir:\n\n1. Uyarma\n2. Kınama\n3. Bir haftadan bir aya kadar uzaklaştırma cezası\n4. 1 veya 2 yarıyıl uzaklaştırma cezası\n5. Üniversiteden çıkarma cezası\n\nBu cezalar, öğrencinin yurt ücretini geç yatırmaması, depozito ücretini zamanında yatırmamaması, oda teslimini belirtilen zamanda yapmaması ve kendisinin tahsis edilen yurt odasını başkasına kullandırmaması gibi tutum ve davranışlar nedeniyle verilebilir.\n\nAyrıca, disiplin suçu nedeniyle öğrencinin uzaklaştırılması halinde, yurtlardan ayrılma prosedürü kapsamında değerlendirilir.",
+      "latency": 159.966,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8252,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.5263,
+        "composite_score": 0.7976
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER includes specific durations for the 'bir haftadan bir aya kadar uzaklaştırma cezası' and '1 veya 2 yar",
+        "relevance note: The answer provides a clear and comprehensive list of yurt discipline penalties, directly addressing the question.",
+        "factual note: found 3/3 facts"
+      ]
+    },
+    {
+      "question_id": "Q38",
+      "category": "List",
+      "question": "Disiplin suçlarında zamanaşımı süreleri ne kadardır?",
+      "expected": "Uyarma, kınama ve kısa süreli uzaklaştırma cezası gerektiren fiillerde soruşturma zamanaşımı 1 aydır. 1-2 yarıyıl uzaklaştırma ve çıkarma cezası gerektiren fiillerde zamanaşımı 3 aydır. Tüm disiplin suçlarında mutlak zamanaşımı süresi 2 yıldır.",
+      "actual": "Disiplin suçlarında zamanaşımı süreleri 1) Uyarma, kınama, yükseköğretim kurumundan bir haftadan bir aya kadar uzaklaştırma cezalarında 1 (bir) ay içinde, b) Yükseköğretim kurumundan bir veya iki yarıyıl için uzaklaştırma ile yükseköğretim kurumundan çıkarma cezalarında 3 ay içinde, disiplin soruşturmasına başlanmadığı takdirde, disiplin cezası verme yetkisi zaman aşımına uğrar.\n\nAyrıca, Disiplin cezasını gerektiren fiil ve hallerin işlendiği tarihten itibaren, en geç 2 (iki) yıl içinde disiplin cezası verilmediği takdirde, ceza verme yetkisi zaman aşımına uğrar.\n\nBu zamanaşımı süreleri adli yargı hükmünün kesinleştiği günden itibaren başlar.",
+      "latency": 129.384,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8184,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.6154,
+        "composite_score": 0.8555
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER incorrectly states that the time limit for disiplin cezası in cases of distant education is 3 months, ",
+        "relevance note: The answer provides a clear and detailed explanation of the time limits for disciplinary penalties, but could be more co",
+        "factual note: found 3/3 facts"
+      ]
+    },
+    {
+      "question_id": "Q39",
+      "category": "List",
+      "question": "Sabancı Üniversitesi'nde kaç fakülte vardır?",
+      "expected": "Sabancı Üniversitesi'nde üç fakülte vardır: Mühendislik ve Doğa Bilimleri Fakültesi (FENS), Sanat ve Sosyal Bilimler Fakültesi (FASS) ve Yönetim Bilimleri Fakültesi (SOM).",
+      "actual": "Sabancı Üniversitesi'nde 3 fakülte vardır:\n\n1. Mühendislik ve Doğa Bilimleri Fakültesi\n2. Sanat ve Sosyal Bilimler Fakültesi\n3. Yönetim Bilimleri Fakültesi",
+      "latency": 125.918,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.9229,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.736,
+        "keyword_coverage": 0.8421,
+        "composite_score": 0.8509
+      },
+      "notes": [
+        "faithfulness note: The system answer lists specific faculty names, but the retrieved context only mentions that Sabancı Üniversitesi has fa",
+        "relevance note: The answer directly and completely lists the number of faculties at Sabancı Üniversitesi and names each one.",
+        "factual note: no numeric facts; char-4gram overlap=0.74"
+      ]
+    },
+    {
+      "question_id": "Q40",
+      "category": "List",
+      "question": "How many books can alumni borrow from the library?",
+      "expected": "Alumni and retirees can borrow 2 books for 30 days, 1 multimedia item for 7 days, 1 bound periodical for 7 days, and 5 popular magazines for 3 days.",
+      "actual": "After carefully reading the context, I found that there is no specific information about the number of books alumni can borrow from the library. However, I did find some related information:\n\n* Alumni are considered as \"Sabancı University Members\" (chunk #2).\n* According to chunk #3, Sabancı University Members can borrow resources, but there is no specific limit mentioned for alumni.\n* In chunk #8, it is stated that Academic and teaching “Emeritus” employees can access the \"Faculty Reserve Collection\" and \"Slide Collection\" within the Information Center and borrow them using their Sabancı University ID. However, this information does not specifically mention alumni.\n\nTherefore, I must conclude that there is no specific information about the number of books alumni can borrow from the library in the provided context.\n\nHowever, I did find some general rules for borrowing:\n\n* The \"qualified membership right to benefit from the circulation service\" of Sabancı University Alumni, Retirees and Families of those residing in the University Housing who do not pay the fees will be revoked and their subsequent applications will not be accepted for 1 year (chunk #5).\n* Overdue fines are charged for overdue items in accordance with the \"Circulation Procedure (PIC-C840-0201)\" and borrowing services are inaccessible until the overdue fines are paid (chunk #5).\n\nIf you would like to know more about the general rules for borrowing, I can provide that information.",
+      "latency": 196.591,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6592,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.6667,
+        "keyword_coverage": 0.4,
+        "composite_score": 0.6194
+      },
+      "notes": [
+        "faithfulness note: The system answer contains several claims that are not explicitly supported by the retrieved context.",
+        "relevance note: The answer partially addresses the question by providing related information, but does not directly and completely answe",
+        "factual note: found 4/6 facts; missing: ['7', '30']"
+      ]
+    },
+    {
+      "question_id": "Q41",
+      "category": "MultiHop",
+      "question": "Disiplin cezası alan öğrencinin bursu kesilir mi?",
+      "expected": "Disiplin cezasının bursa etkisi cezanın türüne göre değişir. Kınama ve kısa süreli uzaklaştırmada (1 hafta-1 ay) burs devam eder. 1-2 yarıyıl uzaklaştırma cezasında burs o dönem kesilir ancak ceza bitiminde yeniden bağlanır. Yükseköğretim kurumundan çıkarma cezasında burs tamamen kesilir.",
+      "actual": "Disiplin cezası alan öğrencinin bursu kesilir mi?\n\nContext'te, disiplin cezası alan öğrencilerin bursluluk durumlarına ilişkin kuralların normal öğrenim süresi içinde uygulanacağı belirtilmektedir. Bu kurallara göre:\n\n* Kınama / Bir Haftadan Bir Aya Kadar Uzaklaştırma: Burs kesintisiz devam eder.\n* Bir Dönem veya İki Dönem Uzaklaştırma: Uzaklaştırma cezası alınan dönemler için burs kesilir; mevcut burs kapsamında ödemekle yükümlü olunan öğrenim ücreti tutarının %25’i ödenir.\n\nBu nedenle, disiplin cezası alan öğrencinin bursu kesilebilir, ancak kesintili olarak devam edebilir.",
+      "latency": 133.063,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8755,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.3333,
+        "keyword_coverage": 0.4412,
+        "composite_score": 0.706
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains claims that are not explicitly supported by the RETRIEVED CONTEXT, specifically regarding the",
+        "relevance note: The answer provides a clear and relevant explanation of the university's policy regarding burs cuts for students who rec",
+        "factual note: found 1/3 facts; missing: ['1 ay', '1']"
+      ]
+    },
+    {
+      "question_id": "Q42",
+      "category": "MultiHop",
+      "question": "Can a suspended student take courses at another university and transfer credits back to Sabancı?",
+      "expected": "No. Even if students who have received suspension or dismissal take courses from another university during the suspension period, they may not have these courses substituted with their programs at Sabancı University.",
+      "actual": "Based on the provided context, I will answer the question step by step:\n\n1. The context mentions that students who are enrolled in a diploma program at Sabancı University cannot take courses as special students from the university during the period they are enrolled (chunk id=\"1\" section=\"Introduction\").\n2. However, it also states that students can take courses as special students from other higher education institutions while registered at the university (chunk id=\"2\" section=\"Introduction\").\n3. The context does not explicitly mention suspended students, but it mentions that students who are expected to graduate can substitute required courses taken from other universities with a \"T\" grade (chunk id=\"4\" section=\"Introduction\").\n4. Additionally, the context states that special students are given a transcript showing the courses they have enrolled in and their grades on these courses if requested (chunk id=\"1\" section=\"Introduction\").\n\nConsidering these points, it is not explicitly stated whether suspended students can take courses at another university and transfer credits back to Sabancı University. However, based on the context, it seems that special students can take courses from other universities while registered at Sabancı University.\n\nTherefore, I will provide a cautious answer:\n\nA suspended student may be able to take courses at another university as a special student, but this is not explicitly stated in the context. The relevant information from the context is:\n\n* Special students can take courses from other universities while registered at Sabancı University (chunk id=\"2\" section=\"Introduction\").\n* Students who are expected to graduate can substitute required courses taken from other universities with a \"T\" grade (chunk id=\"4\" section=\"Introduction\").\n\nHowever, it is essential to note that the context does not explicitly mention suspended students, and this answer should be treated as a cautious interpretation of the provided information.",
+      "latency": 225.13,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8174,
+        "faithfulness": 0.6,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.6503,
+        "keyword_coverage": 0.7407,
+        "composite_score": 0.6628
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER contains claims not explicitly supported by the RETRIEVED CONTEXT, specifically regarding suspended st",
+        "relevance note: The answer partially addresses the question by providing relevant information, but it does not directly and completely a",
+        "factual note: no numeric facts; char-4gram overlap=0.65"
+      ]
+    },
+    {
+      "question_id": "Q43",
+      "category": "MultiHop",
+      "question": "Kütüphane gecikme borcu mezuniyeti engeller mi?",
+      "expected": "Evet, gecikme borcu olan öğrencilerin öğrenci belgesi, transkript ve mezuniyet için gerekli diğer belgeleri alması engellenir. Gecikme ücreti ödenene kadar ödünç alma hizmetleri de askıya alınır.",
+      "actual": "Kütüphane gecikme borcu mezuniyeti engeller mi?\n\nContext'te, \"Mezuniyet\" sayfasından Bilgi Merkezi'ne borcu olup olmadığı ya da hesabındaki bilgi kaynağı durumu işaretlenir. Eğer öğrencilerin Bilgi Merkezi hesabında iade edilmesi gereken kitaplar var ise iadesi; gecikme veya diğer borçları var ise borçlarının ödenmesi istenir.\n\nBu nedenle, kütüphane gecikme borcu mezuniyeti engeller.\n\nYanlış bir varsayım: Kütüphane gecikme borcu mezuniyeti engellemeyecektir.",
+      "latency": 119.474,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7648,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.3081,
+        "keyword_coverage": 0.3333,
+        "composite_score": 0.6665
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER's conclusion that the library delay debt prevents graduation is not explicitly supported by the RETRIE",
+        "relevance note: The answer directly addresses the question and provides a clear explanation of how library delay debt affects graduation",
+        "factual note: no numeric facts; char-4gram overlap=0.31"
+      ]
+    },
+    {
+      "question_id": "Q44",
+      "category": "MultiHop",
+      "question": "Hangi disiplin cezaları Öğrenci Konseyi adaylığına engel olur?",
+      "expected": "Uyarma dışındaki tüm disiplin cezaları Öğrenci Konseyi adaylığına engel olur. Yani kınama, uzaklaştırma (kısa ve uzun süreli) ve yükseköğretim kurumundan çıkarma cezası alan öğrenciler aday olamaz.",
+      "actual": "Öğrenci Konseyi adaylığına engel olan disiplin cezaları:\n\n1. Uyarma cezası dışında disiplin cezası almamış olması (Öğrenci Konseyi İşleyiş Organlarına Üyelik için Temel Koşullar, a) İlgili fakültenin en az ikinci sınıfına kayıtlı öğrenci olması)\n2. Siyasi parti organlarında üye veya görevli olmaması (Öğrenci Konseyi İşleyiş Organlarına Üyelik için Temel Koşullar, b))\n3. Yüz kızartıcı suçlardan dolayı adli sicil kaydı bulunmaması (Öğrenci Konseyi İşleyiş Organlarına Üyelik için Temel Koşullar, c))\n4. Terör örgütlerine aidiyeti veya iltisakı ya da bunlarla irtibatı olmaması (Öğrenci Konseyi İşleyiş Organlarına Üyelik için Temel Koşullar, g))\n\nBu cezalar Öğrenci Konseyi adaylığına engel olabilecek disiplin cezalarıdır.",
+      "latency": 172.81,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8496,
+        "faithfulness": 0.4,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.3778,
+        "keyword_coverage": 0.375,
+        "composite_score": 0.6193
+      },
+      "notes": [
+        "faithfulness note: The SYSTEM ANSWER claims that these disiplin cezaları are the ones that prevent Öğrenci Konseyi adaylığına, but only one",
+        "relevance note: The answer directly and comprehensively lists the disiplin cezaları that would prevent a student from being an Öğrenci K",
+        "factual note: no numeric facts; char-4gram overlap=0.38"
+      ]
+    },
+    {
+      "question_id": "Q45",
+      "category": "MultiHop",
+      "question": "Uzaklaştırma cezası alan öğrenci ücret iadesi alabilir mi?",
+      "expected": "Hayır, uzaklaştırma cezası alan öğrencilere herhangi bir ücret iadesi yapılmaz.",
+      "actual": "Uzaklaştırma cezası alan öğrenci ücret iadesi alamaz. Bu öğrencilere herhangi bir ücret iadesi yapılmaz. (2) Disiplin suçu nedeniyle Üniversiteden uzaklaştırma cezası alan öğrencilerin; ödemekle yükümlü oldukları dönem öğrenim ücretini %25'sini ödemeleri gerekir.\n\nKaynaklar:\n- Öğrenci Disiplin Prosedürü (PSR-C210-0101)\n- Öğrenci Disiplin Yönergesi (ISR-C210-01)\n- lisansustu_yon_tr_v22",
+      "latency": 118.28,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7892,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.9211,
+        "keyword_coverage": 0.8889,
+        "composite_score": 0.827
+      },
+      "notes": [
+        "faithfulness note: The system answer contains two claims that are not explicitly supported by the retrieved context: the first claim is a p",
+        "relevance note: The answer directly addresses the question, but could be more concise and clear in its explanation.",
+        "factual note: no numeric facts; char-4gram overlap=0.92"
+      ]
+    }
+  ]
+}

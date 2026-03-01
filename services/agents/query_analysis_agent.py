@@ -48,6 +48,19 @@ class QueryAnalysisAgent:
         self.llm = llm_service
         self.config = config
 
+    # Negation keywords — if none appear, skip the LLM negation call entirely
+    _NEGATION_KEYWORDS_TR = {"değil", "hariç", "dışında", "haricinde", "olmadan", "olmayan", "disinda", "haric"}
+    _NEGATION_KEYWORDS_EN = {"not", "except", "excluding", "other than", "aside from", "without"}
+    _NEGATION_KEYWORDS = _NEGATION_KEYWORDS_TR | _NEGATION_KEYWORDS_EN
+
+    def _query_has_negation_cue(self, query: str) -> bool:
+        """
+        Fast check whether the query contains any negation keyword.
+        Used to short-circuit the expensive LLM negation call.
+        """
+        q_lower = query.lower()
+        return any(kw in q_lower for kw in self._NEGATION_KEYWORDS)
+
     def analyze(
         self,
         query: str,
@@ -55,6 +68,11 @@ class QueryAnalysisAgent:
     ) -> Dict:
         """
         Perform complete query analysis.
+
+        Optimizations vs. original:
+        - Tags + query expansion are inferred in a SINGLE LLM call
+        - Negation extraction is short-circuited: the LLM is only called
+          when the query contains an explicit negation keyword.
 
         Args:
             query: User query to analyze.
@@ -68,14 +86,23 @@ class QueryAnalysisAgent:
             - anchor_query: Optional previous query if followup
             - tags: List of semantic tags
             - negated_terms: List of excluded terms
+            - expanded_queries: List of expanded query strings (includes original)
         """
         history = history or []
 
         language = self.detect_language(query)
         intent = self.detect_intent(query)
         is_followup, anchor = self.detect_followup(query, history)
-        tags = self.infer_tags(query, language)
-        negated = self.extract_negated_terms(query, language)
+
+        # Single LLM call for tags + expansion (was 2 separate calls)
+        tags, expanded_queries = self.infer_tags_and_expand(query, language)
+
+        # Short-circuit: only call LLM for negation if query has negation cue
+        if self._query_has_negation_cue(query):
+            negated = self.extract_negated_terms(query, language)
+        else:
+            negated = []
+            print("[QueryAnalysis] No negation cue found — skipping LLM negation call")
 
         return {
             "language": language,
@@ -84,6 +111,7 @@ class QueryAnalysisAgent:
             "anchor_query": anchor,
             "tags": tags,
             "negated_terms": negated,
+            "expanded_queries": expanded_queries,
         }
 
     def detect_language(self, text: str) -> Optional[str]:
@@ -255,6 +283,75 @@ class QueryAnalysisAgent:
             for t in tags
             if isinstance(t, str) and t.strip()
         ]
+
+    def infer_tags_and_expand(
+        self,
+        query: str,
+        lang: Optional[str] = None
+    ) -> tuple:
+        """
+        Infer semantic tags AND generate expanded queries in a single LLM call.
+
+        This replaces the old pattern of calling infer_tags() + expand_query()
+        separately (2 LLM round-trips → 1).
+
+        Args:
+            query: User query.
+            lang: Detected language.
+
+        Returns:
+            Tuple of (tags: List[str], expanded_queries: List[str]).
+            expanded_queries always starts with the original query.
+        """
+        sys_prompt = textwrap.dedent("""
+            You are a search assistant for a university information system.
+            Given a user query, produce TWO things:
+
+            1. **tags**: 2-6 lowercase_snake_case semantic tags classifying the query topic.
+               Use English tags even for Turkish queries.
+               Focus on specific domains: scholarships, exchange_programs, library, discipline, gpa, etc.
+
+            2. **queries**: 2-4 alternative phrasings / synonyms of the query for search expansion.
+               Keep the same language as the original query.
+               Include relevant Turkish ↔ English synonyms when applicable, e.g.:
+               - GNO ↔ GPA ↔ genel not ortalaması
+               - ÇAP ↔ çift anadal ↔ double major
+               - yandal ↔ minor
+               - ECTS ↔ kredi ↔ credit
+               - burs ↔ scholarship
+               Do NOT include the original query in "queries".
+
+            JSON schema: {"tags": ["tag1", ...], "queries": ["alt1", "alt2", ...]}
+
+            Output STRICT JSON ONLY, no explanation.
+        """).strip()
+
+        result = self.llm.chat_json(
+            f"Query: {query}",
+            sys_prompt,
+            temperature=0.0
+        )
+
+        tags = []
+        expanded = [query]  # always include original
+
+        if result:
+            raw_tags = result.get("tags", [])
+            if isinstance(raw_tags, list):
+                tags = [
+                    t.strip().lower()
+                    for t in raw_tags
+                    if isinstance(t, str) and t.strip()
+                ]
+
+            raw_queries = result.get("queries", [])
+            if isinstance(raw_queries, list):
+                for q in raw_queries:
+                    if isinstance(q, str) and q.strip() and q.strip() != query:
+                        expanded.append(q.strip())
+
+        print(f"[QueryAnalysis] Combined tags={tags}, expanded={len(expanded)} queries")
+        return tags, expanded
 
     def extract_negated_terms(
         self,
