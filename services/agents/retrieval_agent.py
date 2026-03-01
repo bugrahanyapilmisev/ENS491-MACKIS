@@ -56,7 +56,8 @@ class RetrievalAgent:
         query: str,
         language: Optional[str] = None,
         use_expansion: bool = True,
-        use_hyde: bool = True
+        use_hyde: bool = True,
+        pre_expanded: Optional[List[str]] = None
     ) -> List[Dict]:
         """
         Main retrieval method combining all strategies.
@@ -66,15 +67,21 @@ class RetrievalAgent:
             language: Detected language for filtering.
             use_expansion: Whether to use query expansion.
             use_hyde: Whether to use HyDE.
+            pre_expanded: Pre-expanded queries from query analysis.
+                          When provided, skips the separate expansion LLM call.
 
         Returns:
             List of candidate chunks with scores.
         """
-        expanded_queries = [query]
-
-        # Query expansion
-        if use_expansion and self.config.features.use_query_expansion:
-            expanded_queries = self.expand_query(query, language)
+        # If pre-expanded queries are provided, use them directly
+        if pre_expanded and len(pre_expanded) > 0:
+            expanded_queries = list(pre_expanded)
+            print(f"[Retrieval] Using {len(expanded_queries)} pre-expanded queries (no extra LLM call)")
+        else:
+            expanded_queries = [query]
+            # Query expansion (separate LLM call — only if not pre-expanded)
+            if use_expansion and self.config.features.use_query_expansion:
+                expanded_queries = self.expand_query(query, language)
 
         # HyDE (Hypothetical Document Embeddings)
         if use_hyde and self.config.features.use_hyde:
@@ -215,7 +222,10 @@ class RetrievalAgent:
         lang: Optional[str] = None
     ) -> List[str]:
         """
-        Generate expanded/alternative queries using LLM.
+        Generate expanded/alternative queries using LLM with synonym awareness.
+
+        The prompt instructs the LLM to include common abbreviations and their
+        expansions, formal/informal variations, and related university terms.
 
         Args:
             query: Original query.
@@ -231,8 +241,15 @@ class RetrievalAgent:
             Rules:
             - Keep queries concise (5-15 words each)
             - Use synonyms and related terms
+            - IMPORTANT: Include common abbreviations and their expansions.
+              Examples: GNO <-> GPA, ÇAP <-> çift anadal <-> double major,
+              AKTS <-> ECTS, yandal <-> minor, kayıt dondurma <-> dönem izni,
+              not yükseltme <-> ders tekrarı
+            - If the query uses an abbreviation, expand it in an alternative.
+              If it uses the full form, include the abbreviation.
             - If query is in Turkish, generate Turkish alternatives
             - If query is in English, generate English alternatives
+            - Include both formal and informal variations of key terms
             - Focus on the core information need
 
             Output format (STRICT JSON):

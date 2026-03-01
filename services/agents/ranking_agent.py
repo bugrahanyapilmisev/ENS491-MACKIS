@@ -392,6 +392,68 @@ class RankingAgent:
 
         return strong
 
+    def document_level_select(
+        self,
+        candidates: List[Dict],
+        max_chunks: Optional[int] = None,
+        max_per_doc: int = 4
+    ) -> List[Dict]:
+        """
+        Select chunks with document-level diversity.
+
+        Groups chunks by source document, scores each document by its best
+        chunk, and greedily selects top chunks while capping per-document
+        representation. This prevents a single document from dominating
+        the context and ensures diversity across sources.
+
+        Args:
+            candidates: Ranked candidates to select from.
+            max_chunks: Total chunks to return (defaults to max_docs_context).
+            max_per_doc: Maximum chunks from any single document.
+
+        Returns:
+            Selected candidates with document-level diversity.
+        """
+        if not candidates:
+            return []
+
+        max_chunks = max_chunks or self.config.retrieval.max_docs_context
+
+        # Group by source document
+        doc_groups: Dict[str, List[Dict]] = {}
+        for c in candidates:
+            meta = c.get("meta") or {}
+            path = meta.get("source_path") or meta.get("doc_path", "unknown")
+            if path not in doc_groups:
+                doc_groups[path] = []
+            doc_groups[path].append(c)
+
+        # Score each document by its best chunk score
+        doc_best_scores = {}
+        for path, chunks in doc_groups.items():
+            doc_best_scores[path] = max(
+                c.get("hybrid_score", 0) for c in chunks
+            )
+
+        # Sort documents by best score (descending)
+        sorted_docs = sorted(
+            doc_best_scores.items(), key=lambda x: x[1], reverse=True
+        )
+
+        # Greedily select chunks with per-document cap
+        selected: List[Dict] = []
+        for path, _ in sorted_docs:
+            if len(selected) >= max_chunks:
+                break
+            doc_chunks = doc_groups[path][:max_per_doc]
+            remaining_slots = max_chunks - len(selected)
+            selected.extend(doc_chunks[:remaining_slots])
+
+        print(f"[Ranking] Document-level select: {len(candidates)} candidates -> "
+              f"{len(selected)} chunks from {min(len(sorted_docs), max_chunks)} docs")
+
+        return selected
+
     def _get_meta_tags(self, meta: Dict) -> List[str]:
         """Extract and normalize tags from metadata."""
         tags_val = meta.get("tags", [])
