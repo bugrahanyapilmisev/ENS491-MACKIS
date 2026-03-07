@@ -1,19 +1,24 @@
 # backend/utils.py
-from passlib.context import CryptContext
+import os
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import jwt, JWTError
 import bcrypt
+from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
+load_dotenv()
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-# GÜVENLİK AYARLARI
-# Bunu normalde .env dosyasına koymalısın ama şimdilik burada kalsın
-SECRET_KEY = "_fiwJ.UNX-QfhuvVt7vWqv6nXo3Yz7gqZkz-8Qz5U" 
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 # 24 saat geçerli token
+# --- JWT Güvenlik Ayarları (.env'den okunur) ---
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))
+
+if not SECRET_KEY:
+    raise ValueError("JWT_SECRET_KEY .env dosyasında bulunamadı!")
 
 
 
