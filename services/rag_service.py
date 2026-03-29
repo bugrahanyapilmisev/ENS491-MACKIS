@@ -70,7 +70,7 @@ class RAGService:
         self,
         user_query: str,
         history: Optional[List[Dict]] = None
-    ) -> Tuple[str, List[Dict]]:
+    ) -> Tuple[str, List[Dict], Dict]:
         """
         Process user query through the RAG pipeline.
 
@@ -79,32 +79,46 @@ class RAGService:
             history: Previous conversation messages
 
         Returns:
-            Tuple of (answer_text, sources)
+            Tuple of (answer_text, sources, pipeline_result)
+            pipeline_result contains: retrieved_chunks, context_chunks, analysis
         """
         history = history or []
         print(f"🔍 Processing Query: {user_query[:100]}...")
 
         if not self.pipeline:
-            return "Database connection unavailable.", []
+            return "Database connection unavailable.", [], {}
 
         try:
-            # Call the modular RAG pipeline
-            answer_text = self.pipeline.answer(
+            # Call the modular RAG pipeline — now returns structured result
+            result = self.pipeline.answer(
                 query=user_query,
                 history=history,
             )
 
-            # TODO: Extract sources from the pipeline if needed
-            # For now, return empty sources list
-            sources = []
+            answer_text = result.get("answer", "")
+            retrieved_chunks = result.get("retrieved_chunks", [])
+            context_chunks = result.get("context_chunks", [])
 
-            return answer_text, sources
+            # Build formatted sources from context_chunks (used in generation)
+            sources = []
+            for ch in context_chunks:
+                meta = ch.get("meta") or {}
+                sources.append({
+                    "chunk_id": ch.get("chunk_id", ""),
+                    "title": meta.get("title", ""),
+                    "excerpt": (ch.get("text", "")[:200] + "...") if ch.get("text") else "",
+                    "score": ch.get("hybrid_score", ch.get("ce_score", ch.get("score", 0))),
+                    "source_path": meta.get("source_path", ""),
+                    "url": meta.get("source_path", ""),
+                })
+
+            return answer_text, sources, result
 
         except Exception as e:
             print(f"❌ RAG Pipeline Error: {e}")
             import traceback
             traceback.print_exc()
-            return "Sorry, a technical error occurred while processing your question.", []
+            return "Sorry, a technical error occurred while processing your question.", [], {}
 
     def search_only(
         self,

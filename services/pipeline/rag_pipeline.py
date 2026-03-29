@@ -107,12 +107,9 @@ class RAGPipeline:
         query: str,
         history: Optional[List[Dict]] = None,
         use_hybrid: bool = True
-    ) -> str:
+    ) -> Dict:
         """
-        Main entry point - process query and return answer.
-
-        This method maintains backward compatibility with the original
-        answer_with_rag() function signature.
+        Main entry point - process query and return structured result.
 
         Args:
             query: User question.
@@ -120,7 +117,11 @@ class RAGPipeline:
             use_hybrid: Whether to use hybrid search (ignored, always True).
 
         Returns:
-            Generated answer string.
+            Dict with:
+            - answer: Generated answer string
+            - retrieved_chunks: All reranked chunks with scores
+            - context_chunks: Final chunks used for generation
+            - analysis: Query analysis result (language, intent, followup, etc.)
         """
         history = history or []
 
@@ -153,7 +154,12 @@ class RAGPipeline:
         )
 
         if not candidates:
-            return self._no_results_message(language)
+            return {
+                "answer": self._no_results_message(language),
+                "retrieved_chunks": [],
+                "context_chunks": [],
+                "analysis": analysis,
+            }
 
         print(f"[RAGPipeline] Initial candidates: {len(candidates)}")
 
@@ -223,7 +229,12 @@ class RAGPipeline:
             kg_facts=kg_facts
         )
 
-        return answer
+        return {
+            "answer": answer,
+            "retrieved_chunks": reranked,       # All reranked candidates with scores
+            "context_chunks": retrieved,         # Final chunks used for generation (citations)
+            "analysis": analysis,
+        }
 
     def _no_results_message(self, language: Optional[str]) -> str:
         """Return appropriate no-results message."""
@@ -315,7 +326,9 @@ def answer_with_rag(
     if _pipeline_instance is None:
         _pipeline_instance = RAGPipeline()
 
-    return _pipeline_instance.answer(query, history, use_hybrid)
+    result = _pipeline_instance.answer(query, history, use_hybrid)
+    # Backward compat: return only the answer string
+    return result["answer"] if isinstance(result, dict) else result
 
 
 def get_pipeline() -> RAGPipeline:
