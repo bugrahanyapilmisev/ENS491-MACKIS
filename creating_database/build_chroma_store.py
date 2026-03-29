@@ -38,6 +38,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import pyarrow as pa
 import pyarrow.parquet as pq
 from dotenv import load_dotenv
+from datetime import datetime, timezone
 
 # Optional: BM25 for hybrid search
 try:
@@ -492,6 +493,191 @@ def save_bm25_index(bm25, chunk_ids: List[str], path: str):
     
     print(f"✅ BM25 index saved to {path}")
 
+# ================= INGESTION JOB TRACKING =================
+
+# Optional: Track ingestion in Supabase for traceability
+_ingest_db_session = None
+
+def _get_ingest_db():
+    """Lazy-init a SQLAlchemy session for ingestion tracking."""
+    global _ingest_db_session
+    if _ingest_db_session is not None:
+        return _ingest_db_session
+
+    db_url = os.getenv("DATABASE_URL")
+    if not db_url:
+        print("[ingest-track] DATABASE_URL not set — skipping Supabase job tracking")
+        return None
+
+    try:
+        from sqlalchemy import create_engine
+        from sqlalchemy.orm import sessionmaker
+
+        eng = create_engine(db_url, pool_pre_ping=True)
+        SessionLocal = sessionmaker(bind=eng)
+        _ingest_db_session = SessionLocal()
+        print("[ingest-track] Connected to Supabase for ingestion tracking")
+        return _ingest_db_session
+    except Exception as e:
+        print(f"[ingest-track] Could not connect to Supabase: {e}")
+        return None
+
+
+def create_ingest_job(source_type: str, source_uri: str) -> Optional[int]:
+    """Create an ingest_jobs row and return its job_id."""
+    db = _get_ingest_db()
+    if db is None:
+        return None
+
+    try:
+        from sqlalchemy import text as sql_text
+        result = db.execute(
+            sql_text("""
+                INSERT INTO ingest_jobs (source_type, source_uri, status, started_at)
+                VALUES (:stype, :suri, 'running', NOW())
+                RETURNING job_id
+            """),
+            {"stype": source_type, "suri": source_uri}
+        )
+        db.commit()
+        row = result.fetchone()
+        return row[0] if row else None
+    except Exception as e:
+        db.rollback()
+        print(f"[ingest-track] Could not create ingest_job: {e}")
+        return None
+
+
+def record_ingest_artifact(job_id: int, document_id: int, stage: str, notes: str = None):
+    """Record an ingestion artifact (stage progress)."""
+    db = _get_ingest_db()
+    if db is None or job_id is None:
+        return
+
+    try:
+        from sqlalchemy import text as sql_text
+        db.execute(
+            sql_text("""
+                INSERT INTO ingest_artifacts (job_id, document_id, stage, notes)
+                VALUES (:jid, :did, :stage, :notes)
+                ON CONFLICT (job_id, document_id, stage) DO NOTHING
+            """),
+            {"jid": job_id, "did": document_id, "stage": stage, "notes": notes}
+        )
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"[ingest-track] Could not record artifact: {e}")
+
+
+def finish_ingest_job(job_id: int, status: str = "succeeded", error_msg: str = None):
+    """Mark an ingest_job as finished."""
+    db = _get_ingest_db()
+    if db is None or job_id is None:
+        return
+
+    try:
+        from sqlalchemy import text as sql_text
+        db.execute(
+            sql_text("""
+                UPDATE ingest_jobs
+                SET status = :status, finished_at = NOW(), error_msg = :err
+                WHERE job_id = :jid
+            """),
+            {"status": status, "err": error_msg, "jid": job_id}
+        )
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"[ingest-track] Could not finish job: {e}")
+
+
+def sync_document_to_supabase(source_path: str, title: str, doc_lang: str,
+                               doc_type: str, content_hash: str) -> Optional[int]:
+    """
+    Insert or find a document in Supabase's documents table.
+    Returns the document_id.
+    """
+    db = _get_ingest_db()
+    if db is None:
+        return None
+
+    try:
+        from sqlalchemy import text as sql_text
+
+        # Check if already exists
+        result = db.execute(
+            sql_text("SELECT document_id FROM documents WHERE hash = :h"),
+            {"h": content_hash}
+        )
+        row = result.fetchone()
+        if row:
+            return row[0]
+
+        # Map doc_type to valid source_type
+        source_type_map = {"html": "html", "pdf": "pdf", "md": "md", "email": "email", "url": "url"}
+        source_type = source_type_map.get(doc_type, "other")
+        lang = doc_lang if doc_lang in ("tr", "en") else "tr"
+
+        result = db.execute(
+            sql_text("""
+                INSERT INTO documents (source_type, source_uri, title, lang, hash)
+                VALUES (:stype, :suri, :title, :lang, :hash)
+                RETURNING document_id
+            """),
+            {"stype": source_type, "suri": source_path, "title": title[:500] if title else None,
+             "lang": lang, "hash": content_hash}
+        )
+        db.commit()
+        row = result.fetchone()
+        return row[0] if row else None
+    except Exception as e:
+        db.rollback()
+        print(f"[ingest-track] Could not sync document: {e}")
+        return None
+
+
+def sync_chunk_to_supabase(document_id: int, ordinal: int, section: str,
+                            content: str, chroma_chunk_id: str) -> Optional[int]:
+    """
+    Insert a chunk into Supabase's chunks table.
+    Stores chroma_chunk_id in the 'hash' column for FK mapping.
+    Returns chunk_id.
+    """
+    db = _get_ingest_db()
+    if db is None or document_id is None:
+        return None
+
+    try:
+        from sqlalchemy import text as sql_text
+
+        # Check if already exists
+        result = db.execute(
+            sql_text("SELECT chunk_id FROM chunks WHERE hash = :h"),
+            {"h": chroma_chunk_id}
+        )
+        row = result.fetchone()
+        if row:
+            return row[0]
+
+        result = db.execute(
+            sql_text("""
+                INSERT INTO chunks (document_id, ordinal, section, content, tokens, hash)
+                VALUES (:did, :ord, :sec, :content, :tokens, :hash)
+                RETURNING chunk_id
+            """),
+            {"did": document_id, "ord": ordinal, "sec": section[:500] if section else None,
+             "content": content, "tokens": len(content.split()), "hash": chroma_chunk_id}
+        )
+        db.commit()
+        row = result.fetchone()
+        return row[0] if row else None
+    except Exception as e:
+        db.rollback()
+        print(f"[ingest-track] Could not sync chunk: {e}")
+        return None
+
+
 # ================= MAIN =================
 
 def load_checkpoint() -> dict:
@@ -552,28 +738,33 @@ def main():
     
     total_upserts = 0
     started = time.time()
-    
+
+    # ── Create master ingest_job for this build run ──
+    master_job_id = create_ingest_job(source_type="other", source_uri=PRE_ROOT)
+    if master_job_id:
+        print(f"[ingest-track] Created ingest_job #{master_job_id}")
+
     for fi, path in enumerate(json_files, 1):
         try:
             # Skip if already processed (resume mode)
             if path in processed_set:
                 continue
-            
+
             # Progress logging - show every file
             elapsed = time.time() - started
             print(f"\n[{fi}/{len(json_files)}] Processing: {os.path.basename(path)} (elapsed: {elapsed:.1f}s)")
-            
+
             # Load JSON
             with open(path, "r", encoding="utf-8") as f:
                 doc = json.load(f)
-            
+
             # Get text (support both v1 and v2 format)
             doc_text = normalize_ws(doc.get("full_text", "") or doc.get("text", ""))
             if len(doc_text) < MIN_TEXT_LEN:
                 print(f"  [skip] text too short ({len(doc_text)} chars)")
                 processed_files_list.append(path)
                 continue
-            
+
             title = (doc.get("title") or "").strip()
             source_path = (doc.get("source_path") or "").strip()
             html_lang = (doc.get("html_lang") or "").strip()
@@ -691,7 +882,7 @@ def main():
                     documents=texts,  # Store original text, not contextual
                 )
                 total_upserts += len(ids)
-                
+
                 # Record vectors
                 for j in range(len(ids)):
                     vector_rows.append({
@@ -700,7 +891,34 @@ def main():
                         "document": texts[j],
                         "metadata": json.dumps(metas[j], ensure_ascii=False),
                     })
-            
+
+                # ── Ingestion tracking: sync to Supabase ──
+                if master_job_id:
+                    content_hash = sha1_text(source_path)
+                    sb_doc_id = sync_document_to_supabase(
+                        source_path, title, doc_lang, doc_type, content_hash
+                    )
+                    if sb_doc_id:
+                        record_ingest_artifact(master_job_id, sb_doc_id, "fetched",
+                                               f"source: {os.path.basename(path)}")
+                        record_ingest_artifact(master_job_id, sb_doc_id, "parsed",
+                                               f"sections: {len(doc.get('sections', []))}")
+                        record_ingest_artifact(master_job_id, sb_doc_id, "chunked",
+                                               f"chunks: {len(chunks)}")
+
+                        # Sync individual chunks to Supabase (for FK resolution)
+                        for ch_id, ch_text, ch_meta in zip(ids, texts, metas):
+                            sync_chunk_to_supabase(
+                                sb_doc_id,
+                                ch_meta.get("chunk_index", 0),
+                                ch_meta.get("section_header", ""),
+                                ch_text,
+                                ch_id  # ChromaDB SHA1 ID → chunks.hash
+                            )
+
+                        record_ingest_artifact(master_job_id, sb_doc_id, "embedded",
+                                               f"vectors: {len(ids)}")
+
             # Mark file as processed and save checkpoint periodically
             processed_files_list.append(path)
             if fi % 10 == 0:
@@ -755,6 +973,11 @@ def main():
         os.remove(PROGRESS_CHECKPOINT)
         print("✅ Checkpoint file removed (processing complete)")
     
+    # ── Finalize ingestion job ──
+    if master_job_id:
+        finish_ingest_job(master_job_id, status="succeeded")
+        print(f"✅ Ingest job #{master_job_id} marked as succeeded")
+
     print("✅ Build finished.")
     try:
         print(f"Collection {COLL_NAME} count() -> {coll.count()}")
