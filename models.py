@@ -154,6 +154,7 @@ class Chunk(Base):
     content = Column(Text, nullable=False)
     content_html = Column(Text)
     tokens = Column(Integer)
+    hash = Column(String, unique=True)  # ChromaDB chunk_id (SHA1) for mapping
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
 
     # İlişkiler
