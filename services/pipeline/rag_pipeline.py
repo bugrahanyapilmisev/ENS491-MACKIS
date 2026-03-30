@@ -187,19 +187,12 @@ class RAGPipeline:
         max_per_doc = max(3, max_ctx // 3)
 
         if intent in {"list_names", "count_items"} and reranked:
-            # Use all chunks from top document for factual queries
-            best_chunk = reranked[0]
-            best_meta = best_chunk.get("meta") or {}
-            best_path = best_meta.get("source_path")
-
-            if best_path:
-                print(f"[RAGPipeline] Single-doc mode for intent={intent}")
-                retrieved = self.data_loader.get_all_chunks_for_doc(best_path)
-                retrieved = retrieved[:max_ctx]
-            else:
-                retrieved = self.ranking_agent.document_level_select(
-                    strong, max_chunks=max_ctx, max_per_doc=max_per_doc
-                )
+            # Allow more chunks from top document for factual completeness,
+            # but still use ranked results (not raw unranked doc chunks).
+            print(f"[RAGPipeline] Factual-intent mode for intent={intent}")
+            retrieved = self.ranking_agent.document_level_select(
+                strong, max_chunks=max_ctx, max_per_doc=max_ctx
+            )
         else:
             # Document-level diversity selection
             retrieved = self.ranking_agent.document_level_select(
@@ -207,6 +200,33 @@ class RAGPipeline:
             )
 
         print(f"[RAGPipeline] Final context chunks: {len(retrieved)}")
+
+        # 6b. Neighbor expansion — pull adjacent chunks from same document
+        # This acts as lightweight parent-child: when a chunk is relevant,
+        # its neighbors often have continuation data (table rows, list items).
+        existing_ids = {ch.get("chunk_id") for ch in retrieved if ch.get("chunk_id")}
+        neighbor_chunks = []
+        for ch in retrieved:
+            cid = ch.get("chunk_id")
+            if not cid:
+                continue
+            try:
+                neighbors = self.data_loader.get_neighbor_chunks(cid, window=1)
+                for nbr in neighbors:
+                    if nbr["chunk_id"] not in existing_ids:
+                        existing_ids.add(nbr["chunk_id"])
+                        neighbor_chunks.append(nbr)
+            except Exception:
+                pass
+
+        if neighbor_chunks:
+            # Merge neighbors into retrieved, keeping the originals first
+            # then neighbors grouped by source document
+            retrieved = retrieved + neighbor_chunks
+            # Re-cap to avoid context bloat (allow up to 50% more than max_ctx)
+            expanded_limit = min(len(retrieved), int(max_ctx * 1.5))
+            retrieved = retrieved[:expanded_limit]
+            print(f"[RAGPipeline] After neighbor expansion: {len(retrieved)} chunks")
 
         # 7. Knowledge Graph augmentation (optional)
         kg_facts = ""

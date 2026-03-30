@@ -38,7 +38,7 @@ class RetrievalConfig:
     top_k_bm25: int = 32
     top_k_final_base: int = 8
     top_k_final_max: int = 24
-    max_docs_context: int = 6
+    max_docs_context: int = 8
     bm25_weight: float = 0.3
     vector_weight: float = 0.7
     rrf_constant: int = 60
