@@ -199,6 +199,72 @@ class DataLoaderService:
 
         return results
 
+    def get_neighbor_chunks(
+        self,
+        chunk_id: str,
+        window: int = 1
+    ) -> List[Dict]:
+        """
+        Get neighboring chunks (before/after) from the same document.
+
+        This enables lightweight parent-child retrieval: when a relevant chunk
+        is found, its neighbors often contain continuation data (e.g., the next
+        rows of a table, the next items in a list) that the LLM needs.
+
+        Args:
+            chunk_id: ID of the anchor chunk.
+            window: Number of neighbors on each side (default 1 = prev + next).
+
+        Returns:
+            List of neighbor chunk dicts (excluding the anchor itself),
+            sorted by chunk_index. Empty list if chunk not found or no
+            neighbors exist.
+        """
+        df = self.load_chunk_df()
+        match = df[df["chunk_id"] == chunk_id]
+        if match.empty:
+            return []
+
+        row = match.iloc[0]
+        source_path = row.get("source_path", "")
+        chunk_index = row.get("chunk_index")
+        if chunk_index is None or not source_path:
+            return []
+
+        # Find neighbors in the same document
+        doc_chunks = df[df["source_path"] == source_path]
+        if "chunk_index" not in doc_chunks.columns:
+            return []
+
+        idx_min = chunk_index - window
+        idx_max = chunk_index + window
+
+        neighbors = doc_chunks[
+            (doc_chunks["chunk_index"] >= idx_min) &
+            (doc_chunks["chunk_index"] <= idx_max) &
+            (doc_chunks["chunk_id"] != chunk_id)
+        ].sort_values("chunk_index")
+
+        results = []
+        for _, nrow in neighbors.iterrows():
+            meta = {
+                "source_path": nrow.get("source_path", ""),
+                "json_path": nrow.get("json_path", ""),
+                "title": nrow.get("title", ""),
+                "section_header": nrow.get("section_header", ""),
+                "doc_lang": nrow.get("doc_lang", ""),
+                "doc_type": nrow.get("doc_type", ""),
+                "tags": nrow.get("tags", ""),
+                "procedure_code": nrow.get("procedure_code", ""),
+            }
+            results.append({
+                "chunk_id": nrow["chunk_id"],
+                "text": nrow.get("content", ""),
+                "meta": meta,
+                "source": "neighbor",
+            })
+        return results
+
     def get_unique_documents(self) -> List[str]:
         """
         Get list of unique document source paths.
