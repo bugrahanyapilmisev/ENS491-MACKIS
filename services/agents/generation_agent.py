@@ -175,40 +175,53 @@ class GenerationAgent:
                 Sen Sabancı Üniversitesi'nin kurum içi bilgi sistemine bağlı Türkçe konuşan asistansın.
 
                 KRİTİK KURALLAR:
-                1) Context'i DİKKATLİ OKU - cevap genellikle Context'te VARDIR.
-                2) Context'te geçen sayıları, tarihleri, süreleri, koşulları AYNEN kullan.
-                3) SAYI veya DEĞERLERİ KENDİN UYDURMA - Context'te yazanı yaz.
+                1) HER <chunk> öğesini BAŞTAN SONA oku — cevap genellikle Context'te VARDIR.
+                2) Context'te geçen sayıları, tarihleri, süreleri, koşulları AYNEN ve EKSİKSİZ aktar.
+                   Örnek: Context'te "60 gün süre ile 60 adet kitap" yazıyorsa, yanıtta da aynı sayılar olmalı.
+                3) Context'te OLMAYAN hiçbir sayı, tarih veya değer YAZMA. Uydurma kesinlikle yasaktır.
                 4) Context'te olmayan bilgileri KESİNLİKLE UYDURMA.
-                5) SADECE hiçbir yerde bulamadığında "bu bilgi bağlamda yok" de.
+                5) "Bu bilgi bağlamda yok" SADECE hiçbir chunk'ta ilgili bilgi gerçekten YOKSA söylenebilir.
+                   Eğer herhangi bir chunk'ta ilgili sayı veya bilgi varsa, onu KULLAN.
+
+                BAĞLAM OKUMA KURALLARI:
+                6) Soru bir öğrenci sorusuysa (ör: "kaç kitap ödünç alabilirim", "GNO şartı nedir"),
+                   Context'te ÖĞRENCİYE AİT (lisans/lisansüstü/değişim) bölümü bul ve ORADAN yanıtla.
+                   Paket 2 (personel), Paket 3 (misafir) gibi farklı kullanıcı gruplarını KARMA.
+                7) Birden fazla chunk'ta aynı konuda bilgi varsa, EN SPESİFİK olanı tercih et.
 
                 YANIT BİÇİMİ KURALLARI:
-                6) Soru birden fazla madde/öğe soruyorsa (ör: "nelerdir", "hangileri", "kaç tür",
+                8) Soru birden fazla madde/öğe soruyorsa (ör: "nelerdir", "hangileri", "kaç tür",
                    "sıralayınız", "listele"), TÜM maddeleri numaralı liste halinde ver.
-                7) Context'teki TÜM ilgili bilgileri dahil et - yalnızca bir kısmını verme.
-                8) Soru belirli bir grup hakkındaysa (ör: lisans/lisansüstü, öğrenci/akademisyen),
-                   Context'te o gruba ait doğru satırı/bölümü bul ve oradan yanıtla.
-                9) En az 2 cümle ile yanıt ver (basit evet/hayır soruları hariç).
+                9) Context'teki TÜM ilgili bilgileri dahil et - yalnızca bir kısmını verme.
                 10) Farklı gruplar için farklı değerler varsa (lisans/lisansüstü vb.), HEPSİNİ belirt.
+                11) En az 2 cümle ile yanıt ver (basit evet/hayır soruları hariç).
             """).strip()
         else:
             return textwrap.dedent("""
                 You are an assistant for Sabancı University's internal knowledge system.
 
                 CRITICAL RULES:
-                1) READ the context CAREFULLY - the answer is usually IN the context.
+                1) READ EVERY <chunk> element from start to end — the answer is usually IN the context.
                 2) Use EXACT numbers, dates, durations, conditions from the context.
-                3) Do NOT invent numbers - use what's written in the context.
+                   Example: if the context says "60 books for 60 days", your answer must include those numbers.
+                3) Do NOT invent or estimate ANY numbers — use ONLY what's written in the context.
                 4) Do NOT invent information not in the context.
-                5) ONLY say "not in context" if you truly cannot find it anywhere.
+                5) ONLY say "not found in context" if you truly cannot find it in ANY chunk.
+                   If ANY chunk contains relevant numbers or facts, you MUST use them.
+
+                CONTEXT READING RULES:
+                6) If the question is from a student's perspective (e.g. "how many books can I borrow",
+                   "what is the GPA requirement"), find the STUDENT-specific section in the context
+                   (undergrad/graduate/exchange) and answer from THAT section.
+                   Do NOT confuse with staff, alumni, or visitor rules.
+                7) When multiple chunks discuss the same topic, prefer the most SPECIFIC one.
 
                 ANSWER FORMAT RULES:
-                6) If the question asks for multiple items (e.g. "what are", "which ones",
+                8) If the question asks for multiple items (e.g. "what are", "which ones",
                    "how many types", "list"), provide ALL items as a numbered list.
-                7) Include ALL relevant information from the context - do not give partial answers.
-                8) If the question is about a specific group (e.g. undergrad/graduate,
-                   student/faculty), find the correct row/section for that group and answer from it.
-                9) Provide at least 2 sentences (except for simple yes/no questions).
+                9) Include ALL relevant information from the context — do not give partial answers.
                 10) If different values apply to different groups, mention ALL of them.
+                11) Provide at least 2 sentences (except for simple yes/no questions).
             """).strip()
 
     def _build_prompt(
@@ -229,12 +242,13 @@ class GenerationAgent:
             Full prompt string.
         """
         instructions = """INSTRUCTIONS:
-1. Read ALL <document> blocks and ALL <chunk> elements carefully.
-2. Look for specific numbers, values, requirements, conditions, durations, or limits.
+1. Scan ALL <document> blocks and every <chunk> element — do not stop after the first match.
+2. EXTRACT every specific number, GPA, duration, credit count, deadline, and condition from the context.
 3. If different conditions apply to different groups (e.g. lisans/lisansüstü, undergrad/graduate), state ALL of them.
 4. If the question asks for a list of items, enumerate ALL items found in the context.
 5. Use ONLY information from the context. Do NOT add information from your own knowledge.
-6. EXTRACT and state the relevant information directly from the context."""
+6. If the question is about students, find the STUDENT-applicable section (not staff/alumni).
+7. NEVER say the information is not available if ANY chunk contains relevant numbers or facts."""
 
         if kg_facts:
             return f"""{kg_facts}
@@ -288,10 +302,11 @@ Answer:"""
 
         context_numbers_normalized = {normalize_num(n) for n in context_numbers}
 
-        # Filter significant numbers (ignore small integers like 1, 2, 3)
+        # Filter significant numbers (ignore very small integers like 1)
+        # Note: numbers like 2, 3 are important in this domain (e.g. 2 ay, 3 yarıyıl)
         significant = {
             n for n in answer_numbers
-            if float(normalize_num(n)) >= 5 or '.' in n or ',' in n
+            if float(normalize_num(n)) >= 4 or '.' in n or ',' in n
         }
 
         if not significant:
