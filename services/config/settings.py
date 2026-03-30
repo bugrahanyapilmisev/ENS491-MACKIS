@@ -174,7 +174,7 @@ class RAGConfig:
                 top_k_bm25=int(os.getenv("TOP_K_BM25", "32")),
                 top_k_final_base=int(os.getenv("TOP_K_FINAL_BASE", "8")),
                 top_k_final_max=int(os.getenv("TOP_K_FINAL_MAX", "24")),
-                max_docs_context=int(os.getenv("MAX_DOCS_CONTEXT", "6")),
+                max_docs_context=int(os.getenv("MAX_DOCS_CONTEXT", "8")),
                 bm25_weight=float(os.getenv("BM25_WEIGHT", "0.3")),
                 vector_weight=float(os.getenv("VECTOR_WEIGHT", "0.7")),
                 rrf_constant=int(os.getenv("RRF_CONSTANT", "60")),
