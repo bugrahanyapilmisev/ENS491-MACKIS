@@ -11,24 +11,34 @@ from utils import get_current_user_id
 router = APIRouter()
 
 
-def _resolve_chunk_id(db: Session, chroma_chunk_id: str):
+def _resolve_chunk_info(db: Session, chroma_chunk_id: str):
     """
-    Map a ChromaDB string chunk_id to the Supabase integer chunk_id.
-    Returns the integer chunk_id if found, else None.
+    Map a ChromaDB string chunk_id → (supabase_chunk_id, document_url).
 
-    The chunks table stores a 'hash' or can be looked up via content match.
-    We use the chroma_chunk_id (SHA1) stored in metadata during ingestion sync.
+    Single JOIN query: chunks → documents.
+    Returns (int chunk_id, str source_uri) or (None, None) if not found.
+
+    After running scripts/update_document_urls_from_catalog.py,
+    source_uri will be a full https://mysu.sabanciuniv.edu/... URL.
     """
     if not chroma_chunk_id:
-        return None
-    # Try direct lookup: chunks table may store chroma_chunk_id in a column
-    # The sync script stores chroma_chunk_id as the 'hash' field in chunks table
-    chunk = db.query(models.Chunk.chunk_id).filter(
-        models.Chunk.hash == chroma_chunk_id
-    ).first()
-    if chunk:
-        return chunk.chunk_id
-    return None
+        return None, None
+
+    row = (
+        db.query(models.Chunk.chunk_id, models.Document.source_uri)
+        .join(models.Document, models.Chunk.document_id == models.Document.document_id)
+        .filter(models.Chunk.hash == chroma_chunk_id)
+        .first()
+    )
+    if row:
+        return row.chunk_id, row.source_uri
+    return None, None
+
+
+def _resolve_chunk_id(db: Session, chroma_chunk_id: str):
+    """Thin wrapper kept for backward compatibility (used in retrieval_hits loop)."""
+    chunk_id, _ = _resolve_chunk_info(db, chroma_chunk_id)
+    return chunk_id
 
 
 def _load_conversation_history(db: Session, conversation_id: int, limit: int = 10):
@@ -260,14 +270,19 @@ def chat_endpoint(
     # ---------------------------------------------------------
 
     formatted_sources = []
-    for src in raw_sources:
+    for src in raw_sources[:3]:  # Limit to top 3 sources
+        # Single query: ChromaDB hash → Supabase chunk_id + document URL
+        chroma_cid = src.get("chunk_id", "")
+        resolved_id, doc_url = _resolve_chunk_info(db, chroma_cid)
+        resolved_id = resolved_id or 0
+
         formatted_sources.append(
             schemas.SourceReference(
-                chunk_id=src.get("chunk_id", 0) if isinstance(src.get("chunk_id"), int) else 0,
+                chunk_id=resolved_id,
                 title=src.get("title", "Doc"),
                 excerpt=src.get("excerpt", ""),
-                score=src.get("score", 0.0),
-                url=src.get("url"),
+                score=None,  # Not shown to user
+                url=doc_url,  # Full URL from documents.source_uri
             )
         )
 
@@ -281,6 +296,50 @@ def chat_endpoint(
     )
 
 
+def _get_message_sources(db: Session, answer_id: int) -> List[schemas.SourceReference]:
+    """
+    Fetch sources (citations) for a given answer_id.
+    Loads citations with their chunks and documents in one joined query.
+    Limits to top 3 sources. Score is not stored in DB so left as None.
+    """
+    if not answer_id:
+        return []
+
+    citations = (
+        db.query(models.AnswerCitation)
+        .options(
+            joinedload(models.AnswerCitation.chunk).joinedload(models.Chunk.document)
+        )
+        .filter(models.AnswerCitation.answer_id == answer_id)
+        .order_by(models.AnswerCitation.order_idx.asc())
+        .limit(3)
+        .all()
+    )
+
+    sources = []
+    for citation in citations:
+        chunk = citation.chunk
+        if not chunk:
+            continue
+
+        doc = chunk.document
+        doc_url = doc.source_uri if doc else None
+        # Document title has priority over section header ("Introduction" etc.)
+        title = (doc.title if doc else None) or chunk.section or "Document"
+
+        sources.append(
+            schemas.SourceReference(
+                chunk_id=chunk.chunk_id,
+                title=title,
+                excerpt=(chunk.content[:150] + "...") if chunk.content else "",
+                score=None,  # Not stored in DB; score badge hidden when None
+                url=doc_url,
+            )
+        )
+
+    return sources
+
+
 @router.get("/chat/history", response_model=List[schemas.ConversationOut])
 def get_chat_history(
     db: Session = Depends(get_db),
@@ -289,6 +348,7 @@ def get_chat_history(
     """
     Giriş yapmış kullanıcının tüm sohbet geçmişini döner.
     Frontend ConversationData interface'i ile birebir uyumlu format.
+    Includes sources (citations) and confidence scores for assistant messages.
     """
     conversations = (
         db.query(models.Conversation)
@@ -313,15 +373,25 @@ def get_chat_history(
         # Konuşmanın timestamp'i = son mesajın zamanı veya oluşturulma zamanı
         conv_timestamp = (last_msg.created_at if last_msg else conv.created_at).isoformat()
 
-        messages_out = [
-            schemas.MessageOut(
-                id=msg.message_id,
-                role=msg.role,
-                content=msg.content,
-                timestamp=msg.created_at.isoformat(),
+        messages_out = []
+        for msg in sorted_messages:
+            # Fetch sources for assistant messages
+            sources = None
+            confidence = None
+            if msg.role == "assistant" and msg.answer_id:
+                sources = _get_message_sources(db, msg.answer_id)
+                confidence = 0.95  # Default; could also be stored per answer if needed
+
+            messages_out.append(
+                schemas.MessageOut(
+                    id=msg.message_id,
+                    role=msg.role,
+                    content=msg.content,
+                    timestamp=msg.created_at.isoformat(),
+                    sources=sources,
+                    confidence=confidence,
+                )
             )
-            for msg in sorted_messages
-        ]
 
         result.append(
             schemas.ConversationOut(

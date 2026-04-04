@@ -140,10 +140,27 @@ class RAGPipeline:
         if negated_terms:
             print(f"[RAGPipeline] negated_terms={negated_terms}")
 
-        # 2. Build retrieval query
+        # 2. Build retrieval query (combines anchor + current for follow-ups)
         retrieval_query = self.query_agent.build_retrieval_query(query, analysis)
 
-        # 3. Retrieval — pass pre-expanded queries + intent-based HyDE skip
+        # 3a. For follow-up queries: inject the anchor-enriched combined query at the
+        #     FRONT of the expanded list. This guarantees the retrieval stage always
+        #     searches with the resolved topic even if the LLM-expanded queries are
+        #     imperfect (e.g. they still contain unresolved pronouns "bu", "onların").
+        if is_followup and anchor and self.config.features.use_query_expansion:
+            # Build a concise resolved query: "<anchor topic>: <current question>"
+            # E.g. "Erasmus'a başvurma şartları nelerdir: Bu şartları kimlerin sağlaması gerekiyor?"
+            anchor_short = anchor[:120]  # Truncate very long anchors
+            resolved_query = f"{anchor_short}: {query}"
+            # Prepend combined + resolved; keep at most 3 of the LLM-generated expansions
+            enriched_expanded = [retrieval_query, resolved_query] + [
+                q for q in expanded_queries if q != query
+            ][:3]
+            expanded_queries = enriched_expanded
+            print(f"[RAGPipeline] Follow-up: injected anchor into expanded queries "
+                  f"({len(expanded_queries)} total)")
+
+        # 3b. Retrieval — pass pre-expanded queries + intent-based HyDE skip
         skip_hyde = intent in {"count_items", "list_names"}
         candidates = self.retrieval_agent.retrieve(
             retrieval_query,

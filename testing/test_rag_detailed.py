@@ -506,7 +506,8 @@ def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
         # ── Run pipeline ─────────────────────────────────────────────────────
         t0 = time.time()
         try:
-            answer  = pipeline.answer(question, history=[])
+            pipeline_result = pipeline.answer(question, history=[])
+            answer = pipeline_result["answer"] if isinstance(pipeline_result, dict) else pipeline_result
             latency = time.time() - t0
         except Exception as e:
             latency = time.time() - t0
