@@ -101,13 +101,15 @@ class RAGService:
 
             # Build formatted sources from context_chunks (used in generation)
             sources = []
-            for ch in context_chunks:
+            for ch in context_chunks[:3]:
                 meta = ch.get("meta") or {}
+                # Document title has priority over section header ("Introduction" etc.)
+                title = meta.get("title") or meta.get("section_header") or ""
                 sources.append({
                     "chunk_id": ch.get("chunk_id", ""),
-                    "title": meta.get("title", ""),
+                    "title": title,
                     "excerpt": (ch.get("text", "")[:200] + "...") if ch.get("text") else "",
-                    "score": ch.get("hybrid_score", ch.get("ce_score", ch.get("score", 0))),
+                    "score": None,  # Not shown to user
                     "source_path": meta.get("source_path", ""),
                     "url": meta.get("source_path", ""),
                 })

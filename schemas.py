@@ -54,6 +54,8 @@ class MessageOut(BaseModel):
     role: str            # "user" | "assistant"
     content: str
     timestamp: str       # ISO string, frontend bunu görüntüler
+    sources: Optional[List[SourceReference]] = None  # Kaynaklar (assistant mesajları için)
+    confidence: Optional[float] = None  # Güven skoru (assistant mesajları için)
 
     class Config:
         from_attributes = True
