@@ -94,8 +94,12 @@ class QueryAnalysisAgent:
         intent = self.detect_intent(query)
         is_followup, anchor = self.detect_followup(query, history)
 
-        # Single LLM call for tags + expansion (was 2 separate calls)
-        tags, expanded_queries = self.infer_tags_and_expand(query, language)
+        # Single LLM call for tags + expansion.
+        # When follow-up, pass anchor so the LLM can resolve pronouns like "bu", "onların".
+        tags, expanded_queries = self.infer_tags_and_expand(
+            query, language,
+            anchor_query=anchor if is_followup else None
+        )
 
         # Short-circuit: only call LLM for negation if query has negation cue
         if self._query_has_negation_cue(query):
@@ -221,11 +225,19 @@ class QueryAnalysisAgent:
         if not last_q:
             return False, None
 
+        # Minimum length guard: very short messages (greetings, one-word replies)
+        # can't be meaningful anchors, and their embeddings are too generic.
+        if len(last_q.split()) < 3:
+            return False, None
+
         # Check semantic similarity
         try:
             q_vec = self.embedding.embed(query)
             last_vec = self.embedding.embed(last_q)
             sim = self.embedding.cosine_similarity(q_vec, last_vec)
+
+            print(f"[QueryAnalysis] Follow-up similarity={sim:.3f} "
+                  f"(threshold={threshold}) | anchor='{last_q[:60]}'")
 
             if sim >= threshold:
                 return True, last_q
@@ -287,53 +299,93 @@ class QueryAnalysisAgent:
     def infer_tags_and_expand(
         self,
         query: str,
-        lang: Optional[str] = None
+        lang: Optional[str] = None,
+        anchor_query: Optional[str] = None
     ) -> tuple:
         """
         Infer semantic tags AND generate expanded queries in a single LLM call.
 
-        This replaces the old pattern of calling infer_tags() + expand_query()
-        separately (2 LLM round-trips → 1).
+        When anchor_query is provided (follow-up case), the LLM receives the full
+        conversation context so tags and expansions are anchored to the original topic
+        rather than the ambiguous pronoun-heavy follow-up.
 
         Args:
-            query: User query.
+            query: User query (may contain pronouns like "bu", "onların" in follow-ups).
             lang: Detected language.
+            anchor_query: The previous user query if this is a follow-up. When provided,
+                          both tags and expanded queries will reflect the combined topic.
 
         Returns:
             Tuple of (tags: List[str], expanded_queries: List[str]).
             expanded_queries always starts with the original query.
         """
-        sys_prompt = textwrap.dedent("""
-            You are a search assistant for a university information system.
-            Given a user query, produce TWO things:
+        if anchor_query:
+            # Follow-up mode: give the LLM full context so it understands what
+            # pronouns like "bu", "onların", "bu şartlar" refer to.
+            sys_prompt = textwrap.dedent("""
+                You are a search assistant for a university information system.
+                The user is asking a FOLLOW-UP question that contains pronouns or references
+                to a previous question. You must resolve those references using the context.
 
-            1. **tags**: 2-6 lowercase_snake_case semantic tags classifying the query topic.
-               Use English tags even for Turkish queries.
-               Focus on specific domains: scholarships, exchange_programs, library, discipline, gpa, etc.
+                Given:
+                - PREVIOUS question (what "bu", "onların", "bu şartlar" etc. refer to)
+                - CURRENT follow-up question
 
-            2. **queries**: 2-4 alternative phrasings / synonyms of the query for search expansion.
-               Keep the same language as the original query.
-               Include relevant Turkish ↔ English synonyms when applicable, e.g.:
-               - GNO ↔ GPA ↔ genel not ortalaması
-               - ÇAP ↔ çift anadal ↔ double major
-               - yandal ↔ minor
-               - ECTS ↔ kredi ↔ credit
-               - burs ↔ scholarship
-               Do NOT include the original query in "queries".
+                Produce TWO things for the COMBINED topic:
 
-            JSON schema: {"tags": ["tag1", ...], "queries": ["alt1", "alt2", ...]}
+                1. **tags**: 2-6 lowercase_snake_case semantic tags for the COMBINED topic.
+                   IMPORTANT: Tags must reflect the original topic (from the previous question),
+                   not just the surface words of the follow-up.
+                   Use English tags: exchange_programs, erasmus, scholarships, gpa, discipline, etc.
 
-            Output STRICT JSON ONLY, no explanation.
-        """).strip()
+                2. **queries**: 2-4 search queries that capture what the user is REALLY asking,
+                   with pronouns fully resolved using the previous question's context.
+                   Each query must be self-contained (no unresolved pronouns).
+                   Keep the same language as the current query.
+                   Include relevant synonyms:
+                   - GNO ↔ GPA ↔ genel not ortalaması
+                   - ÇAP ↔ çift anadal ↔ double major
+                   - ECTS ↔ kredi
+                   - Erasmus ↔ değişim programı ↔ exchange program
+                   Do NOT include the original current query (with pronouns) in "queries".
 
-        result = self.llm.chat_json(
-            f"Query: {query}",
-            sys_prompt,
-            temperature=0.0
-        )
+                JSON schema: {"tags": ["tag1", ...], "queries": ["resolved query 1", ...]}
+                Output STRICT JSON ONLY, no explanation.
+            """).strip()
+
+            user_input = (
+                f"PREVIOUS question: {anchor_query}\n"
+                f"CURRENT follow-up: {query}"
+            )
+        else:
+            sys_prompt = textwrap.dedent("""
+                You are a search assistant for a university information system.
+                Given a user query, produce TWO things:
+
+                1. **tags**: 2-6 lowercase_snake_case semantic tags classifying the query topic.
+                   Use English tags even for Turkish queries.
+                   Focus on specific domains: scholarships, exchange_programs, library, discipline, gpa, etc.
+
+                2. **queries**: 2-4 alternative phrasings / synonyms of the query for search expansion.
+                   Keep the same language as the original query.
+                   Include relevant Turkish ↔ English synonyms when applicable, e.g.:
+                   - GNO ↔ GPA ↔ genel not ortalaması
+                   - ÇAP ↔ çift anadal ↔ double major
+                   - yandal ↔ minor
+                   - ECTS ↔ kredi ↔ credit
+                   - burs ↔ scholarship
+                   Do NOT include the original query in "queries".
+
+                JSON schema: {"tags": ["tag1", ...], "queries": ["alt1", "alt2", ...]}
+                Output STRICT JSON ONLY, no explanation.
+            """).strip()
+
+            user_input = f"Query: {query}"
+
+        result = self.llm.chat_json(user_input, sys_prompt, temperature=0.0)
 
         tags = []
-        expanded = [query]  # always include original
+        expanded = [query]  # always include original query first
 
         if result:
             raw_tags = result.get("tags", [])
@@ -350,7 +402,8 @@ class QueryAnalysisAgent:
                     if isinstance(q, str) and q.strip() and q.strip() != query:
                         expanded.append(q.strip())
 
-        print(f"[QueryAnalysis] Combined tags={tags}, expanded={len(expanded)} queries")
+        ctx = f" [anchor='{anchor_query[:40]}...']" if anchor_query else ""
+        print(f"[QueryAnalysis] Combined tags={tags}, expanded={len(expanded)} queries{ctx}")
         return tags, expanded
 
     def extract_negated_terms(
