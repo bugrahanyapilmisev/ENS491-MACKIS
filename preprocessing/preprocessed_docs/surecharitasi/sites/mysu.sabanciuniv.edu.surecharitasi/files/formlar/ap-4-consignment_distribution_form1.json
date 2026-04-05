@@ -3,5 +3,15 @@
   "title": "ap-4-consignment_distribution_form1",
   "lang": "en",
   "html_lang": "",
-  "text": "Appendix 4 : CONSIGNMENT DISTRIBUTION FORM DOCUMENTATION & CORRESPONDENCE CENTER CONSIGNMENT DISTRIBUTION FORM Unit : Date : No. Type of Consignment Consignee Consigner Description Recipient Signature"
+  "doc_type": "form",
+  "metadata": {},
+  "summary": "Belge: ap-4-consignment_distribution_form1",
+  "sections": [
+    {
+      "header": "Introduction",
+      "level": 0,
+      "text": "Appendix 4 : CONSIGNMENT DISTRIBUTION FORM DOCUMENTATION & CORRESPONDENCE CENTER CONSIGNMENT DISTRIBUTION FORM Unit : Date : No. Type of Consignment Consignee Consigner Description Recipient Signature"
+    }
+  ],
+  "full_text": "Appendix 4 : CONSIGNMENT DISTRIBUTION FORM DOCUMENTATION & CORRESPONDENCE CENTER CONSIGNMENT DISTRIBUTION FORM Unit : Date : No. Type of Consignment Consignee Consigner Description Recipient Signature"
 }

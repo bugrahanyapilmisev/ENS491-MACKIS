@@ -1,0 +1,71 @@
+{
+  "prev_pass": 28,
+  "curr_pass": 32,
+  "flipped_to_pass": [
+    {
+      "q": "Q6",
+      "before": 0.374,
+      "after": 0.745,
+      "delta": 0.371
+    },
+    {
+      "q": "Q9",
+      "before": 0.629,
+      "after": 0.807,
+      "delta": 0.178
+    },
+    {
+      "q": "Q14",
+      "before": 0.7,
+      "after": 0.774,
+      "delta": 0.074
+    },
+    {
+      "q": "Q21",
+      "before": 0.376,
+      "after": 0.733,
+      "delta": 0.357
+    },
+    {
+      "q": "Q40",
+      "before": 0.555,
+      "after": 0.739,
+      "delta": 0.184
+    },
+    {
+      "q": "Q43",
+      "before": 0.664,
+      "after": 0.792,
+      "delta": 0.128
+    }
+  ],
+  "flipped_to_fail": [
+    {
+      "q": "Q5",
+      "before": 0.719,
+      "after": 0.651,
+      "delta": -0.068
+    },
+    {
+      "q": "Q33",
+      "before": 0.747,
+      "after": 0.616,
+      "delta": -0.131
+    }
+  ],
+  "still_fail": [
+    "Q4",
+    "Q5",
+    "Q10",
+    "Q11",
+    "Q15",
+    "Q16",
+    "Q19",
+    "Q23",
+    "Q25",
+    "Q28",
+    "Q33",
+    "Q35",
+    "Q42"
+  ]
+}
