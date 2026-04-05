@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_DIR = os.getenv("PROJECT_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.getenv("PROJECT_ROOT") or os.getcwd()
 PREPROCESSING_DIR = os.getenv("PREPROCESSING_PATH") or os.path.join(BASE_DIR, "preprocessing")
-PRE_ROOT = os.getenv("PREPROCESSED_ROOT") or os.path.join(PREPROCESSING_DIR, "preprocessed_docs_v2")
+PRE_ROOT = os.getenv("PREPROCESSED_ROOT") or os.path.join(PREPROCESSING_DIR, "preprocessed_docs")
 CHUNKS_PARQUET = os.path.join(PREPROCESSING_DIR, "chunks_plus2.parquet")
 
 

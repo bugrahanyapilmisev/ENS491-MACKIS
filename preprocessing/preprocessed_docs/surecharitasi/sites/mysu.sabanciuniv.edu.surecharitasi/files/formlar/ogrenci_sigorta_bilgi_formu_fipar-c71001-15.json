@@ -3,15 +3,5 @@
   "title": "ogrenci_sigorta_bilgi_formu_fipar-c71001-15",
   "lang": "tr",
   "html_lang": "",
-  "doc_type": "form",
-  "metadata": {},
-  "summary": "Belge: ogrenci_sigorta_bilgi_formu_fipar-c71001-15",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "ID İsim Soyad T.C Kimlik Numarası Kurum İsmi Staj Başlangıç Tarihi Staj Bitiş Tarihi Doğum Tarihi Yükümlülük Bilgisi"
-    }
-  ],
-  "full_text": "ID İsim Soyad T.C Kimlik Numarası Kurum İsmi Staj Başlangıç Tarihi Staj Bitiş Tarihi Doğum Tarihi Yükümlülük Bilgisi"
+  "text": "ID İsim Soyad T.C Kimlik Numarası Kurum İsmi Staj Başlangıç Tarihi Staj Bitiş Tarihi Doğum Tarihi Yükümlülük Bilgisi"
 }

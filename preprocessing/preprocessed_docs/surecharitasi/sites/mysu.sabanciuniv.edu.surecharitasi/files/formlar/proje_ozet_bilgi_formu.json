@@ -3,15 +3,5 @@
   "title": "proje_ozet_bilgi_formu",
   "lang": "tr",
   "html_lang": "",
-  "doc_type": "form",
-  "metadata": {},
-  "summary": "Belge: proje_ozet_bilgi_formu",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "PROJE ÖZET BİLGİ FORMU Topluluk Programı:  7. Çerçeve Programı Program Alt Alanı: İlgili Çağrı: Proje Adı (Ing-Turkçe): Projenin Amacı: Projenin Kurumdaki Yürütücüsü: Projedeki Ortak Sayısı: Kurumun Projedeki Temel Sorumlulukları:"
-    }
-  ],
-  "full_text": "PROJE ÖZET BİLGİ FORMU Topluluk Programı:  7. Çerçeve Programı Program Alt Alanı: İlgili Çağrı: Proje Adı (Ing-Turkçe): Projenin Amacı: Projenin Kurumdaki Yürütücüsü: Projedeki Ortak Sayısı: Kurumun Projedeki Temel Sorumlulukları:"
+  "text": "PROJE ÖZET BİLGİ FORMU Topluluk Programı:  7. Çerçeve Programı Program Alt Alanı: İlgili Çağrı: Proje Adı (Ing-Turkçe): Projenin Amacı: Projenin Kurumdaki Yürütücüsü: Projedeki Ortak Sayısı: Kurumun Projedeki Temel Sorumlulukları:"
 }

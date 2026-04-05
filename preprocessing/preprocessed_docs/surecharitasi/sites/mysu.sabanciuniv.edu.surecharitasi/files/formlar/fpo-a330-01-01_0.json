@@ -3,17 +3,5 @@
   "title": "fpo-a330-01-01_0",
   "lang": "en",
   "html_lang": "",
-  "doc_type": "other",
-  "metadata": {
-    "procedure_code": "FPO-A330-01-01"
-  },
-  "summary": "Belge: fpo-a330-01-01_0",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "COURSE PACKAGE DELIVERY CHECKLIST (FPO-A330-01-01)"
-    }
-  ],
-  "full_text": "COURSE PACKAGE DELIVERY CHECKLIST (FPO-A330-01-01)"
+  "text": "COURSE PACKAGE DELIVERY CHECKLIST (FPO-A330-01-01)"
 }
