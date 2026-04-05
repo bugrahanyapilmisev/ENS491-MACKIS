@@ -35,3 +35,15 @@ chroma_db_mysu_RESTORE/
 mackis/
 
 preprocessing/corpus_browser/
+
+# --- IDE ve Düzenleyici Dosyaları ---
+.idea/
+.vscode/
+
+# --- Test Çıktıları ve Loglar ---
+testing/test_results/
+testing/*.txt
+
+# --- Manuel Yoksayılanlar ---
+create_user.py
+

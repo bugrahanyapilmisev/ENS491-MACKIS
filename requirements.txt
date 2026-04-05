@@ -1,0 +1,32 @@
+# Web Framework
+fastapi
+uvicorn[standard]
+
+# Database
+sqlalchemy
+psycopg2-binary
+pgvector
+
+# Auth & Security
+passlib[bcrypt]
+python-jose[cryptography]
+bcrypt
+
+# Environment
+python-dotenv
+
+# RAG / ML
+chromadb
+sentence-transformers
+numpy
+requests
+
+# BM25
+rank-bm25
+
+# Pydantic (FastAPI dependency, pin v2)
+pydantic[email]
+
+# Gemini API (external LLM judge)
+google-genai
+
