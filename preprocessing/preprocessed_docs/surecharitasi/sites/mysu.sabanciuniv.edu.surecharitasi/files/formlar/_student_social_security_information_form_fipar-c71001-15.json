@@ -3,15 +3,5 @@
   "title": "_student_social_security_information_form_fipar-c71001-15",
   "lang": "en",
   "html_lang": "",
-  "doc_type": "form",
-  "metadata": {},
-  "summary": "Belge: _student_social_security_information_form_fipar-c71001-15",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "Student ID No Name Surname ID Number Company Name Internship Start Date Internship End Date Birth Date Liability Info"
-    }
-  ],
-  "full_text": "Student ID No Name Surname ID Number Company Name Internship Start Date Internship End Date Birth Date Liability Info"
+  "text": "Student ID No Name Surname ID Number Company Name Internship Start Date Internship End Date Birth Date Liability Info"
 }

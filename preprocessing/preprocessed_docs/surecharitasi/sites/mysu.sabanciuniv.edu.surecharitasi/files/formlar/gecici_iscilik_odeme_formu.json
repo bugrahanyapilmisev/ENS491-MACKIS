@@ -3,15 +3,5 @@
   "title": "gecici_iscilik_odeme_formu",
   "lang": "tr",
   "html_lang": "",
-  "doc_type": "form",
-  "metadata": {},
-  "summary": "Belge: gecici_iscilik_odeme_formu",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "Proje Kodu: Proje Adı: Çalışma Tarihi: Yukarıda bilgileri verilen proje kapsamındaki işlere verdiğim destek karşılığında tarafıma ……..-TL (………….Türk Lirası) ödeme yapılmıştır. İsim, Soyisim: İmza: Tarih:"
-    }
-  ],
-  "full_text": "Proje Kodu: Proje Adı: Çalışma Tarihi: Yukarıda bilgileri verilen proje kapsamındaki işlere verdiğim destek karşılığında tarafıma ……..-TL (………….Türk Lirası) ödeme yapılmıştır. İsim, Soyisim: İmza: Tarih:"
+  "text": "Proje Kodu: Proje Adı: Çalışma Tarihi: Yukarıda bilgileri verilen proje kapsamındaki işlere verdiğim destek karşılığında tarafıma ……..-TL (………….Türk Lirası) ödeme yapılmıştır. İsim, Soyisim: İmza: Tarih:"
 }

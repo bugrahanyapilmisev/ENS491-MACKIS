@@ -3,15 +3,5 @@
   "title": "Page not found | Yönerge",
   "lang": "en",
   "html_lang": "",
-  "doc_type": "directive",
-  "metadata": {},
-  "summary": "Belge: Page not found | Yönerge",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "Page not found The requested page \"/surecharitasi/en/yonerge/gili%20kurallar%20ve%20uygulama%20ad%C4%B1mlar%C4%B1\" could not be found."
-    }
-  ],
-  "full_text": "Page not found The requested page \"/surecharitasi/en/yonerge/gili%20kurallar%20ve%20uygulama%20ad%C4%B1mlar%C4%B1\" could not be found."
+  "text": "Page not found The requested page \"/surecharitasi/en/yonerge/gili%20kurallar%20ve%20uygulama%20ad%C4%B1mlar%C4%B1\" could not be found."
 }

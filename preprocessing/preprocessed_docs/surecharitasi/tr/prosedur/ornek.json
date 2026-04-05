@@ -3,21 +3,5 @@
   "title": "örnek | Yönerge",
   "lang": "tr",
   "html_lang": "",
-  "doc_type": "directive",
-  "metadata": {
-    "procedure_code": "00",
-    "effective_date": "14-07-2013",
-    "update_date": "14-07-2013",
-    "responsible_unit": "Onaylayan MH / Mütevelli Heyeti İlgili Yönergeler Amaç Kapsam Tanımlar / Kısaltmalar Uygulama Adımları Sorumluluk Çıktılar/Zamanlama İlgili Formlar İlgili Form Linkleri",
-    "approver": "MH / Mütevelli Heyeti"
-  },
-  "summary": "Belge: örnek | Yönerge",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "Prosedür No 00 Yürürlük Tarihi 14-07-2013 Güncelleme Tarihi 14-07-2013 İlgili Birim / Sahibi Onaylayan MH / Mütevelli Heyeti İlgili Yönergeler Amaç Kapsam Tanımlar / Kısaltmalar Uygulama Adımları Sorumluluk Çıktılar/Zamanlama İlgili Formlar İlgili Form Linkleri"
-    }
-  ],
-  "full_text": "Prosedür No 00 Yürürlük Tarihi 14-07-2013 Güncelleme Tarihi 14-07-2013 İlgili Birim / Sahibi Onaylayan MH / Mütevelli Heyeti İlgili Yönergeler Amaç Kapsam Tanımlar / Kısaltmalar Uygulama Adımları Sorumluluk Çıktılar/Zamanlama İlgili Formlar İlgili Form Linkleri"
+  "text": "Prosedür No 00 Yürürlük Tarihi 14-07-2013 Güncelleme Tarihi 14-07-2013 İlgili Birim / Sahibi Onaylayan MH / Mütevelli Heyeti İlgili Yönergeler Amaç Kapsam Tanımlar / Kısaltmalar Uygulama Adımları Sorumluluk Çıktılar/Zamanlama İlgili Formlar İlgili Form Linkleri"
 }

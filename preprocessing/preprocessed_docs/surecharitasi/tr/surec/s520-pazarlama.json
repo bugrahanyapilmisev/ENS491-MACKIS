@@ -3,15 +3,5 @@
   "title": "Sayfa bulunamadı | Yönerge",
   "lang": "en",
   "html_lang": "",
-  "doc_type": "directive",
-  "metadata": {},
-  "summary": "Belge: Sayfa bulunamadı | Yönerge",
-  "sections": [
-    {
-      "header": "Introduction",
-      "level": 0,
-      "text": "Sayfa bulunamadı The requested page \"/surecharitasi/tr/surec/s520-pazarlama\" could not be found."
-    }
-  ],
-  "full_text": "Sayfa bulunamadı The requested page \"/surecharitasi/tr/surec/s520-pazarlama\" could not be found."
+  "text": "Sayfa bulunamadı The requested page \"/surecharitasi/tr/surec/s520-pazarlama\" could not be found."
 }
