@@ -9,10 +9,28 @@ METRICS
 ─────────────────────────────────────────────────────────────────────────────
   1. Answer Similarity   – Cosine similarity between answer and expected
                            embeddings (bge-m3 via Ollama, fallback: ST).
-  2. Faithfulness        – LLM judge (Ollama): every claim grounded in context?
-  3. Answer Relevance    – LLM judge (Ollama): does answer address the question?
+  2. Faithfulness        – LLM judge: every claim grounded in context?
+  3. Answer Relevance    – LLM judge: does answer address the question?
   4. Factual Accuracy    – Regex: numbers / dates in expected found in answer.
   5. Keyword Coverage    – Legacy word-overlap metric (kept for comparison).
+
+─────────────────────────────────────────────────────────────────────────────
+LLM JUDGE PROVIDERS
+─────────────────────────────────────────────────────────────────────────────
+  judge_provider="gemini" (default, recommended)
+      Uses the Gemini API as a fully independent, neutral judge.
+      This eliminates self-judging bias when comparing two Ollama models
+      (e.g. llama3.1 vs qwen3.5) — the judge is always the same external
+      Gemini model regardless of which RAG model is under test.
+
+      Requires: GEMINI_API_KEY in .env
+      Default judge model: gemini-2.0-flash
+      Override via: JUDGE_MODEL=gemini-1.5-pro (or any Gemini model)
+
+  judge_provider="ollama" (legacy)
+      Uses the same Ollama server as the RAG pipeline for judging.
+      WARNING: when evaluating a model against itself this introduces
+      self-judging bias.  Kept for backward compatibility only.
 
 ─────────────────────────────────────────────────────────────────────────────
 COMPOSITE SCORE  (domain-optimized for regulatory university Q&A)
@@ -40,7 +58,7 @@ USAGE
 ─────────────────────────────────────────────────────────────────────────────
   from testing.evaluator import Evaluator, EvaluationResult
 
-  ev = Evaluator()
+  ev = Evaluator()   # uses JUDGE_PROVIDER / GEMINI_API_KEY from .env
   result = ev.evaluate(
       question_id="Q1",
       category="Erasmus",
@@ -76,6 +94,16 @@ try:
     _ST_AVAILABLE = True
 except ImportError:
     _ST_AVAILABLE = False
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Optional: google-genai (Gemini API judge)
+# ─────────────────────────────────────────────────────────────────────────────
+try:
+    from google import genai as _google_genai
+    _GENAI_AVAILABLE = True
+except ImportError:
+    _google_genai = None  # type: ignore
+    _GENAI_AVAILABLE = False
 
 # Turkish diacritics used in keyword normalisation
 _TR_DIACRITICS = "çğıöşüÇĞİÖŞÜ"
@@ -210,14 +238,28 @@ class Evaluator:
     embed_model : str
         Embedding model name served by Ollama (default: bge-m3).
     chat_model : str
-        Chat/LLM model name served by Ollama (used for LLM-judge metrics).
+        Chat/LLM model name served by Ollama — the model being *evaluated*
+        (NOT the judge).  Used only when judge_provider="ollama" (legacy).
+    judge_provider : str
+        Which backend to use for LLM-judge metrics (faithfulness, relevance).
+        "gemini" (default) — neutral external judge via Gemini API.
+        "ollama"           — legacy self-judge (same model as RAG pipeline).
+        Falls back to JUDGE_PROVIDER env var if not passed explicitly.
+    judge_model : str
+        Model name for the judge provider.
+        For Gemini: e.g. "gemini-2.0-flash" (default), "gemini-1.5-pro".
+        For Ollama: any locally available model name.
+        Falls back to JUDGE_MODEL env var if not passed explicitly.
+    gemini_api_key : str, optional
+        Gemini API key.  Falls back to GEMINI_API_KEY env var.
     pass_threshold : float
         Composite score ≥ this value → PASS.
     st_model_name : str
-        fallback sentence-transformers model for similarity (used only when
-        Ollama is unreachable).
+        Fallback sentence-transformers model for similarity (used only when
+        Ollama embed is unreachable).
     llm_judge_timeout : int
-        Seconds to wait for Ollama LLM-judge responses.
+        Seconds to wait for Ollama LLM-judge responses (Gemini uses its own
+        internal timeout via the SDK).
     """
 
     def __init__(
@@ -225,37 +267,80 @@ class Evaluator:
         ollama_host: str = "http://localhost:11434",
         embed_model: str = "bge-m3",
         chat_model: Optional[str] = None,
+        judge_provider: Optional[str] = None,
+        judge_model: Optional[str] = None,
+        gemini_api_key: Optional[str] = None,
         pass_threshold: float = 0.70,
         st_model_name: str = "paraphrase-multilingual-MiniLM-L12-v2",
         llm_judge_timeout: int = 120,
     ):
+        from dotenv import load_dotenv
+        load_dotenv()
+
         self.ollama_host = ollama_host.rstrip("/")
         self.embed_model = embed_model
         self.pass_threshold = pass_threshold
         self.llm_judge_timeout = llm_judge_timeout
 
-        # Resolve chat model from env if not given
+        # ── Resolve the RAG chat model (model under test) ──────────────────
         if chat_model is None:
-            from dotenv import load_dotenv
-            load_dotenv()
             chat_model = os.getenv("CHAT_MODEL", "qwen2.5:7b")
         self.chat_model = chat_model
 
-        # Embedding cache: sha1 → numpy vector
+        # ── Resolve judge provider & model ────────────────────────────────
+        if judge_provider is None:
+            judge_provider = os.getenv("JUDGE_PROVIDER", "gemini")
+        self.judge_provider = judge_provider.lower().strip()
+
+        if judge_model is None:
+            if self.judge_provider == "gemini":
+                judge_model = os.getenv("JUDGE_MODEL", "gemini-2.0-flash")
+            else:
+                judge_model = os.getenv("JUDGE_MODEL", chat_model)
+        self.judge_model = judge_model
+
+        # ── Gemini client (only when judge_provider == "gemini") ──────────
+        self._gemini_client = None
+        self._gemini_ok = False
+        if self.judge_provider == "gemini":
+            if gemini_api_key is None:
+                gemini_api_key = os.getenv("GEMINI_API_KEY", "")
+            self._gemini_api_key = gemini_api_key
+            self._gemini_ok = self._ping_gemini()
+            if not self._gemini_ok:
+                print(
+                    "[Evaluator] ⚠️  Gemini judge unavailable – "
+                    "faithfulness/relevance will be 0.5 (neutral).\n"
+                    "           Check GEMINI_API_KEY in your .env file."
+                )
+
+        # ── Embedding cache: sha1 → numpy vector ─────────────────────────
         self._embed_cache: Dict[str, np.ndarray] = {}
 
         # Lazy-load ST model only if Ollama embed is unavailable
         self._st_model: Optional[object] = None
         self._st_model_name = st_model_name
 
-        # Check Ollama connectivity once at init
+        # ── Check Ollama connectivity ─────────────────────────────────────
         self._ollama_embed_ok = self._ping_ollama_embed()
-        self._ollama_llm_ok = self._ping_ollama_llm()
+        # Ollama LLM only needed when judge_provider == "ollama"
+        self._ollama_llm_ok = (
+            self._ping_ollama_llm() if self.judge_provider == "ollama" else False
+        )
 
         if not self._ollama_embed_ok:
             print("[Evaluator] ⚠️  Ollama embed unavailable – falling back to sentence-transformers")
-        if not self._ollama_llm_ok:
+        if self.judge_provider == "ollama" and not self._ollama_llm_ok:
             print("[Evaluator] ⚠️  Ollama LLM unavailable – faithfulness/relevance will be 0.5 (neutral)")
+
+        # ── Startup summary ───────────────────────────────────────────────
+        judge_status = (
+            f"gemini ({self.judge_model}) – {'✅ ready' if self._gemini_ok else '❌ unavailable'}"
+            if self.judge_provider == "gemini"
+            else f"ollama ({self.judge_model}) – {'✅ ready' if self._ollama_llm_ok else '❌ unavailable'}"
+        )
+        print(f"[Evaluator] Judge provider : {judge_status}")
+        print(f"[Evaluator] Model under test: {self.chat_model}")
 
     # ─────────────────────────────────────────────────────────────────────────
     # Public API
@@ -416,6 +501,8 @@ class Evaluator:
             "pass_threshold": self.pass_threshold,
             "ollama_host": self.ollama_host,
             "chat_model": self.chat_model,
+            "judge_provider": self.judge_provider,
+            "judge_model": self.judge_model,
             "composite_formula": (
                 "0.30×similarity + 0.30×faithfulness + 0.25×factual_accuracy + 0.15×relevance "
                 "| gate: if faithfulness<0.35 → composite×=(faith/0.35)²"
@@ -466,9 +553,16 @@ class Evaluator:
         """
         LLM-judge faithfulness: are all claims in *answer* grounded in *context*?
 
+        The judge is fully independent of the model under test:
+          • judge_provider="gemini" → Gemini API (neutral external judge)
+          • judge_provider="ollama" → Ollama (legacy; same server as RAG model)
+
         Returns (score 0–1, short note).
         """
-        if not self._ollama_llm_ok:
+        # Guard: check judge availability
+        if self.judge_provider == "gemini" and not self._gemini_ok:
+            return 0.5, "gemini_judge_unavailable; neutral 0.5 used"
+        if self.judge_provider == "ollama" and not self._ollama_llm_ok:
             return 0.5, "ollama_llm_unavailable; neutral 0.5 used"
 
         # Truncate context to avoid token limits
@@ -489,7 +583,7 @@ class Evaluator:
             '{"score": <0-10>, "unsupported_claims": ["list of claims not in context"], '
             '"reasoning": "<one sentence>"}'
         )
-        raw = self._ollama_chat(prompt, temperature=0.0)
+        raw = self._llm_judge_chat(prompt, temperature=0.0)
         score, note = self._parse_llm_score(raw, key="score")
         return score / 10.0, note
 
@@ -499,9 +593,14 @@ class Evaluator:
         """
         LLM-judge relevance: does *answer* actually address *question*?
 
+        The judge is fully independent of the model under test (see
+        _score_faithfulness for provider details).
+
         Returns (score 0–1, short note).
         """
-        if not self._ollama_llm_ok:
+        if self.judge_provider == "gemini" and not self._gemini_ok:
+            return 0.5, "gemini_judge_unavailable; neutral 0.5 used"
+        if self.judge_provider == "ollama" and not self._ollama_llm_ok:
             return 0.5, "ollama_llm_unavailable; neutral 0.5 used"
 
         prompt = (
@@ -516,7 +615,7 @@ class Evaluator:
             "Reply ONLY with valid JSON (no markdown):\n"
             '{"score": <0-10>, "reasoning": "<one sentence>"}'
         )
-        raw = self._ollama_chat(prompt, temperature=0.0)
+        raw = self._llm_judge_chat(prompt, temperature=0.0)
         score, note = self._parse_llm_score(raw, key="score")
         return score / 10.0, note
 
@@ -738,16 +837,63 @@ class Evaluator:
         return float(np.dot(a, b))  # both already normalised
 
     # ─────────────────────────────────────────────────────────────────────────
-    # LLM helpers
+    # LLM judge helpers
     # ─────────────────────────────────────────────────────────────────────────
 
+    def _llm_judge_chat(self, prompt: str, temperature: float = 0.0) -> str:
+        """
+        Dispatcher: route judge prompt to Gemini or Ollama based on
+        self.judge_provider.
+
+        Returns raw text response string (expected to be JSON by callers).
+        """
+        if self.judge_provider == "gemini":
+            return self._gemini_chat(prompt, temperature=temperature)
+        return self._ollama_chat(prompt, temperature=temperature)
+
+    def _gemini_chat(self, prompt: str, temperature: float = 0.0) -> str:
+        """
+        Send a judge prompt to the Gemini API and return the raw text.
+
+        Uses google-genai SDK.  Returns a neutral-score JSON string on any
+        error so callers always get a parseable response.
+        """
+        if not _GENAI_AVAILABLE or not self._gemini_ok:
+            return '{"score": 5, "reasoning": "gemini_unavailable"}'
+        try:
+            client = _google_genai.Client(api_key=self._gemini_api_key)
+            response = client.models.generate_content(
+                model=self.judge_model,
+                contents=prompt,
+                config=_google_genai.types.GenerateContentConfig(
+                    temperature=temperature,
+                    max_output_tokens=512,
+                ),
+            )
+            return response.text or '{"score": 5, "reasoning": "empty_response"}'
+        except Exception as e:
+            return f'{{"score": 5, "reasoning": "gemini_error: {str(e)[:120]}"}}'  # noqa: E501
+
     def _ollama_chat(self, prompt: str, temperature: float = 0.0) -> str:
-        """Send a prompt to Ollama and return the raw text response."""
+        """
+        Send a prompt to Ollama (using judge_model when provider=ollama)
+        and return the raw text response.
+
+        NOTE: when judge_provider='ollama' this uses self.judge_model,
+        NOT self.chat_model, so you can still set an independent Ollama
+        judge model via JUDGE_MODEL in .env.
+        """
+        # Use judge_model when acting as judge, chat_model is the tested model
+        model = (
+            self.judge_model
+            if self.judge_provider == "ollama"
+            else self.chat_model
+        )
         try:
             r = requests.post(
                 f"{self.ollama_host}/api/chat",
                 json={
-                    "model": self.chat_model,
+                    "model": model,
                     "messages": [{"role": "user", "content": prompt}],
                     "stream": False,
                     "options": {"temperature": temperature},
@@ -757,7 +903,7 @@ class Evaluator:
             r.raise_for_status()
             return r.json().get("message", {}).get("content", "")
         except Exception as e:
-            return f'{{"score": 5, "reasoning": "ollama_error: {e}"}}'
+            return f'{{"score": 5, "reasoning": "ollama_error: {e}"}}'  # noqa: E501
 
     @staticmethod
     def _parse_llm_score(raw: str, key: str = "score") -> Tuple[float, str]:
@@ -841,7 +987,7 @@ class Evaluator:
         """
         Three-step check:
           1. Is Ollama reachable? (reuses /api/tags result)
-          2. Is the chat model listed?
+          2. Is the judge model listed? (uses self.judge_model, not chat_model)
           3. Does a minimal (num_predict=1) chat call succeed?
              Timeout is set to 120 s – llama3.1:latest can take 30-60 s
              to produce even 1 token if it was recently swapped out.
@@ -850,10 +996,10 @@ class Evaluator:
         if available is None:
             return False
 
-        model_base = self.chat_model.split(":")[0].lower()
+        model_base = self.judge_model.split(":")[0].lower()
         found = any(m.lower().startswith(model_base) for m in available)
         if not found:
-            print(f"[Evaluator] chat model '{self.chat_model}' not found in Ollama "
+            print(f"[Evaluator] ollama judge model '{self.judge_model}' not found in Ollama "
                   f"(available: {available[:5]})")
             return False
 
@@ -861,7 +1007,7 @@ class Evaluator:
             r = requests.post(
                 f"{self.ollama_host}/api/chat",
                 json={
-                    "model": self.chat_model,
+                    "model": self.judge_model,
                     "messages": [{"role": "user", "content": "1+1="}],
                     "stream": False,
                     "options": {"temperature": 0, "num_predict": 2},
@@ -870,6 +1016,41 @@ class Evaluator:
             )
             return r.status_code == 200
         except Exception:
+            return False
+
+    def _ping_gemini(self) -> bool:
+        """
+        Verify Gemini API connectivity:
+          1. Check google-genai SDK is installed.
+          2. Check GEMINI_API_KEY is provided (non-empty).
+          3. Send a minimal test request (max 1 token) to confirm the key
+             is valid and the model exists.
+        Returns True only if all three steps pass.
+        """
+        if not _GENAI_AVAILABLE:
+            print("[Evaluator] google-genai package not installed. "
+                  "Run: pip install google-genai")
+            return False
+
+        if not self._gemini_api_key or self._gemini_api_key == "your_gemini_api_key_here":
+            print("[Evaluator] GEMINI_API_KEY is not set or is still a placeholder. "
+                  "Add your key to .env: GEMINI_API_KEY=<your_key>")
+            return False
+
+        try:
+            client = _google_genai.Client(api_key=self._gemini_api_key)
+            resp = client.models.generate_content(
+                model=self.judge_model,
+                contents="Reply with the single word: OK",
+                config=_google_genai.types.GenerateContentConfig(
+                    max_output_tokens=4,
+                    temperature=0.0,
+                ),
+            )
+            # Any successful response means the key + model are valid
+            return True
+        except Exception as e:
+            print(f"[Evaluator] Gemini ping failed: {e}")
             return False
 
     # ─────────────────────────────────────────────────────────────────────────
