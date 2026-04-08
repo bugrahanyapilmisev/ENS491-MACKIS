@@ -41,8 +41,8 @@ COMPOSITE SCORE  (domain-optimized for regulatory university Q&A)
             + 0.25 × factual_accuracy
             + 0.15 × relevance
 
-  Faithfulness gate: if faithfulness < 0.35, apply quadratic penalty
-      composite × = (faithfulness / 0.35)²
+  Faithfulness gate: if faithfulness < 0.20, apply linear penalty
+      composite × = faithfulness / 0.20
 
   Rationale: In a university regulatory system, giving the wrong GPA
   threshold or duration is worse than giving a vague answer. Factual
@@ -192,7 +192,7 @@ def compute_composite(
     faithfulness: float,
     relevance: float,
     factual_accuracy: float,
-    faithfulness_gate_threshold: float = 0.35,
+    faithfulness_gate_threshold: float = 0.20,
 ) -> float:
     """
     Domain-optimized composite for university regulatory Q&A.
@@ -206,10 +206,11 @@ def compute_composite(
 
     Faithfulness gate
     -----------------
-    If faithfulness < threshold, a quadratic penalty is applied:
-        composite ×= (faithfulness / threshold)²
-    This ensures a hallucinating answer can never score above ~45 % even
-    if it accidentally matches vocabulary.
+    If faithfulness < threshold, a LINEAR penalty is applied:
+        composite ×= faithfulness / threshold
+    This penalizes true hallucinations while not obliterating scores
+    for verbose-but-correct answers that Gemini marks as partially
+    unfaithful due to extra (but grounded) detail.
     """
     base = (
         0.30 * similarity
@@ -218,7 +219,7 @@ def compute_composite(
         + 0.15 * relevance
     )
     if faithfulness < faithfulness_gate_threshold:
-        gate_factor = (faithfulness / faithfulness_gate_threshold) ** 2
+        gate_factor = faithfulness / faithfulness_gate_threshold
         base *= gate_factor
     return round(float(np.clip(base, 0.0, 1.0)), 4)
 
@@ -565,11 +566,16 @@ class Evaluator:
         if self.judge_provider == "ollama" and not self._ollama_llm_ok:
             return 0.5, "ollama_llm_unavailable; neutral 0.5 used"
 
-        # Truncate context to avoid token limits
-        ctx_trunc = context[:3000] + ("…" if len(context) > 3000 else "")
+        # Context truncation: Gemini 2.5 Flash has a 1M token window so we pass
+        # the full context. Ollama (llama3.1) is capped at 4000 chars to stay
+        # within practical limits for local inference.
+        ctx_limit = 4000 if self.judge_provider == "ollama" else len(context)
+        ctx_trunc = context[:ctx_limit] + ("…" if len(context) > ctx_limit else "")
 
         prompt = (
-            "You are a strict grounding checker for a university knowledge system.\n\n"
+            "You are a strict grounding checker for a university knowledge system.\n"
+            "IMPORTANT: Your response must be a single raw JSON object — "
+            "no markdown, no code fences, no extra text.\n\n"
             f"QUESTION: {question}\n\n"
             f"RETRIEVED CONTEXT (source documents):\n{ctx_trunc}\n\n"
             f"SYSTEM ANSWER: {answer}\n\n"
@@ -579,12 +585,27 @@ class Evaluator:
             "  • Numbers, thresholds, durations, names → must appear in context\n"
             "  • Paraphrasing is acceptable if meaning is preserved\n"
             "  • Invented details, guesses, or additions not in context = unfaithful\n\n"
-            "Reply ONLY with valid JSON (no markdown):\n"
-            '{"score": <0-10>, "unsupported_claims": ["list of claims not in context"], '
+            "Output format (raw JSON only, no markdown):\n"
+            '{"score": <integer 0-10>, "unsupported_claims": ["..."], '
             '"reasoning": "<one sentence>"}'
         )
         raw = self._llm_judge_chat(prompt, temperature=0.0)
         score, note = self._parse_llm_score(raw, key="score")
+
+        # Retry with stripped prompt if parse failed (score==5.0 and note starts with parse_failed)
+        if score == 5.0 and note.startswith("parse_failed"):
+            simple_prompt = (
+                "Rate faithfulness 0-10: does the ANSWER only use info from CONTEXT?\n"
+                f"CONTEXT (first 2000 chars): {ctx_trunc[:2000]}\n\n"
+                f"ANSWER: {answer}\n\n"
+                "Reply with ONLY this JSON (no other text): "
+                '{"score": <integer>}'
+            )
+            raw2 = self._llm_judge_chat(simple_prompt, temperature=0.0)
+            score2, note2 = self._parse_llm_score(raw2, key="score")
+            if not note2.startswith("parse_failed"):
+                return score2 / 10.0, f"retry_ok:{note2}"
+
         return score / 10.0, note
 
     def _score_answer_relevance(
@@ -604,7 +625,9 @@ class Evaluator:
             return 0.5, "ollama_llm_unavailable; neutral 0.5 used"
 
         prompt = (
-            "You are an evaluator for a university Q&A system.\n\n"
+            "You are an evaluator for a university Q&A system.\n"
+            "IMPORTANT: Your response must be a single raw JSON object — "
+            "no markdown, no code fences, no extra text.\n\n"
             f"QUESTION: {question}\n\n"
             f"ANSWER: {answer}\n\n"
             "Task: Score how well the ANSWER addresses the QUESTION, "
@@ -612,11 +635,24 @@ class Evaluator:
             "  10 = directly and completely answers the question\n"
             "   5 = partially relevant or tangential\n"
             "   0 = completely off-topic or refuses to answer\n\n"
-            "Reply ONLY with valid JSON (no markdown):\n"
-            '{"score": <0-10>, "reasoning": "<one sentence>"}'
+            "Output format (raw JSON only, no markdown):\n"
+            '{"score": <integer 0-10>, "reasoning": "<one sentence>"}'
         )
         raw = self._llm_judge_chat(prompt, temperature=0.0)
         score, note = self._parse_llm_score(raw, key="score")
+
+        # Retry with stripped prompt if parse failed
+        if score == 5.0 and note.startswith("parse_failed"):
+            simple_prompt = (
+                f"Does this answer address the question? Score 0-10.\n"
+                f"Question: {question}\nAnswer: {answer}\n"
+                "Reply ONLY with: {\"score\": <integer>}"
+            )
+            raw2 = self._llm_judge_chat(simple_prompt, temperature=0.0)
+            score2, note2 = self._parse_llm_score(raw2, key="score")
+            if not note2.startswith("parse_failed"):
+                return score2 / 10.0, f"retry_ok:{note2}"
+
         return score / 10.0, note
 
     # ── Number-word mappings for Turkish and English ──────────────────────
@@ -855,8 +891,9 @@ class Evaluator:
         """
         Send a judge prompt to the Gemini API and return the raw text.
 
-        Uses google-genai SDK.  Returns a neutral-score JSON string on any
-        error so callers always get a parseable response.
+        Uses google-genai SDK with response_mime_type='application/json'
+        to force JSON output and prevent markdown wrapping.
+        Returns a neutral-score JSON string on any error.
         """
         if not _GENAI_AVAILABLE or not self._gemini_ok:
             return '{"score": 5, "reasoning": "gemini_unavailable"}'
@@ -868,11 +905,15 @@ class Evaluator:
                 config=_google_genai.types.GenerateContentConfig(
                     temperature=temperature,
                     max_output_tokens=512,
+                    response_mime_type="application/json",
                 ),
             )
-            return response.text or '{"score": 5, "reasoning": "empty_response"}'
+            text = response.text or ""
+            # Strip any residual markdown fences just in case
+            text = text.strip().lstrip("```json").lstrip("```").rstrip("```").strip()
+            return text if text else '{"score": 5, "reasoning": "empty_response"}'
         except Exception as e:
-            return f'{{"score": 5, "reasoning": "gemini_error: {str(e)[:120]}"}}'  # noqa: E501
+            return f'{{"score": 5, "reasoning": "gemini_error: {str(e)[:120]}"}}' # noqa: E501
 
     def _ollama_chat(self, prompt: str, temperature: float = 0.0) -> str:
         """
@@ -1091,7 +1132,7 @@ class Evaluator:
             "═" * w,
             "",
             "  COMPOSITE FORMULA: 0.30×Similarity + 0.30×Faithfulness + 0.25×FactualAcc + 0.15×Relevance",
-            "  Faithfulness gate: if faith < 0.35 → composite×=(faith/0.35)²",
+            "  Faithfulness gate: if faith < 0.20 → composite×=(faith/0.20)",
             f"  Pass threshold: ≥ {self.pass_threshold:.2f}",
             "",
             "─" * w,

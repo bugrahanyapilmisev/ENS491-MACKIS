@@ -161,9 +161,99 @@ def load_kg_facts() -> bool:
     else:
         _topic_list = list(_kg_facts.keys())
     
+    # ── Runtime quality filter: clean noisy facts before serving ──
+    _runtime_quality_filter()
+    
     _loaded = True
     print(f"[KG Service] Hybrid KG loaded: {len(_kg_facts)} topics, {len(_kg_triples)} triples")
     return True
+
+
+def _runtime_quality_filter():
+    """Clean noisy facts at load time (runs once)."""
+    global _kg_facts, _topic_list
+    before = len(_kg_facts)
+    
+    # 1. Remove pure-metadata noise topics
+    NOISE_TOPICS = {
+        "effective_date", "update_date", "statutory_basis",
+        "prosedur", "procedure", "yonerge", "instruction",
+    }
+    for noise in NOISE_TOPICS:
+        _kg_facts.pop(noise, None)
+    
+    # 2. Filter facts with bad values
+    for topic in list(_kg_facts.keys()):
+        filtered = []
+        for f in _kg_facts[topic]:
+            value = str(f.get("value", "")).strip()
+            relation = f.get("relation", "")
+            
+            # Skip empty, too short, or template placeholders
+            if len(value) < 2 or "..." in value or "___" in value:
+                continue
+            
+            # Skip form codes used as GNO/duration/limit values
+            if relation in ("minimum_gno", "duration", "limit") and \
+               re.match(r'^[A-Z]{2,5}-[A-Z0-9]', value):
+                continue
+            
+            # Skip years as durations
+            if relation == "duration" and re.match(r'^(19|20)\d{2}$', value):
+                continue
+            
+            # Skip vague values
+            if value.lower() in ("belirlenir", "ilgili birim", "none", "yapılır", "uygulanır"):
+                continue
+            
+            # minimum_gno must contain a number or GPA keyword
+            if relation == "minimum_gno":
+                if not re.search(r'\d', value) and \
+                   not any(kw in value.lower() for kw in ("gno", "gpa", "%")):
+                    continue
+            
+            filtered.append(f)
+        _kg_facts[topic] = filtered
+    
+    # 3. Remove empty topics
+    _kg_facts = {t: f for t, f in _kg_facts.items() if f}
+    
+    # 4. Merge synonym topics
+    MERGES = {
+        "burs": "scholarship_requirements",
+        "burslar": "scholarship_requirements",
+        "burs_miktar": "scholarship_requirements",
+        "burs_tutari": "scholarship_requirements",
+        "burs_suresi": "scholarship_requirements",
+        "burs_benefit": "scholarship_requirements",
+        "burs_payment": "scholarship_requirements",
+        "burs_form": "scholarship_requirements",
+        "scholarship": "scholarship_requirements",
+        "scholarship_payment": "scholarship_requirements",
+        "staj_suresi": "internship_requirements",
+        "staj_kurumu": "internship_requirements",
+    }
+    for old_name, new_name in MERGES.items():
+        if old_name in _kg_facts and old_name != new_name:
+            _kg_facts.setdefault(new_name, []).extend(_kg_facts.pop(old_name))
+    
+    # Deduplicate merged topics
+    for topic in _kg_facts:
+        seen = set()
+        unique = []
+        for f in _kg_facts[topic]:
+            key = (f.get("relation", ""), str(f.get("value", ""))[:50])
+            if key not in seen:
+                seen.add(key)
+                unique.append(f)
+        _kg_facts[topic] = unique
+    
+    # Update topic list
+    _topic_list = list(_kg_facts.keys())
+    
+    after = len(_kg_facts)
+    total = sum(len(f) for f in _kg_facts.values())
+    print(f"[KG Service] Quality filter: {before} → {after} topics, {total} facts")
 
 
 # =================== SEMANTIC TOPIC MATCHING ===================

@@ -158,8 +158,8 @@ TEST_QUESTIONS = [
     {
         "id": "Q15",
         "category": "Undergraduate",
-        "question": "Yatay geçiş başvurusu için GNO şartı nedir?",
-        "expected_answer": "Yatay geçiş başvurusu için başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca ÖSYM puanının taban puanına eşit veya yüksek olması şartı aranır.",
+        "question": "Yatay geçiş başvuru şartları nelerdir?",
+        "expected_answer": "Yatay geçiş başvurusu için belirli bir GNO şartı yoktur. Başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca ÖSYM puanının taban puanına eşit veya yüksek olması şartı aranır.",
         "source": "Lisans Yönetmeliği Madde 9, 10"
     },
     {
@@ -182,7 +182,7 @@ TEST_QUESTIONS = [
         "id": "Q18",
         "category": "Registration",
         "question": "Mezuniyet başvurusu nasıl yapılır?",
-        "expected_answer": "Mezuniyet başvurusu ÖBS üzerinden yapılır.",
+        "expected_answer": "Mezuniyet başvurusu akademik takvimde belirtilen tarihlerde ÖBS üzerinden yapılır. Mezun adayı öğrencilerin programa ait tüm mezuniyet yükümlülüklerini tamamlaması ve genel not ortalamasının en az 2.00 olması gerekir.",
         "source": "PSR-C240-0101 Mezuniyet Denetimi ve Diploma Düzenleme Prosedürü §1.1-1.2"
     },
     {
@@ -221,7 +221,7 @@ TEST_QUESTIONS = [
         "id": "Q23",
         "category": "Numeric",
         "question": "Lisans mezuniyeti için kaç kredi gerekiyor?",
-        "expected_answer": "Lisans mezuniyeti için kayıtlı olunan diploma programının gerektirdiği tüm mezuniyet yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
+        "expected_answer": "Lisans mezuniyeti için belirli bir sabit kredi sayısı yoktur. Kayıtlı olunan diploma programının gerektirdiği tüm ders ve kredi yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
         "source": "Lisans Yönetmeliği Madde 35"
     },
     {
@@ -236,9 +236,9 @@ TEST_QUESTIONS = [
     {
         "id": "Q25",
         "category": "Procedure",
-        "question": "Staj başvurusu nasıl yapılır?",
-        "expected_answer": "Staj başvurusu Kariyer Geliştirme ve Staj Ofisi üzerinden yapılır. Uluslararası staj süreci IPAR'a bağlı bu ofis tarafından yürütülür.",
-        "source": "IID-C710-02 Uluslararası Staj Yönergesi §1.1 / PID-C710-0101 Zorunlu Staj Prosedürü"
+        "question": "Zorunlu staj başvurusu nasıl yapılır?",
+        "expected_answer": "Zorunlu staj başvurusu Kariyer Geliştirme ve Staj Ofisi üzerinden yapılır. Öğrenciler özgeçmiş ve transkript ile başvuru yapar. Staj süresi ve şartları ilgili fakülte tarafından belirlenir.",
+        "source": "PID-C710-0101 Zorunlu Staj Prosedürü"
     },
     {
         "id": "Q26",
@@ -542,12 +542,19 @@ def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
 
         # ── Multi-metric evaluation ───────────────────────────────────────────
         if evaluator is not None:
-            # Get context chunks for faithfulness scoring
+            # Use the EXACT chunks that were used during generation.
+            # pipeline.answer() returns retrieved_chunks already — using
+            # search_only() would give different (smaller, no neighbor expansion)
+            # context and cause false low-faithfulness scores.
             try:
-                chunks  = pipeline.search_only(question, top_k=10)
-                context = _build_context_from_chunks(chunks)
+                raw_chunks = (
+                    pipeline_result.get("retrieved_chunks", [])
+                    if isinstance(pipeline_result, dict) else []
+                )
+                context = _build_context_from_chunks(raw_chunks) if raw_chunks else ""
             except Exception:
                 context = ""
+
 
             result = evaluator.evaluate(
                 question_id=qid,

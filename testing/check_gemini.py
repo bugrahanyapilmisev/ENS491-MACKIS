@@ -90,7 +90,6 @@ for model in CANDIDATE_MODELS:
         reply = resp.text.strip() if resp.text else ""
         print(f"✅  replied: \"{reply}\"")
         working_model = model
-        break
     except Exception as e:
         err_str = str(e)
         if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
