@@ -18,7 +18,7 @@ class OllamaConfig:
     host: str = "http://localhost:11434"
     embed_model: str = "bge-m3"
     embed_dim: int = 1024
-    chat_model: str = "llama3.1:latest"
+    chat_model: str = "qwen3.5:latest"
     timeout: int = 120
     chat_timeout: int = 300
     max_retries: int = 3
@@ -160,7 +160,7 @@ class RAGConfig:
                 host=os.getenv("OLLAMA_HOST", "http://localhost:11434"),
                 embed_model=os.getenv("EMBED_MODEL", "bge-m3"),
                 embed_dim=int(os.getenv("EMBED_DIM", "1024")),
-                chat_model=os.getenv("CHAT_MODEL", "qwen2.5:7b"),
+                chat_model=os.getenv("CHAT_MODEL", "qwen3.5:latest"),
                 timeout=int(os.getenv("OLLAMA_TIMEOUT", "120")),
                 chat_timeout=int(os.getenv("OLLAMA_CHAT_TIMEOUT", "300")),
                 max_retries=int(os.getenv("OLLAMA_MAX_RETRIES", "3")),

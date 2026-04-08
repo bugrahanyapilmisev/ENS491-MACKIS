@@ -26,10 +26,13 @@ CHAT_MODEL = os.getenv("CHAT_MODEL", "llama3.1:latest")
 
 PREPROCESSING_DIR = os.path.dirname(os.path.abspath(__file__))
 KG_DIR = os.path.join(PREPROCESSING_DIR, "knowledge_graph")
+KG_LLM_DIR = os.path.join(KG_DIR, "llm_validated")
+os.makedirs(KG_LLM_DIR, exist_ok=True)
+
 KG_FACTS_PATH = os.path.join(KG_DIR, "kg_facts.json")
-KG_FACTS_VALIDATED_PATH = os.path.join(KG_DIR, "kg_facts_llm_validated.json")
+KG_FACTS_VALIDATED_PATH = os.path.join(KG_LLM_DIR, "kg_facts_llm_validated.json")
 KG_TRIPLES_PATH = os.path.join(KG_DIR, "kg_triples.json")
-KG_TRIPLES_VALIDATED_PATH = os.path.join(KG_DIR, "kg_triples_llm_validated.json")
+KG_TRIPLES_VALIDATED_PATH = os.path.join(KG_LLM_DIR, "kg_triples_llm_validated.json")
 
 # Progress saving for resume capability
 PROGRESS_FILE = os.path.join(KG_DIR, "validation_progress.json")
