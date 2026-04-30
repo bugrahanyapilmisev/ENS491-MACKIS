@@ -240,10 +240,28 @@ class RAGPipeline:
             # Merge neighbors into retrieved, keeping the originals first
             # then neighbors grouped by source document
             retrieved = retrieved + neighbor_chunks
-            # Re-cap to avoid context bloat (allow up to 50% more than max_ctx)
-            expanded_limit = min(len(retrieved), int(max_ctx * 1.5))
+            # Re-cap to avoid context bloat (tightened from 1.5x to 1.25x)
+            expanded_limit = min(len(retrieved), int(max_ctx * 1.25))
             retrieved = retrieved[:expanded_limit]
             print(f"[RAGPipeline] After neighbor expansion: {len(retrieved)} chunks")
+
+        # 6c. Context Precision: filter noise chunks and sort by relevance
+        # Academic basis: CS 455/555 §8.6 "lost in the middle" — irrelevant
+        # context confuses the LLM. Presenting highest-scoring chunks first
+        # ensures the most relevant information is at the top of the prompt.
+        ce_threshold = 0.05  # very low bar — only filters truly irrelevant
+        before_filter = len(retrieved)
+        retrieved = [
+            ch for ch in retrieved
+            if ch.get("ce_score", 0.5) >= ce_threshold  # neighbors get 0.5 default
+        ]
+        if len(retrieved) < before_filter:
+            print(f"[RAGPipeline] Context precision: filtered {before_filter - len(retrieved)} "
+                  f"noise chunks (CE < {ce_threshold})")
+
+        # Sort by CE score descending — highest relevance first
+        retrieved.sort(key=lambda ch: ch.get("ce_score", 0.0), reverse=True)
+        print(f"[RAGPipeline] Context sorted by CE score (highest first)")
 
         # 7. Knowledge Graph augmentation (optional)
         kg_facts = ""

@@ -10,6 +10,7 @@ This agent handles:
 
 from typing import Dict, List, Optional, Set
 import re
+import time
 import textwrap
 
 from services.core.llm_service import LLMService
@@ -72,11 +73,32 @@ class GenerationAgent:
         # Build full prompt
         full_prompt = self._build_prompt(query, context, kg_facts)
 
-        # Generate answer
-        answer = self.llm.chat(full_prompt, system_prompt, temperature=0.0)
+        # Generate answer with retry logic for empty responses
+        answer = None
+        max_retries = 3
+        for attempt in range(max_retries):
+            raw = self.llm.chat(full_prompt, system_prompt, temperature=0.0, max_tokens=900)
+            if raw and raw.strip() and not raw.strip().startswith("Empty response"):
+                answer = raw
+                break
+            wait = 2 ** attempt
+            print(f"[Generation] Empty response on attempt {attempt + 1}/{max_retries}, "
+                  f"retrying in {wait}s...")
+            time.sleep(wait)
 
-        # Verify numbers (hallucination check)
-        answer = self.verify_answer_numbers(answer, context, language)
+        if not answer or not answer.strip() or answer.strip().startswith("Empty response"):
+            print(f"[Generation] All {max_retries} attempts returned empty. Using fallback.")
+            if language == "tr":
+                answer = ("Üzgünüm, bu soruya şu an yanıt üretilemedi. "
+                          "Lütfen sorunuzu yeniden deneyin.")
+            else:
+                answer = ("Sorry, I was unable to generate an answer to this question "
+                          "at this time. Please try again.")
+
+        # Post-processing pipeline
+        answer = self._fix_repetition(answer, full_prompt, system_prompt, language)
+        answer = self._strip_doc_codes(answer)
+        #answer = self.verify_hallucinations(answer, context, language)
 
         return answer
 
@@ -172,56 +194,86 @@ class GenerationAgent:
         """
         if language == "tr":
             return textwrap.dedent("""
-                Sen Sabancı Üniversitesi'nin kurum içi bilgi sistemine bağlı Türkçe konuşan asistansın.
+                Sen Sabancı Üniversitesi'nin bilgi sistemi asistanısın. KESİNLİKLE TÜRKÇE yanıtla.
 
-                KRİTİK KURALLAR:
-                1) HER <chunk> öğesini BAŞTAN SONA oku — cevap genellikle Context'te VARDIR.
-                2) Context'te geçen sayıları, tarihleri, süreleri, koşulları AYNEN ve EKSİKSİZ aktar.
-                   Örnek: Context'te "60 gün süre ile 60 adet kitap" yazıyorsa, yanıtta da aynı sayılar olmalı.
-                3) Context'te OLMAYAN hiçbir sayı, tarih veya değer YAZMA. Uydurma kesinlikle yasaktır.
-                4) Context'te olmayan bilgileri KESİNLİKLE UYDURMA.
-                5) "Bu bilgi bağlamda yok" SADECE hiçbir chunk'ta ilgili bilgi gerçekten YOKSA söylenebilir.
-                   Eğer herhangi bir chunk'ta ilgili sayı veya bilgi varsa, onu KULLAN.
+                TEMEL KURALLAR:
+                1) Tüm <chunk> öğelerini baştan sona oku. Cevap genellikle context'te mevcuttur.
+                2) Context'teki sayıları, tarihleri, süreleri, koşulları BİREBİR kullan. Uydurma YASAK.
+                3) Context'te AÇIKÇA yazmayan bilgi EKLEME. Bilmiyorsan "bu konuda bilgim yok" de.
+                4) Sorulan soruyu DOĞRUDAN yanıtla. Soruyu tekrarlama, giriş cümlesi kurma.
 
-                BAĞLAM OKUMA KURALLARI:
-                6) Soru bir öğrenci sorusuysa (ör: "kaç kitap ödünç alabilirim", "GNO şartı nedir"),
-                   Context'te ÖĞRENCİYE AİT (lisans/lisansüstü/değişim) bölümü bul ve ORADAN yanıtla.
-                   Paket 2 (personel), Paket 3 (misafir) gibi farklı kullanıcı gruplarını KARMA.
-                7) Birden fazla chunk'ta aynı konuda bilgi varsa, EN SPESİFİK olanı tercih et.
+                BAĞLAM OKUMA:
+                5) VARSAYILAN KİŞİ: Soruyu ÖĞRENCİ soruyor kabul et.
+                   - KYK, devlet kurumu vb. dış kurum bilgilerini DEĞİL, Sabancı Üniversitesi'nin
+                     kendi iç prosedürünü yanıtla.
+                6) Bilgi birden fazla chunk'a yayılmışsa, hepsini birleştirerek tam cevap ver.
+                7) Birden fazla chunk aynı konuyu işliyorsa en SPESİFİK olanı tercih et.
+                   - ÖNEMLİ: Eğer kural, sayı veya GNO Lisans (Undergraduate) ve Lisansüstü (Graduate) için FARKLIYSA, İKİSİNİ BİRDEN KESİNLİKLE YAZ. Sadece birini yazıp bırakma.
 
-                YANIT BİÇİMİ KURALLARI:
-                8) Soru birden fazla madde/öğe soruyorsa (ör: "nelerdir", "hangileri", "kaç tür",
-                   "sıralayınız", "listele"), TÜM maddeleri numaralı liste halinde ver.
-                9) Context'teki TÜM ilgili bilgileri dahil et - yalnızca bir kısmını verme.
-                10) Farklı gruplar için farklı değerler varsa (lisans/lisansüstü vb.), HEPSİNİ belirt.
-                11) En az 2 cümle ile yanıt ver (basit evet/hayır soruları hariç).
+                SORU TİPİNE GÖRE YANIT:
+                8) SÜRE/SAYI SORUSU: "ne kadar sürede", "kaç gün", "ne zaman" gibi sorularda
+                   context'ten İLGİLİ SAYILARI (gün, ay, yıl, dönem) MUTLAKA çıkar ve yaz.
+                9) CEZA SORUSU: Context'te bir fiil için ÖZEL ceza belirtilmişse (örn. kopya çekmek
+                   için bir yarıyıl uzaklaştırma), genel ceza tanımlarıyla KARIŞTIRMA, eğer özel bir ceza yoksa o fiil için özel bir ceza bulamadığını söyle ve genel ceza tanımlarını belirt.
+                10) HİBE/HESAPLAMA SORUSU: Seçim kriterleri (puan hesaplama) ile hibe ödeme
+                    sürecini (taksit, sözleşme, gün bazında hesap) AYIR.
+                11) ŞART/KOŞUL SORUSU: "şartları nelerdir", "koşulları nelerdir", "başvuru için ne gerekir"
+                    gibi sorularda ÖNCE sayısal kriterleri yaz (GNO eşiği, kredi sayısı, dönem sayısı,
+                    puan sınırı), SONRA prosedürel adımları özetle. Prosedürel detaylara takılıp
+                    sayısal eşikleri atlamayı YASAK.
+
+                BAĞLAM ÖNCELİĞİ:
+                12) Context'teki chunk'lar ilgililik sırasına göre sıralanmıştır. İLK chunk'lar en
+                    ilgili olanlardır — öncelikli olarak onlara odaklan.
+
+                CEVAP BİÇİMİ:
+                13) KAPSAMLI OL: Cevap duruma göre değişiyorsa TÜM varyasyonları listele.
+                14) KISA VE ÖZ OL: Prosedür soruları için 2-5 cümlede özetle.
+                15) Aynı cümleyi veya paragrafı KESİNLİKLE TEKRARLAMA. Her cümle yeni bilgi içermeli.
+                16) Belge kodu (PSR-C210-0101 gibi), chunk id, madde numarası YAZMA.
             """).strip()
         else:
             return textwrap.dedent("""
-                You are an assistant for Sabancı University's internal knowledge system.
+                You are Sabancı University's knowledge assistant. ALWAYS answer in ENGLISH.
 
-                CRITICAL RULES:
-                1) READ EVERY <chunk> element from start to end — the answer is usually IN the context.
-                2) Use EXACT numbers, dates, durations, conditions from the context.
-                   Example: if the context says "60 books for 60 days", your answer must include those numbers.
-                3) Do NOT invent or estimate ANY numbers — use ONLY what's written in the context.
-                4) Do NOT invent information not in the context.
-                5) ONLY say "not found in context" if you truly cannot find it in ANY chunk.
-                   If ANY chunk contains relevant numbers or facts, you MUST use them.
+                CORE RULES:
+                1) Read ALL <chunk> elements. The answer is usually IN the context.
+                2) Use EXACT numbers, dates, durations from the context. Do NOT invent any.
+                3) Do NOT add information not EXPLICITLY in the context. If unsure, say so.
+                4) Start your answer DIRECTLY. No preamble, no repeating the question.
 
-                CONTEXT READING RULES:
-                6) If the question is from a student's perspective (e.g. "how many books can I borrow",
-                   "what is the GPA requirement"), find the STUDENT-specific section in the context
-                   (undergrad/graduate/exchange) and answer from THAT section.
-                   Do NOT confuse with staff, alumni, or visitor rules.
-                7) When multiple chunks discuss the same topic, prefer the most SPECIFIC one.
+                CONTEXT READING:
+                5) DEFAULT PERSONA: Assume the question is from a STUDENT.
+                   - If a table/list has multiple user categories (Package 1/2/3,
+                     student/staff/alumni), use ONLY the STUDENT row.
+                   - Answer about Sabancı University's OWN procedures, not external institutions.
+                6) If info is spread across chunks, synthesize them into one complete answer.
+                7) Prefer the most SPECIFIC chunk when multiple discuss the same topic.
+                   - CRITICAL: If a rule, number, or GPA differs for Undergraduate (Lisans) vs. Graduate (Lisansüstü) students, YOU MUST STATE BOTH. Do not just state one.
 
-                ANSWER FORMAT RULES:
-                8) If the question asks for multiple items (e.g. "what are", "which ones",
-                   "how many types", "list"), provide ALL items as a numbered list.
-                9) Include ALL relevant information from the context — do not give partial answers.
-                10) If different values apply to different groups, mention ALL of them.
-                11) Provide at least 2 sentences (except for simple yes/no questions).
+                QUESTION-TYPE RULES:
+                8) DURATION/NUMBER QUESTIONS: When asked "how long", "how many days", always
+                   EXTRACT the relevant numbers (days, months, semesters) from context.
+                9) PENALTY QUESTIONS: If context maps a SPECIFIC act to a SPECIFIC penalty
+                   (e.g. cheating = one semester suspension), report that specific mapping.
+                   Do NOT substitute the generic penalty definition.
+                10) GRANT/CALCULATION QUESTIONS: Distinguish between selection criteria (scoring)
+                    and grant payment process (installments, contract, day-based calculation).
+                11) REQUIREMENT/CONDITION QUESTIONS: When asked "what are the requirements",
+                    "conditions", "eligibility criteria" — FIRST state all quantitative thresholds
+                    (GPA minimums, credit counts, semester counts, score cutoffs), THEN
+                    summarize procedural steps. Do NOT skip numeric criteria in favor of procedures.
+
+                CONTEXT PRIORITY:
+                12) Chunks are sorted by relevance — the FIRST chunks are the most relevant.
+                    Prioritize information from the first chunks.
+
+                ANSWER FORMAT:
+                13) BE COMPREHENSIVE: If the answer varies by condition, state ALL variations.
+                14) BE CONCISE: Summarize in 2-5 sentences. Do NOT copy every procedural step.
+                15) NEVER repeat the same sentence. Each sentence must add new information.
+                16) Do NOT include document codes (like PSR-C210-0101), chunk IDs, or article
+                    numbers. State information naturally.
             """).strip()
 
     def _build_prompt(
@@ -242,24 +294,27 @@ class GenerationAgent:
             Full prompt string.
         """
         instructions = """INSTRUCTIONS:
-1. Scan ALL <document> blocks and every <chunk> element — do not stop after the first match.
-2. EXTRACT every specific number, GPA, duration, credit count, deadline, and condition from the context.
-3. If different conditions apply to different groups (e.g. lisans/lisansüstü, undergrad/graduate), state ALL of them.
-4. If the question asks for a list of items, enumerate ALL items found in the context.
-5. Use ONLY information from the context. Do NOT add information from your own knowledge.
-6. If the question is about students, find the STUDENT-applicable section (not staff/alumni).
-7. NEVER say the information is not available if ANY chunk contains relevant numbers or facts."""
+1. Scan ALL <document> blocks and every <chunk> element before answering.
+2. EXTRACT specific numbers, GPAs, durations, credit counts, deadlines, conditions.
+3. If different conditions apply to different groups (e.g. Undergraduate vs. Graduate), YOU MUST state ALL of them clearly. Do not stop at the first group!
+4. If the question asks for a list, enumerate ALL items found.
+5. Use ONLY information from the context. Do NOT add from your own knowledge.
+6. For student questions, use the STUDENT/ÖĞRENCİ section (not staff/alumni/Paket 2).
+7. NEVER repeat the same sentence. Each sentence must provide NEW information.
+8. Keep your answer between 2-8 sentences unless a detailed list is specifically needed.
+9. Do NOT include document codes like (PSR-XXX-XXXX) or (ISR-XXX-XX) in your answer.
+10. If context has NO relevant information for the question, say you don't have that information."""
 
         if kg_facts:
-            return f"""{kg_facts}
-
-Context:
+            return f"""Context:
 {context}
 
-Question: {query}
+{kg_facts}
 
-IMPORTANT: The facts above MAY be helpful hints. CROSS-CHECK them against the Context.
-If a fact seems inconsistent with the Context, IGNORE the fact and use the Context instead.
+NOTE: KG facts above are supplementary hints. CROSS-CHECK them against the Context.
+If a fact conflicts with the Context, IGNORE the fact and use the Context.
+
+Question: {query}
 
 {instructions}
 
@@ -274,16 +329,139 @@ Question: {query}
 
 Answer:"""
 
-    def verify_answer_numbers(
+    def _fix_repetition(
+        self,
+        answer: str,
+        full_prompt: str,
+        system_prompt: str,
+        language: Optional[str]
+    ) -> str:
+        """
+        Detect and fix repetition loops in generated answers.
+
+        If more than 50% of sentences are duplicates, regenerate with
+        an explicit anti-repetition instruction.
+
+        Args:
+            answer: Generated answer to check.
+            full_prompt: Original prompt for regeneration.
+            system_prompt: System prompt for regeneration.
+            language: Detected language.
+
+        Returns:
+            Original answer if clean, or regenerated answer.
+        """
+        if not answer or len(answer) < 100:
+            return answer
+
+        # Split into sentences
+        sentences = [s.strip() for s in re.split(r'[.!?。]\s+', answer) if s.strip()]
+
+        if len(sentences) < 3:
+            return answer
+
+        # Count unique sentences
+        unique = set(sentences)
+        repetition_ratio = 1.0 - (len(unique) / len(sentences))
+
+        if repetition_ratio < 0.5:
+            return answer
+
+        print(f"[Generation] WARNING: Repetition detected ({repetition_ratio:.0%}). "
+              f"Regenerating...")
+
+        # Regenerate with explicit anti-repetition guard
+        if language == "tr":
+            guard = ("\n\nÖNEMLİ: Önceki yanıt tekrar döngüsüne girdi. "
+                     "Her cümle FARKLI bilgi içermeli. Cevap bulamıyorsan "
+                     "\"Bu konuda yeterli bilgi bulunamadı\" de.")
+        else:
+            guard = ("\n\nIMPORTANT: Your previous answer was a repetition loop. "
+                     "Every sentence must contain DIFFERENT information. "
+                     "If you cannot find relevant information, say so.")
+
+        try:
+            new_answer = self.llm.chat(
+                full_prompt + guard,
+                system_prompt,
+                temperature=0.1,
+                max_tokens=900
+            )
+
+            if new_answer and not new_answer.startswith(("Ollama Error", "LLM error")):
+                # Verify the new answer is not also repetitive
+                new_sentences = [s.strip() for s in re.split(r'[.!?。]\s+', new_answer) if s.strip()]
+                if len(new_sentences) >= 2:
+                    new_unique = set(new_sentences)
+                    new_ratio = 1.0 - (len(new_unique) / len(new_sentences))
+                    if new_ratio < 0.5:
+                        print("[Generation] Regeneration successful.")
+                        return new_answer
+
+            print("[Generation] Regeneration still repetitive, returning fallback.")
+        except Exception as e:
+            print(f"[Generation] Regeneration failed: {e}")
+
+        # Last resort: return just the unique sentences
+        seen = set()
+        deduped = []
+        for s in sentences:
+            if s not in seen:
+                seen.add(s)
+                deduped.append(s)
+        return ". ".join(deduped) + "."
+
+    def _strip_doc_codes(self, answer: str) -> str:
+        """
+        Remove document/procedure codes from the answer.
+
+        Strips patterns like (PSR-C210-0101), (ISR-C220-01), (PIPAR-C710-0201)
+        that leak into answers despite prompt instructions.
+
+        Args:
+            answer: Answer text to clean.
+
+        Returns:
+            Cleaned answer without document codes.
+        """
+        if not answer:
+            return answer
+
+        # Remove parenthesized codes: (PSR-C210-0101), (ISR-C220-01), etc.
+        cleaned = re.sub(
+            r'\s*\([A-Z]{2,6}-[A-Z0-9]+-[0-9]+(?:-[0-9]+)?\)',
+            '',
+            answer
+        )
+
+        # Remove inline codes without parens when followed by comma or period
+        # e.g., "PSR-C210-0101 göre," → "göre,"
+        cleaned = re.sub(
+            r'\b[A-Z]{2,6}-[A-Z][0-9]+-[0-9]+(?:-[0-9]+)?\b',
+            '',
+            cleaned
+        )
+
+        # Clean up double spaces
+        cleaned = re.sub(r'  +', ' ', cleaned)
+        # Clean up orphaned punctuation
+        cleaned = re.sub(r' ,', ',', cleaned)
+        cleaned = re.sub(r' \.', '.', cleaned)
+
+        if cleaned != answer:
+            print("[Generation] Stripped document codes from answer.")
+
+        return cleaned.strip()
+
+    def verify_hallucinations(
         self,
         answer: str,
         context: str,
         language: Optional[str]
     ) -> str:
         """
-        Verify that numbers in answer exist in context.
-        If hallucinated numbers are detected, re-generate with an explicit
-        number guard to correct them.
+        Verify that the generated answer does not contain hallucinations using an LLM.
+        This provides much smarter context-aware verification than regex number checking.
 
         Args:
             answer: Generated answer.
@@ -291,99 +469,50 @@ Answer:"""
             language: Detected language.
 
         Returns:
-            Original answer if clean, or corrected answer if hallucination detected.
+            Original answer if completely factual, or a corrected version.
         """
-        # Extract numbers from answer and context
-        answer_numbers = set(re.findall(r'\d+[.,]?\d*', answer))
-        context_numbers = set(re.findall(r'\d+[.,]?\d*', context))
-
-        def normalize_num(n: str) -> str:
-            return n.replace(',', '.')
-
-        context_numbers_normalized = {normalize_num(n) for n in context_numbers}
-
-        # Filter significant numbers (ignore very small integers like 1)
-        # Note: numbers like 2, 3 are important in this domain (e.g. 2 ay, 3 yarıyıl)
-        significant = {
-            n for n in answer_numbers
-            if float(normalize_num(n)) >= 4 or '.' in n or ',' in n
-        }
-
-        if not significant:
+        if not answer or len(answer.strip()) < 5:
             return answer
 
-        # Check for hallucinated numbers
-        hallucinated = {
-            n for n in significant
-            if normalize_num(n) not in context_numbers_normalized
-        }
-
-        if not hallucinated:
-            return answer
-
-        print(f"[Generation] WARNING: Possible hallucinated numbers: {hallucinated}")
-        print(f"[Generation] Numbers in context: "
-              f"{sorted(list(context_numbers_normalized)[:20])}")
-
-        # Active correction: re-prompt the LLM to fix hallucinated numbers
-        print("[Generation] Re-generating with number guard...")
-
-        context_nums_display = ", ".join(sorted(context_numbers)[:40])
+        print("[Generation] Running LLM hallucination check...")
 
         if language == "tr":
-            guard_system = (
-                "Verilen yanıttaki yanlış sayıları düzelt. "
-                "Sadece kaynak bağlamda geçen sayıları kullan."
+            system_prompt = (
+                "Sen katı bir doğruluk kontrolörüsün. Sağlanan 'Bağlam' (Context) metni ile üretilen 'Yanıt' (Answer) metnini karşılaştır.\n"
+                "Görevlerin:\n"
+                "1. Yanıttaki sayıların, katsayıların, tarihlerin, GNO'ların veya kuralların Bağlam'da geçip geçmediğini dikkatlice incele.\n"
+                "2. Yanıtta listeleri numaralandırmak için kullanılan (1., 2. gibi) sayılar halisünasyon değildir, bunları yok say.\n"
+                "3. Eğer Yanıtta Bağlam'da BULUNMAYAN kritik uydurma bir kural veya matematiksel sayı varsa, bunu düzelt veya ilgili kısmı çıkar.\n"
+                "4. YALNIZCA düzeltilmiş yanıtı döndür. Eğer orijinal yanıt doğrulandıysa veya sadece liste numaraları varsa orijinali AYNEN geri döndür. Yorum YOK."
             )
-            guard_prompt = (
-                f"Aşağıdaki yanıtta kaynak bağlamda BULUNMAYAN sayılar olabilir.\n\n"
-                f"Yanıt:\n{answer}\n\n"
-                f"Kaynak bağlamda geçen sayılar: {context_nums_display}\n\n"
-                f"Yanıtı aynı yapıda tut, ancak kaynak bağlamda olmayan sayıları "
-                f"kaynak bağlamdan doğru sayı ile değiştir veya çıkar.\n\n"
-                f"Düzeltilmiş yanıt:"
-            )
+            prompt = f"Bağlam:\n{context}\n\nOrijinal Yanıt:\n{answer}\n\nDoğrulanmış ve Düzeltilmiş Yanıt:"
         else:
-            guard_system = (
-                "Correct wrong numbers in the given answer. "
-                "Use only numbers that appear in the source context."
+            system_prompt = (
+                "You are a strict fact-checker. Compare the 'Context' with the generated 'Answer'.\n"
+                "Your tasks:\n"
+                "1. Scrutinize if ANY specific numbers, GPAs, dates, or rules in the Answer are missing from the Context.\n"
+                "2. Generic list numbering (like 1., 2.) are NOT hallucinations, ignore them.\n"
+                "3. If the Answer contains hallucinations (invented facts or unauthorized mathematical logic), correct or remove them.\n"
+                "4. RETURN ONLY the corrected answer text. If the original answer is factual, return it exactly as is. NO additional comments."
             )
-            guard_prompt = (
-                f"The following answer may contain numbers NOT found in the source context.\n\n"
-                f"Answer:\n{answer}\n\n"
-                f"Numbers found in source context: {context_nums_display}\n\n"
-                f"Keep the same structure but replace numbers not in the source context "
-                f"with the correct number from the context, or remove them.\n\n"
-                f"Corrected answer:"
-            )
+            prompt = f"Context:\n{context}\n\nOriginal Answer:\n{answer}\n\nVerified and Corrected Answer:"
 
         try:
-            corrected = self.llm.chat(guard_prompt, guard_system, temperature=0.0)
+            corrected = self.llm.chat(prompt, system_prompt, temperature=0.0, max_tokens=900)
+            
+            if not corrected or corrected.startswith(("Ollama Error", "LLM error", "Connection", "Empty response")):
+                print("[Generation] Hallucination check failed (timeout/error), keeping original.")
+                return answer
+            
+            if corrected.strip() != answer.strip():
+                print("[Generation] LLM applied corrections for hallucinations.")
+                return corrected.strip()
+            else:
+                print("[Generation] LLM confirmed answer is factual.")
+                return answer
+
         except Exception as e:
-            print(f"[Generation] Number guard LLM call failed: {e}")
-            return answer
-
-        if not corrected or corrected.startswith(("Ollama Error", "LLM error", "Connection")):
-            print("[Generation] Number guard failed, keeping original.")
-            return answer
-
-        # Verify the correction actually improved things
-        corrected_nums = set(re.findall(r'\d+[.,]?\d*', corrected))
-        corrected_significant = {
-            n for n in corrected_nums
-            if float(normalize_num(n)) >= 5 or '.' in n or ',' in n
-        }
-        corrected_hallucinated = {
-            n for n in corrected_significant
-            if normalize_num(n) not in context_numbers_normalized
-        }
-
-        if len(corrected_hallucinated) < len(hallucinated):
-            print(f"[Generation] Number guard applied. "
-                  f"Hallucinated: {len(hallucinated)} -> {len(corrected_hallucinated)}")
-            return corrected
-        else:
-            print("[Generation] Number guard did not improve. Keeping original.")
+            print(f"[Generation] LLM hallucination check call failed: {e}")
             return answer
 
     def generate_with_citations(

@@ -22,8 +22,8 @@ venv/
 *.sqlite3
 *.db
 *.bin
-*.pickle
-*.parquet
+vectors_v3.parquet
+
 
 # --- ChromaDB ve RAG Verileri ---
 
@@ -40,10 +40,7 @@ preprocessing/corpus_browser/
 .idea/
 .vscode/
 
-# --- Test Çıktıları ve Loglar ---
-testing/test_results/
-testing/*.txt
 
 # --- Manuel Yoksayılanlar ---
 create_user.py
-
+

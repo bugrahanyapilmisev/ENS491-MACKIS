@@ -1,0 +1,495 @@
+﻿--- Q1 | IID-C710-02 Uluslararası Staj Yönergesi §3.3
+1|Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+2|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+3|Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+4|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+5|IAESTE ile Uluslararası Staja Giden Öğrenci Prosed
+6|Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+7|Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+8|Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+9|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+10|IAESTE ile Uluslararası Staja Giden Öğrenci Prosed
+--- Q2 | IID-C710-02 Uluslararası Staj Yönergesi §3.9
+1|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+2|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+3|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+4|Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+5|0_grant_agreement
+6|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+7|0_grant_agreement
+8|hibe_sozlesmesi_0
+9|hibe_sozlesmesi_firo-c42001-07_1
+10|hibe_sozlesmesi_firo-c42003-02_2
+--- Q3 | PIPAR-C710-0201 Erasmus Internship Mobility Procedure §3.2
+1|International Internship Instruction Letter (IIPAR
+2|International Internship Instruction Letter (IIPAR
+3|International Internship Instruction Letter (IIPAR
+4|Procedure for Students Participating in Erasmus In
+5|International Internship Instruction Letter (IIPAR
+6|International Internship Instruction Letter (IIPAR
+7|Procedure for Students Participating in Erasmus In
+8|International Internship Instruction Letter (IIPAR
+9|C710 Coordinate Career Development  | Yönerge
+10|acceptance_letter
+--- Q4 | IIRO-C420-01 Değişim Programları Giden Öğrenci Yönergesi §7
+1|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+2|Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+3|0_grant_agreement
+4|Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+5|Değişim Programları Kapsamında Giden Öğrenci Yöner
+6|Değişim Programları Kapsamında Giden Öğrenci Yöner
+7|0_grant_agreement
+8|Değişim Programları Kapsamında Giden Öğrenci Yöner
+9|Erasmus Programı Kapsamında Eğitim Alma Yönergesi
+10|0_grant_agreement
+--- Q5 | IIC-C840-02 Ödünç Verme ve Yararlanma Yönergesi §1.3
+1|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+2|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+3|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+4|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+5|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+6|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+7|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+8|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+9|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+10|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+--- Q6 | IIC-C820-01 Kütüphanelerarası Ödünç Yönergesi
+1|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+2|Üyelik Yönergesi (IIC-C840-01) | Yönerge
+3|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+4|Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+5|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+6|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+7|Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+8|Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+9|Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+10|Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+--- Q7 | ISR-C210-01 Öğrenci Disiplin Yönergesi §3 Madde 1
+1|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+2|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+3|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+4|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+5|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+6|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+7|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+8|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+9|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+--- Q8 | PSR-C210-0101 Disiplin Prosedürü §1.6, §2.5
+1|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+2|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+3|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+4|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+5|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+6|fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogr
+7|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+8|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+9|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+10|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+--- Q9 | ISR-C210-01 Öğrenci Disiplin Yönergesi Madde 3
+1|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+2|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+3|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+4|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+5|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+6|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+7|fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogr
+8|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+9|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10|fsr-c21001-19
+--- Q10 | ISR-C160-01 Burs ve Mali Destek Yönergesi §2
+1|Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+2|Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+3|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+4|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+5|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+6|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+7|Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+8|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+9|fmic-s52001-19_1
+10|Yüksek Öğrenim Kredi Ve Yurtlar Kurumu Burs Ve Öğr
+--- Q11 | ISR-C160-01 Burs ve Mali Destek Yönergesi §2-4
+1|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+2|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+3|Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+4|Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+5|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+6|Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+7|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+8|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+9|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+10|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+--- Q12 | Lisansüstü Yönetmeliği Madde 32(2), 34(2)
+1|lisansustu_yon_tr_v22
+2|lisansustu_yon_tr_v22
+3|lisansustu_yon_tr_v22
+4|lisansustu_yon_tr_v22
+5|lisansustu_yon_tr_v22
+6|Yüksek Lisans Programı Açma, Kapatma, Mevcut Progr
+7|lisansustu_yon_tr_v22
+8|lisansustu_yon_tr_v22
+9|Yüksek Lisans Programı Açma, Kapatma, Mevcut Progr
+10|Yüksek Lisans Programı Açma, Kapatma, Mevcut Progr
+--- Q13 | Lisansüstü Yönetmeliği Madde 36(1)
+1|lisansustu_yon_tr_v22
+2|lisansustu_yon_tr_v22
+3|lisansustu_yon_tr_v22
+4|lisansustu_yon_tr_v22
+5|lisansustu_yon_tr_v22
+6|lisansustu_yon_tr_v22
+7|lisansustu_yon_tr_v22
+8|lisansustu_yon_tr_v22
+9|Doçentliğe Yükseltilme Prosedürü (PHR-S460-0401) |
+10|lisansustu_yon_tr_v22
+--- Q14 | Lisansüstü Yönetmeliği Madde 33 ve Madde 38
+1|lisansustu_yon_tr_v22
+2|lisansustu_yon_tr_v22
+3|lisansustu_yon_tr_v22
+4|lisansustu_yon_tr_v22
+5|lisansustu_yon_tr_v22
+6|lisansustu_yon_tr_v22
+7|Danışmanlık Süreci Akademik ve İdari İşlemler Pros
+8|Danışmanlık Süreci Akademik ve İdari İşlemler Pros
+9|lisansustu_yon_tr_v22
+10|lisansustu_yon_tr_v22
+--- Q15 | PSR-C120-0103 Yatay Geçiş Prosedürü, ISR-C120-01 Yönergesi
+1|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+2|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+3|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+4|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+5|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+6|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+7|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+8|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+9|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+10|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+--- Q16 | ISR-C290-02 Çift Anadal Yönergesi ve Lisans Yönetmeliği Madde 34
+1|Double Major Directive (ISR-C290-02) | Yönerge
+2|Double Major Directive (ISR-C290-02) | Yönerge
+3|Double Major Directive (ISR-C290-02) | Yönerge
+4|Lisans Yaz Stajı Çift Anadal Prosedürü (PIPAR-C710
+5|Double Major Directive (ISR-C290-02) | Yönerge
+6|Double Major Directive (ISR-C290-02) | Yönerge
+7|Double Major Directive (ISR-C290-02) | Yönerge
+8|Double Major Directive (ISR-C290-02) | Yönerge
+9|Double Major Directive (ISR-C290-02) | Yönerge
+10|Lisans Yaz Stajı Çift Anadal Prosedürü (PIPAR-C710
+--- Q17 | Akademik Takvim / Lisans Yönetmeliği Madde 22
+1|Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) |
+2|Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) |
+3|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+4|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+5|lisans_yon_tr_v26
+6|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+7|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+8|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+9|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+10|Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) |
+--- Q18 | PSR-C240-0101 Mezuniyet Denetimi ve Diploma Düzenleme Prosedürü §1.1-1.2
+1|Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü
+2|Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü
+3|Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü
+4|Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi
+5|fsr-c24001-20_gec_mezuniyet_basvuru_formu_v02
+6|Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü
+7|C240 Mezuniyet Denetimi | Yönerge
+8|Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü
+9|lisansustu_yon_tr_v22
+10|Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi
+--- Q19 | Lisans Yönetmeliği Madde 39-41, ISR-C210-02
+1|Vize ve İkamet İzni Yönergesi ( IIRO-C430-02) | Yö
+2|Öğrenci Askerlik İşlemleri Prosedürü (PSR-C210-030
+3|Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+4|Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) |
+5|Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+6|Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) |
+7|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+8|lisans_yon_tr_v26
+9|Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+10|lisans_yon_tr_v26
+--- Q20 | IID-C710-02 International Internship Instruction §3.3
+1|International Internship Instruction Letter (IIPAR
+2|Instruction letter for Outgoing Students within th
+3|Procedure for Students Participating in Erasmus In
+4|International Internship Instruction Letter (IIPAR
+5|Procedure for Students Participating in Erasmus In
+6|Instruction letter for Outgoing Students within th
+7|International Internship Instruction Letter (IIPAR
+8|Instruction letter for Outgoing Students within th
+9|lisansustu_yon_en_v22
+10|Procedure for Students Participating in Erasmus In
+--- Q21 | IIC-C840-02 Circulation and Utilization Instruction §1.3
+1|Circulation and Utilization Instruction Letter  |
+2|Circulation and Utilization Instruction Letter  |
+3|Circulation and Utilization Instruction Letter  |
+4|Circulation and Utilization Instruction Letter  |
+5|Circulation and Utilization Instruction Letter  |
+6|Circulation and Utilization Instruction Letter  |
+7|Circulation and Utilization Instruction Letter  |
+8|Circulation and Utilization Instruction Letter  |
+9|Circulation and Utilization Instruction Letter  |
+10|Circulation and Utilization Instruction Letter  |
+--- Q22 | PSR-C210-0101 Student Disciplinary Procedure §1.3
+1|Disciplinary Procedure of Students ( PSR-C210-0101
+2|Disciplinary Procedure of Students ( PSR-C210-0101
+3|Disciplinary Procedure of Students ( PSR-C210-0101
+4|Disciplinary Procedure of Students ( PSR-C210-0101
+5|Disciplinary Procedure of Students ( PSR-C210-0101
+6|Disciplinary Procedure of Students ( PSR-C210-0101
+7|Instruction Letter for Student Discipline (ISR-C21
+8|Disciplinary Procedure of Students ( PSR-C210-0101
+9|Student Housing Instruction Letter  (ISER-C910-01)
+10|Instruction Letter for Student Discipline (ISR-C21
+--- Q23 | Lisans Yönetmeliği Madde 35
+1|Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi
+2|Derslerden Muafiyet Yönergesi (ISR-C220-02) | Yöne
+3|Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi
+4|Derslerden Muafiyet Prosedürü (PSR-C220-0201) | Yö
+5|lisansustu_yon_tr_v22
+6|Lisans Diploma Programı Bildirimi, Diploma Program
+7|lisansustu_yon_tr_v22
+8|lisansustu_yon_tr_v22
+9|lisansustu_yon_tr_v22
+10|Derslerden Muafiyet Prosedürü (PSR-C220-0201) | Yö
+--- Q24 | Lisans Yönetmeliği Madde 30
+1|lisans_yon_tr_v26
+2|lisansustu_yon_tr_v22
+3|lisans_yon_tr_v26
+4|Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+5|Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) |
+6|Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+7|lisans_yon_tr_v26
+8|Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) |
+9|Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+10|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+--- Q25 | PIPAR-C710-0101 Lisans Yaz Stajı Prosedürü
+1|Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+2|Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+3|Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+4|Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+5|Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+6|İkili Anlaşmalarla Uluslararası Staja Giden Öğrenc
+7|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+8|Lisans Yaz Stajı Çift Anadal Prosedürü (PIPAR-C710
+9|Lisans Yaz Stajı Çift Anadal Prosedürü (PIPAR-C710
+10|Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+--- Q26 | PSR-C230-0103 Transkript Düzenleme Prosedürü
+1|Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+2|Akademik Durum Değerlendirme Prosedürü (PSR-C230-0
+3|Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+4|Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+5|Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+6|Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+7|Akademik Durum Değerlendirme Prosedürü (PSR-C230-0
+8|Akademik Programlara Başvuru ve Öğrenci Kabulu Yön
+9|Notlar ve Akademik Değerlendirme Yönergesi (ISR-C2
+10|lisans_yon_tr_v26
+--- Q27 | PSR-C210-0402 Öğrenci Belgesi Düzenleme Prosedürü
+1|Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+2|Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+3|Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+4|Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+5|Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+6|Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+7|Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+8|Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+9|Değişim Programları Kapsamında Gelen Öğrenci Prose
+10|C210 Öğrenci Bilgi ve Belgelerinin Yönetimi | Yöne
+--- Q28 | IPO-A510-01 Cinsel Taciz Yönergesi §5
+1|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+2|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+3|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+4|fpo-a510-01-01_0
+5|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+6|fpo-a510-01-01_0
+7|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+8|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+9|fpo-a510-01-01_0
+10|fpo-a510-01-01_0
+--- Q29 | PSR-C210-0101 Disiplin Prosedürü §2.7
+1|Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme
+2|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+3|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+4|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+5|sabanci_universitesi_ihale_yonetmeligi_21_subat_20
+6|Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme
+7|Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme
+8|Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme
+9|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+10|İngilizce Dil Ölçme Sınavı Yönergesi (ISR-C140-01)
+--- Q30 | Genel Bilgi / Kurumsal Web
+1|isg_el_kitabirev9
+2|kalite_el_kitabiv13
+3|cevre_el_kitabi_rev_07
+4|fipar-c720-02-02_0
+5|fpop-s210-01-113_2
+6|fsr-c12001-08
+7|Ulaşım Hizmetleri Yönergesi (ISER-C930-01) | Yöner
+8|ekler4
+9|cevre_el_kitabi_rev_07
+10|firo-c430-01-v01_
+--- Q31 | IIC-C840-02 Circulation and Utilization Instruction §1.4
+1|Circulation and Utilization Instruction Letter  |
+2|Circulation and Utilization Instruction Letter  |
+3|Circulation and Utilization Instruction Letter  |
+4|Circulation and Utilization Instruction Letter  |
+5|Circulation and Utilization Instruction Letter  |
+6|Circulation and Utilization Instruction Letter  |
+7|Circulation and Utilization Instruction Letter  |
+8|Circulation and Utilization Instruction Letter  |
+9|Circulation and Utilization Instruction Letter  |
+10|Circulation and Utilization Instruction Letter  |
+--- Q32 | IOP-C310-01 Yurt Yönergesi §6
+1|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+2|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+3|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+4|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+5|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+6|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+7|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+8|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+9|Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+10|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+--- Q33 | IOP-C320-01 Yemek Hizmeti Yönergesi
+1|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+2|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+3|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+4|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+5|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+6|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+7|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+8|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+9|Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+10|C960 Yiyecek Hizmetlerini Sağlama | Yönerge
+--- Q34 | IIC-C840-02 Circulation and Utilization Instruction §1.1, §1.3
+1|Circulation and Utilization Instruction Letter  |
+2|Circulation and Utilization Instruction Letter  |
+3|Circulation and Utilization Instruction Letter  |
+4|Circulation and Utilization Instruction Letter  |
+5|Circulation and Utilization Instruction Letter  |
+6|Circulation and Utilization Instruction Letter  |
+7|Circulation and Utilization Instruction Letter  |
+8|Circulation and Utilization Instruction Letter  |
+9|Circulation and Utilization Instruction Letter  |
+10|Circulation and Utilization Instruction Letter  |
+--- Q35 | ISR-C620-02 Öğrenci Konseyi Yönergesi §5
+1|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+2|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+3|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+4|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+5|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+6|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+7|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+8|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+9|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+10|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+--- Q36 | PSR-C210-0101 Student Disciplinary Procedure §1.3
+1|Disciplinary Procedure of Students ( PSR-C210-0101
+2|Disciplinary Procedure of Students ( PSR-C210-0101
+3|Instruction Letter for Student Discipline (ISR-C21
+4|Disciplinary Procedure of Students ( PSR-C210-0101
+5|Disciplinary Procedure of Students ( PSR-C210-0101
+6|Disciplinary Procedure of Students ( PSR-C210-0101
+7|Disciplinary Procedure of Students ( PSR-C210-0101
+8|Student Housing Instruction Letter  (ISER-C910-01)
+9|Disciplinary Procedure of Students ( PSR-C210-0101
+10|Disciplinary Procedure of Students ( PSR-C210-0101
+--- Q37 | IOP-C310-01 Yurt Yönergesi §7
+1|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+2|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+3|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+4|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+5|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+6|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+7|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+8|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+9|fsr-c21001-19
+10|YÖK İstatistikleri Prosedürü ( PSR-C260-0102) | Yö
+--- Q38 | PSR-C210-0101 Disiplin Prosedürü §2.5
+1|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+2|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+3|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+4|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+5|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+6|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+7|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+8|Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+9|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+--- Q39 | Lisans Yönetmeliği / Lisansüstü Yönetmeliği
+1|Öğrenci Birliği Seçim ve Çalışma Esasları Prosedür
+2|Derslerden Muafiyet Yönergesi (ISR-C220-02) | Yöne
+3|Sabancı Üniversitesi Öğretim Üyesi Atama ve Yüksel
+4|Gelen Değişim Öğrencileri Başvuru ve Kabul Prosedü
+5|Danışmanlık Süreci Akademik ve İdari İşlemler Yöne
+6|Özel Öğrenci Başvuru Ve Kabul Prosedürü (PSR-C120-
+7|Lisans Programlarına Yatay Geçiş Başvuru ve Kabul
+8|isg_el_kitabirev9
+9|kalite_el_kitabiv13
+10|t-fid-s620-01-05
+--- Q40 | IIC-C840-02 Circulation and Utilization Instruction §1.5
+1|Circulation and Utilization Instruction Letter  |
+2|Circulation and Utilization Instruction Letter  |
+3|Circulation and Utilization Instruction Letter  |
+4|Circulation and Utilization Instruction Letter  |
+5|Circulation and Utilization Instruction Letter  |
+6|Circulation and Utilization Instruction Letter  |
+7|Circulation and Utilization Instruction Letter  |
+8|Circulation and Utilization Instruction Letter  |
+9|Circulation and Utilization Instruction Letter  |
+10|Circulation and Utilization Instruction Letter  |
+--- Q41 | ISR-C160-01 Burs Yönergesi §4 + PSR-C210-0101 Disiplin Prosedürü §1.5
+1|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+2|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+3|Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+4|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+5|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+6|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+7|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+8|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+9|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10|lisans_yon_tr_v26
+--- Q42 | PSR-C210-0101 Disciplinary Procedure §1.5
+1|lisans_yon_eng_v26_0
+2|Disciplinary Procedure of Students ( PSR-C210-0101
+3|Instruction letter for Outgoing Students within th
+4|lisans_yon_eng_v26_0
+5|lisansustu_yon_en_v22
+6|Procedure for Grade Conversion Process for Exchang
+7|Instruction Letter for Student Discipline (ISR-C21
+8|lisansustu_yon_en_v22
+9|lisans_yon_eng_v26_0
+10|lisans_yon_eng_v26_0
+--- Q43 | IIC-C840-02 Ödünç Verme Yönergesi §4 + PSR-C240-0101 Mezuniyet Prosedürü
+1|Üyelik Prosedürü (PIC-840-0101) | Yönerge
+2|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+3|Üyelik Yönergesi (IIC-C840-01) | Yönerge
+4|Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+5|Üyelik Yönergesi (IIC-C840-01) | Yönerge
+6|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+7|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+8|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+9|Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02)
+10|Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101)
+--- Q44 | ISR-C620-02 Öğrenci Konseyi Yönergesi §5 + ISR-C210-01 Disiplin Yönergesi §3
+1|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+2|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+3|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+4|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+5|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+6|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+7|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+8|Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+9|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+10|Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+--- Q45 | PSR-C210-0101 Disiplin Prosedürü §1.5
+1|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+2|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+3|tgy_tr_v23
+4|Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+5|Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+6|lisans_yon_tr_v26
+7|Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+8|Yurtlardan Ayrılma Prosedürü (PSER-C910-0102)  | Y
+9|lisansustu_yon_tr_v22
+10|tgy_tr_v23

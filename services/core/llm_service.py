@@ -27,7 +27,11 @@ class LLMService:
             config: Ollama configuration with host, model, timeouts.
         """
         self.config = config
-        self._url = f"{config.host}/api/chat"
+        self.is_openrouter = bool(config.openrouter_api_key)
+        if self.is_openrouter:
+            self._url = "https://openrouter.ai/api/v1/chat/completions"
+        else:
+            self._url = f"{config.host}/api/chat"
 
     def chat(
         self,
@@ -36,6 +40,8 @@ class LLMService:
         temperature: float = 0.0,
         model: Optional[str] = None,
         top_p: float = 0.9,
+        require_json: bool = False,
+        max_tokens: Optional[int] = None,
     ) -> str:
         """
         Send chat request and return response text.
@@ -46,6 +52,7 @@ class LLMService:
             temperature: Sampling temperature (0.0 = deterministic).
             model: Optional model override.
             top_p: Top-p sampling parameter.
+            max_tokens: Optional maximum tokens in the response.
 
         Returns:
             Response text from LLM, or error message string.
@@ -58,25 +65,60 @@ class LLMService:
         payload = {
             "model": model or self.config.chat_model,
             "messages": messages,
-            "stream": False,
-            "options": {
-                "temperature": temperature,
-                "top_p": top_p,
-            },
+            "temperature": temperature,
+            "top_p": top_p,
         }
+
+        if not self.is_openrouter:
+            payload["stream"] = False
+            if require_json:
+                payload["format"] = "json"
+            if max_tokens:
+                payload["options"] = {
+                    "temperature": temperature,
+                    "top_p": top_p,
+                    "num_predict": max_tokens,
+                }
+            else:
+                payload["options"] = {
+                    "temperature": temperature,
+                    "top_p": top_p,
+                }
+            del payload["temperature"]
+            del payload["top_p"]
+        else:
+            if require_json:
+                payload["response_format"] = {"type": "json_object"}
+            if max_tokens:
+                payload["max_tokens"] = max_tokens
+
+        headers = {}
+        if self.is_openrouter:
+            headers = {
+                "Authorization": f"Bearer {self.config.openrouter_api_key}",
+                "HTTP-Referer": "http://localhost:3000",
+                "X-Title": "MACKIS RAG Eval"
+            }
 
         try:
             response = requests.post(
                 self._url,
                 json=payload,
+                headers=headers,
                 timeout=self.config.chat_timeout
             )
 
             if response.status_code != 200:
-                return f"Ollama Error: {response.text}"
+                provider = "OpenRouter" if self.is_openrouter else "Ollama"
+                return f"{provider} Error: {response.text}"
 
             data = response.json()
-            content = data.get("message", {}).get("content", "")
+            if self.is_openrouter:
+                content = data.get("choices", [{}])[0].get("message", {}).get("content")
+                if content is None:
+                    content = ""
+            else:
+                content = data.get("message", {}).get("content", "")
 
             if not content:
                 return "Empty response from LLM."
@@ -109,7 +151,13 @@ class LLMService:
         Returns:
             Parsed JSON dict, or None if parsing fails.
         """
-        text = self.chat(prompt, system_prompt, temperature, model)
+        text = self.chat(
+            prompt=prompt,
+            system_prompt=system_prompt,
+            temperature=temperature,
+            model=model,
+            require_json=True
+        )
 
         if not text:
             return None
