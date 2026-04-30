@@ -120,8 +120,10 @@ class RetrievalAgent:
         top_k_bm25 = top_k_bm25 or self.config.retrieval.top_k_bm25
 
         # Embed query if not provided
+        # is_query=True applies the instruction prefix for instruction-aware models
+        # (Qwen3-Embedding-8B): "Instruct: ... retrieve the relevant document chunk\nQuery: <text>"
         if query_vec is None:
-            query_vec = self.embedding.embed(query)
+            query_vec = self.embedding.embed(query, is_query=True)
 
         # Vector search
         lang_filter = {"doc_lang": language} if language in ("tr", "en") else None

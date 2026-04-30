@@ -43,6 +43,121 @@ sys.stderr = Tee(original_stderr, output_file)
 from dotenv import load_dotenv
 load_dotenv()
 
+import math
+import re
+
+def compute_retrieval_metrics(expected_source: str, retrieved_chunks: list, top_k: int = 10, expected_answer: str = "") -> dict:
+    """Computes retrieval metrics using fuzzy document-title matching.
+    
+    Instead of regex code extraction (which fails for sources like 
+    'Lisansüstü Yönetmeliği Madde 32'), this uses keyword overlap 
+    between the expected source description and each chunk's title/path.
+    
+    Also computes Context Recall: what fraction of expected answer 
+    keywords appear in the retrieved chunks' text (CS 455/555 §8.6).
+    """
+    if not retrieved_chunks:
+        return {"Hit@K": 0.0, "MRR@K": 0.0, "MAP@K": 0.0, "nDCG@K": 0.0, "ContextRecall": 0.0}
+    
+    # -- Build matching keywords from expected source --
+    # Extract document codes if present (e.g., "IID-C710-02", "PSR-C210-0101")
+    codes = re.findall(r'[A-Z]{2,6}-[A-Z]?\d+-\d+', expected_source)
+    # Extract meaningful words (4+ chars, Turkish-aware)
+    source_words = set(re.findall(r'[a-zA-ZçğıöşüÇĞİÖŞÜ]{4,}', expected_source.lower()))
+    # Remove very generic words that would match too broadly
+    generic = {'için', 'olan', 'veya', 'madde', 'from', 'with', 'that', 'this'}
+    source_words -= generic
+    
+    rel_array = []
+    for i, c in enumerate(retrieved_chunks[:top_k]):
+        meta = c.get("meta", {}) or {}
+        source_path = (meta.get("source_path", "") or "").lower()
+        title = (meta.get("title", "") or "").lower()
+        search_text = source_path + " " + title
+        
+        is_relevant = False
+        
+        # Method 1: Direct code matching (high confidence)
+        if codes:
+            for code in codes:
+                if code.lower() in search_text:
+                    is_relevant = True
+                    break
+        
+        # Method 2: Keyword overlap (fuzzy matching)
+        if not is_relevant and source_words:
+            matched_words = sum(1 for w in source_words if w in search_text)
+            # Require at least 40% of source words to match
+            if len(source_words) > 0 and matched_words / len(source_words) >= 0.40:
+                is_relevant = True
+            # Also check if at least 2 specific words match for short sources
+            elif matched_words >= 2:
+                is_relevant = True
+        
+        rel_array.append(1 if is_relevant else 0)
+    
+    # -- Standard IR metrics --
+    hit_at_k = 1.0 if any(rel_array) else 0.0
+    
+    mrr_at_k = 0.0
+    for i, rel in enumerate(rel_array):
+        if rel == 1:
+            mrr_at_k = 1.0 / (i + 1)
+            break
+            
+    num_relevant = sum(rel_array)
+    map_at_k = 0.0
+    if num_relevant > 0:
+        precisions = []
+        hits = 0
+        for i, rel in enumerate(rel_array):
+            if rel == 1:
+                hits += 1
+                precisions.append(hits / (i + 1))
+        map_at_k = sum(precisions) / num_relevant
+        
+    dcg = 0.0
+    for i, rel in enumerate(rel_array):
+        if rel == 1:
+            dcg += 1.0 / math.log2(i + 2)
+            
+    idcg = 0.0
+    for i in range(num_relevant):
+        idcg += 1.0 / math.log2(i + 2)
+        
+    ndcg_at_k = dcg / idcg if idcg > 0 else 0.0
+    
+    # -- Context Recall (CS 455/555 §8.6) --
+    # Measures what fraction of expected answer facts appear in retrieved text
+    context_recall = 0.0
+    if expected_answer:
+        answer_keywords = set(re.findall(
+            r'[a-zA-ZçğıöşüÇĞİÖŞÜ]{4,}',
+            expected_answer.lower()
+        ))
+        # Remove stopwords
+        stopwords = {'için', 'olan', 'veya', 'daha', 'kadar', 'bile', 'olan',
+                     'with', 'from', 'that', 'this', 'they', 'their', 'also',
+                     'have', 'does', 'olarak', 'ancak', 'ayrıca'}
+        answer_keywords -= stopwords
+        
+        if answer_keywords:
+            # Combine all retrieved chunk text
+            all_chunk_text = " ".join(
+                (c.get("text", "") or "").lower()
+                for c in retrieved_chunks[:top_k]
+            )
+            found_keywords = sum(1 for kw in answer_keywords if kw in all_chunk_text)
+            context_recall = found_keywords / len(answer_keywords)
+    
+    return {
+        "Hit@K": hit_at_k,
+        "MRR@K": mrr_at_k,
+        "MAP@K": map_at_k,
+        "nDCG@K": ndcg_at_k,
+        "ContextRecall": round(context_recall, 3),
+    }
+
 # Test questions with expected answers from documents
 # Organized by category for comprehensive coverage
 TEST_QUESTIONS = [
@@ -158,9 +273,9 @@ TEST_QUESTIONS = [
     {
         "id": "Q15",
         "category": "Undergraduate",
-        "question": "Yatay geçiş başvurusu için GNO şartı nedir?",
-        "expected_answer": "Yatay geçiş başvurusu için başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca ÖSYM puanının taban puanına eşit veya yüksek olması şartı aranır.",
-        "source": "Lisans Yönetmeliği Madde 9, 10"
+        "question": "Yatay geçiş başvuru şartları nelerdir?",
+        "expected_answer": "Yatay geçiş başvurusu için hazırlık sınıfı dışında 2 dönemi en az 60/100 genel not ortalaması ile tamamlamış olmak gerekir. Başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca merkezi yerleştirme puanının taban puanına eşit veya yüksek olması şartı aranır.",
+        "source": "PSR-C120-0103 Yatay Geçiş Prosedürü, ISR-C120-01 Yönergesi"
     },
     {
         "id": "Q16",
@@ -182,7 +297,7 @@ TEST_QUESTIONS = [
         "id": "Q18",
         "category": "Registration",
         "question": "Mezuniyet başvurusu nasıl yapılır?",
-        "expected_answer": "Mezuniyet başvurusu ÖBS üzerinden yapılır.",
+        "expected_answer": "Mezuniyet başvurusu akademik takvimde belirtilen tarihlerde ÖBS üzerinden yapılır. Mezun adayı öğrencilerin programa ait tüm mezuniyet yükümlülüklerini tamamlaması ve genel not ortalamasının en az 2.00 olması gerekir.",
         "source": "PSR-C240-0101 Mezuniyet Denetimi ve Diploma Düzenleme Prosedürü §1.1-1.2"
     },
     {
@@ -221,7 +336,7 @@ TEST_QUESTIONS = [
         "id": "Q23",
         "category": "Numeric",
         "question": "Lisans mezuniyeti için kaç kredi gerekiyor?",
-        "expected_answer": "Lisans mezuniyeti için kayıtlı olunan diploma programının gerektirdiği tüm mezuniyet yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
+        "expected_answer": "Lisans mezuniyeti için belirli bir sabit kredi sayısı yoktur. Kayıtlı olunan diploma programının gerektirdiği tüm ders ve kredi yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
         "source": "Lisans Yönetmeliği Madde 35"
     },
     {
@@ -236,9 +351,9 @@ TEST_QUESTIONS = [
     {
         "id": "Q25",
         "category": "Procedure",
-        "question": "Staj başvurusu nasıl yapılır?",
-        "expected_answer": "Staj başvurusu Kariyer Geliştirme ve Staj Ofisi üzerinden yapılır. Uluslararası staj süreci IPAR'a bağlı bu ofis tarafından yürütülür.",
-        "source": "IID-C710-02 Uluslararası Staj Yönergesi §1.1 / PID-C710-0101 Zorunlu Staj Prosedürü"
+        "question": "Zorunlu staj başvurusu nasıl yapılır?",
+        "expected_answer": "Zorunlu staj başvurusu OMS (Online Management System) üzerinden staj talebi oluşturularak yapılır. Öğrenciler Yeni Staj Projesi Formu (FIPAR-C71001-02) doldurur ve kurumlarda yapacakları projenin tanımını girer. Staj Ofisi, kabul edildikleri kuruma teslim edilmek üzere Zorunlu Staj Belgesi verir.",
+        "source": "PIPAR-C710-0101 Lisans Yaz Stajı Prosedürü"
     },
     {
         "id": "Q26",
@@ -483,6 +598,7 @@ def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
     # ── Result containers ────────────────────────────────────────────────────
     eval_results   = []   # EvaluationResult objects (new path)
     legacy_results = []   # plain dicts             (old path / comparison)
+    retrieval_results = [] # list of retrieval metric dicts
 
     total_start = time.time()
 
@@ -521,6 +637,15 @@ def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
         print(_wrap(answer, width=74))
         print("-" * 60)
 
+        # ── Retrieval Metrics ────────────────────────────────────────────────
+        retrieval_chunks = pipeline_result.get("retrieved_chunks", []) if isinstance(pipeline_result, dict) else []
+        r_metrics = compute_retrieval_metrics(test["source"], retrieval_chunks, top_k=10, expected_answer=expected)
+        retrieval_results.append(r_metrics)
+        
+        print(f"\n🔍 Retrieval Metrics (Top 10):")
+        print(f"   Hit@10 : {r_metrics['Hit@K']:.3f} | MRR@10 : {r_metrics['MRR@K']:.3f} | MAP@10 : {r_metrics['MAP@K']:.3f} | nDCG@10 : {r_metrics['nDCG@K']:.3f}")
+        print(f"   Context Recall : {r_metrics['ContextRecall']:.3f}")
+
         # ── Legacy keyword coverage (always computed for comparison) ──────────
         kws      = expected.lower().split()
         ans_low  = answer.lower()
@@ -542,12 +667,19 @@ def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
 
         # ── Multi-metric evaluation ───────────────────────────────────────────
         if evaluator is not None:
-            # Get context chunks for faithfulness scoring
+            # Use the EXACT chunks that were used during generation.
+            # pipeline.answer() returns retrieved_chunks already — using
+            # search_only() would give different (smaller, no neighbor expansion)
+            # context and cause false low-faithfulness scores.
             try:
-                chunks  = pipeline.search_only(question, top_k=10)
-                context = _build_context_from_chunks(chunks)
+                raw_chunks = (
+                    pipeline_result.get("retrieved_chunks", [])
+                    if isinstance(pipeline_result, dict) else []
+                )
+                context = _build_context_from_chunks(raw_chunks) if raw_chunks else ""
             except Exception:
                 context = ""
+
 
             result = evaluator.evaluate(
                 question_id=qid,
@@ -596,6 +728,25 @@ def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
         avg_kw  = sum(r["coverage"] for r in valid_legacy) / len(valid_legacy)
         old_pass = sum(1 for r in valid_legacy if r["coverage"] >= 50)
         print(f"\n  Average: {avg_kw:.0f}%  |  Passed (≥50%): {old_pass}/{len(valid_legacy)}")
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # RETRIEVAL SUMMARY
+    # ─────────────────────────────────────────────────────────────────────────
+    print("=" * 80)
+    print("📈 RETRIEVAL METRICS SUMMARY")
+    print("=" * 80)
+    if retrieval_results:
+        avg_hit = sum(m["Hit@K"] for m in retrieval_results) / len(retrieval_results)
+        avg_mrr = sum(m["MRR@K"] for m in retrieval_results) / len(retrieval_results)
+        avg_map = sum(m["MAP@K"] for m in retrieval_results) / len(retrieval_results)
+        avg_ndcg = sum(m["nDCG@K"] for m in retrieval_results) / len(retrieval_results)
+        avg_ctx_recall = sum(m.get("ContextRecall", 0) for m in retrieval_results) / len(retrieval_results)
+        print(f"  Hit@10          : {avg_hit:.3f}")
+        print(f"  MRR@10          : {avg_mrr:.3f}")
+        print(f"  MAP@10          : {avg_map:.3f}")
+        print(f"  nDCG@10         : {avg_ndcg:.3f}")
+        print(f"  Context Recall  : {avg_ctx_recall:.3f}")
+        print()
 
     # ─────────────────────────────────────────────────────────────────────────
     # MULTI-METRIC REPORT

@@ -1,108 +1,92 @@
 
 import os
-import json
-import numpy as np
-import pyarrow.parquet as pq
-import chromadb
+import zipfile
+import shutil
 from dotenv import load_dotenv
 
 load_dotenv()
 
 # ================= CONFIG =================
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-# Directory setup relative to this script
-CHROMA_DIR_V2 =  os.getenv("CHROMA_DIR_V2", "chroma_db_v2")
-CHECKPOINT_DIR_V2 = os.getenv("CHECKPOINT_DIR_V2") or os.path.join(CURRENT_DIR, "checkpoints_v2")
+CHROMA_DIR_V2 = os.getenv("CHROMA_DIR_V2", os.path.join(CURRENT_DIR, "chroma_db_v2"))
+ZIP_PATH = os.path.join(CURRENT_DIR, "chroma_db_v2_compact.zip")
 
-VECTORS_PARQUET = os.path.join(CHECKPOINT_DIR_V2, "vectors_v2.parquet")
-
-COLL_NAME = os.getenv("COLL_NAME_V2", "mysu_v2_bge_m3")
-EMBED_DIM = int(os.getenv("EMBED_DIM", "1024"))
-BATCH_UPSERT = int(os.getenv("BATCH_UPSERT", "64"))
 
 def main():
     print("=" * 60)
-    print("RESTORE CHROMA DB V2")
+    print("RESTORE CHROMA DB V2 (from zip)")
     print("=" * 60)
-    print(f"Parquet Source: {VECTORS_PARQUET}")
-    print(f"Chroma Target:  {CHROMA_DIR_V2}")
-    print(f"Collection:     {COLL_NAME}")
+    print(f"Zip Source : {ZIP_PATH}")
+    print(f"Chroma Target: {CHROMA_DIR_V2}")
     print("=" * 60)
 
-    if not os.path.exists(VECTORS_PARQUET):
-        print(f"[error] Vectors parquet file not found: {VECTORS_PARQUET}")
+    # 1) Check zip exists
+    if not os.path.exists(ZIP_PATH):
+        print(f"[error] Zip file not found: {ZIP_PATH}")
         return
 
-    # 1) Load vectors checkpoint
-    print("[1/5] Loading vectors parquet...")
-    try:
-        table = pq.read_table(VECTORS_PARQUET)
-    except Exception as e:
-        print(f"[error] Failed to read parquet: {e}")
+    # 2) Check if chroma_db_v2 already exists
+    if os.path.exists(CHROMA_DIR_V2):
+        existing_sqlite = os.path.join(CHROMA_DIR_V2, "chroma.sqlite3")
+        if os.path.exists(existing_sqlite):
+            size_mb = os.path.getsize(existing_sqlite) / (1024 * 1024)
+            print(f"[warn] ChromaDB already exists ({size_mb:.1f} MB)")
+            answer = input("Overwrite? (y/n): ").strip().lower()
+            if answer != "y":
+                print("Aborted.")
+                return
+            print("[info] Removing existing chroma_db_v2/ ...")
+            shutil.rmtree(CHROMA_DIR_V2)
+
+    # 3) Create target directory
+    os.makedirs(CHROMA_DIR_V2, exist_ok=True)
+
+    # 4) Extract zip
+    print("[1/1] Extracting zip...")
+    with zipfile.ZipFile(ZIP_PATH, "r") as zf:
+        zf.extractall(CHROMA_DIR_V2)
+
+    # 5) Verify
+    restored_sqlite = os.path.join(CHROMA_DIR_V2, "chroma.sqlite3")
+    if os.path.exists(restored_sqlite):
+        size_mb = os.path.getsize(restored_sqlite) / (1024 * 1024)
+        print(f"\n✅ Restore finished! ({size_mb:.1f} MB)")
+    else:
+        print("\n❌ Restore failed — chroma.sqlite3 not found after extraction")
+
+
+
+    CHECKPOINT_DIR = os.getenv("CHECKPOINT_DIR_V2", os.path.join(CURRENT_DIR, "checkpoints_v2"))
+    CHECKPOINT_ZIP_PATH = os.path.join(CURRENT_DIR, "checkpoint_files_zipped.zip")
+    print("\n" + "=" * 60)
+    print("RESTORE CHECKPOINT FILES (from zip)")
+    print("=" * 60)
+    print(f"Zip Source : {CHECKPOINT_ZIP_PATH}")
+    print(f"Target Dir : {CHECKPOINT_DIR}")
+    print("=" * 60)
+
+    # 1) Check zip exists
+    if not os.path.exists(CHECKPOINT_ZIP_PATH):
+        print(f"[error] Zip file not found: {CHECKPOINT_ZIP_PATH}")
         return
 
-    ids         = table["id"].to_pylist()
-    docs        = table["document"].to_pylist()
-    metas_json  = table["metadata"].to_pylist()
-    vecs_list   = table["vector"].to_pylist()
+    # 2) Check if checkpoints already exist
+    if os.path.exists(CHECKPOINT_DIR):
+        print(f"[warn] Checkpoint directory already exists: {CHECKPOINT_DIR}")
+        answer = input("Overwrite? (y/n): ").strip().lower()
+        if answer != "y":
+            print("Aborted.")
+            return
+        print(f"[info] Removing existing {CHECKPOINT_DIR} ...")
+        shutil.rmtree(CHECKPOINT_DIR)
 
-    print(f"[info] Loaded {len(ids)} vectors from parquet")
+    # 3) Create target directory
+    os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-    if not ids:
-        print("[warn] No vectors found. Exiting.")
-        return
-
-    vectors = np.asarray(vecs_list, dtype=np.float32)
-    if vectors.shape[1] != EMBED_DIM:
-        print(f"[warn] Dimension mismatch! Parquet has {vectors.shape[1]}, config expects {EMBED_DIM}.")
-        # Proceeding anyway usually causes Chroma error, but we'll let it try or user can adjust config.
-
-    metadatas = []
-    for m in metas_json:
-        try:
-            metadatas.append(json.loads(m))
-        except:
-            metadatas.append({})
-
-    # 2) Connect to Chroma
-    print("[2/5] Connecting to ChromaDB...")
-    client = chromadb.PersistentClient(path=CHROMA_DIR_V2)
-
-    # 3) Drop old collection (very important!)
-    print(f"[3/5] Resetting collection '{COLL_NAME}'...")
-    try:
-        client.delete_collection(COLL_NAME)
-        print(f"  - Deleted old collection")
-    except Exception as e:
-        print(f"  - No existing collection to delete or delete failed ({e})")
-
-    # 4) Recreate collection
-    print("[4/5] Creating new collection...")
-    coll = client.get_or_create_collection(
-        name=COLL_NAME,
-        metadata={"hnsw:space": "cosine"},
-    )
-
-    # 5) Upsert in batches
-    print(f"[5/5] Upserting {len(ids)} items...")
-    n = len(ids)
-    for i in range(0, n, BATCH_UPSERT):
-        batch_ids   = ids[i : i + BATCH_UPSERT]
-        batch_docs  = docs[i : i + BATCH_UPSERT]
-        batch_meta  = metadatas[i : i + BATCH_UPSERT]
-        batch_vecs  = vectors[i : i + BATCH_UPSERT]
-
-        coll.upsert(
-            ids=batch_ids,
-            embeddings=batch_vecs.tolist(),
-            metadatas=batch_meta,
-            documents=batch_docs,
-        )
-        if (i // BATCH_UPSERT) % 5 == 0:
-            print(f"  - restored {min(i+BATCH_UPSERT, n)}/{n}")
-
-    print("\n✅ Restore finished!")
-    print(f"Final Collection Count: {coll.count()}")
+    # 4) Extract zip
+    print("[1/1] Extracting zip...")
+    with zipfile.ZipFile(CHECKPOINT_ZIP_PATH, "r") as zf:
+        zf.extractall(CHECKPOINT_DIR)
 
 if __name__ == "__main__":
     main()

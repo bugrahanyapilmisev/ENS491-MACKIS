@@ -26,6 +26,11 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from services.config.settings import RAGConfig
+from services.core.llm_service import LLMService
+
 load_dotenv()
 
 # =================== CONFIG ===================
@@ -82,13 +87,14 @@ class LLMHybridExtractor:
     """Uses LLM to extract both Facts and Triples."""
     
     def __init__(self):
-        self.url = f"{OLLAMA_HOST}/api/chat"
-        self.model = CHAT_MODEL
+        settings = RAGConfig.from_env()
+        self.llm = LLMService(settings.ollama)
         
     def extract(self, chunk_text: str, title: str, chunk_id: str) -> Tuple[List[ExtractedFact], List[Triple]]:
         """Extract both facts and triples from chunk using LLM."""
         
-        prompt = f"""You are a Knowledge Graph extraction expert. Extract BOTH structured facts AND entity-relation-entity triples from the given text.
+        prompt = f"""You are a Knowledge Graph extraction expert for a UNIVERSITY information system.
+Extract BOTH structured facts AND entity-relation-entity triples from the given text.
 
 TEXT:
 Title: {title}
@@ -98,17 +104,30 @@ Content: {chunk_text[:2000]}
 
 Return JSON with two sections:
 
-1. **facts**: Specific values/requirements (numbers, durations, limits)
-   - topic: main topic (e.g., "erasmus_internship", "library_borrowing")
-   - relation: type of fact (minimum_gno, duration, limit, penalty)
-   - value: the specific value
+1. **facts**: Extract ONLY student-facing rules and requirements:
+   - GPA thresholds (minimum_gno), credit requirements (credit_requirement)
+   - Deadlines and durations (duration, deadline)
+   - Borrowing limits, penalties, fees (limit, penalty_type, penalty_duration)
+   - Application procedures (process_step, requirement)
+   DO NOT extract: document dates, version numbers, committee names, form codes
+
+   Fields:
+   - topic: Use a CONCISE, CONSISTENT snake_case name for the main subject.
+     Examples: "erasmus_internship", "library_borrowing", "student_discipline",
+     "scholarship_requirements", "graduation_requirements", "course_registration"
+     AVOID creating new topic names for the same concept (e.g., don't create
+     both "burs" and "scholarship" and "burs_miktar" — use ONE name)
+   - relation: one of: minimum_gno, duration, limit, quantity_limit, credit_requirement,
+     penalty_type, penalty_duration, deadline, requirement, process_step, effective_date
+   - value: the EXACT specific value from the text (a number, duration, or short phrase).
+     Must be concrete — skip vague values like "belirlenir" or "ilgili birim"
    - context: who it applies to (lisans, lisansustu, general)
 
 2. **triples**: Entity relationships
-   - head: source entity
-   - head_type: entity type (program, requirement, process, penalty)
-   - relation: relationship (requires, has_duration, applies_to, results_in)
-   - tail: target entity
+   - head: source entity (concise name)
+   - head_type: entity type (program, office, requirement, penalty, document)
+   - relation: relationship (requires, has_duration, applies_to, results_in, responsible_for)
+   - tail: target entity (concise name)
    - tail_type: entity type
 
 JSON OUTPUT SCHEMA:
@@ -123,40 +142,25 @@ JSON OUTPUT SCHEMA:
 
 RULES:
 1. Extract ONLY explicit information from the text
-2. Do NOT make up values - use exact text
-3. Keep entity names concise but descriptive
-4. Return empty lists if nothing extractable
+2. Do NOT make up values - use exact numbers/phrases from text
+3. SKIP document metadata (effective dates, version numbers, approval dates)
+4. SKIP form codes and committee references unless they are the answer to "how to apply"
+5. Keep topic names consistent — reuse existing topic names when possible
+6. Values must be CONCRETE (numbers, durations, specific conditions) — not vague phrases
+7. Return empty lists if nothing useful is extractable
 
 JSON:"""
 
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                resp = requests.post(
-                    self.url,
-                    json={
-                        "model": self.model,
-                        "messages": [{"role": "user", "content": prompt}],
-                        "stream": False,
-                        "format": "json",
-                        "options": {"temperature": 0.0}
-                    },
-                    timeout=180
+                parsed = self.llm.chat_json(
+                    prompt=prompt,
+                    system_prompt="You are a Knowledge Graph extraction expert. Return ONLY valid JSON matching the schema.",
+                    temperature=0.0
                 )
-                
-                data = resp.json()
-                content = data.get("message", {}).get("content", "{}")
-                
-                # Parse JSON
-                try:
-                    parsed = json.loads(content)
-                except json.JSONDecodeError:
-                    # Try to extract JSON
-                    m = re.search(r"\{.*\}", content, flags=re.DOTALL)
-                    if m:
-                        parsed = json.loads(m.group(0))
-                    else:
-                        return [], []
+                if not parsed:
+                    continue
                 
                 # Extract facts
                 facts = []
@@ -197,8 +201,8 @@ JSON:"""
                     print(f"[LLM extraction failed: timeout]")
                     return [], []
             except Exception as e:
-                print(f"[LLM extraction error] {e}")
-                return [], []
+                print(f"      [!] Error extracting block: {str(e)}")
+                time.sleep(1)
         
         return [], []
 
@@ -295,9 +299,9 @@ class HybridKGBuilder:
         print(f"[KG] Done: {len(self.facts_by_topic)} topics, {len(self.all_triples)} triples")
     
     def _deduplicate(self):
-        """Remove duplicates."""
+        """Remove duplicates and apply quality filters."""
         # Deduplicate facts
-        for topic in self.facts_by_topic:
+        for topic in list(self.facts_by_topic.keys()):
             facts = self.facts_by_topic[topic]
             seen = set()
             unique = []
@@ -317,6 +321,111 @@ class HybridKGBuilder:
                 seen.add(key)
                 unique_triples.append(t)
         self.all_triples = unique_triples
+        
+        # ── POST-BUILD QUALITY FILTER ──
+        self._quality_filter()
+    
+    def _quality_filter(self):
+        """Remove noisy/garbage facts and topics from the KG."""
+        import re as _re
+        
+        # 1. Remove noise topics entirely (document metadata, not student-facing)
+        NOISE_TOPICS = {
+            "effective_date", "update_date", "statutory_basis",
+            "prosedur", "procedure", "yonerge", "instruction",
+        }
+        for noise in NOISE_TOPICS:
+            self.facts_by_topic.pop(noise, None)
+        
+        # 2. Filter individual facts with bad values
+        for topic in list(self.facts_by_topic.keys()):
+            filtered = []
+            for f in self.facts_by_topic[topic]:
+                value = str(f.get("value", "")).strip()
+                relation = f.get("relation", "")
+                
+                # Skip empty or too-short values
+                if len(value) < 2:
+                    continue
+                
+                # Skip template placeholders
+                if "..." in value or "___" in value:
+                    continue
+                
+                # Skip form codes used as values for non-form relations
+                if relation in ("minimum_gno", "duration", "limit") and \
+                   _re.match(r'^[A-Z]{2,5}-[A-Z0-9]', value):
+                    continue
+                
+                # Skip years misidentified as durations
+                if relation == "duration" and _re.match(r'^(19|20)\d{2}$', value):
+                    continue
+                
+                # Skip vague values
+                vague_phrases = [
+                    "belirlenir", "ilgili birim", "gerektiğinde",
+                    "uygulanır", "yapılır", "none",
+                ]
+                if value.lower() in vague_phrases:
+                    continue
+                
+                # Skip wrong relation types (minimum_gno should contain a number or GNO-like value)
+                if relation == "minimum_gno":
+                    has_number = bool(_re.search(r'\d', value))
+                    gno_keywords = ["gno", "gpa", "%", "puan"]
+                    has_keyword = any(kw in value.lower() for kw in gno_keywords)
+                    if not has_number and not has_keyword:
+                        continue
+                
+                filtered.append(f)
+            
+            self.facts_by_topic[topic] = filtered
+        
+        # 3. Remove topics that ended up with 0 facts after filtering
+        empty = [t for t, f in self.facts_by_topic.items() if len(f) == 0]
+        for t in empty:
+            del self.facts_by_topic[t]
+        
+        # 4. Merge synonym topics (Turkish ↔ English duplicates)
+        TOPIC_MERGES = {
+            "burs": "scholarship_requirements",
+            "burslar": "scholarship_requirements",
+            "burs_miktar": "scholarship_requirements",
+            "burs_tutari": "scholarship_requirements",
+            "burs_suresi": "scholarship_requirements",
+            "burs_benefit": "scholarship_requirements",
+            "burs_payment": "scholarship_requirements",
+            "burs_form": "scholarship_requirements",
+            "scholarship": "scholarship_requirements",
+            "scholarship_payment": "scholarship_requirements",
+            "staj_suresi": "internship_requirements",
+            "staj_kurumu": "internship_requirements",
+            "erasmus_internship": "erasmus_internship",
+            "library_borrowing": "library_borrowing",
+        }
+        for old_name, new_name in TOPIC_MERGES.items():
+            if old_name in self.facts_by_topic and old_name != new_name:
+                if new_name not in self.facts_by_topic:
+                    self.facts_by_topic[new_name] = []
+                self.facts_by_topic[new_name].extend(self.facts_by_topic.pop(old_name))
+        
+        # 5. Re-deduplicate merged topics
+        for topic in self.facts_by_topic:
+            facts = self.facts_by_topic[topic]
+            seen = set()
+            unique = []
+            for f in facts:
+                key = (f["relation"], f["value"][:50], f["context_type"])
+                if key not in seen:
+                    seen.add(key)
+                    unique.append(f)
+            self.facts_by_topic[topic] = unique
+        
+        # Stats
+        total_facts = sum(len(f) for f in self.facts_by_topic.values())
+        single_fact = sum(1 for f in self.facts_by_topic.values() if len(f) == 1)
+        print(f"[KG Quality Filter] {len(self.facts_by_topic)} topics, {total_facts} facts")
+        print(f"[KG Quality Filter] Single-fact topics: {single_fact}/{len(self.facts_by_topic)}")
     
     def save(self):
         """Save hybrid KG to files."""
@@ -388,7 +497,7 @@ def main():
     
     builder = HybridKGBuilder()
     builder.build_from_selected_chunks(chunks_df, selected_paths)
-    
+
     # Save
     print(f"\n[4/5] Saving knowledge graph...")
     builder.save()

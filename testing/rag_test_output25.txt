@@ -1,0 +1,3576 @@
+================================================================================
+🔬 RAG EVALUATION — MULTI-METRIC MODE
+📊 Total Questions: 45
+================================================================================
+[EmbeddingService] Backend: OpenRouter (model=qwen/qwen3-embedding-8b)
+[KG Service] Loaded facts: 261 topics
+[KG Service] Loaded triples: 8119 relations
+[KG Service] Loaded embeddings for 261 topics
+[KG Service] Quality filter: 261 → 261 topics, 1848 facts
+[KG Service] Hybrid KG loaded: 261 topics, 8119 triples
+[RAGPipeline] KG service loaded successfully
+[EmbeddingService] Backend: OpenRouter (model=qwen/qwen3-embedding-8b)
+[BM25Service] Loaded index with 17788 documents
+[VectorStore] Loaded collection 'mysu_v3_qwen3' with 17788 documents
+[RAGPipeline] Initialized with 17788 chunks
+🤖 LLM model  : qwen/qwen3-32b
+🔢 Embed model: qwen/qwen3-embedding-8b
+✅ ChromaDB connected : 17788 chunks
+✅ BM25 loaded        : 17788 docs
+
+[Evaluator] ⚠️  Ollama embed unavailable – falling back to sentence-transformers
+[Evaluator] Judge provider : gemini (gemini-2.5-flash) – ✅ ready
+[Evaluator] Model under test: qwen/qwen3-32b
+✅ Evaluator ready (ollama_embed=False, ollama_llm=False)
+
+================================================================================
+📝 TEST 1/45: Q1 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   Erasmus staj programına başvurmak için minimum GNO ne olmalı?
+
+📚 SOURCE   : IID-C710-02 Uluslararası Staj Yönergesi §3.3
+
+✅ EXPECTED :
+   Lisans için en az 2.20, Lisansüstü için en az 2.5 GNO gereklidir.
+[QueryAnalysis] Combined tags=['exchange_programs', 'gpa'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['exchange_programs', 'gpa']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, Erasmus staj programına başvurmak için gereken minimum GNO kriterlerini ve diğer başvuru ş...
+[DataLoader] Loaded 17788 chunks
+[Retrieval] Multi-query: 5 queries, 91 unique chunks
+[RAGPipeline] Initial candidates: 91
+[Ranking] Loading reranker: BAAI/bge-reranker-v2-m3
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.233 ce=0.987 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 2. score=1.220 ce=0.991 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 3. score=1.075 ce=0.820 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 4. score=0.946 ce=0.707 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 5. score=0.803 ce=0.498 | IAESTE ile Uluslararası Staja Giden Öğrenci Prosed
+ 6. score=0.632 ce=0.298 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 7. score=0.529 ce=0.396 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 8. score=0.432 ce=0.150 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 9. score=0.420 ce=0.107 | IAESTE ile Uluslararası Staja Giden Öğrenci Prosed
+10. score=0.409 ce=0.027 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+===================================
+[Ranking] Document-level select: 7 candidates -> 7 chunks from 4 docs
+[RAGPipeline] Final context chunks: 7
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Erasmus Application]
+  • Adım: başvuru, seçim ve değişim esnasında ve sonrasında yapılacaklar ile ilgili uygulama adımlarını belirtmektir
+  • Adım: UIO, erasmus@sabanciuniv.edu e-mail adresi, UİO web sayfası ve üniversite iç web sayfası kanalıyla ‘Eğitim Alma Hareketlilik’ Çağrısını yapar
+  • Adım: Çağrı döneminde UA tarafından SÜ’ye tahsis edilen Eğitim Alma Hareketlilik bütçesi kapsamında yeterli başvuru olmaması durumunda, UİO tarafından belirlene...
+================
+[DataLoader] Loaded 2364 document summaries
+
+🤖 RAG ANSWER (68.7s):
+------------------------------------------------------------
+   Erasmus+ Staj Hareketliliği Programına başvurmak için **Lisans öğrencileri
+   için en az 2.20**, **Lisansüstü öğrencileri için en az 2.5** Genel Not
+   Ortalaması (GNO) şartı aranmaktadır. Bu kriter, hem başvuru sürecinde ev
+   sahibi kuruluştan alınacak kabul belgesi hem de dil puanı hesaplamaları
+   kapsamında geçerlidir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 83%
+[Evaluator] Loading ST model 'paraphrase-multilingual-MiniLM-L12-v2'…
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.445
+   Faithfulness      : 0.100
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.282  ❌
+   Keyword Coverage  : 83%  ✅  (legacy)
+
+================================================================================
+📝 TEST 2/45: Q2 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   Erasmus staj hareketliliği minimum süresi ne kadar?
+
+📚 SOURCE   : IID-C710-02 Uluslararası Staj Yönergesi §3.9
+
+✅ EXPECTED :
+   Staj hareketliliği süresi minimum 2 aydır.
+[QueryAnalysis] Combined tags=['exchange_programs', 'erasmus', 'internship'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['exchange_programs', 'erasmus', 'internship']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, Erasmus staj hareketliliği için kabul edilen minimum süreyi ve program kriterlerinde belir...
+[Retrieval] Multi-query: 5 queries, 91 unique chunks
+[RAGPipeline] Initial candidates: 91
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.634 ce=0.997 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 2. score=1.588 ce=0.994 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 3. score=1.551 ce=0.958 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 4. score=1.503 ce=0.875 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 5. score=1.186 ce=0.976 | 0_grant_agreement
+ 6. score=1.135 ce=0.629 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 7. score=1.130 ce=0.832 | 0_grant_agreement
+ 8. score=1.047 ce=0.983 | hibe_sozlesmesi_0
+ 9. score=1.036 ce=0.983 | hibe_sozlesmesi_firo-c42001-07_1
+10. score=1.020 ce=0.969 | hibe_sozlesmesi_firo-c42003-02_2
+===================================
+[Ranking] Document-level select: 19 candidates -> 8 chunks from 6 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Erasmus Internship]
+  • Minimum Gno: 2.20 (lisans)
+  • Minimum Gno: 2.5 (lisansustu)
+  • Adım: Öğrenciler talep ettikleri takdirde vize başvurusu için UİO’dan programa katılımlarına dair ek belge talep edebilirler
+  • Adım: Öğrenci gideceği ülkenin vize koşullarını ve gerekli belgeleri öğrenir ve vize için gerekli işlemlere başlar
+  • Adım: Değişim için seçilen öğrenci UİO tarafından duyurulan süre içinde, yurt dışında program kapsamında yapacağı çal...
+================
+
+🤖 RAG ANSWER (83.4s):
+------------------------------------------------------------
+   Erasmus+ Staj Hareketliliği Programı için staj süresi **minimum 2 aydır**.
+   Bu süre, hem ev sahibi kuruluştan alınacak "Kabul Belgesi"nin belirttiği
+   süreyi hem de öğrenciye verilen staj hareketliliği süresini kapsar. Lisans
+   ve Lisansüstü öğrencileri için bu asgari süre aynıdır (2 ay). Ayrıca, staj
+   süresi tamamlandığında öğrenci, 2 ay süreyle staj yaptığını teyit eden
+   "Katılım Belgesi"ni kurumdan almak zorundadır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 83%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.665
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.899  ✅
+   Keyword Coverage  : 83%  ✅  (legacy)
+
+================================================================================
+📝 TEST 3/45: Q3 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   How can I apply for Erasmus internship program?
+
+📚 SOURCE   : PIPAR-C710-0201 Erasmus Internship Mobility Procedure §3.2
+
+✅ EXPECTED :
+   Students submit their application documents (CV, transcript) together with
+   a minimum 2-month acceptance letter from the host organization to the
+   Internship Office. Minimum GPA requirement is 2.20 for undergraduates and
+   2.5 for graduate students.
+[QueryAnalysis] Combined tags=['exchange_programs', 'internship'], expanded=5 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=other, followup=False
+[RAGPipeline] tags=['exchange_programs', 'internship']
+[Retrieval] Using 5 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: "This document outlines the eligibility criteria, application procedure, and required documents for ...
+[Retrieval] Multi-query: 6 queries, 110 unique chunks
+[RAGPipeline] Initial candidates: 110
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.382 ce=0.973 | International Internship Instruction Letter (IIPAR
+ 2. score=1.288 ce=0.958 | International Internship Instruction Letter (IIPAR
+ 3. score=1.266 ce=0.985 | Procedure for Students Participating in Erasmus In
+ 4. score=1.225 ce=0.830 | International Internship Instruction Letter (IIPAR
+ 5. score=1.194 ce=0.974 | International Internship Instruction Letter (IIPAR
+ 6. score=1.158 ce=0.699 | International Internship Instruction Letter (IIPAR
+ 7. score=1.135 ce=0.880 | Procedure for Students Participating in Erasmus In
+ 8. score=0.860 ce=0.530 | International Internship Instruction Letter (IIPAR
+ 9. score=0.804 ce=0.507 | C710 Coordinate Career Development  | Yönerge
+10. score=0.798 ce=0.585 | Procedure for Students Participating in Erasmus In
+===================================
+[Ranking] Document-level select: 18 candidates -> 8 chunks from 5 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Erasmus Internship]
+  • Step: Öğrenciler talep ettikleri takdirde vize başvurusu için UİO’dan programa katılımlarına dair ek belge talep edebilirler
+  • Step: Öğrenci gideceği ülkenin vize koşullarını ve gerekli belgeleri öğrenir ve vize için gerekli işlemlere başlar
+  • Step: Değişim için seçilen öğrenci UİO tarafından duyurulan süre içinde, yurt dışında program kapsamında yapacağı çalışmayı/staj programının içeriğini belirten ÖA'yı Değişim Akademik Da...
+================
+
+🤖 RAG ANSWER (120.9s):
+------------------------------------------------------------
+   To apply for the Erasmus internship program, students must first obtain an
+   "Acceptance Letter" from a host organization for a minimum internship
+   period of 2 months. Undergraduate students require a GPA of at least 2.20,
+   while graduate students need a GPA of 2.5. Applications are submitted
+   through the Online Application System, following the procedures outlined
+   in the Erasmus+ Outgoing Student guidelines, and must include a CV,
+   transcript, and the acceptance letter to the Internship Office.
+   Applications are evaluated based on Erasmus+ scores, and the approved
+   student list is submitted to the Student Selection Committee for grant
+   allocation. Before starting the internship, students must ensure the
+   Erasmus+ Internship Mobility Agreement is signed by the host organization.
+   Application requirements and deadlines are published on the internal web
+   and internship website starting in October.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 74%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.734
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.920  ✅
+   Keyword Coverage  : 74%  ✅  (legacy)
+
+================================================================================
+📝 TEST 4/45: Q4 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?
+
+📚 SOURCE   : IIRO-C420-01 Değişim Programları Giden Öğrenci Yönergesi §7
+
+✅ EXPECTED :
+   Erasmus+ hibesi Ulusal Ajans (UA) tarafından her akademik yıl belirlenen
+   miktarlar üzerinden hesaplanır. Hibe ödemesi iki taksit olarak yapılır.
+   Öğrenciler hibe almadan önce üniversiteyle bir Öğrenci Sözleşmesi imzalar.
+   Nihai ödeme öğrencinin karşı kurumda kaldığı gün sayısına göre yapılır.
+[QueryAnalysis] Combined tags=['exchange_programs', 'scholarships', 'calculation'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['exchange_programs', 'scholarships', 'calculation']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, Erasmus öğrenim hareketliliği kapsamında burs hesaplamasında akademik başarı kriterleri, h...
+[Retrieval] Multi-query: 5 queries, 131 unique chunks
+[RAGPipeline] Initial candidates: 131
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.105 ce=0.968 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 2. score=1.100 ce=0.853 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 3. score=1.017 ce=0.818 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 4. score=1.012 ce=0.749 | 0_grant_agreement
+ 5. score=0.982 ce=0.829 | Değişim Programları Kapsamında Giden Öğrenci Yöner
+ 6. score=0.919 ce=0.695 | Değişim Programları Kapsamında Giden Öğrenci Yöner
+ 7. score=0.870 ce=0.791 | 0_grant_agreement
+ 8. score=0.826 ce=0.583 | Değişim Programları Kapsamında Giden Öğrenci Yöner
+ 9. score=0.815 ce=0.877 | Erasmus Programı Kapsamında Eğitim Alma Yönergesi 
+10. score=0.794 ce=0.694 | 0_grant_agreement
+===================================
+[Ranking] Document-level select: 24 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Erasmus Payment Procedure]
+  • Adım: Personel, sözleşmesi tamamlandığında 'Seyahat Onay ve Avans Ödeme Formu'nu doldurması gerekir
+  • Adım: Personel, sözleşmede belirtilen hibelerin ilk ödemelerini (en fazla %80'lik kısmı) web form doldurarak talep eder
+  • Adım: İlgili onayları tamamlanan web formun Mali İşler Birimi'ne ulaşmasını takiben, personele yurtdışına çıkacağı haftanın bir önceki Cuma günü ödeme yapılır
+  • Adım: Personel, eğitim alma faal...
+================
+
+🤖 RAG ANSWER (107.3s):
+------------------------------------------------------------
+   Erasmus öğrenim hareketliliğinde hibe, öğrencinin dil puanının %50'si ve
+   Genel Not Ortalaması (GNO)’nun %50
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 11%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.570
+   Faithfulness      : 0.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.062
+   ─────────────────────────────────────────
+   Composite Score   : 0.000  ❌
+   Keyword Coverage  : 11%  ❌  (legacy)
+
+================================================================================
+📝 TEST 5/45: Q5 [Library]
+================================================================================
+
+❓ QUESTION:
+   Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?
+
+📚 SOURCE   : IIC-C840-02 Ödünç Verme ve Yararlanma Yönergesi §1.3
+
+✅ EXPECTED :
+   Öğrenciler (lisans, lisansüstü, değişim) 60 gün süre ile 60 adet kitap
+   ödünç alabilir. Ayrıca 5 multimedya kaynağı 7 gün, 2 ciltli süreli yayın 7
+   gün ve 5 popüler dergi 3 gün süreliğine ödünç alınabilir.
+[QueryAnalysis] Combined tags=['library', 'book_loan'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['library', 'book_loan']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, kütüphane politikalarına göre ödünç alınabilecek maksimum kitap sayısını ve ödünç alma sür...
+[Retrieval] Multi-query: 5 queries, 95 unique chunks
+[RAGPipeline] Initial candidates: 95
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.353 ce=0.919 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 2. score=1.219 ce=0.896 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 3. score=1.196 ce=0.861 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 4. score=1.045 ce=0.550 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 5. score=1.033 ce=0.874 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 6. score=0.957 ce=0.687 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 7. score=0.927 ce=0.492 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 8. score=0.784 ce=0.526 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 9. score=0.689 ce=0.387 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+10. score=0.682 ce=0.267 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+===================================
+[Ranking] Document-level select: 14 candidates -> 6 chunks from 2 docs
+[RAGPipeline] Final context chunks: 6
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Library Borrowing]
+  • Süre: 7 gün
+  • Süre: 3 gün
+  • Süre: 60 gün
+  • Süre: sınırsız kere aynı süre ile (lisans,lisansustu,degisim_ogrencileri)
+  • Süre: 30 gün
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Sabancı Üniversitesi Akademik, Emeritus ve İdari Çalışanları, Öğrencileri, Mezunları ve Emeklileri → [must use] → web sitesi üzerinden 'Ödünç Kitap İstek Formu'
+  • Aylık Faaliyet Raporları → [includes] → Mimari ve İnşaat Bölümü’ne ait yapılan faaliyet...
+================
+
+🤖 RAG ANSWER (77.9s):
+------------------------------------------------------------
+   Sabancı Üniversitesi Lisans, Lisansüstü ve Değişim Öğrencileri,
+   kütüphaneden **60 adet kitap** ödünç alabilir. Bu kitapların ödünç alma
+   süresi **60 gün**dür. Ayrıca, 7 gün süreyle 5 adet multimedya, 7 gün
+   süreyle 2 adet ciltli süreli yayın ve 3 gün süreyle 5 popüler dergi ödünç
+   alınabiliyor. Multimedya kaynakları, başkalarınca istenmedikçe **1 kez
+   aynı süreyle yenilenebilir**. Kütüphanelerarası ödünç (ILL) kapsamında ise
+   Lisans ve Değişim Öğrencileri 3, Lisansüstü Öğrencileri 5 bilgi kaynağı
+   isteyebilir. Yurtdışından sağlanan kaynakların iade süresi kurum politik
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 82%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.926
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.978  ✅
+   Keyword Coverage  : 82%  ✅  (legacy)
+
+================================================================================
+📝 TEST 6/45: Q6 [Library]
+================================================================================
+
+❓ QUESTION:
+   Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?
+
+📚 SOURCE   : IIC-C820-01 Kütüphanelerarası Ödünç Yönergesi
+
+✅ EXPECTED :
+   Kütüphanelerarası ödünç alma (ILL) hizmeti ile Bilgi Merkezi
+   koleksiyonunda bulunmayan kitap ve makaleler diğer kütüphanelerden temin
+   edilebilir. Başvuru Bilgi Merkezi üzerinden yapılır.
+[QueryAnalysis] Combined tags=['library', 'interlibrary_loan'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['library', 'interlibrary_loan']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, kütüphanelerarası ödünç alma hizmetinin işleyişini, başvuru koşullarını, gerekli belgeleri...
+[Retrieval] Multi-query: 5 queries, 123 unique chunks
+[RAGPipeline] Initial candidates: 123
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.564 ce=0.986 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 2. score=1.506 ce=0.996 | Üyelik Yönergesi (IIC-C840-01) | Yönerge
+ 3. score=1.460 ce=0.915 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 4. score=1.400 ce=0.946 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 5. score=1.373 ce=0.835 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+ 6. score=1.368 ce=0.916 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+ 7. score=1.357 ce=0.821 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 8. score=1.321 ce=0.802 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+ 9. score=1.239 ce=0.876 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+10. score=1.119 ce=0.679 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+===================================
+[Ranking] Document-level select: 25 candidates -> 8 chunks from 5 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Library Borrowing]
+  • Gereksinim: Sabancı Üniversitesi kimlik kartı
+  • Ceza Türü: 1 yıl süre ile Bilgi Merkezi hizmetlerinden yararlanamazlar
+  • Ceza Türü: gecikme bedeli alınmaz
+  • Limit: sadece Bilgi Merkezi içerisinde yararlanabilirler
+  • Gereksinim: sadece Akademik ve ders veren ‘Emeritus’ çalışanlarınca özel gösterimlerde yararlanmak için multimedya kaynakları ayırtılabilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Kütüphanelerarası Ödünç (ILL...
+================
+
+🤖 RAG ANSWER (55.3s):
+------------------------------------------------------------
+   Kütüphanelerarası ödünç alma (ILL) hizmeti, Sabancı Üniversitesi'nin
+   koleksiyonunda bulunmayan bilgi kaynaklarını diğer üniversitelerden ödünç
+   almayı sağlar. Öğrenciler, web sitesi üzerinden "Ödünç Kitap İstek Formu"
+   doldurarak istek yapabilir. Aynı anda en fazla 10 bilgi kaynağı 30 gün
+   süreyle ödünç alınır ve kaynak başka bir istekle çakışmadıkça bir kez
+   yenilebilir. Ödünç alınan kaynaklar süresinde iade edilmezse, iki uyarıdan
+   sonra 1 yıl boyunca ILL hizmetinden yararlanamaz. Kayıp veya hasar
+   durumunda, ödünç veren kurumun kuralları uygulanır ve sorun çözülünceye
+   kadar öğrenci, ödünç alma, öğrenci belgesi veya mezuniyet belgesi alamaz.
+   Ücretler her yıl Bilgi Merkezi Danışma Kurulu tarafından belirlenir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 73%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.703
+   Faithfulness      : 0.600
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.700
+   ─────────────────────────────────────────
+   Composite Score   : 0.716  ✅
+   Keyword Coverage  : 73%  ✅  (legacy)
+
+================================================================================
+📝 TEST 7/45: Q7 [Discipline]
+================================================================================
+
+❓ QUESTION:
+   Öğrenci disiplin cezaları nelerdir?
+
+📚 SOURCE   : ISR-C210-01 Öğrenci Disiplin Yönergesi §3 Madde 1
+
+✅ EXPECTED :
+   Uyarma, kınama, 1 haftadan 1 aya kadar uzaklaştırma, 1-2 yarıyıl
+   uzaklaştırma, yükseköğretim kurumundan çıkarma.
+[QueryAnalysis] Combined tags=['discipline'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, öğrencilerin disiplin cezaları hakkında bilgi sağlar. Cezalar, ders dışı davranışlar, akad...
+[Retrieval] Multi-query: 5 queries, 85 unique chunks
+[RAGPipeline] Initial candidates: 85
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.264 ce=0.985 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 2. score=1.229 ce=0.979 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 3. score=1.226 ce=0.938 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 4. score=1.216 ce=0.953 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 5. score=1.180 ce=0.964 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 6. score=1.137 ce=0.934 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 7. score=1.129 ce=0.935 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 8. score=1.092 ce=0.967 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 9. score=1.066 ce=0.956 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+10. score=1.058 ce=0.834 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+===================================
+[Ranking] Document-level select: 30 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Ceza Türü: savunmadan vazgeçmiş sayılıyor
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+
+[Mazeret Izni]
+  • Ceza Türü: yıllık izin olarak değerlendirilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Mimari ve İnşaat Bölümü → [supports] → Öğrenci ve akademisyen çalışmalarına ve projelerine destek
+  • Elektrik İşleri Bölümü → [responsible for] → Öğrenci ve akademisyen çalışmalarına ve proj...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (87.8s):
+------------------------------------------------------------
+   Öğrenci disiplin cezaları şunlardır:  1. **Uyarma**: Öğrenci
+   davranışlarında daha dikkatli olmaya ikaz edilir.  2. **Kınama**: Daha
+   ciddi ihlaller için yazılı olarak verilir.  3. **Uzaklaştırma**:   - **1
+   haftadan 1 aya kadar** (ilgili Fakülte Dekanı/Enstitü Müdürü tarafından
+   verilir).   - **1 veya 2 yarıyıl** (Disiplin Kurulu kararı ile uygulanır).
+   4. **Yükseköğretim Kurumundan Çıkarma**: Üniversiteden kalıcı olarak
+   uzaklaştırılma cezasıdır (Disiplin Kurulu kararı ile verilir).   Ceza
+   türlerine göre uygulama yetkileri farklıdır: Uyarma ve kınama,
+   Dekanlar/Enstitü Müdürleri; uzun süreli uzaklaştırma ve çıkarma cezaları
+   Disiplin Kurulu tarafından verilir. Uzaklaştırma cezaları süresince
+   öğrenci kampüse giremez, yurtta kalma ve burs durumu özel prosedürlerle
+   değerlendirilir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 64%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.647
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.894  ✅
+   Keyword Coverage  : 64%  ✅  (legacy)
+
+================================================================================
+📝 TEST 8/45: Q8 [Discipline]
+================================================================================
+
+❓ QUESTION:
+   Disiplin soruşturması ne kadar sürede sonuçlanmalı?
+
+📚 SOURCE   : PSR-C210-0101 Disiplin Prosedürü §1.6, §2.5
+
+✅ EXPECTED :
+   Disiplin soruşturmasında karar en geç 10 gün içinde bildirilmelidir.
+   Disiplin cezası gerektiren fiillerin işlendiği tarihten itibaren 2 yıl
+   geçmesi halinde zamanaşımı oluşur.
+[QueryAnalysis] Combined tags=['discipline'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, disiplin soruşturmasının süresini belirleyen faktörleri ve kurumsal prosedürlere göre sonu...
+[Retrieval] Multi-query: 5 queries, 99 unique chunks
+[RAGPipeline] Initial candidates: 99
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.218 ce=0.989 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 2. score=1.177 ce=0.969 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 3. score=1.176 ce=0.983 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=1.154 ce=0.994 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 5. score=1.096 ce=0.947 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 6. score=1.049 ce=0.857 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 7. score=1.006 ce=0.851 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 8. score=1.004 ce=0.828 | fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogr
+ 9. score=0.991 ce=0.881 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+10. score=0.981 ce=0.845 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+===================================
+[Ranking] Document-level select: 16 candidates -> 8 chunks from 6 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+  • Adım: itiraz edilebilir
+  • Adım: idari yargı yoluna başvurulabilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Aylık Faaliyet Raporları → [includes] → Mimari ve İnşaat Bölümü’ne ait yapılan faaliyetler
+  • Depo Sorumlusu → [responsible for] → Mali İşleri Birimi'ne bilgi verme
+  • Depo Sorumlusu → [responsible for] → SAP-PM Modülü’ne ekipman...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (51.3s):
+------------------------------------------------------------
+   Disiplin soruşturmasının sonuçlanması süresi duruma göre değişir:  - Genel
+   disiplin soruşturması, Disiplin Kurulu tarafından dosyanın alındığı
+   tarihten itibaren **10 gün içinde** sonuçlanmalıdır.  - Cinsel taciz ile
+   ilgili soruşturmalar, fiilin öğrenilmesinden itibaren **en geç 3 ay
+   içinde** başlatılmalı ve **eylemin işlendiği tarihten itibaren 2 yıl
+   içinde** tamamlanmalı.  - Can ve mal güvenliği açısından acil durumlarda
+   (kurumdan çıkarma cezası gerektiren fiiller), işlem **24 saat içinde**
+   sonuçlandırılabilir.  - Soruşturma kararlarına karşı **15 gün içinde**
+   itiraz edilebilir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 68%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.813
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.944  ✅
+   Keyword Coverage  : 68%  ✅  (legacy)
+
+================================================================================
+📝 TEST 9/45: Q9 [Discipline]
+================================================================================
+
+❓ QUESTION:
+   Kopya çekmek hangi disiplin cezasını gerektirir?
+
+📚 SOURCE   : ISR-C210-01 Öğrenci Disiplin Yönergesi Madde 3
+
+✅ EXPECTED :
+   Sınavlarda kopyaya teşebbüs etmek kınama cezası gerektirir. Kopya çekmek
+   veya çektirmek bir yarıyıl uzaklaştırma cezası gerektirir. Tehditle kopya
+   çekmek, kopya çeken öğrencilerin sınav salonundan çıkarılmasına engel
+   olmak veya başkasının yerine sınava girmek iki yarıyıl uzaklaştırma cezası
+   gerektirir.
+[QueryAnalysis] Combined tags=['discipline', 'copying'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'copying']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, kopya çekme uygulamasının disiplin cezalarını belirleyen öğretim kurumu yönetmeliklerini ö...
+[Retrieval] Multi-query: 5 queries, 118 unique chunks
+[RAGPipeline] Initial candidates: 118
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.230 ce=0.674 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 2. score=1.143 ce=0.612 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 3. score=0.806 ce=0.397 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 4. score=0.424 ce=0.042 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 5. score=0.367 ce=0.018 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 6. score=0.364 ce=0.017 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 7. score=0.363 ce=0.018 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 8. score=0.355 ce=0.012 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 9. score=0.351 ce=0.040 | fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogr
+10. score=0.348 ce=0.011 | fsr-c21001-19
+===================================
+[Ranking] Document-level select: 12 candidates -> 7 chunks from 4 docs
+[RAGPipeline] Final context chunks: 7
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Ceza Türü: savunmadan vazgeçmiş sayılıyor
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+
+[Mazeret Izni]
+  • Ceza Türü: yıllık izin olarak değerlendirilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Planlı Bakımlar → [requires] → hangi zamanda yapılacağı tanımlanması
+  • Elektronik kopya → [sent via] → e-posta
+  • Bilgi Teknolojileri Birimi → [provides] → Kopya Merkezi
+================
+
+🤖 RAG ANSWER (69.6s):
+------------------------------------------------------------
+   Kopya çekmek, Sabancı Üniversitesi Öğrenci Disiplin Yönergesi'ne göre
+   **iki yarıyıl uzaklaştırma** cezasına neden olur. Bu ceza, öğrencinin
+   ilgili süre zarfında derslere ve sınavlara katılamayacağını belirtir.
+   Ayrıca, kopya çekme eylemiyle ilgili disiplin kararlarına karşı **15 gün
+   içinde** üniversite yönetim kuruluna itiraz edilebilir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 38%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.803
+   Faithfulness      : 0.100
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.262
+   ─────────────────────────────────────────
+   Composite Score   : 0.243  ❌
+   Keyword Coverage  : 38%  ❌  (legacy)
+
+================================================================================
+📝 TEST 10/45: Q10 [Scholarship]
+================================================================================
+
+❓ QUESTION:
+   Burs başvurusu nasıl yapılır?
+
+📚 SOURCE   : ISR-C160-01 Burs ve Mali Destek Yönergesi §2
+
+✅ EXPECTED :
+   Burs başvurusu ilan edilen tarihlerde başvuru sistemi üzerinden yapılır.
+   Akademik Başarı ve İhtiyaç Bursu için ihtiyacı kanıtlayıcı belgeler
+   sunulması gerekir. Üstün Akademik Başarı Bursu için herhangi bir başvuru
+   yapılmasına gerek yoktur.
+[QueryAnalysis] Combined tags=['scholarship', 'application_process'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['scholarship', 'application_process']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, burs başvurusu için gereken belgeleri, başvurunun yapılması için takip edilecek adımları v...
+[Retrieval] Multi-query: 5 queries, 127 unique chunks
+[RAGPipeline] Initial candidates: 127
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.452 ce=0.975 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 2. score=1.382 ce=0.923 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 3. score=1.341 ce=0.920 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 4. score=1.307 ce=0.920 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 5. score=1.305 ce=0.901 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 6. score=1.163 ce=0.819 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 7. score=1.050 ce=0.671 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 8. score=1.011 ce=0.661 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 9. score=1.002 ce=0.942 | fmic-s52001-19_1
+10. score=0.969 ce=0.780 | Yüksek Öğrenim Kredi Ve Yurtlar Kurumu Burs Ve Öğr
+===================================
+[Ranking] Document-level select: 22 candidates -> 8 chunks from 5 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Izin Basvuru]
+  • Son Tarih: bir dönem önce
+  • Son Tarih: bir ay önce
+
+[Bulus Bildirimi]
+  • Son Tarih: 1 ay
+  • Gereksinim: eksiklikleri gidermek
+  • Adım: buluş bildiriminin usulüne uygun şekilde yapılması
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Elektronik Mühür Sertifika Başvurusu → [performed by] → Resmi Yazı İşleri Yetkili
+  • Elektronik Mühür Sertifika Başvurusu → [requires] → KamuSM Web Sayfası Formları
+  • Elektronik Mühür Sertifika Başvurusu...
+================
+
+🤖 RAG ANSWER (50.2s):
+------------------------------------------------------------
+   Lisans öğrencileri, ilan edilen tarihlerde Öğrenci Burs Sistemi (ÖBS)
+   üzerinden online başvuru yapar ve aile gelir, çalışma durumu gibi maddi
+   gereksinimleri kanıtlayan belgeler sunar. Üstün akademik başarı nedeniyle
+   burs alacak öğrenciler için başvuru gerekmez; bu burslar değerlendirme
+   sonrası otomatik olarak atanır. Lisansüstü programlara başvuran adaylar,
+   burs talebini başvuru sistemiyle programa kabul sırasında iletir.
+   Lisansüstü burs değerlendirmesi, kabul jürisi önerisi doğrultusunda ilgili
+   Enstitü Kurulu tarafından yapılır. Burs devamlılığı, her akademik dönemin
+   başında Enstitü Yönetim Kurulu tarafından Lisansüstü Bursluluk Devam
+   Koşulları Tablosu’na göre değerlendirilir. Güz dönemi için en geç Ağustos
+   ayının ilk haftası, Bahar dönemi için Ocak ayının ilk haftası içinde burs
+   başvuruları veya güncelleme talepleri Enstitü’ye sunulur. İhtiyaç bursu
+   için maddi gereksinim devam ediyorsa, öğrenci bir sonraki dönem için yeni
+   başvuru yapmak zorundadır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 74%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.702
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.679
+   ─────────────────────────────────────────
+   Composite Score   : 0.830  ✅
+   Keyword Coverage  : 74%  ✅  (legacy)
+
+================================================================================
+📝 TEST 11/45: Q11 [Scholarship]
+================================================================================
+
+❓ QUESTION:
+   Burs devam şartları nelerdir?
+
+📚 SOURCE   : ISR-C160-01 Burs ve Mali Destek Yönergesi §2-4
+
+✅ EXPECTED :
+   Burs devam şartları bursun türüne göre değişir. Üstün Akademik Başarı
+   Bursu için GNO en az 3.00, ilk yıl 34 SÜ / sonraki yıllar 30 SÜ kredi
+   gerekir. Akademik Başarı ve İhtiyaç Bursu için GNO en az 2.50 ve 34 SÜ
+   kredi gerekir. İlk giriş bursları akademik başarı durumuna bakılmaksızın
+   normal öğrenim süresince devam eder. Disiplin cezalarında: kınama ve kısa
+   süreli uzaklaştırmada burs devam eder, 1-2 yarıyıl uzaklaştırmada o dönem
+   kesilir ama sonra yeniden bağlanır, çıkarmada tamamen kesilir.
+[QueryAnalysis] Combined tags=['scholarship', 'requirements'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['scholarship', 'requirements']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, bursun devamı için gerekli akademik başarı kriterlerini, tamamlanması gereken kredi sayıla...
+[Retrieval] Multi-query: 5 queries, 149 unique chunks
+[RAGPipeline] Initial candidates: 149
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.191 ce=0.932 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 2. score=1.092 ce=0.788 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 3. score=1.090 ce=0.972 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 4. score=1.046 ce=0.918 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 5. score=1.041 ce=0.904 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 6. score=1.019 ce=0.877 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 7. score=0.949 ce=0.730 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 8. score=0.945 ce=0.799 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 9. score=0.941 ce=0.627 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+10. score=0.940 ce=0.624 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+===================================
+[Ranking] Document-level select: 19 candidates -> 6 chunks from 2 docs
+[RAGPipeline] Final context chunks: 6
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Scholarship Requirements]
+  • Gereksinim: imzaları tamamlanmış burs formunun ilgili PU'ya teslim edilmesi gereklidir
+  • Gereksinim: fon veren kurumun burs kurallarını kabul etmek şartı ile kontratlı projelerden ek burs ödemesi yapılabilir
+  • Gereksinim: bütçe sınırları içinde kalmak şartı ile ve burs ödemesi yapılabilir
+  • Gereksinim: SÜ A Tipi Lisansüstü bursu alan öğrenciler yıl boyunca alacağı burs tutarının yarısını aşmamak kaydı ile akademik ...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (65.2s):
+------------------------------------------------------------
+   Lisans bursu devam koşulları:  1. Üniversiteye ilk girişte verilen
+   burslar, normal öğrenim süresi boyunca devam eder ve süresi dolduğunda
+   otomatik olarak sona erer.  2. Anadal programdan mezun olan ancak çift
+   anadal koşullarını yerine getiremeyen öğrencilerin burs süresi, en fazla
+   iki dönem uzatılabilir.  3. Öğrenci izin alarak öğrenime devam
+   edemeyebilirse burs sonraki yıllara aktarılmaz; ancak Güz döneminde izin
+   alındığında, izinli dönem bursu kesilir ve Bahar dönemi ders kaydıyla
+   tekrar başlatılır.  4. Normal öğrenim süresini aşan öğrencilerin bursları
+   otomatik olarak sona erer.   Lisansüstü bursu devam koşulları:  1. Yüksek
+   lisans öğrencileri için aylık nakit ödeme en fazla 10 ay (Eylül-Haziran),
+   doktora öğrencileri için 12 ay (Eylül-Ağustos) sürer.  2. Her dönem
+   başında Enstitü Yönetim Kurulu kararıyla burs süresi ve koşulları yeniden
+   belirlenir.  3. Burs devamlılığı, her dönem başında Lisansüstü Bursluluk
+   Devam Koşulları Tablosu’na göre değerlendirilir.  4. Üniversite kaydı
+   silinen öğrencilerin tüm bursları tamamen sona erer.   Disiplin cezası
+   alan öğrencilerin burs durumu, normal öğrenim süresi içinde olmak kaydıyla
+   özel kurala tabidir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 47%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.634
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.333
+   ─────────────────────────────────────────
+   Composite Score   : 0.724  ✅
+   Keyword Coverage  : 47%  ❌  (legacy)
+
+================================================================================
+📝 TEST 12/45: Q12 [Graduate]
+================================================================================
+
+❓ QUESTION:
+   Yüksek lisans programı kaç yarıyıl sürer?
+
+📚 SOURCE   : Lisansüstü Yönetmeliği Madde 32(2), 34(2)
+
+✅ EXPECTED :
+   Tezli yüksek lisans en fazla 6 yarıyıl, tezsiz yüksek lisans en fazla 3
+   yarıyıldır.
+[QueryAnalysis] Combined tags=['masters_program', 'duration'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['masters_program', 'duration']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, yüksek lisans programının tam zamanlı ve yarı zamanlı öğrenciler için genel olarak kaç yar...
+[Retrieval] Multi-query: 5 queries, 103 unique chunks
+[RAGPipeline] Initial candidates: 103
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.000 ce=0.678 | lisansustu_yon_tr_v22
+ 2. score=0.553 ce=0.392 | tubitak_projeleri_burs_formu
+ 3. score=0.491 ce=0.266 | lisansustu_yon_tr_v22
+ 4. score=0.476 ce=0.193 | lisansustu_yon_tr_v22
+ 5. score=0.445 ce=0.251 | lisansustu_yon_tr_v22
+ 6. score=0.433 ce=0.139 | lisansustu_yon_tr_v22
+ 7. score=0.400 ce=0.029 | Yüksek Lisans Programı Açma, Kapatma, Mevcut Progr
+ 8. score=0.394 ce=0.053 | lisansustu_yon_tr_v22
+ 9. score=0.362 ce=0.102 | lisansustu_yon_tr_v22
+10. score=0.318 ce=0.032 | lisansustu_yon_tr_v22
+===================================
+[Ranking] Document-level select: 12 candidates -> 7 chunks from 5 docs
+[RAGPipeline] Final context chunks: 7
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • uluslararası_staj → [applies to] → lisans, yüksek lisans ve doktora öğrencileri
+  • Erasmus+ Staj Hareketliliği Programı → [applies to] → lisans öğrencileri
+  • SAO Direktörlüğü → [responsible for] → Vardiya Programı / Aylık Personelin İzin Programının Hazırlanması
+================
+
+🤖 RAG ANSWER (59.8s):
+------------------------------------------------------------
+   Yüksek lisans programının süresi, bilimsel hazırlık süresi hariç, **dört
+   dönem**dir. Azami (maksimum) süre ise **altı dönem** olarak
+   belirlenmiştir. Bu süreler, her dönem için kayıt yaptırılıp yapılmadığına
+   bakılmaksızın geçerlidir. Tezli yüksek lisans programı için bu süreler
+   geçerlidir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 50%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.491
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.500
+   ─────────────────────────────────────────
+   Composite Score   : 0.722  ✅
+   Keyword Coverage  : 50%  ✅  (legacy)
+
+================================================================================
+📝 TEST 13/45: Q13 [Graduate]
+================================================================================
+
+❓ QUESTION:
+   Doktora yeterlik sınavı ne zaman yapılır?
+
+📚 SOURCE   : Lisansüstü Yönetmeliği Madde 36(1)
+
+✅ EXPECTED :
+   Derslerini ve seminerini tamamlayan öğrenciler doktora yeterlik sınavına
+   girebilir. Bir yılda en fazla iki kez girebilirler.
+[QueryAnalysis] Combined tags=['doctorate', 'exams'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['doctorate', 'exams']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, doktora yeterlik sınavının ne zaman uygulanacağını ve sınav tarihlerinin belirlenme kriter...
+[Retrieval] Multi-query: 5 queries, 113 unique chunks
+[RAGPipeline] Initial candidates: 113
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.000 ce=0.984 | lisansustu_yon_tr_v22
+ 2. score=0.936 ce=0.902 | lisansustu_yon_tr_v22
+ 3. score=0.932 ce=0.923 | lisansustu_yon_tr_v22
+ 4. score=0.632 ce=0.452 | lisansustu_yon_tr_v22
+ 5. score=0.568 ce=0.343 | lisansustu_yon_tr_v22
+ 6. score=0.472 ce=0.315 | lisansustu_yon_tr_v22
+ 7. score=0.431 ce=0.152 | lisansustu_yon_tr_v22
+ 8. score=0.428 ce=0.188 | lisansustu_yon_tr_v22
+ 9. score=0.382 ce=0.248 | Doçentliğe Yükseltilme Prosedürü (PHR-S460-0401) |
+10. score=0.338 ce=0.094 | lisansustu_yon_tr_v22
+===================================
+[Ranking] Document-level select: 5 candidates -> 3 chunks from 1 docs
+[RAGPipeline] Final context chunks: 3
+[RAGPipeline] After neighbor expansion: 5 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Aek Onay Procesi]
+  • Gereksinim: en az 3 üye imzası ve AEK başkanı imzası olmak üzere toplamda en az 4 onay
+  • Adım: kurul tarafından gerek görülürse, kurul dışından kişilerin görüşüne başvurulabilir
+  • Adım: AEK Başkanı gerekli gördüğü durumlarda (karma durumlarda) bir alt komite kurulmasını isteyebilir
+  • Adım: değerlendirme sonrası onay alan başvuruların elektronik imza süreçleri, FİT tarafından EBYS sistemi üzerinden yürütülür
+  • Adım: E-imz...
+================
+
+🤖 RAG ANSWER (65.7s):
+------------------------------------------------------------
+   Doktora yeterlik sınavı, derslerini ve seminerini tamamlayan öğrenciler
+   tarafından bir yılda en fazla iki kez girebilir. Yüksek lisans derecesi
+   ile kabul edilen öğrenciler en geç beşinci dönemlerinin sonuna kadar,
+   lisans derecesi ile kabul edilen öğrenciler ise en geç yedinci
+   dönemlerinin sonuna kadar bu sınavı tamamlamak zorundadır. Sınavdan bir
+   sonraki dönemde sadece başarısız olduğu bölümden tekrar sınava alınır.
+   Yazılı ve sözlü sınavlardan herhangi birinde başarısız olan öğrenci, bir
+   sonraki dönemde sadece başarısız olduğu kısımdan sınava girebilir. Her iki
+   kısımda da başarısız olan öğrencinin doktora programı ile ilişiği kesilir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 88%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.782
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.892
+   ─────────────────────────────────────────
+   Composite Score   : 0.908  ✅
+   Keyword Coverage  : 88%  ✅  (legacy)
+
+================================================================================
+📝 TEST 14/45: Q14 [Graduate]
+================================================================================
+
+❓ QUESTION:
+   Tez savunması için jüri kaç kişiden oluşur?
+
+📚 SOURCE   : Lisansüstü Yönetmeliği Madde 33 ve Madde 38
+
+✅ EXPECTED :
+   Yüksek lisans tez savunma jürisi, biri tez danışmanı ve en az biri
+   üniversite dışından olmak üzere üç veya beş öğretim üyesinden oluşur.
+   Doktora tez savunma jürisi, danışman dahil beş öğretim üyesinden oluşur ve
+   en az ikisi başka bir yükseköğretim kurumunun öğretim üyesi olmalıdır.
+[QueryAnalysis] Combined tags=['thesis_defense', 'jury', 'academic_requirements'], expanded=5 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['thesis_defense', 'jury', 'academic_requirements']
+[Retrieval] Using 5 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, tez savunma jürisinin gerekli sayıda üyesinden oluştuğunu ve üyelerin atama kriterlerini a...
+[Retrieval] Multi-query: 6 queries, 127 unique chunks
+[RAGPipeline] Initial candidates: 127
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.381 ce=0.995 | lisansustu_yon_tr_v22
+ 2. score=1.359 ce=0.995 | lisansustu_yon_tr_v22
+ 3. score=1.354 ce=0.973 | lisansustu_yon_tr_v22
+ 4. score=1.288 ce=0.947 | lisansustu_yon_tr_v22
+ 5. score=1.255 ce=0.872 | lisansustu_yon_tr_v22
+ 6. score=1.200 ce=0.996 | Danışmanlık Süreci Akademik ve İdari İşlemler Pros
+ 7. score=1.180 ce=0.994 | Danışmanlık Süreci Akademik ve İdari İşlemler Pros
+ 8. score=1.155 ce=0.778 | lisansustu_yon_tr_v22
+ 9. score=0.977 ce=0.582 | lisansustu_yon_tr_v22
+10. score=0.708 ce=0.301 | lisansustu_yon_tr_v22
+===================================
+[Ranking] Document-level select: 12 candidates -> 6 chunks from 2 docs
+[RAGPipeline] Final context chunks: 6
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Thesis Submission]
+  • Adım: Tez sahibinin 'Tez veri giriş formu'nda belirttiği şekilde tezin tam metninin statüsü ayarlanır (lisansustu)
+  • Adım: Arama Veritabanı 'ndaki link bibliyografik kayda eklenerek kayıtlar ilişkilendirilir (lisansustu)
+  • Adım: Tezin basılı kopyası ve/veya CD'si etiketleme işlemleri için teslim edilir (lisansustu)
+  • Adım: Tezin işlemlerinin tamamlandığına dair yazarı ve danışmanına gerekli bilgilendirme yapılır (lisansus...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (81.9s):
+------------------------------------------------------------
+   Tez savunması için jüri yüksek lisans ve doktora programları için farklı
+   kurallara tabidir:  - **Yüksek lisans tez jürisi**, enstitü yönetim kurulu
+   kararı ile **üç veya beş öğretim üyesinden** oluşur. Tez jürisinin üç
+   kişiden oluşması durumunda **ikinci tez danışmanı jüri üyesi olamaz**.
+   İkinci tez danışmanının jüriye dahil edilmesi halinde jüri **beş kişiden**
+   oluşur. Ayrıca jüride en az **bir üye, başka bir yükseköğretim
+   kurumundan** olmalıdır.  - **Doktora tez jürisi**, beş öğretim üyesinden
+   oluşur. Jüride yer alan öğretim üyelerinden **en az ikisi başka bir
+   yükseköğretim kurumunun öğretim üyesi** olmak zorundadır. Doktora
+   jürisinin üçte ikisi, öğrencinin tez izleme komitesinde yer alan öğretim
+   üyelerinden oluşur.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 84%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.801
+   Faithfulness      : 0.100
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.747
+   ─────────────────────────────────────────
+   Composite Score   : 0.303  ❌
+   Keyword Coverage  : 84%  ✅  (legacy)
+
+================================================================================
+📝 TEST 15/45: Q15 [Undergraduate]
+================================================================================
+
+❓ QUESTION:
+   Yatay geçiş başvuru şartları nelerdir?
+
+📚 SOURCE   : PSR-C120-0103 Yatay Geçiş Prosedürü, ISR-C120-01 Yönergesi
+
+✅ EXPECTED :
+   Yatay geçiş başvurusu için hazırlık sınıfı dışında 2 dönemi en az 60/100
+   genel not ortalaması ile tamamlamış olmak gerekir. Başvuru sırasında bir
+   yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği
+   kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca
+   merkezi yerleştirme puanının taban puanına eşit veya yüksek olması şartı
+   aranır.
+[QueryAnalysis] Combined tags=['lateral_transfer', 'application_requirements'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['lateral_transfer', 'application_requirements']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, yatay geçiş başvurusu için gerekli olan minimum GPA kriterlerini, tamamlanması gereken kre...
+[Retrieval] Multi-query: 5 queries, 84 unique chunks
+[RAGPipeline] Initial candidates: 84
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.487 ce=0.986 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 2. score=1.467 ce=0.971 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 3. score=1.458 ce=0.975 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 4. score=1.425 ce=0.970 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 5. score=1.399 ce=0.993 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 6. score=1.373 ce=0.989 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 7. score=1.366 ce=0.878 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 8. score=1.363 ce=0.953 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 9. score=1.241 ce=0.780 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+10. score=1.221 ce=0.886 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+===================================
+[Ranking] Document-level select: 32 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Izin Basvuru]
+  • Son Tarih: bir dönem önce
+  • Son Tarih: bir ay önce
+
+[Student Application]
+  • Son Tarih: Akademik Takvimde ilan edilen son güne kadar
+  • Adım: UİO Başvuruları değerlendirerek, kabul edilen öğrencilerin bilgilerini ÖK ile paylaşır
+  • Adım: ÖK, gelecek olan öğrenci için standart kabul mektubu hazırlayarak öğrencinin e-posta adresine postalar
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Resmi Yazı Yönetimi Prosedürü → [defines] → yetkili...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (53.3s):
+------------------------------------------------------------
+   Yatay geçiş başvurusu için gerekli şartlar şunlardır:  1. **Belge
+   Gereksinimleri**: Yurtdışından başvuranlar için pasaport sayfalarının
+   fotokopisi (öğrenim yıllarını gösteren), transkript ve anne/babanın
+   yurtdışı görevi sona erdiyse resmi yazı sunulmalıdır.  2. **Kontenjan ve
+   Zamanlama**: Yatay geçiş kontenjanları programlara göre belirlenir.
+   Başvurular, Akademik Takvim'de belirtilen tarihlerle uyumlu olmak
+   zorundadır.  3. **Değerlendirme Kriterleri**: Başvurular, akademik
+   performans (ÖSYS puanı veya eşdeğer belgeler) ve kontenjanlar dikkate
+   alınarak değerlendirilir.  4. **Süreler**: Başvuru son tarihi genellikle
+   başvurulan dönemin bir ay öncesidir.   Lisansüstü programlar için ek bilgi
+   bulunmamaktadır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 35%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.626
+   Faithfulness      : 0.600
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.333
+   ─────────────────────────────────────────
+   Composite Score   : 0.601  ❌
+   Keyword Coverage  : 35%  ❌  (legacy)
+
+================================================================================
+📝 TEST 16/45: Q16 [Undergraduate]
+================================================================================
+
+❓ QUESTION:
+   Çift anadal programına nasıl başvurulur?
+
+📚 SOURCE   : ISR-C290-02 Çift Anadal Yönergesi ve Lisans Yönetmeliği Madde 34
+
+✅ EXPECTED :
+   Çift anadal programına başvuru için GNO en az 3.20 olmalı ve öğrenci
+   sınıfının ilk %20'sinde yer almalıdır. Tüm dersleri geçmiş olmalıdır.
+   Başvuru en erken 2. dönem, en geç 4. dönemde yapılabilir. En fazla bir
+   diploma programına daha kayıt yaptırılabilir.
+[QueryAnalysis] Combined tags=['double_major', 'application_process', 'university_programs', 'academic_requirements'], expanded=5 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['double_major', 'application_process', 'university_programs', 'academic_requirements']
+[Retrieval] Using 5 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Çift anadal programına başvuru süreci, gereken kredi ve ders şartlarını, başvuru tarihlerini ve gere...
+[Retrieval] Multi-query: 6 queries, 87 unique chunks
+[RAGPipeline] Initial candidates: 87
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.600 ce=0.996 | Double Major Directive (ISR-C290-02) | Yönerge
+ 2. score=1.491 ce=0.963 | Double Major Directive (ISR-C290-02) | Yönerge
+ 3. score=1.489 ce=0.985 | Double Major Directive (ISR-C290-02) | Yönerge
+ 4. score=1.476 ce=0.953 | Double Major Directive (ISR-C290-02) | Yönerge
+ 5. score=1.421 ce=0.836 | Double Major Directive (ISR-C290-02) | Yönerge
+ 6. score=1.391 ce=0.877 | Double Major Directive (ISR-C290-02) | Yönerge
+ 7. score=1.382 ce=0.836 | Double Major Directive (ISR-C290-02) | Yönerge
+ 8. score=1.361 ce=0.833 | Double Major Directive (ISR-C290-02) | Yönerge
+ 9. score=1.325 ce=0.767 | Double Major Directive (ISR-C290-02) | Yönerge
+10. score=1.262 ce=0.794 | Double Major Directive (ISR-C290-02) | Yönerge
+===================================
+[Ranking] Document-level select: 33 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Izin Basvuru]
+  • Son Tarih: bir dönem önce
+  • Son Tarih: bir ay önce
+
+[Student Application]
+  • Son Tarih: Akademik Takvimde ilan edilen son güne kadar
+  • Adım: UİO Başvuruları değerlendirerek, kabul edilen öğrencilerin bilgilerini ÖK ile paylaşır
+  • Adım: ÖK, gelecek olan öğrenci için standart kabul mektubu hazırlayarak öğrencinin e-posta adresine postalar
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Çift Anadal Staj Programı → [requires] → staj süres...
+================
+
+🤖 RAG ANSWER (107.7s):
+------------------------------------------------------------
+   Çift anadal programına başvurmak için öğrenciler, **Akademik Takvim’de
+   belirtilen tarihlerde** ilgili fakülteye dilekçe ile başvurur. Başvuru,
+   **lisans öğreniminin en erken ikinci, en geç dördüncü dönemlerinde**
+   yapılabilir ve programa başlama dönemi **en erken üçüncü, en geç beşinci
+   dönem** olmalıdır. Başvuru için **anadal programındaki GNO en az 3,20**
+   olmak zorundadır. Başarı sıralaması şartı aranan programlarda, öğrencinin
+   **kabul edildiği yıla ait YKS başarı sıralamasını** sağlaması gerekir.
+   Başvurular, **Fakülte Yönetim Kurulu kararı** ile kabul edilir ve GNO’su
+   yüksek öğrenciler önceliklidir. Kontenjan dolu olan durumlarda,
+   başvuruları kabul edilmeyen öğrenciler **aynı dönem içinde başka çift
+   anadal programlarına tekrar başvurabilir**.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 49%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.842
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.750
+   ─────────────────────────────────────────
+   Composite Score   : 0.890  ✅
+   Keyword Coverage  : 49%  ❌  (legacy)
+
+================================================================================
+📝 TEST 17/45: Q17 [Undergraduate]
+================================================================================
+
+❓ QUESTION:
+   Ders ekleme-bırakma süresi ne kadar?
+
+📚 SOURCE   : Akademik Takvim / Lisans Yönetmeliği Madde 22
+
+✅ EXPECTED :
+   Ders ekleme-bırakma işlemi, sonbahar ve ilkbahar dönemlerinde derslerin
+   başladığı haftayı takip eden ikinci hafta içinde, akademik takvimde
+   belirtilen tarihlerde yapılır.
+[QueryAnalysis] Combined tags=['course_add_drop', 'academic_calendar'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['course_add_drop', 'academic_calendar']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, akademik dönem boyunca ders ekleme-bırakma süresini ve bu süreçle ilgili işlemleri açıklar...
+[Retrieval] Multi-query: 5 queries, 58 unique chunks
+[RAGPipeline] Initial candidates: 58
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.637 ce=0.992 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 2. score=1.613 ce=0.988 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 3. score=1.612 ce=0.978 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 4. score=1.595 ce=0.982 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 5. score=1.588 ce=0.984 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 6. score=1.587 ce=0.995 | lisans_yon_tr_v26
+ 7. score=1.584 ce=0.994 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 8. score=1.517 ce=0.971 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 9. score=1.514 ce=0.929 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+10. score=1.501 ce=0.977 | lisans_yon_tr_v26
+===================================
+[Ranking] Document-level select: 39 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Mazeret Izni]
+  • Süre: 1 gün
+  • Gereksinim: elektronik form
+  • Gereksinim: ihtiyac halinde
+  • Ceza Türü: yıllık izin olarak değerlendirilir
+
+[Izin Basvuru]
+  • Son Tarih: bir dönem önce
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Değişim Akademik Danışmanı → [responsible for] → ders seçimi ve ders ekleme-bırakma konularında destek
+  • proje toplantısı → [results in] → projede yapılacak ders veya çalışma atölyesinde ne yapılacağı, işlenecek konular, pr...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (89.3s):
+------------------------------------------------------------
+   Ders ekleme-bırakma süresi, dönemlere göre değişiklik gösterir:  - **Güz
+   ve Bahar dönemlerinde**: Derslerin başlamasını izleyen **2. hafta içinde**
+   yapılır.  - **İsteğe bağlı yaz okulu** için: Derslerin başladığı **ilk
+   hafta içinde** yapılır.  Bu süreler akademik takvimde belirtilen
+   tarihlerle uyumludur. Ayrıca, ders ekleme-bırakma süresinden sonra geçerli
+   bir mazereti olan öğrenciler, **iki hafta içinde** fakülte yönetim
+   kuruluna başvurarak mazeretli kayıt yapabilir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 55%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.829
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.654
+   ─────────────────────────────────────────
+   Composite Score   : 0.862  ✅
+   Keyword Coverage  : 55%  ✅  (legacy)
+
+================================================================================
+📝 TEST 18/45: Q18 [Registration]
+================================================================================
+
+❓ QUESTION:
+   Mezuniyet başvurusu nasıl yapılır?
+
+📚 SOURCE   : PSR-C240-0101 Mezuniyet Denetimi ve Diploma Düzenleme Prosedürü §1.1-1.2
+
+✅ EXPECTED :
+   Mezuniyet başvurusu akademik takvimde belirtilen tarihlerde ÖBS üzerinden
+   yapılır. Mezun adayı öğrencilerin programa ait tüm mezuniyet
+   yükümlülüklerini tamamlaması ve genel not ortalamasının en az 2.00 olması
+   gerekir.
+[QueryAnalysis] Combined tags=['graduation', 'application_process'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['graduation', 'application_process']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, mezuniyet başvurusu sürecini, gerekli belgeleri, son tarihleri ve uygunluk kriterlerini (g...
+[Retrieval] Multi-query: 5 queries, 144 unique chunks
+[RAGPipeline] Initial candidates: 144
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.245 ce=0.988 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+ 2. score=1.200 ce=0.957 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+ 3. score=1.051 ce=0.958 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+ 4. score=0.990 ce=0.777 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 5. score=0.936 ce=0.757 | fsr-c24001-20_gec_mezuniyet_basvuru_formu_v02
+ 6. score=0.931 ce=0.722 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+ 7. score=0.770 ce=0.561 | C240 Mezuniyet Denetimi | Yönerge
+ 8. score=0.756 ce=0.634 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 9. score=0.736 ce=0.528 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+10. score=0.723 ce=0.778 | lisansustu_yon_tr_v22
+===================================
+[Ranking] Document-level select: 18 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Izin Basvuru]
+  • Son Tarih: bir dönem önce
+  • Son Tarih: bir ay önce
+
+[Student Application]
+  • Son Tarih: Akademik Takvimde ilan edilen son güne kadar
+  • Adım: UİO Başvuruları değerlendirerek, kabul edilen öğrencilerin bilgilerini ÖK ile paylaşır
+  • Adım: ÖK, gelecek olan öğrenci için standart kabul mektubu hazırlayarak öğrencinin e-posta adresine postalar
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Elektronik Mühür Sertifika Başvurusu → [performed b...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (68.0s):
+------------------------------------------------------------
+   Mezuniyet başvurusu, öğrencinin akademik takvimde belirtilen tarihler
+   arasında Öğrenci Bilgi Sistemi (ÖBS) üzerinden elektronik olarak
+   yapmasıyla başlar. Öğrenci, mezuniyet için gerekli SÜ ve AKTS kredilerini,
+   dönem sonunda tamamladığını belirterek başvuruyu tamamlar. Başvuru süresi,
+   Öğrenci Kayıt ve Mezuniyet (ÖK) tarafından duyurulan ilan edilen
+   tarihlerle sınırlıdır. Başvuru son gününü izleyen 4 hafta içinde,
+   mezuniyet hakkı elde edemeyen öğrencilere e-posta ile bilgi verilir.
+   Başvuru süreci tamamlandıktan 1 hafta sonra, ÖK mezun aday listesini
+   fakültelere/enstitülere iletir. Fakülteler/enstitüler, listeyi inceleyip
+   gerekli düzeltmeleri yaptıktan sonra Dekan/Enstitü Müdürü onayıyla ÖK'ya
+   geri gönderir. Mezuniyet başvurusunu yapamayan öğrenciler, geç mezuniyet
+   başvurusu formu aracılığıyla bir sonraki dönem başvurabilir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 41%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.776
+   Faithfulness      : 0.800
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.623  ❌
+   Keyword Coverage  : 41%  ❌  (legacy)
+
+================================================================================
+📝 TEST 19/45: Q19 [Registration]
+================================================================================
+
+❓ QUESTION:
+   Kayıt dondurma şartları nelerdir?
+
+📚 SOURCE   : Lisans Yönetmeliği Madde 39-41, ISR-C210-02
+
+✅ EXPECTED :
+   Dönem izni (kayıt dondurma); sağlık, maddi, aile, kişisel, akademik ve
+   beklenmedik zorunlu olaylar gibi nedenlerle, ayrıca askerlik, gözaltı,
+   tutukluluk veya mahkûmiyet durumlarında verilebilir. İzin gerekçesine
+   ilişkin belgeler eklenerek dilekçe ile derslerin başlamasını takip eden 4.
+   haftanın son iş gününe kadar ilgili fakülte dekanlığına başvurulur. Bir
+   defada en çok 2 dönem, toplam 4 dönem izin verilebilir.
+[QueryAnalysis] Combined tags=['registration_freeze', 'academic_policy'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['registration_freeze', 'academic_policy']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, kayıt dondurmaya ilişkin akademik ve idari şartları, gerekli belgeleri ve başvuru prosedür...
+[Retrieval] Multi-query: 5 queries, 177 unique chunks
+[RAGPipeline] Initial candidates: 177
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.900 ce=0.239 | Vize ve İkamet İzni Yönergesi ( IIRO-C430-02) | Yö
+ 2. score=0.447 ce=0.110 | Öğrenci Askerlik İşlemleri Prosedürü (PSR-C210-030
+ 3. score=0.443 ce=0.001 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+ 4. score=0.400 ce=0.002 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+ 5. score=0.399 ce=0.008 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 6. score=0.398 ce=0.017 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 7. score=0.385 ce=0.025 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 8. score=0.370 ce=0.014 | lisans_yon_tr_v26
+ 9. score=0.366 ce=0.001 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+10. score=0.349 ce=0.006 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+===================================
+[Ranking] Document-level select: 12 candidates -> 8 chunks from 7 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Mazeret Izni]
+  • Süre: 1 gün
+  • Gereksinim: elektronik form
+  • Gereksinim: ihtiyac halinde
+  • Ceza Türü: yıllık izin olarak değerlendirilir
+
+[Izin Basvuru]
+  • Son Tarih: bir dönem önce
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Stoksuz Malzeme → [has process] → Giriş Kayıt ve Yönlendirme
+  • Stoklu Malzeme → [has process] → Giriş Kayıt İşlemleri
+  • Duran Varlık / Envanter → [has process] → Kayıt İşlemleri
+================
+
+🤖 RAG ANSWER (54.4s):
+------------------------------------------------------------
+   Kayıt dondurma başvurusu için öğrenci, izin gerekçesini destekleyen resmi
+   belgeleri (örneğin sağlık raporu, askerlik sevk belgesi) ve kayıtlı olduğu
+   birime herhangi bir borç bulunmadığını beyan eden dilekçeyi sunmalıdır.
+   TGY ve lisans öğrencileri için başvuru, derslerin başlamasından itibaren
+   10. haftanın son iş gününe kadar yapılmalıdır; lisansüstü öğrenciler ise
+   dönem sonu sınavlarının başlangıcından dört hafta önceki son iş gününe
+   kadar başvurmalı, aksi halde başvuruları kabul edilmez. Kayıt dondurulan
+   dönem, azami öğrenim süresi hesabına dahil edilir. Dört yıl üst üste
+   öğrenim ücreti ödenmeyip kayıt yenilenmeyen öğrencilerin, Akademik Kurul
+   kararı ve YÖK onayı ile ilişikleri kesilir. Geçerli bir mazeretle dönem
+   kayıtlarını yapamayan öğrenciler, derslerin başlamasından itibaren iki
+   hafta içinde bir dilekçe ile DO'ya başvurmalı ve geç kayıt ücreti
+   ödemelidir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 33%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.807
+   Faithfulness      : 0.800
+   Answer Relevance  : 0.800
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.852  ✅
+   Keyword Coverage  : 33%  ❌  (legacy)
+
+================================================================================
+📝 TEST 20/45: Q20 [English]
+================================================================================
+
+❓ QUESTION:
+   What is the minimum GPA requirement for Erasmus?
+
+📚 SOURCE   : IID-C710-02 International Internship Instruction §3.3
+
+✅ EXPECTED :
+   Minimum GPA is 2.20 for undergrad and 2.5 for graduate students.
+[QueryAnalysis] Combined tags=['gpa', 'exchange_programs'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=describe, followup=False
+[RAGPipeline] tags=['gpa', 'exchange_programs']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: This document outlines the minimum GPA requirement for eligibility in the Erasmus program, detailing...
+[Retrieval] Multi-query: 5 queries, 141 unique chunks
+[RAGPipeline] Initial candidates: 141
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.172 ce=0.953 | International Internship Instruction Letter (IIPAR
+ 2. score=1.060 ce=0.791 | Instruction letter for Outgoing Students within th
+ 3. score=0.934 ce=0.979 | Procedure for Students Participating in Erasmus In
+ 4. score=0.625 ce=0.285 | International Internship Instruction Letter (IIPAR
+ 5. score=0.559 ce=0.419 | Procedure for Students Participating in Erasmus In
+ 6. score=0.428 ce=0.171 | Instruction letter for Outgoing Students within th
+ 7. score=0.367 ce=0.068 | International Internship Instruction Letter (IIPAR
+ 8. score=0.344 ce=0.144 | lisansustu_yon_en_v22
+ 9. score=0.343 ce=0.014 | Instruction letter for Outgoing Students within th
+10. score=0.319 ce=0.040 | Procedure for Students Participating in Erasmus In
+===================================
+[Ranking] Document-level select: 5 candidates -> 5 chunks from 3 docs
+[RAGPipeline] Final context chunks: 5
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Erasmus Internship]
+  • Minimum Gno: 2.20 (lisans)
+  • Minimum Gno: 2.5 (lisansustu)
+
+[Erasmus Application]
+  • Step: başvuru, seçim ve değişim esnasında ve sonrasında yapılacaklar ile ilgili uygulama adımlarını belirtmektir
+  • Step: UIO, erasmus@sabanciuniv.edu e-mail adresi, UİO web sayfası ve üniversite iç web sayfası kanalıyla ‘Eğitim Alma Hareketlilik’ Çağrısını yapar
+  • Step: Çağrı döneminde UA tarafından SÜ’ye tahsis edilen Eğitim Alma Hareketl...
+================
+
+🤖 RAG ANSWER (51.6s):
+------------------------------------------------------------
+   The minimum GPA requirement for Erasmus+ Internship Mobility is 2.20 for
+   undergraduate students and 2.50 for graduate students. For first-semester
+   master’s or doctoral applicants whose transcripts are not yet available,
+   the final GPA from their previous higher education level is used. Transfer
+   students must meet the GPA requirement based on their grades after course
+   transfers to Sabancı University. These criteria apply to both Erasmus+
+   Internship Mobility and general exchange program applications.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 100%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.611
+   Faithfulness      : 0.100
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.500
+   ─────────────────────────────────────────
+   Composite Score   : 0.244  ❌
+   Keyword Coverage  : 100%  ✅  (legacy)
+
+================================================================================
+📝 TEST 21/45: Q21 [English]
+================================================================================
+
+❓ QUESTION:
+   How many books can I borrow from the library?
+
+📚 SOURCE   : IIC-C840-02 Circulation and Utilization Instruction §1.3
+
+✅ EXPECTED :
+   Undergraduate, graduate, and exchange students can borrow 60 books for 60
+   days, 5 multimedia items for 7 days, and 2 bound periodicals for 7 days.
+[QueryAnalysis] Combined tags=['library', 'borrowing'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=count_items, followup=False
+[RAGPipeline] tags=['library', 'borrowing']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] Multi-query: 4 queries, 86 unique chunks
+[RAGPipeline] Initial candidates: 86
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.347 ce=0.579 | Circulation and Utilization Instruction Letter  | 
+ 2. score=1.321 ce=0.549 | Circulation and Utilization Instruction Letter  | 
+ 3. score=0.986 ce=0.316 | Circulation and Utilization Instruction Letter  | 
+ 4. score=0.841 ce=0.271 | Circulation and Utilization Instruction Letter  | 
+ 5. score=0.732 ce=0.183 | Circulation and Utilization Instruction Letter  | 
+ 6. score=0.718 ce=0.152 | Circulation and Utilization Instruction Letter  | 
+ 7. score=0.560 ce=0.053 | Circulation and Utilization Instruction Letter  | 
+ 8. score=0.555 ce=0.086 | Circulation and Utilization Instruction Letter  | 
+ 9. score=0.455 ce=0.005 | Circulation and Utilization Instruction Letter  | 
+10. score=0.445 ce=0.005 | Circulation and Utilization Instruction Letter  | 
+===================================
+[RAGPipeline] Factual-intent mode for intent=count_items
+[Ranking] Document-level select: 8 candidates -> 8 chunks from 1 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Library Borrowing]
+  • Limit: sadece Bilgi Merkezi içerisinde yararlanabilirler
+  • Limit: 5 adet multimedya
+  • Limit: 2 adet ciltli süreli yayın
+  • Limit: 5 popüler dergi
+  • Limit: 60 adet kitap (lisans,lisansustu,degisim_ogrencileri)
+
+🔗 RELATIONS (From Knowledge Graph):
+
+  • Erdal İnönü Chair → [has quantity limit] → 2/3 of the normal teaching load
+  • closing_conference_speaker_selection → [has duration] → 2 weeks from the start of classes
+  • clo...
+================
+
+🤖 RAG ANSWER (46.8s):
+------------------------------------------------------------
+   Undergraduate, graduate, and exchange students at Sabancı University can
+   borrow up to 60 books for a period of 60 days. Books may be renewed
+   unlimitedly for the same duration, provided no other user has requested
+   them. Additionally, students can borrow 5 multimedia items for 7 days, 2
+   hardcover periodicals for 7 days, and 5 popular magazines for 3 days.
+   Multimedia resources are eligible for one renewal. These borrowing limits
+   apply specifically to students and differ from those for administrative
+   staff or alumni/retirees.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 96%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.783
+   Faithfulness      : 0.900
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.905  ✅
+   Keyword Coverage  : 96%  ✅  (legacy)
+
+================================================================================
+📝 TEST 22/45: Q22 [English]
+================================================================================
+
+❓ QUESTION:
+   What are the disciplinary penalties for students?
+
+📚 SOURCE   : PSR-C210-0101 Student Disciplinary Procedure §1.3
+
+✅ EXPECTED :
+   Warning, reprimand, suspension, and expulsion from university.
+[QueryAnalysis] Combined tags=['discipline', 'penalties', 'student_conduct'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=describe, followup=False
+[RAGPipeline] tags=['discipline', 'penalties', 'student_conduct']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: This document outlines the disciplinary penalties for students, including warnings, suspensions, or ...
+[Retrieval] Multi-query: 5 queries, 123 unique chunks
+[RAGPipeline] Initial candidates: 123
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.251 ce=0.891 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 2. score=1.131 ce=0.774 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 3. score=1.126 ce=0.824 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 4. score=0.924 ce=0.707 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 5. score=0.899 ce=0.547 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 6. score=0.880 ce=0.535 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 7. score=0.864 ce=0.621 | Instruction Letter for Student Discipline (ISR-C21
+ 8. score=0.863 ce=0.575 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 9. score=0.824 ce=0.866 | Student Housing Instruction Letter  (ISER-C910-01)
+10. score=0.756 ce=0.535 | Instruction Letter for Student Discipline (ISR-C21
+===================================
+[Ranking] Document-level select: 18 candidates -> 8 chunks from 3 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Student Discipline]
+  • Penalty: Yükseköğretim Kurumundan Çıkarma
+  • Deadline: 15 gün
+  • Deadline: 60 gün
+  • Step: itiraz edilebilir
+  • Step: idari yargı yoluna başvurulabilir
+
+🔗 RELATIONS (From Knowledge Graph):
+
+  • Instruction Letter for Student Discipline → [has procedure] → Disciplinary Procedure of Students
+  • Instruction Letter For Keeping Students Information and Documents / Updating/ Preparation of the Student Documents → [has procedure] →...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (54.5s):
+------------------------------------------------------------
+   The disciplinary penalties for students at Sabancı University include:  1.
+   **Warnings and reprimands** issued by Deans or Graduate School Directors
+   for minor violations.  2. **Temporary suspension** from the university for
+   **1 week to 1 month** or **1–2 semesters**, depending on the severity of
+   the offense.  3. **Dismissal from the university** for serious violations,
+   with the suspension period not counted toward the maximum study duration.
+   4. **Removal from student dormitories** for violations related to housing
+   rules, subject to evaluation under dormitory procedures.  5. **Repetition
+   of offenses** results in a penalty one grade heavier (e.g., reprimand →
+   suspension), though dismissal cannot be repeated.  6. Notifications of
+   penalties are sent to students, scholarship providers, and relevant
+   university units **after a 15-day objection period** (or within 3 days
+   post-objection resolution if challenged).  7. Students under suspension or
+   dismissal are **prohibited from entering campus** and may lose scholarship
+   benefits, evaluated under financial support guidelines.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 29%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.658
+   Faithfulness      : 0.400
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.621
+   ─────────────────────────────────────────
+   Composite Score   : 0.623  ❌
+   Keyword Coverage  : 29%  ❌  (legacy)
+
+================================================================================
+📝 TEST 23/45: Q23 [Numeric]
+================================================================================
+
+❓ QUESTION:
+   Lisans mezuniyeti için kaç kredi gerekiyor?
+
+📚 SOURCE   : Lisans Yönetmeliği Madde 35
+
+✅ EXPECTED :
+   Lisans mezuniyeti için belirli bir sabit kredi sayısı yoktur. Kayıtlı
+   olunan diploma programının gerektirdiği tüm ders ve kredi
+   yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not
+   ortalamasının en az 2.00 olması gerekir.
+[QueryAnalysis] Combined tags=['credit', 'graduation_requirements'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['credit', 'graduation_requirements']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, lisans mezuniyeti için gerekli kredi sayısını ve farklı bölümlerdeki değişiklikleri açıkla...
+[Retrieval] Multi-query: 5 queries, 143 unique chunks
+[RAGPipeline] Initial candidates: 143
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.238 ce=0.788 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 2. score=1.122 ce=0.917 | Derslerden Muafiyet Yönergesi (ISR-C220-02) | Yöne
+ 3. score=0.856 ce=0.959 | Derslerden Muafiyet Prosedürü (PSR-C220-0201) | Yö
+ 4. score=0.829 ce=0.535 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 5. score=0.759 ce=0.823 | lisansustu_yon_tr_v22
+ 6. score=0.752 ce=0.833 | Lisans Diploma Programı Bildirimi, Diploma Program
+ 7. score=0.623 ce=0.660 | lisansustu_yon_tr_v22
+ 8. score=0.548 ce=0.519 | lisansustu_yon_tr_v22
+ 9. score=0.499 ce=0.311 | YÖK İstatistikleri Prosedürü ( PSR-C260-0102) | Yö
+10. score=0.497 ce=0.495 | lisansustu_yon_tr_v22
+===================================
+[Ranking] Document-level select: 8 candidates -> 8 chunks from 5 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Graduation Requirements]
+  • Kredi Gereksinimi: 64 SR credits
+  • Kredi Gereksinimi: the credits specified in the Sabancı University Undergraduate Education and Training Instruction Letter and the Sabancı University Graduate Education and Training Instruction Letter
+  • Gereksinim: SSBF staj derslerinden başarılı olmak (lisans)
+  • Gereksinim: MDBF staj dersinden başarılı olmak (lisans)
+  • Gereksinim: YBF staj dersinden başarılı olmak (lisans)
+
+🔗 İL...
+================
+
+🤖 RAG ANSWER (76.0s):
+------------------------------------------------------------
+   Lisans mezuniyeti için gereken kredi miktarı, Sabancı Üniversitesi Lisans
+   Eğitim ve Öğretim Yönetmeliği'nde belirtilen toplam krediye göre değişir.
+   Bu belgede doğrudan bir kredi sayısı verilmemiştir. Ancak, ön lisans
+   diploması alabilmek için 64 SÜ kredisi tamamlanması gerektiği açıkça
+   belirtilmiştir. Lisans mezuniyeti için tam kredi gereksinimi, öğrenciye
+   özel olarak belirlenen programın toplam kredisiyle ilişkilidir ve bu bilgi
+   context'te doğrudan verilmemiştir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 42%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.852
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.706  ✅
+   Keyword Coverage  : 42%  ❌  (legacy)
+
+================================================================================
+📝 TEST 24/45: Q24 [Numeric]
+================================================================================
+
+❓ QUESTION:
+   Bir dersin kaç kez tekrar edilebilir?
+
+📚 SOURCE   : Lisans Yönetmeliği Madde 30
+
+✅ EXPECTED :
+   Geçer not alınan dersler, notun alındığı dönemi izleyen en çok 3 dönem
+   içinde tekrar edilebilir (izinli dönemler ve yaz dönemleri hariç). Bu bir
+   zaman sınırıdır, tekrar sayısı sınırı değildir. Başarısız olunan zorunlu
+   dersler ise mezuniyete kadar tekrar edilerek başarılmalıdır.
+[QueryAnalysis] Combined tags=['course_repeats', 'academic_policies'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['course_repeats', 'academic_policies']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, bir dersin tekrar edilebileceği en fazla sefer sayısını ve bu konudaki akademik kuralları ...
+[Retrieval] Multi-query: 5 queries, 137 unique chunks
+[RAGPipeline] Initial candidates: 137
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.321 ce=0.935 | lisans_yon_tr_v26
+ 2. score=1.087 ce=0.666 | lisansustu_yon_tr_v22
+ 3. score=0.993 ce=0.516 | lisans_yon_tr_v26
+ 4. score=0.918 ce=0.482 | Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+ 5. score=0.869 ce=0.614 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 6. score=0.807 ce=0.625 | Dersten Çekilme Prosedürü (PSR-C220-0102) | Yönerg
+ 7. score=0.795 ce=0.346 | Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+ 8. score=0.712 ce=0.361 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 9. score=0.681 ce=0.292 | Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+10. score=0.668 ce=0.445 | lisans_yon_tr_v26
+===================================
+[Ranking] Document-level select: 13 candidates -> 8 chunks from 6 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Course Registration]
+  • Gereksinim: değişim programlarına katılan SÜ lisans ve lisansüstü öğrencilerinin gittikleri kurumda aldıkları derslere ait notların SÜ’ye transfer edilmesi (lisansustu)
+  • Gereksinim: değişim döneminde aldıkları derslerin notların SÜ’deki program yükümlülüklerine sayılıması (lisansustu)
+  • Adım: Öğrenciler, 'Bilgi Sistemi' üzerinden staj dersine ön koşulları dahilinde kayıt olurlar (lisans)
+  • Son Tarih: Bahar dönemi ders ...
+================
+
+🤖 RAG ANSWER (83.9s):
+------------------------------------------------------------
+   Lisans öğrencileri, daha önce geçer not almış oldukları dersleri,
+   aldıkları dönemi izleyen en çok üç dönem içerisinde tekrarlayabilir.
+   Lisansüstü öğrencileri için ders tekrarı sayısı belirtilmemiş; ancak B
+   veya B’den yüksek not alan dersler tekrarlanamaz. Lisans programlarında,
+   birinci sınıf üniversite dersleri dışındaki dersler herhangi bir dönemde
+   tekrar alınabilir. Zorunlu dersler mezuniyete kadar tekrar edilerek
+   başarılması gerekir. Seçmeli dersler, öğrencilerin talebi doğrultusunda
+   tekrar alınabilir. Tekrarlanan derslerde, en son alınan dersin notu genel
+   not ortalamasına dahil edilir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 51%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.870
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.961  ✅
+   Keyword Coverage  : 51%  ✅  (legacy)
+
+================================================================================
+📝 TEST 25/45: Q25 [Procedure]
+================================================================================
+
+❓ QUESTION:
+   Zorunlu staj başvurusu nasıl yapılır?
+
+📚 SOURCE   : PIPAR-C710-0101 Lisans Yaz Stajı Prosedürü
+
+✅ EXPECTED :
+   Zorunlu staj başvurusu OMS (Online Management System) üzerinden staj
+   talebi oluşturularak yapılır. Öğrenciler Yeni Staj Projesi Formu
+   (FIPAR-C71001-02) doldurur ve kurumlarda yapacakları projenin tanımını
+   girer. Staj Ofisi, kabul edildikleri kuruma teslim edilmek üzere Zorunlu
+   Staj Belgesi verir.
+[QueryAnalysis] Combined tags=['internship', 'application_process'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['internship', 'application_process']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, zorunlu staj başvurularının nasıl yapılacağına dair prosedürleri, gereken belgeleri ve baş...
+[Retrieval] Multi-query: 5 queries, 79 unique chunks
+[RAGPipeline] Initial candidates: 79
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.200 ce=0.956 | Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+ 2. score=1.160 ce=0.923 | Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+ 3. score=1.027 ce=0.894 | Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+ 4. score=0.977 ce=0.748 | Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+ 5. score=0.875 ce=0.648 | Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+ 6. score=0.839 ce=0.560 | İkili Anlaşmalarla Uluslararası Staja Giden Öğrenc
+ 7. score=0.774 ce=0.540 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 8. score=0.723 ce=0.903 | Lisans Yaz Stajı Çift Anadal Prosedürü (PIPAR-C710
+ 9. score=0.644 ce=0.392 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+10. score=0.610 ce=0.323 | Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+===================================
+[Ranking] Document-level select: 13 candidates -> 8 chunks from 6 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Staj Requirements]
+  • Gereksinim: SSBF Lisans Diploma Programlarından birine yerleştirilmiş olmak (lisans)
+  • Gereksinim: MDBF Lisans Diploma Programlarından birine yerleştirilmiş olmak (lisans)
+  • Gereksinim: YBF Lisans Diploma Programlarından birine yerleştirilmiş olmak (lisans)
+  • Gereksinim: MDBF öğrencileri Sunum Haftasında Staj Danışmanlarına sunum yaparlar (lisans)
+
+[Staj Projesi]
+  • Adım: araştırma projesi oluşturmak için Öğretim Üyesi i...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (76.9s):
+------------------------------------------------------------
+   Zorunlu staj başvurusu için öğrenciler, staj yapacakları kurum ve projeyi
+   belirleyerek başlar. Yurt içi/yurt dışı kurumlarla irtibata geçerek staj
+   yerini ve projeyi tanımlar. Ardından, OMS sistemine girerek "Yeni Staj
+   Projesi Formu" doldurur. SSBF programına kayıtlı öğrenciler, 3.00 GNO
+   sağlayarak bir öğretim üyesinin denetiminde üniversite içi/ dışı araştırma
+   projesinde görev alarak "Akademik Staj" başvurusu yapabilir. Bu durumda,
+   araştırma projesini oluşturmak için bir öğretim üyesiyle irtibata geçmeli
+   ve Mayıs'ın ilk haftasına kadar SSBF Dekanına başvurmalıdır. Başvuru
+   reddedilen öğrenciler, aynı yaz döneminde yeniden Akademik Staj başvurusu
+   yapamaz. Uluslararası staj başvuruları için ikili anlaşmalar kapsamında
+   Şubat ayından itibaren özgeçmiş, transkript ve ek belgelerle başvurulur.
+   Staj süresi minimum 4 haftadır. Ayrıca, staj danışmanı belirlenmeli ve
+   proje on
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 43%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.805
+   Faithfulness      : 0.700
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.602  ❌
+   Keyword Coverage  : 43%  ❌  (legacy)
+
+================================================================================
+📝 TEST 26/45: Q26 [Procedure]
+================================================================================
+
+❓ QUESTION:
+   Transkript nasıl alınır?
+
+📚 SOURCE   : PSR-C230-0103 Transkript Düzenleme Prosedürü
+
+✅ EXPECTED :
+   Transkript, MySU'daki online belge talep formu doldurularak Öğrenci
+   Kaynakları'ndan (ÖK) talep edilir. ÖK raporlama yazılımı ile hazırlar.
+   Basılı kopya ücretlidir, e-imzalı transkript ücretsizdir. Transkriptte
+   öğrencinin tüm dersleri, kodları, SÜ ve AKTS kredileri, notları, DNO ve
+   GNO bilgileri yer alır.
+[QueryAnalysis] Combined tags=['transcript', 'academic_records', 'university_procedures', 'student_services'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['transcript', 'academic_records', 'university_procedures', 'student_services']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, akademik transkript almak için gerekli olan prosedürleri ve gereklilikleri açıklar. Transk...
+[Retrieval] Multi-query: 5 queries, 113 unique chunks
+[RAGPipeline] Initial candidates: 113
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.240 ce=0.935 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 2. score=1.222 ce=0.876 | Akademik Durum Değerlendirme Prosedürü (PSR-C230-0
+ 3. score=1.211 ce=0.879 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 4. score=1.196 ce=0.876 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 5. score=1.090 ce=0.846 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 6. score=1.085 ce=0.755 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 7. score=0.961 ce=0.638 | Akademik Durum Değerlendirme Prosedürü (PSR-C230-0
+ 8. score=0.879 ce=0.729 | Akademik Programlara Başvuru ve Öğrenci Kabulu Yön
+ 9. score=0.864 ce=0.664 | Notlar ve Akademik Değerlendirme Yönergesi (ISR-C2
+10. score=0.853 ce=0.590 | lisans_yon_tr_v26
+===================================
+[Ranking] Document-level select: 20 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Transcript]
+  • Adım: ÖK öğrencinin almış olduğu kredi ve notları SÜ sistemine geçirir (lisansustu)
+
+[Transcript Preparation]
+  • Adım: Notların belirlenmesinden sonra ÖK değişim programları kapsamında gelen her öğrenci için Transkript hazırlar
+
+[Transcript Conversion]
+  • Gereksinim: Transcriptler/not çizelgeleri partner kurum tarafından ıslak imzalı ve mühürlü veya elektronik onaylı olarak paylaşılmalıdır
+  • Adım: Öğrenci, gönderilen belge...
+================
+
+🤖 RAG ANSWER (84.4s):
+------------------------------------------------------------
+   Transkript talebi, öğrencinin online belge talep formu üzerinden
+   yapmasıyla başlar. E imzalı transkript ücretsizdir, ancak basılı kopya
+   talep edilmesi durumunda, öğrenci o yıl için belirlenen transkript
+   ücretini Akbank’a yatırıp dekontunu forma yüklemelidir. Öğrenci Kaynakları
+   Birimi (ÖK), başvurudan 2 iş günü içinde transkripti hazırlar ve e imzalı
+   hali mail adresine gönderilir. Basılı transkript, zarf içinde kapalı
+   olarak ÖK'dan teslim alınır; öğrenci şahsen alamazsa normal posta veya
+   karşı ödemeli kargo ile adrese gönderilir. Transkript, öğrencinin kayıtlı
+   olduğu düzeydeki tüm dersleri, kredilerini, harf notlarını, DNO ve
+   GNO’sunu İngilizce olarak gösterir. Tekrar edilen derslerden en son alınan
+   not dikkate alınır. Değişim programı kapsamında gelen öğrenciler için de,
+   notların belirlenmesinden sonra ÖK tarafından transkript hazırlanır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 51%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.787
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.597
+   ─────────────────────────────────────────
+   Composite Score   : 0.835  ✅
+   Keyword Coverage  : 51%  ✅  (legacy)
+
+================================================================================
+📝 TEST 27/45: Q27 [Procedure]
+================================================================================
+
+❓ QUESTION:
+   Öğrenci belgesi nereden alınır?
+
+📚 SOURCE   : PSR-C210-0402 Öğrenci Belgesi Düzenleme Prosedürü
+
+✅ EXPECTED :
+   Öğrenci belgesi, Öğrenci Kaynakları (ÖK) birimi tarafından hazırlanır.
+   MySU'daki online Belge Talep Formu doldurularak başvuru yapılır. Belge 2
+   iş günü içinde hazırlanır ve en fazla 2 hafta muhafaza edilir; bu sürede
+   teslim alınmazsa imha edilir.
+[QueryAnalysis] Combined tags=['student_documents', 'university_services'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['student_documents', 'university_services']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, öğrenci belgesinin alınabileceği resmi birimleri ve gerekli olan süreçleri açıklar. Belgen...
+[Retrieval] Multi-query: 5 queries, 118 unique chunks
+[RAGPipeline] Initial candidates: 118
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.934 ce=0.937 | Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+ 2. score=0.908 ce=0.883 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 3. score=0.897 ce=0.850 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 4. score=0.841 ce=0.771 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 5. score=0.774 ce=0.718 | Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+ 6. score=0.724 ce=0.851 | Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+ 7. score=0.696 ce=0.594 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 8. score=0.577 ce=0.536 | Değişim Programları Kapsamında Gelen Öğrenci Prose
+ 9. score=0.571 ce=0.468 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+10. score=0.471 ce=0.517 | Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+===================================
+[Ranking] Document-level select: 9 candidates -> 7 chunks from 3 docs
+[RAGPipeline] Final context chunks: 7
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Documents]
+  • Gereksinim: öğrenci belgesi, transkript ve mezuniyet için gerekli belgelerin alımı engellenir (lisans)
+
+[Student Transcript]
+  • Adım: ÖK öğrencinin almış olduğu kredi ve notları SÜ sistemine geçirir (lisansustu)
+
+[Diploma Issuance]
+  • Adım: students can receive their diplomas on the dates announced by the SR
+  • Adım: diplomas will be sent to students by registered mail upon request
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • 50TL...
+================
+
+🤖 RAG ANSWER (55.2s):
+------------------------------------------------------------
+   Öğrenci belgesi, Öğrenci Kaynakları (ÖK) biriminden alınır. İstek, ÖK'nın
+   web sitesinde yer alan online belge talep formu aracılığıyla yapılır.
+   Belge, talep tarihinden itibaren 2 iş günü içinde hazırlanır ve öğrenci en
+   geç 2 hafta içinde ÖK'dan teslim almalıdır. 2 hafta içinde teslim
+   alınmayan belgeler imha edilir. Öğrenci, belgenin bir kişiye veya kuruma
+   postalanmasını istiyorsa, bunu yazılı olarak adresle birlikte ÖK'ya
+   bildirmelidir. Belge ücretsiz düzenlenir, ancak öğrenci belgesi üzerinde
+   fotoğraf isteniyorsa, belge teslimi sırasında fotoğraf sunulmalıdır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 71%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.890
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.967  ✅
+   Keyword Coverage  : 71%  ✅  (legacy)
+
+================================================================================
+📝 TEST 28/45: Q28 [Edge]
+================================================================================
+
+❓ QUESTION:
+   Cinsel taciz şikayeti nasıl yapılır?
+
+📚 SOURCE   : IPO-A510-01 Cinsel Taciz Yönergesi §5
+
+✅ EXPECTED :
+   Cinsel taciz şikayeti Cinsel Tacize Karşı Önlem ve Destek Komitesi'ne
+   telefon, e-posta, yüz yüze görüşme veya yazılı olarak yapılabilir.
+   Başvuranın ispatla yükümlülüğü yoktur.
+[QueryAnalysis] Combined tags=['complaint_procedure', 'sexual_harassment'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['complaint_procedure', 'sexual_harassment']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, cinsel taciz şikayeti için başvurulacak resmi süreçleri, doldurulması gereken formları ve ...
+[Retrieval] Multi-query: 5 queries, 69 unique chunks
+[RAGPipeline] Initial candidates: 69
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.037 ce=0.981 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 2. score=1.034 ce=0.960 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 3. score=0.919 ce=0.912 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 4. score=0.878 ce=0.809 | fpo-a510-01-01_0
+ 5. score=0.819 ce=0.821 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 6. score=0.813 ce=0.832 | fpo-a510-01-01_0
+ 7. score=0.780 ce=0.720 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 8. score=0.722 ce=0.592 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 9. score=0.680 ce=0.552 | fpo-a510-01-01_0
+10. score=0.665 ce=0.498 | fpo-a510-01-01_0
+===================================
+[Ranking] Document-level select: 15 candidates -> 7 chunks from 3 docs
+[RAGPipeline] Final context chunks: 7
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Izin Basvuru]
+  • Son Tarih: bir dönem önce
+  • Son Tarih: bir ay önce
+
+[Itiraz Proseduru]
+  • Son Tarih: 1 ay
+  • Adım: ilgili belgeler ve gerekçeleri ile birlikte İLO’ya yazılı olarak yapılır
+  • Adım: İLO, ilgili itirazı değerlendirilmesi üzerine FMTK/IPCC’ye iletir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • SÜ Bilim ve Sanat Ödülleri → [has process] → Başvuru/aday gösterme sürecinin başladığına ilişkin olarak tüm Üniversite’ye bir duyuru yapılır
+  • ...
+================
+
+🤖 RAG ANSWER (80.0s):
+------------------------------------------------------------
+   Cinsel taciz şikayeti için başvuran, olayı yaşadığını düşündüğü anda
+   Cinsel Tacize Karşı Önlem ve Destek Komitesi veya güvenilen bir kişiye
+   (akademik danışman, psikolog vb.) başvurabilir. Başvuru süresi için
+   Komite’ye belirli bir zaman sınırı yoktur; ancak resmi şikayet süreci
+   başlatıldığında, şikayetin 6 ay içinde yapılması gerekir. Başvuran, olayla
+   ilgili bilgi alır, destek süreçleri hakkında bilgilendirilir ve Komite’ye
+   bilgi verilir. Şikayetçi, resmi şikayet süreci başlamadan önce kontrollü
+   iletişim veya uyarılarla devam edebilir. Şikayetçi olunan kişi SÜ çalışanı
+   veya öğrenci değilse, disiplin süreci yürütülemez ancak adli süreç
+   başlatılabilir. Başvuran, kanıt olarak e-posta, mesaj gibi belgeleri
+   saklamalı ve durumu açıkça ifade etmelidir. Her aşamada başvuranın
+   gönüllülüğü esas alınır; hiçbir işlem onaysız yapılmaz.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 57%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.741
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.593
+   ─────────────────────────────────────────
+   Composite Score   : 0.821  ✅
+   Keyword Coverage  : 57%  ✅  (legacy)
+
+================================================================================
+📝 TEST 29/45: Q29 [Edge]
+================================================================================
+
+❓ QUESTION:
+   İtiraz süresi ne kadar?
+
+📚 SOURCE   : PSR-C210-0101 Disiplin Prosedürü §2.7
+
+✅ EXPECTED :
+   Disiplin kararlarına itiraz süresi, cezanın tebliğ tarihinden itibaren 15
+   gündür. İdari yargı yoluna başvuru süresi 60 gündür.
+[QueryAnalysis] Combined tags=['complaint_period'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['complaint_period']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, itiraz süresinin belirlenmesine ilişkin kuralları ve süreçleri açıklar. Sürenin tanımı, il...
+[Retrieval] Multi-query: 5 queries, 133 unique chunks
+[RAGPipeline] Initial candidates: 133
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.985 ce=0.893 | Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme 
+ 2. score=0.956 ce=0.832 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 3. score=0.930 ce=0.841 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=0.909 ce=0.795 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 5. score=0.877 ce=0.819 | sabanci_universitesi_ihale_yonetmeligi_21_subat_20
+ 6. score=0.851 ce=0.778 | Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme 
+ 7. score=0.793 ce=0.741 | Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme 
+ 8. score=0.755 ce=0.754 | Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme 
+ 9. score=0.740 ce=0.695 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+10. score=0.650 ce=0.494 | İngilizce Dil Ölçme Sınavı Yönergesi (ISR-C140-01)
+===================================
+[Ranking] Document-level select: 16 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Itiraz Proseduru]
+  • Son Tarih: 1 ay
+  • Adım: ilgili belgeler ve gerekçeleri ile birlikte İLO’ya yazılı olarak yapılır
+  • Adım: İLO, ilgili itirazı değerlendirilmesi üzerine FMTK/IPCC’ye iletir
+  • Adım: FMTK/IPCC, ilgili itirazın yapıldığı tarihten itibaren en geç 1 ay içerisinde kararını verir
+  • Adım: Alınan karar, İLO tarafından yazılı olarak buluşçulara iletilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Aylık Faaliyet Raporları → [includes] → M...
+================
+
+🤖 RAG ANSWER (88.9s):
+------------------------------------------------------------
+   Empty response from LLM.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 0%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.131
+   Faithfulness      : 0.000
+   Answer Relevance  : 0.000
+   Factual Accuracy  : 0.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.000  ❌
+   Keyword Coverage  : 0%  ❌  (legacy)
+
+================================================================================
+📝 TEST 30/45: Q30 [Edge]
+================================================================================
+
+❓ QUESTION:
+   Sabancı Üniversitesi nerede?
+
+📚 SOURCE   : Genel Bilgi / Kurumsal Web
+
+✅ EXPECTED :
+   Sabancı Üniversitesi İstanbul Tuzla'da bulunmaktadır.
+[QueryAnalysis] Combined tags=['university_location'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['university_location']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, Sabancı Üniversitesi'nin bulunduğu konumu açıklar. Üniversite, İstanbul'un banliyölerinde,...
+[Retrieval] Multi-query: 5 queries, 172 unique chunks
+[RAGPipeline] Initial candidates: 172
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.000 ce=0.999 | isg_el_kitabirev9
+ 2. score=0.999 ce=0.998 | cevre_el_kitabi_rev_07
+ 3. score=0.995 ce=0.999 | kalite_el_kitabiv13
+ 4. score=0.951 ce=0.998 | fipar-c720-02-02_0
+ 5. score=0.901 ce=0.945 | fsr-c12001-08
+ 6. score=0.894 ce=0.988 | Ulaşım Hizmetleri Yönergesi (ISER-C930-01) | Yöner
+ 7. score=0.892 ce=0.970 | fpop-s210-01-113_2
+ 8. score=0.876 ce=0.975 | ekler4
+ 9. score=0.869 ce=0.900 | cevre_el_kitabi_rev_07
+10. score=0.807 ce=0.949 | fop-s23002-09_0
+===================================
+[Ranking] Document-level select: 17 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • SAP-PM Modülü → [used by] → Sabancı Üniversitesi
+  • DocServer → [used by] → Sabancı Üniversitesi
+  • MySU → [used by] → Sabancı Üniversitesi
+================
+
+🤖 RAG ANSWER (73.6s):
+------------------------------------------------------------
+   Sabancı Üniversitesi Tuzla, İstanbul'da yer alır. Üniversitenin adresi:
+   **Orta Mahalle (veya Orta Mah.), Üniversite Caddesi No: 27, 34956 Tuzla-
+   İstanbul** olarak belirtilmiştir. Bu bilgi, "İSG El Kitabı", "Çevre El
+   Kitabı" ve "Kalite El Kitabı" gibi belgelerde tekrarlanmaktadır. Kampüsün
+   tamamı 34956 posta kodlu alanda yer alır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 60%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.802
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.706
+   ─────────────────────────────────────────
+   Composite Score   : 0.867  ✅
+   Keyword Coverage  : 60%  ✅  (legacy)
+
+================================================================================
+📝 TEST 31/45: Q31 [Negation]
+================================================================================
+
+❓ QUESTION:
+   Can audience students borrow books from the library?
+
+📚 SOURCE   : IIC-C840-02 Circulation and Utilization Instruction §1.4
+
+✅ EXPECTED :
+   No, audience students cannot use borrowing services. They can only access
+   the Information Center and use information resources on-site. They also
+   cannot access electronic resources from off-campus.
+[QueryAnalysis] Combined tags=['library', 'audience_students'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=other, followup=False
+[RAGPipeline] tags=['library', 'audience_students']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: This document outlines the library borrowing policies for audience students, specifying eligibility ...
+[Retrieval] Multi-query: 5 queries, 93 unique chunks
+[RAGPipeline] Initial candidates: 93
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.200 ce=0.892 | Circulation and Utilization Instruction Letter  | 
+ 2. score=0.550 ce=0.287 | Circulation and Utilization Instruction Letter  | 
+ 3. score=0.448 ce=0.048 | Circulation and Utilization Instruction Letter  | 
+ 4. score=0.417 ce=0.025 | Circulation and Utilization Instruction Letter  | 
+ 5. score=0.390 ce=0.015 | Circulation and Utilization Instruction Letter  | 
+ 6. score=0.388 ce=0.007 | Circulation and Utilization Instruction Letter  | 
+ 7. score=0.381 ce=0.013 | Circulation and Utilization Instruction Letter  | 
+ 8. score=0.374 ce=0.007 | Circulation and Utilization Instruction Letter  | 
+ 9. score=0.367 ce=0.015 | Circulation and Utilization Instruction Letter  | 
+10. score=0.360 ce=0.003 | Circulation and Utilization Instruction Letter  | 
+===================================
+[Ranking] Document-level select: 12 candidates -> 3 chunks from 1 docs
+[RAGPipeline] Final context chunks: 3
+[RAGPipeline] After neighbor expansion: 7 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Library Borrowing]
+  • Requirement: Sabancı Üniversitesi kimlik kartı
+  • Penalty: 1 yıl süre ile Bilgi Merkezi hizmetlerinden yararlanamazlar
+  • Penalty: gecikme bedeli alınmaz
+  • Limit: sadece Bilgi Merkezi içerisinde yararlanabilirler
+  • Requirement: sadece Akademik ve ders veren ‘Emeritus’ çalışanlarınca özel gösterimlerde yararlanmak için multimedya kaynakları ayırtılabilir
+
+🔗 RELATIONS (From Knowledge Graph):
+
+  • students → [earn right to] → g...
+================
+
+🤖 RAG ANSWER (89.8s):
+------------------------------------------------------------
+   Audience students cannot borrow books from the Information Center. They
+   are restricted to using the services and facilities on-site but are
+   explicitly prohibited from accessing the borrowing service. This includes
+   all collections such as the "General Book Collection," "Large-Size Book
+   Collection," "Multimedia Collection," and "Student Reserve Collection," as
+   their borrowing privileges are entirely suspended.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 59%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.847
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.541
+   ─────────────────────────────────────────
+   Composite Score   : 0.839  ✅
+   Keyword Coverage  : 59%  ✅  (legacy)
+
+================================================================================
+📝 TEST 32/45: Q32 [Negation]
+================================================================================
+
+❓ QUESTION:
+   Üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalabilir mi?
+
+📚 SOURCE   : IOP-C310-01 Yurt Yönergesi §6
+
+✅ EXPECTED :
+   Hayır, üniversiteden uzaklaştırma cezası alan öğrenciler ceza süresi
+   boyunca yurtlarda konaklayamaz.
+[QueryAnalysis] Combined tags=['discipline', 'student_lodging'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'student_lodging']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, üniversiteden uzaklaştırma cezası alan öğrencilerin yurtta kalma hakkı ile ilgili uygulana...
+[Retrieval] Multi-query: 5 queries, 68 unique chunks
+[RAGPipeline] Initial candidates: 68
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.217 ce=0.991 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 2. score=1.172 ce=0.999 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 3. score=1.057 ce=0.793 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 4. score=0.956 ce=0.716 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 5. score=0.892 ce=0.815 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 6. score=0.884 ce=0.613 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 7. score=0.814 ce=0.547 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 8. score=0.665 ce=0.395 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 9. score=0.644 ce=0.401 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10. score=0.629 ce=0.594 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+===================================
+[Ranking] Document-level select: 11 candidates -> 8 chunks from 5 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Departure]
+  • Ceza Türü: transkript düzenlenmez
+  • Ceza Türü: yasal işlem yapılması zorunlu hale gelir
+  • Son Tarih: akademik takvimde belirtilen dönem sonu sınavlarının bitimini izleyen 2.haftanın son iş gününe kadar
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Ceza Türü: savunmadan vazgeçmiş sayılıyor
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • kontenjanın 2 katı sayısındaki öğrenci listesi → [prepared by] → sıral...
+================
+
+🤖 RAG ANSWER (55.2s):
+------------------------------------------------------------
+   Üniversiteden uzaklaştırma cezası alan öğrenci, ceza süresi boyunca
+   yurtlarda konaklayamaz. Yurtlar Yönergesi'ne göre, disiplin cezası alan
+   öğrencilerin yurtta kalma durumu, ceza süresi içinde yurtlardan ayrılma
+   prosedürüne tabidir. Öğrenci Disiplin Yönergesi'nde de, uzaklaştırma
+   cezası alan öğrencilerin yurtlardan ayrılması ve yurtlarda kalma hakkının
+   geçici olarak kaldırıldığı belirtilmiştir. Bu durum, ceza süresi boyunca
+   yurtlara giriş ve konaklamayı yasaklar.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 91%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.820
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.894
+   ─────────────────────────────────────────
+   Composite Score   : 0.919  ✅
+   Keyword Coverage  : 91%  ✅  (legacy)
+
+================================================================================
+📝 TEST 33/45: Q33 [Negation]
+================================================================================
+
+❓ QUESTION:
+   Kafeteryadan paket yemek servisi yapılır mı?
+
+📚 SOURCE   : IOP-C320-01 Yemek Hizmeti Yönergesi
+
+✅ EXPECTED :
+   Hayır, kafeteryada paket yemek servisi yapılmaz. Bu kural yalnızca pandemi
+   veya doğal afet gibi olağanüstü durumlarda esnetilebilir.
+[QueryAnalysis] Combined tags=['cafeteria', 'food_service'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['cafeteria', 'food_service']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, kafeteryanın paket yemek hizmeti sunup sunmadığını ve bu hizmetle ilgili koşulları açıklar...
+[Retrieval] Multi-query: 5 queries, 113 unique chunks
+[RAGPipeline] Initial candidates: 113
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.200 ce=0.919 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 2. score=0.448 ce=0.064 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 3. score=0.419 ce=0.014 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 4. score=0.377 ce=0.039 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 5. score=0.375 ce=0.025 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 6. score=0.344 ce=0.002 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 7. score=0.330 ce=0.007 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 8. score=0.329 ce=0.003 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+ 9. score=0.327 ce=0.000 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+10. score=0.326 ce=0.012 | Yiyecek ve İçecek Hizmetlerini Sağlama Yönergesi (
+===================================
+[Ranking] Document-level select: 12 candidates -> 4 chunks from 2 docs
+[RAGPipeline] Final context chunks: 4
+[RAGPipeline] After neighbor expansion: 6 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • SÜ Bilim ve Sanat Ödülleri → [has process] → Başvuru/aday gösterme sürecinin başladığına ilişkin olarak tüm Üniversite’ye bir duyuru yapılır
+  • burs bağışları → [results in] → öğrenim giderlerine, yurt, yemek, ulaşım, kitap gibi temel ihtiyaçlara yönlendirilme
+  • Paket 2 kullanıcıları → [can borrow] → 10 adet kitap
+================
+
+🤖 RAG ANSWER (61.1s):
+------------------------------------------------------------
+   Kafeteryada paket yemek servisi yapılmaz. Ancak afet, pandemi gibi özel
+   durumlarda Yiyecek ve İçecek Hizmetleri (YİH) tarafından bu kurala istisna
+   getirilebilir. Bu istisnalar, YİH onayı ile özel olarak uygulanır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 65%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.887
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.567
+   ─────────────────────────────────────────
+   Composite Score   : 0.858  ✅
+   Keyword Coverage  : 65%  ✅  (legacy)
+
+================================================================================
+📝 TEST 34/45: Q34 [Negation]
+================================================================================
+
+❓ QUESTION:
+   Can students access the Faculty Reserve Collection?
+
+📚 SOURCE   : IIC-C840-02 Circulation and Utilization Instruction §1.1, §1.3
+
+✅ EXPECTED :
+   No, students cannot benefit from the Faculty Reserve Collection. Only
+   academic staff and emeritus faculty can access it.
+[QueryAnalysis] Combined tags=['library', 'faculty_reserve'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=other, followup=False
+[RAGPipeline] tags=['library', 'faculty_reserve']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: This document outlines the access policies for the Faculty Reserve Collection, including eligibility...
+[Retrieval] Multi-query: 5 queries, 82 unique chunks
+[RAGPipeline] Initial candidates: 82
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.192 ce=0.990 | Circulation and Utilization Instruction Letter  | 
+ 2. score=1.190 ce=0.994 | Circulation and Utilization Instruction Letter  | 
+ 3. score=1.190 ce=0.982 | Circulation and Utilization Instruction Letter  | 
+ 4. score=1.188 ce=0.990 | Circulation and Utilization Instruction Letter  | 
+ 5. score=1.184 ce=0.992 | Circulation and Utilization Instruction Letter  | 
+ 6. score=1.156 ce=0.988 | Circulation and Utilization Instruction Letter  | 
+ 7. score=1.145 ce=0.979 | Circulation and Utilization Instruction Letter  | 
+ 8. score=1.135 ce=0.984 | Circulation and Utilization Instruction Letter  | 
+ 9. score=1.129 ce=0.982 | Circulation and Utilization Instruction Letter  | 
+10. score=1.100 ce=0.902 | Circulation and Utilization Instruction Letter  | 
+===================================
+[Ranking] Document-level select: 12 candidates -> 3 chunks from 1 docs
+[RAGPipeline] Final context chunks: 3
+[RAGPipeline] After neighbor expansion: 9 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Library Borrowing]
+  • Requirement: Sabancı Üniversitesi kimlik kartı
+  • Penalty: 1 yıl süre ile Bilgi Merkezi hizmetlerinden yararlanamazlar
+  • Penalty: gecikme bedeli alınmaz
+  • Limit: sadece Bilgi Merkezi içerisinde yararlanabilirler
+  • Requirement: sadece Akademik ve ders veren ‘Emeritus’ çalışanlarınca özel gösterimlerde yararlanmak için multimedya kaynakları ayırtılabilir
+
+🔗 RELATIONS (From Knowledge Graph):
+
+  • students → [earn right to] → g...
+================
+
+🤖 RAG ANSWER (59.0s):
+------------------------------------------------------------
+   Students cannot access the "Faculty Reserve Collection." Only academic and
+   teaching "Emeritus" employees are authorized to borrow and access this
+   collection, either within the Information Center or using their Sabancı
+   University ID. Undergraduate, graduate, and exchange students are
+   explicitly excluded from benefiting from the Faculty Reserve Collection
+   and the Student Reserve Collection. However, they can request resources
+   from the General Book Collection, Oversize Book Collection, and Multimedia
+   Collection via the Cargo Form.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 83%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.763
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.736
+   ─────────────────────────────────────────
+   Composite Score   : 0.863  ✅
+   Keyword Coverage  : 83%  ✅  (legacy)
+
+================================================================================
+📝 TEST 35/45: Q35 [Negation]
+================================================================================
+
+❓ QUESTION:
+   Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu nedir?
+
+📚 SOURCE   : ISR-C620-02 Öğrenci Konseyi Yönergesi §5
+
+✅ EXPECTED :
+   Adayların uyarma cezası dışında disiplin cezası almamış olması gerekir.
+   Ayrıca siyasi parti organlarında üye veya görevli olmaması zorunludur.
+[QueryAnalysis] Combined tags=['discipline', 'student_council'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=describe, followup=False
+[RAGPipeline] tags=['discipline', 'student_council']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, Öğrenci Konseyi seçimlerine aday olabilmek için gerekli disiplin koşullarını, geçmişte dis...
+[Retrieval] Multi-query: 5 queries, 87 unique chunks
+[RAGPipeline] Initial candidates: 87
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.240 ce=0.978 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 2. score=0.764 ce=0.427 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 3. score=0.718 ce=0.453 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 4. score=0.637 ce=0.301 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 5. score=0.559 ce=0.181 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 6. score=0.558 ce=0.294 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 7. score=0.536 ce=0.201 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 8. score=0.475 ce=0.185 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 9. score=0.470 ce=0.185 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+10. score=0.469 ce=0.067 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+===================================
+[Ranking] Document-level select: 7 candidates -> 3 chunks from 1 docs
+[RAGPipeline] Final context chunks: 3
+[RAGPipeline] After neighbor expansion: 9 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Ceza Türü: savunmadan vazgeçmiş sayılıyor
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+  • Adım: itiraz edilebilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Öğrenci → [responsible for] → vize başvurusu için ek belge talebi
+  • Öğrenci → [responsible for] → vize için gerekli işlemler
+  • 50TL gecikme bedeli → [results in] → öğrenci belgesi, transkript ve mezuniyet için gerekli belgele...
+================
+
+🤖 RAG ANSWER (56.6s):
+------------------------------------------------------------
+   Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu, öğrencinin
+   "uyarma cezası dışında disiplin cezası almamış olması"dır. Bu kural,
+   adayın herhangi bir disiplin cezası (uyarma hariç) almadığını belirtir.
+   Uyarma cezası, bu koşulu etkilemez.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 39%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.683
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.379
+   ─────────────────────────────────────────
+   Composite Score   : 0.750  ✅
+   Keyword Coverage  : 39%  ❌  (legacy)
+
+================================================================================
+📝 TEST 36/45: Q36 [List]
+================================================================================
+
+❓ QUESTION:
+   How many types of disciplinary penalties exist for students?
+
+📚 SOURCE   : PSR-C210-0101 Student Disciplinary Procedure §1.3
+
+✅ EXPECTED :
+   There are 5 types: (1) Warning, (2) Reprimand, (3) Suspension from
+   university for 1 week to 1 month, (4) Suspension from university for 1 or
+   2 semesters, (5) Dismissal from the higher education institution.
+[QueryAnalysis] Combined tags=['discipline', 'penalties', 'student_conduct'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=count_items, followup=False
+[RAGPipeline] tags=['discipline', 'penalties', 'student_conduct']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] Multi-query: 4 queries, 102 unique chunks
+[RAGPipeline] Initial candidates: 102
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.203 ce=0.238 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 2. score=0.812 ce=0.108 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 3. score=0.800 ce=0.149 | Instruction Letter for Student Discipline (ISR-C21
+ 4. score=0.744 ce=0.113 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 5. score=0.742 ce=0.109 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 6. score=0.725 ce=0.087 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 7. score=0.588 ce=0.064 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 8. score=0.587 ce=0.138 | Student Housing Instruction Letter  (ISER-C910-01)
+ 9. score=0.571 ce=0.041 | Disciplinary Procedure of Students ( PSR-C210-0101
+10. score=0.565 ce=0.054 | Disciplinary Procedure of Students ( PSR-C210-0101
+===================================
+[RAGPipeline] Factual-intent mode for intent=count_items
+[Ranking] Document-level select: 10 candidates -> 8 chunks from 3 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Student Discipline]
+  • Penalty: Yükseköğretim Kurumundan Çıkarma
+  • Deadline: 15 gün
+  • Deadline: 60 gün
+  • Step: itiraz edilebilir
+  • Step: idari yargı yoluna başvurulabilir
+
+🔗 RELATIONS (From Knowledge Graph):
+
+  • Instruction Letter for Student Discipline → [has procedure] → Disciplinary Procedure of Students
+  • Instruction Letter For Keeping Students Information and Documents / Updating/ Preparation of the Student Documents → [has procedure] →...
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (36.0s):
+------------------------------------------------------------
+   The disciplinary penalties for students include:  1. **Warning**  2.
+   **Reprimand**  3. **Suspension (1 week to 1 month)**  4. **Suspension for
+   1 or 2 semesters**  5. **Dismissal from the Higher Education Institution**
+   These penalties are specified in the disciplinary procedure, with
+   decisions for the first three (Warning, Reprimand, Suspension up to 1
+   month) made directly by the Disciplinary Supervisor, while the latter two
+   (Suspension for semesters and Dismissal) require approval by the
+   Disciplinary Board.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 65%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.762
+   Faithfulness      : 0.100
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.329  ❌
+   Keyword Coverage  : 65%  ✅  (legacy)
+
+================================================================================
+📝 TEST 37/45: Q37 [List]
+================================================================================
+
+❓ QUESTION:
+   Yurt disiplin cezaları nelerdir?
+
+📚 SOURCE   : IOP-C310-01 Yurt Yönergesi §7
+
+✅ EXPECTED :
+   Yurt disiplin cezaları üç türdür: (1) Uyarma, (2) Kınama, (3) Kurumdan
+   çıkarma. Uyarma ve kınama müdür tarafından, kurumdan çıkarma ise disiplin
+   kurulu kararıyla verilir.
+[QueryAnalysis] Combined tags=['discipline', 'hostel'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'hostel']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, yurtta disiplin kurallarının ihlal edilmesi durumunda uygulanabilecek cezaları ve davranış...
+[Retrieval] Multi-query: 5 queries, 110 unique chunks
+[RAGPipeline] Initial candidates: 110
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.174 ce=0.882 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 2. score=1.167 ce=0.941 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 3. score=1.115 ce=0.916 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=0.967 ce=0.957 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 5. score=0.914 ce=0.645 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 6. score=0.901 ce=0.637 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 7. score=0.812 ce=0.569 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 8. score=0.729 ce=0.379 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 9. score=0.699 ce=0.570 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+10. score=0.688 ce=0.381 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+===================================
+[Ranking] Document-level select: 16 candidates -> 8 chunks from 6 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Ceza Türü: savunmadan vazgeçmiş sayılıyor
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+
+[Mazeret Izni]
+  • Ceza Türü: yıllık izin olarak değerlendirilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Mimari ve İnşaat Alanları → [includes] → Lojman ve Yurt Binaları
+  • detsis → [applies to] → idarelerin merkez, taşra ve yurt dışı teşkilatındaki birimler
+  • PUY → [responsible for] → yurt v...
+================
+
+🤖 RAG ANSWER (54.7s):
+------------------------------------------------------------
+   Yurt disiplin cezaları arasında uyarma, kınama, 1 haftadan 1 aya kadar
+   uzaklaştırma, 1 veya 2 yarıyıl uzaklaştırma ve yükseköğretim kurumundan
+   çıkarma cezaları yer alır. Uyarma ve kınama cezaları yurt müdürleri
+   tarafından, 1 hafta-1 ay uzaklaştırma ise Disiplin Amiri tarafından
+   verilebilir. 1 veya 2 yarıyıl uzaklaştırma ile yükseköğretim kurumundan
+   çıkarma kararları, Disiplin Kurulu tarafından alınır. Disiplin cezalarına
+   karşı itirazlar, ceza tebliğ tarihinden itibaren 5 iş günü içinde Disiplin
+   Kurulu'na (uyarma/kınama) veya il müdürlüğüne (kurumdan çıkarma) yapılır.
+   Uyarma ve kınama kararları Disiplin Amiri tarafından, kurumdan çıkarma
+   kararları ise Disiplin Kurulu tarafından 7 iş günü içinde verilir. Yurda
+   yerleşmiş bir öğrenciye yurt ücretini geç ödeme, depozito ödemesini
+   yapmama veya oda teslimini geciktirme gibi davranışlar, yurt başvurusunu
+   engelleyebilir. Disiplin cezası alan öğrencinin yurttan ayrılma prosedürü,
+   "Yurtlardan Ayrılma Prosedürü"ne göre uygulanır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 71%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.772
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.667
+   ─────────────────────────────────────────
+   Composite Score   : 0.848  ✅
+   Keyword Coverage  : 71%  ✅  (legacy)
+
+================================================================================
+📝 TEST 38/45: Q38 [List]
+================================================================================
+
+❓ QUESTION:
+   Disiplin suçlarında zamanaşımı süreleri ne kadardır?
+
+📚 SOURCE   : PSR-C210-0101 Disiplin Prosedürü §2.5
+
+✅ EXPECTED :
+   Uyarma, kınama ve kısa süreli uzaklaştırma cezası gerektiren fiillerde
+   soruşturma zamanaşımı 1 aydır. 1-2 yarıyıl uzaklaştırma ve çıkarma cezası
+   gerektiren fiillerde zamanaşımı 3 aydır. Tüm disiplin suçlarında mutlak
+   zamanaşımı süresi 2 yıldır.
+[QueryAnalysis] Combined tags=['discipline', 'time_limit'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'time_limit']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, disiplin suçları için zamanaşımı sürelerini ve bu sürelerin belirlenmesini etkileyen faktö...
+[Retrieval] Multi-query: 5 queries, 111 unique chunks
+[RAGPipeline] Initial candidates: 111
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.176 ce=0.994 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 2. score=1.156 ce=0.976 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 3. score=0.847 ce=0.549 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=0.824 ce=0.609 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 5. score=0.635 ce=0.422 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 6. score=0.625 ce=0.261 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 7. score=0.624 ce=0.387 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 8. score=0.492 ce=0.394 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 9. score=0.484 ce=0.279 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10. score=0.464 ce=0.116 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+===================================
+[Ranking] Document-level select: 7 candidates -> 6 chunks from 4 docs
+[RAGPipeline] Final context chunks: 6
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Mazeret Izni]
+  • Süre: 1 gün
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+  • Adım: itiraz edilebilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Aylık Faaliyet Raporları → [includes] → Mimari ve İnşaat Bölümü’ne ait yapılan faaliyetler
+  • Aylık Faaliyet Raporları → [includes] → çağrı kapama süreleri
+  • Depo Sorumlusu → [responsible for] → Mali İşleri Birimi'ne bilgi verme
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (78.9s):
+------------------------------------------------------------
+   Disiplin suçlarında zamanaşımı süreleri, ceza türüne ve öğrenilen tarihe
+   göre değişir:  1. **Uyarma, kınama veya 1 haftadan 1 aya kadar
+   uzaklaştırma cezaları** için, disiplin suçu öğrenildiği tarihten itibaren
+   **1 ay** içinde soruşturma başlatılmazsa zamanaşımı olur.  2. **1 veya 2
+   yarıyıl uzaklaştırma veya yükseköğretim kurumundan çıkarma cezaları**
+   için, öğrenildiği tarihten itibaren **3 ay** içinde soruşturma
+   başlatılmazsa zamanaşımı olur.  3. **Genel zamanaşımı süresi**, disiplin
+   suçu işlendiği tarihten itibaren **2 yıl**dır. Ancak adli yargı kararı
+   gerekiyorsa, zamanaşım süresi mahkeme kararının kesinleştiği tarihten
+   başlar.  4. **Cinsel taciz/saldırı suçları**
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 56%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.798
+   Faithfulness      : 0.800
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.879  ✅
+   Keyword Coverage  : 56%  ✅  (legacy)
+
+================================================================================
+📝 TEST 39/45: Q39 [List]
+================================================================================
+
+❓ QUESTION:
+   Sabancı Üniversitesi'nde kaç fakülte vardır?
+
+📚 SOURCE   : Lisans Yönetmeliği / Lisansüstü Yönetmeliği
+
+✅ EXPECTED :
+   Sabancı Üniversitesi'nde üç fakülte vardır: Mühendislik ve Doğa Bilimleri
+   Fakültesi (FENS), Sanat ve Sosyal Bilimler Fakültesi (FASS) ve Yönetim
+   Bilimleri Fakültesi (SOM).
+[QueryAnalysis] Combined tags=['faculties', 'university_structure'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['faculties', 'university_structure']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, Sabancı Üniversitesi'nde yer alan fakültelerin sayısını, disiplin alanlarını ve öğrenci ka...
+[Retrieval] Multi-query: 5 queries, 158 unique chunks
+[RAGPipeline] Initial candidates: 158
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.998 ce=0.983 | Öğrenci Birliği Seçim ve Çalışma Esasları Prosedür
+ 2. score=0.857 ce=0.963 | Gelen Değişim Öğrencileri Başvuru ve Kabul Prosedü
+ 3. score=0.850 ce=0.939 | Derslerden Muafiyet Yönergesi (ISR-C220-02) | Yöne
+ 4. score=0.834 ce=0.947 | Sabancı Üniversitesi Öğretim Üyesi Atama ve Yüksel
+ 5. score=0.825 ce=0.970 | Özel Öğrenci Başvuru Ve Kabul Prosedürü (PSR-C120-
+ 6. score=0.814 ce=0.900 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 7. score=0.784 ce=0.876 | Danışmanlık Süreci Akademik ve İdari İşlemler Yöne
+ 8. score=0.751 ce=0.884 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 9. score=0.600 ce=0.403 | kalite_el_kitabiv13
+10. score=0.600 ce=0.411 | isg_el_kitabirev9
+===================================
+[Ranking] Document-level select: 13 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • SAP-PM Modülü → [used by] → Sabancı Üniversitesi
+  • DocServer → [used by] → Sabancı Üniversitesi
+  • MySU → [used by] → Sabancı Üniversitesi
+================
+
+🤖 RAG ANSWER (100.2s):
+------------------------------------------------------------
+   Sabancı Üniversitesi'nde Mühendislik ve Doğa Bilimleri Fakültesi, Sanat ve
+   Sosyal Bilimler Fakültesi ve Yönetim Bilimleri Fakültesi olmak üzere
+   toplam **üç fakülte** bulunmaktadır. Tüm belgelerde bu üç fakülte tanımı
+   tekrarlanmaktadır. Lisans ve lisansüstü programlar bu fakültelerin
+   bünyesinde yer alır. Enstitü ve diğer birimler fakültelerin alt yapılarını
+   oluşturmaz, ayrı yapılar olarak tanımlanmıştır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 82%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.749
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.736
+   ─────────────────────────────────────────
+   Composite Score   : 0.859  ✅
+   Keyword Coverage  : 82%  ✅  (legacy)
+
+================================================================================
+📝 TEST 40/45: Q40 [List]
+================================================================================
+
+❓ QUESTION:
+   How many books can alumni borrow from the library?
+
+📚 SOURCE   : IIC-C840-02 Circulation and Utilization Instruction §1.5
+
+✅ EXPECTED :
+   Alumni and retirees can borrow 2 books for 30 days, 1 multimedia item for
+   7 days, 1 bound periodical for 7 days, and 5 popular magazines for 3 days.
+[QueryAnalysis] Combined tags=['library', 'alumni'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=en, intent=count_items, followup=False
+[RAGPipeline] tags=['library', 'alumni']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] Multi-query: 4 queries, 106 unique chunks
+[RAGPipeline] Initial candidates: 106
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.200 ce=0.423 | Circulation and Utilization Instruction Letter  | 
+ 2. score=1.133 ce=0.390 | Circulation and Utilization Instruction Letter  | 
+ 3. score=1.004 ce=0.331 | Circulation and Utilization Instruction Letter  | 
+ 4. score=0.733 ce=0.241 | Circulation and Utilization Instruction Letter  | 
+ 5. score=0.567 ce=0.141 | Circulation and Utilization Instruction Letter  | 
+ 6. score=0.545 ce=0.147 | Circulation and Utilization Instruction Letter  | 
+ 7. score=0.472 ce=0.077 | Circulation and Utilization Instruction Letter  | 
+ 8. score=0.419 ce=0.016 | Circulation and Utilization Instruction Letter  | 
+ 9. score=0.396 ce=0.004 | Circulation and Utilization Instruction Letter  | 
+10. score=0.378 ce=0.002 | Circulation and Utilization Instruction Letter  | 
+===================================
+[RAGPipeline] Factual-intent mode for intent=count_items
+[Ranking] Document-level select: 6 candidates -> 6 chunks from 1 docs
+[RAGPipeline] Final context chunks: 6
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Library Borrowing]
+  • Limit: sadece Bilgi Merkezi içerisinde yararlanabilirler
+  • Limit: 5 adet multimedya
+  • Limit: 2 adet ciltli süreli yayın
+  • Limit: 5 popüler dergi
+  • Limit: 60 adet kitap (lisans,lisansustu,degisim_ogrencileri)
+
+🔗 RELATIONS (From Knowledge Graph):
+
+  • closing_conference_speaker_selection → [has duration] → 2 weeks from the start of classes
+  • closing_conference_speaker_selection → [has duration] → 3 weeks from the start of ...
+================
+
+🤖 RAG ANSWER (44.8s):
+------------------------------------------------------------
+   Sabancı University alumni who pay the membership fee can borrow **2 books
+   for 30 days**. Alumni who fail to pay the fee lose their borrowing rights
+   for one year. This applies specifically to alumni using the circulation
+   service; those without membership cannot borrow books. The limit is
+   explicitly stated for alumni in the context.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 38%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.625
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.500
+   ─────────────────────────────────────────
+   Composite Score   : 0.763  ✅
+   Keyword Coverage  : 38%  ❌  (legacy)
+
+================================================================================
+📝 TEST 41/45: Q41 [MultiHop]
+================================================================================
+
+❓ QUESTION:
+   Disiplin cezası alan öğrencinin bursu kesilir mi?
+
+📚 SOURCE   : ISR-C160-01 Burs Yönergesi §4 + PSR-C210-0101 Disiplin Prosedürü §1.5
+
+✅ EXPECTED :
+   Disiplin cezasının bursa etkisi cezanın türüne göre değişir. Kınama ve
+   kısa süreli uzaklaştırmada (1 hafta-1 ay) burs devam eder. 1-2 yarıyıl
+   uzaklaştırma cezasında burs o dönem kesilir ancak ceza bitiminde yeniden
+   bağlanır. Yükseköğretim kurumundan çıkarma cezasında burs tamamen kesilir.
+[QueryAnalysis] Combined tags=['discipline', 'scholarship'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'scholarship']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, disiplin cezası uygulama politikalarını ve bu cezaların burs durumuna nasıl etki edebilece...
+[Retrieval] Multi-query: 5 queries, 66 unique chunks
+[RAGPipeline] Initial candidates: 66
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.200 ce=0.997 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 2. score=1.178 ce=0.947 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 3. score=1.175 ce=0.971 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 4. score=1.147 ce=0.976 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 5. score=1.138 ce=0.993 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 6. score=1.128 ce=0.985 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 7. score=1.031 ce=0.800 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 8. score=1.022 ce=0.822 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 9. score=0.886 ce=0.642 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10. score=0.714 ce=0.839 | lisans_yon_tr_v26
+===================================
+[Ranking] Document-level select: 15 candidates -> 8 chunks from 8 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Ceza Türü: savunmadan vazgeçmiş sayılıyor
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+
+[Mazeret Izni]
+  • Ceza Türü: yıllık izin olarak değerlendirilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • disiplin cezası → [results in] → Yükseköğretim Kurumundan Çıkarma
+  • disiplin cezası → [applies to] → student
+  • Soruşturma → [requires] → Disiplin Cezası Bilgisi
+================
+[Generation] Stripped document codes from answer.
+
+🤖 RAG ANSWER (60.6s):
+------------------------------------------------------------
+   Disiplin cezası alan öğrencinin bursu kesilip kesilmeyeceği, ceza türüne
+   ve süresine bağlıdır.  - **Bir haftadan bir aya kadar uzaklaştırma**: Burs
+   kesintisiz devam eder.  - **Bir veya iki dönem uzaklaştırma**: Burs
+   kesilir, ancak mevcut burs kapsamında ödenmesi gereken öğrenim ücretinin
+   %25’i ödenir. Disiplin cezasının bitmesini takip eden dönemde burs yeniden
+   bağlanır.  - **Üniversite’den çıkarma**: Burs tamamen kesilir ve yeniden
+   tahsis edilmez.  - **Lisansüstü öğrenciler**: Disiplin cezası alan
+   öğrencilerin burs durumu, Enstitü Yönetim Kurulu tarafından tekrar
+   değerlendirilir.  - **Dönem izni durumu**: Burs, öğrenci izinli olduğu
+   dönemde sona erer. İzinli dönemde ihtiyaçlılık varsa, Enstitü Yönetim
+   Kurulu tarafından öğrenim ücreti muafiyeti sağlanabilir.  - **Disiplin
+   cezası sonrası mezuniyet**: Burs kesintisi uygulanmadan mezun olan
+   öğrenciler, disiplin cezası için ek ödemeleri mezuniyet tarihinden
+   itibaren bir ay içinde SÜ Burs Ana Varlık Fonu’na defaten ödemek
+   zorundadır.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 49%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.819
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 1.000
+   ─────────────────────────────────────────
+   Composite Score   : 0.946  ✅
+   Keyword Coverage  : 49%  ❌  (legacy)
+
+================================================================================
+📝 TEST 42/45: Q42 [MultiHop]
+================================================================================
+
+❓ QUESTION:
+   Can a suspended student take courses at another university and transfer
+   credits back to Sabancı?
+
+📚 SOURCE   : PSR-C210-0101 Disciplinary Procedure §1.5
+
+✅ EXPECTED :
+   No. Even if students who have received suspension or dismissal take
+   courses from another university during the suspension period, they may not
+   have these courses substituted with their programs at Sabancı University.
+[QueryAnalysis] Combined tags=['discipline', 'credit_transfer', 'suspended_students'], expanded=4 queries
+[RAGPipeline] language=en, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'credit_transfer', 'suspended_students']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: This document outlines the policies regarding credit transfers for suspended students, specifying wh...
+[Retrieval] Multi-query: 5 queries, 112 unique chunks
+[RAGPipeline] Initial candidates: 112
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.836 ce=0.318 | lisans_yon_eng_v26_0
+ 2. score=0.809 ce=0.405 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 3. score=0.769 ce=0.712 | Instruction letter for Outgoing Students within th
+ 4. score=0.576 ce=0.197 | lisans_yon_eng_v26_0
+ 5. score=0.566 ce=0.502 | Procedure for Grade Conversion Process for Exchang
+ 6. score=0.556 ce=0.317 | lisansustu_yon_en_v22
+ 7. score=0.531 ce=0.317 | lisansustu_yon_en_v22
+ 8. score=0.509 ce=0.015 | lisans_yon_eng_v26_0
+ 9. score=0.484 ce=0.165 | Instruction Letter for Student Discipline (ISR-C21
+10. score=0.478 ce=0.020 | lisans_yon_eng_v26_0
+===================================
+[Ranking] Document-level select: 8 candidates -> 8 chunks from 5 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+🔗 RELATIONS (From Knowledge Graph):
+
+  • New Enrollment at University → [responsible for] → Student Resources (ÖK)
+  • Application to Academic Programs and Admission of Students → [responsible for] → Student Resources (ÖK)
+  • Alumni Candidates and Faculty Members → [must wear] → Sabancı University gowns and caps
+================
+
+🤖 RAG ANSWER (68.0s):
+------------------------------------------------------------
+   A suspended student cannot take courses at another university and transfer
+   credits back to Sabancı University during the suspension period. According
+   to the disciplinary procedures, students who have received a suspension or
+   dismissal penalty are explicitly prohibited from having courses taken
+   during that period substituted into their Sabancı program. This
+   restriction applies regardless of whether the courses were taken
+   domestically or internationally, and no exceptions are mentioned for such
+   cases in the provided documents.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 69%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.880
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.700
+   ─────────────────────────────────────────
+   Composite Score   : 0.889  ✅
+   Keyword Coverage  : 69%  ✅  (legacy)
+
+================================================================================
+📝 TEST 43/45: Q43 [MultiHop]
+================================================================================
+
+❓ QUESTION:
+   Kütüphane gecikme borcu mezuniyeti engeller mi?
+
+📚 SOURCE   : IIC-C840-02 Ödünç Verme Yönergesi §4 + PSR-C240-0101 Mezuniyet Prosedürü
+
+✅ EXPECTED :
+   Evet, gecikme borcu olan öğrencilerin öğrenci belgesi, transkript ve
+   mezuniyet için gerekli diğer belgeleri alması engellenir. Gecikme ücreti
+   ödenene kadar ödünç alma hizmetleri de askıya alınır.
+[QueryAnalysis] Combined tags=['library', 'overdue_debt', 'graduation', 'academic_policies'], expanded=5 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['library', 'overdue_debt', 'graduation', 'academic_policies']
+[Retrieval] Using 5 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, kütüphane gecikme borçlarının mezuniyet şartları üzerindeki etkisini açıklar. Mezuniyet iç...
+[Retrieval] Multi-query: 6 queries, 158 unique chunks
+[RAGPipeline] Initial candidates: 158
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.900 ce=0.808 | Üyelik Prosedürü (PIC-840-0101) | Yönerge
+ 2. score=0.696 ce=0.534 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 3. score=0.529 ce=0.157 | Üyelik Yönergesi (IIC-C840-01) | Yönerge
+ 4. score=0.505 ce=0.253 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 5. score=0.328 ce=0.119 | Üyelik Yönergesi (IIC-C840-01) | Yönerge
+ 6. score=0.307 ce=0.001 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 7. score=0.294 ce=0.005 | Üyelik Yönergesi (IIC-C840-01) | Yönerge
+ 8. score=0.293 ce=0.001 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 9. score=0.280 ce=0.002 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+10. score=0.271 ce=0.014 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+===================================
+[Ranking] Document-level select: 4 candidates -> 4 chunks from 4 docs
+[RAGPipeline] Final context chunks: 4
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Library Return]
+  • Adım: Kullanıcı kendi kendine ödünç alma cihazından (Self Check) kaynağın barkodunu okutup, kaynağı iade kutusuna bırakabilir
+  • Adım: Ödünç Verme Bankosu’na şahsen getirebilir
+
+[Library Borrowing]
+  • Gereksinim: Sabancı Üniversitesi kimlik kartı
+  • Ceza Türü: 1 yıl süre ile Bilgi Merkezi hizmetlerinden yararlanamazlar
+  • Ceza Türü: gecikme bedeli alınmaz
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Mİ → [receives] → bütçe_fon_kontr...
+================
+
+🤖 RAG ANSWER (96.4s):
+------------------------------------------------------------
+   Evet, kütüphane gecikme borcu mezuniyeti engeller. Mezun olurken Bilgi
+   Merkezi'ne borcu olup olmadığı kontrol edilir; iade edilmemiş kitaplar
+   veya gecikme bedelleri varsa, bu borçlar ödenene kadar mezuniyet işlemleri
+   tamamlanmaz. Öğrencilerin ders seçim dönemi haricinde gecikme bedeli 50
+   TL'yi aşması durumunda, ödünç alma hizmetlerinden yararlanamaz ve
+   mezuniyet için gerekli belgelerin alımı engellenir. Gecikme bedeli ödenene
+   kadar öğrenci belgesi, transkript ve mezuniyet belgeleri verilmez.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 77%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.860
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.750
+   ─────────────────────────────────────────
+   Composite Score   : 0.895  ✅
+   Keyword Coverage  : 77%  ✅  (legacy)
+
+================================================================================
+📝 TEST 44/45: Q44 [MultiHop]
+================================================================================
+
+❓ QUESTION:
+   Hangi disiplin cezaları Öğrenci Konseyi adaylığına engel olur?
+
+📚 SOURCE   : ISR-C620-02 Öğrenci Konseyi Yönergesi §5 + ISR-C210-01 Disiplin Yönergesi §3
+
+✅ EXPECTED :
+   Uyarma dışındaki tüm disiplin cezaları Öğrenci Konseyi adaylığına engel
+   olur. Yani kınama, uzaklaştırma (kısa ve uzun süreli) ve yükseköğretim
+   kurumundan çıkarma cezası alan öğrenciler aday olamaz.
+[QueryAnalysis] Combined tags=['discipline', 'student_council'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'student_council']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, Öğrenci Konseyi adaylığına engel olan disiplin cezalarını ve ilgili kural ihlallerini açık...
+[Retrieval] Multi-query: 5 queries, 95 unique chunks
+[RAGPipeline] Initial candidates: 95
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.245 ce=0.753 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 2. score=0.575 ce=0.296 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 3. score=0.505 ce=0.214 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=0.477 ce=0.100 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 5. score=0.455 ce=0.036 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 6. score=0.444 ce=0.109 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 7. score=0.421 ce=0.117 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+ 8. score=0.420 ce=0.044 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 9. score=0.408 ce=0.008 | Öğrenci Konseyi Seçim Ve Çalışma Esasları Yönerges
+10. score=0.407 ce=0.048 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+===================================
+[Ranking] Document-level select: 12 candidates -> 8 chunks from 4 docs
+[RAGPipeline] Final context chunks: 8
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Discipline]
+  • Ceza Türü: Yükseköğretim Kurumundan Çıkarma
+  • Ceza Türü: savunmadan vazgeçmiş sayılıyor
+  • Son Tarih: 15 gün
+  • Son Tarih: 60 gün
+  • Adım: itiraz edilebilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Planlı Bakımlar → [requires] → hangi zamanda yapılacağı tanımlanması
+  • Mimari ve İnşaat Bölümü → [supports] → Öğrenci ve akademisyen çalışmalarına ve projelerine destek
+  • Elektrik İşleri Bölümü → [responsible for] → Öğrenci v...
+================
+
+🤖 RAG ANSWER (77.1s):
+------------------------------------------------------------
+   Öğrenci Konseyi adaylığına engel olan disiplin cezaları, "uyarma cezası
+   dışında disiplin cezası almamış olması" koşulu ile belirlenmiştir. Yani,
+   öğrenci disiplin kurulundan **uyarma dışındaki her tür ceza** (kınama,
+   yurttan uzaklaştırma, kurumdan çıkarma vb.) almışsa aday olamaz. Ayrıca,
+   yasaklanan diğer durumlar arasında "yüz kızartıcı suçlardan adli sicil
+   kaydı", "terör örgütleriyle irtibatı" ve "seçim dönemi içinde kayıt
+   dondurma" yer alır. Bu koşullar, Öğrenci Konseyi Seçim ve Çalışma Esasları
+   Yönergesi'nde açıkça belirtilmiştir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 65%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.884
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.628
+   ─────────────────────────────────────────
+   Composite Score   : 0.872  ✅
+   Keyword Coverage  : 65%  ✅  (legacy)
+
+================================================================================
+📝 TEST 45/45: Q45 [MultiHop]
+================================================================================
+
+❓ QUESTION:
+   Uzaklaştırma cezası alan öğrenci ücret iadesi alabilir mi?
+
+📚 SOURCE   : PSR-C210-0101 Disiplin Prosedürü §1.5
+
+✅ EXPECTED :
+   Hayır, uzaklaştırma cezası alan öğrencilere herhangi bir ücret iadesi
+   yapılmaz.
+[QueryAnalysis] Combined tags=['discipline', 'tuition_refund', 'student_policies'], expanded=4 queries
+[QueryAnalysis] No negation cue found — skipping LLM negation call
+[RAGPipeline] language=tr, intent=other, followup=False
+[RAGPipeline] tags=['discipline', 'tuition_refund', 'student_policies']
+[Retrieval] Using 4 pre-expanded queries (no extra LLM call)
+[Retrieval] HyDE generated: Bu belge, uzaklaştırma cezası alan öğrencilerin ücret iadesi alma hakkı ile ilgili kuralları ve koşu...
+[Retrieval] Multi-query: 5 queries, 89 unique chunks
+[RAGPipeline] Initial candidates: 89
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.131 ce=0.880 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 2. score=1.016 ce=0.803 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 3. score=0.891 ce=0.995 | tgy_tr_v23
+ 4. score=0.801 ce=0.500 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 5. score=0.493 ce=0.088 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 6. score=0.470 ce=0.382 | lisans_yon_tr_v26
+ 7. score=0.449 ce=0.219 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 8. score=0.402 ce=0.263 | Yurtlardan Ayrılma Prosedürü (PSER-C910-0102)  | Y
+ 9. score=0.395 ce=0.188 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10. score=0.393 ce=0.245 | lisans_yon_tr_v26
+===================================
+[Ranking] Document-level select: 4 candidates -> 4 chunks from 4 docs
+[RAGPipeline] Final context chunks: 4
+[RAGPipeline] After neighbor expansion: 12 chunks
+[RAGPipeline] KG facts retrieved
+=== KG FACTS ===
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Student Departure]
+  • Ceza Türü: transkript düzenlenmez
+  • Ceza Türü: yasal işlem yapılması zorunlu hale gelir
+  • Son Tarih: akademik takvimde belirtilen dönem sonu sınavlarının bitimini izleyen 2.haftanın son iş gününe kadar
+  • Gereksinim: verilen mal ve teçhizatı ilgili birimlere teslim etmek
+
+[Mazeret Izni]
+  • Ceza Türü: yıllık izin olarak değerlendirilir
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • kontenjanın 2 katı sayısındaki öğrenci listesi → ...
+================
+
+🤖 RAG ANSWER (88.1s):
+------------------------------------------------------------
+   Disiplin suçu nedeniyle Üniversiteden uzaklaştırma cezası alan
+   öğrencilerin ödemekle yükümlü oldukları dönem öğrenim ücretini ödemeleri
+   gerekir. Bu öğrencilere herhangi bir ücret iadesi yapılmaz. Uzaklaştırma
+   süresi azami öğrenim süresine dahil edilmez ve ceza süresi boyunca alınan
+   dersler SÜ programına sayılmaz. Burs kapsamında ödemelerdeki değişiklikler
+   (örneğin, bir dönem uzaklaştırma durumunda bursun %25'lik kısmı geçerli
+   olur) ücret iadesi değil, burs ödemesiyle ilgilidir.
+------------------------------------------------------------
+
+📊 Keyword coverage (legacy): 90%
+
+📐 Multi-metric scores:
+   Answer Similarity : 0.714
+   Faithfulness      : 1.000
+   Answer Relevance  : 1.000
+   Factual Accuracy  : 0.921
+   ─────────────────────────────────────────
+   Composite Score   : 0.895  ✅
+   Keyword Coverage  : 90%  ✅  (legacy)
+
+================================================================================
+📊 LEGACY SUMMARY (keyword coverage)
+================================================================================
+  ✅ Q1     [Erasmus       ]     83%  (68.7s)
+  ✅ Q2     [Erasmus       ]     83%  (83.4s)
+  ✅ Q3     [Erasmus       ]     74%  (120.9s)
+  ⚠️ Q4     [Erasmus       ]     11%  (107.3s)
+  ✅ Q5     [Library       ]     82%  (77.9s)
+  ✅ Q6     [Library       ]     73%  (55.3s)
+  ✅ Q7     [Discipline    ]     64%  (87.8s)
+  ✅ Q8     [Discipline    ]     68%  (51.3s)
+  ⚠️ Q9     [Discipline    ]     38%  (69.6s)
+  ✅ Q10    [Scholarship   ]     74%  (50.2s)
+  ⚠️ Q11    [Scholarship   ]     47%  (65.2s)
+  ✅ Q12    [Graduate      ]     50%  (59.8s)
+  ✅ Q13    [Graduate      ]     88%  (65.7s)
+  ✅ Q14    [Graduate      ]     84%  (81.9s)
+  ⚠️ Q15    [Undergraduate ]     35%  (53.3s)
+  ⚠️ Q16    [Undergraduate ]     49%  (107.7s)
+  ✅ Q17    [Undergraduate ]     55%  (89.3s)
+  ⚠️ Q18    [Registration  ]     41%  (68.0s)
+  ⚠️ Q19    [Registration  ]     33%  (54.4s)
+  ✅ Q20    [English       ]    100%  (51.6s)
+  ✅ Q21    [English       ]     96%  (46.8s)
+  ⚠️ Q22    [English       ]     29%  (54.5s)
+  ⚠️ Q23    [Numeric       ]     42%  (76.0s)
+  ✅ Q24    [Numeric       ]     51%  (83.9s)
+  ⚠️ Q25    [Procedure     ]     43%  (76.9s)
+  ✅ Q26    [Procedure     ]     51%  (84.4s)
+  ✅ Q27    [Procedure     ]     71%  (55.2s)
+  ✅ Q28    [Edge          ]     57%  (80.0s)
+  ⚠️ Q29    [Edge          ]      0%  (88.9s)
+  ✅ Q30    [Edge          ]     60%  (73.6s)
+  ✅ Q31    [Negation      ]     59%  (89.8s)
+  ✅ Q32    [Negation      ]     91%  (55.2s)
+  ✅ Q33    [Negation      ]     65%  (61.1s)
+  ✅ Q34    [Negation      ]     83%  (59.0s)
+  ⚠️ Q35    [Negation      ]     39%  (56.6s)
+  ✅ Q36    [List          ]     65%  (36.0s)
+  ✅ Q37    [List          ]     71%  (54.7s)
+  ✅ Q38    [List          ]     56%  (78.9s)
+  ✅ Q39    [List          ]     82%  (100.2s)
+  ⚠️ Q40    [List          ]     38%  (44.8s)
+  ⚠️ Q41    [MultiHop      ]     49%  (60.6s)
+  ✅ Q42    [MultiHop      ]     69%  (68.0s)
+  ✅ Q43    [MultiHop      ]     77%  (96.4s)
+  ✅ Q44    [MultiHop      ]     65%  (77.1s)
+  ✅ Q45    [MultiHop      ]     90%  (88.1s)
+
+  Average: 61%  |  Passed (≥50%): 31/45
+
+📄 JSON report saved → C:\bitirme3\ENS491-MACKIS\testing\test_results\eval_report_20260418_191334.json
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  MACKIS RAG EVALUATION REPORT — Multi-Metric Framework
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  COMPOSITE FORMULA: 0.30×Similarity + 0.30×Faithfulness + 0.25×FactualAcc + 0.15×Relevance
+  Faithfulness gate: if faith < 0.20 → composite×=(faith/0.20)
+  Pass threshold: ≥ 0.70
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ID     Cat               Sim   Faith    Rel   Fact   KwCov  Compose  Status        Lat(s)
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Q1     Erasmus         0.445   0.100  1.000  1.000   0.750    0.282  ❌ FAIL          68.7
+  Q2     Erasmus         0.665   1.000  1.000  1.000   1.000    0.899  ✅ PASS          83.4
+  Q3     Erasmus         0.734   1.000  1.000  1.000   0.783    0.920  ✅ PASS         120.9
+  Q4     Erasmus         0.570   0.000  1.000  0.062   0.139    0.000  ❌ FAIL         107.3
+  Q5     Library         0.926   1.000  1.000  1.000   0.917    0.978  ✅ PASS          77.9
+  Q6     Library         0.703   0.600  1.000  0.700   0.700    0.716  ✅ PASS          55.3
+  Q7     Discipline      0.647   1.000  1.000  1.000   1.000    0.894  ✅ PASS          87.8
+  Q8     Discipline      0.813   1.000  1.000  1.000   0.632    0.944  ✅ PASS          51.3
+  Q9     Discipline      0.803   0.100  1.000  0.262   0.389    0.243  ❌ FAIL          69.6
+  Q10    Scholarship     0.702   1.000  1.000  0.679   0.704    0.830  ✅ PASS          50.2
+  Q11    Scholarship     0.634   1.000  1.000  0.333   0.456    0.724  ✅ PASS          65.2
+  Q12    Graduate        0.491   1.000  1.000  0.500   0.500    0.722  ✅ PASS          59.8
+  Q13    Graduate        0.782   1.000  1.000  0.892   0.846    0.908  ✅ PASS          65.7
+  Q14    Graduate        0.801   0.100  1.000  0.747   0.857    0.303  ❌ FAIL          81.9
+  Q15    Undergraduate   0.626   0.600  1.000  0.333   0.262    0.601  ❌ FAIL          53.3
+  Q16    Undergraduate   0.842   1.000  1.000  0.750   0.500    0.890  ✅ PASS         107.7
+  Q17    Undergraduate   0.829   1.000  1.000  0.654   0.600    0.862  ✅ PASS          89.3
+  Q18    Registration    0.776   0.800  1.000  0.000   0.391    0.623  ❌ FAIL          68.0
+  Q19    Registration    0.807   0.800  0.800  1.000   0.348    0.852  ✅ PASS          54.4
+  Q20    English         0.611   0.100  1.000  0.500   1.000    0.244  ❌ FAIL          51.6
+  Q21    English         0.783   0.900  1.000  1.000   0.929    0.905  ✅ PASS          46.8
+  Q22    English         0.658   0.400  1.000  0.621   0.833    0.623  ❌ FAIL          54.5
+  Q23    Numeric         0.852   1.000  1.000  0.000   0.320    0.706  ✅ PASS          76.0
+  Q24    Numeric         0.870   1.000  1.000  1.000   0.469    0.961  ✅ PASS          83.9
+  Q25    Procedure       0.805   0.700  1.000  0.000   0.432    0.602  ❌ FAIL          76.9
+  Q26    Procedure       0.787   1.000  1.000  0.597   0.629    0.835  ✅ PASS          84.4
+  Q27    Procedure       0.890   1.000  1.000  1.000   0.690    0.967  ✅ PASS          55.2
+  Q28    Edge            0.741   1.000  1.000  0.593   0.636    0.821  ✅ PASS          80.0
+  Q29    Edge            0.131   0.000  0.000  0.000   0.000    0.000  ❌ FAIL          88.9
+  Q30    Edge            0.802   1.000  1.000  0.706   0.800    0.867  ✅ PASS          73.6
+  Q31    Negation        0.847   1.000  1.000  0.541   0.640    0.839  ✅ PASS          89.8
+  Q32    Negation        0.820   1.000  1.000  0.894   0.909    0.919  ✅ PASS          55.2
+  Q33    Negation        0.887   1.000  1.000  0.567   0.625    0.858  ✅ PASS          61.1
+  Q34    Negation        0.763   1.000  1.000  0.736   0.929    0.863  ✅ PASS          59.0
+  Q35    Negation        0.683   1.000  1.000  0.379   0.389    0.750  ✅ PASS          56.6
+  Q36    List            0.762   0.100  1.000  1.000   0.789    0.329  ❌ FAIL          36.0
+  Q37    List            0.772   1.000  1.000  0.667   0.895    0.848  ✅ PASS          54.7
+  Q38    List            0.798   0.800  1.000  1.000   0.500    0.879  ✅ PASS          78.9
+  Q39    List            0.749   1.000  1.000  0.736   0.789    0.859  ✅ PASS         100.2
+  Q40    List            0.625   1.000  1.000  0.500   0.533    0.763  ✅ PASS          44.8
+  Q41    MultiHop        0.819   1.000  1.000  1.000   0.559    0.946  ✅ PASS          60.6
+  Q42    MultiHop        0.880   1.000  1.000  0.700   0.778    0.889  ✅ PASS          68.0
+  Q43    MultiHop        0.860   1.000  1.000  0.750   0.762    0.895  ✅ PASS          96.4
+  Q44    MultiHop        0.884   1.000  1.000  0.628   0.625    0.872  ✅ PASS          77.1
+  Q45    MultiHop        0.714   1.000  1.000  0.921   0.889    0.895  ✅ PASS          88.1
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  MEAN                   0.742   0.802  0.973  0.665   0.647    0.736                  71.5
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  BY CATEGORY
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Category          N  Passed  PassRate  Avg Comp  Avg KwCov(old)
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Discipline        3       2     66.7%     0.694           0.673
+  Edge              3       2     66.7%     0.563           0.479
+  English           3       1     33.3%     0.591           0.921
+  Erasmus           4       2     50.0%     0.525           0.668
+  Graduate          3       2     66.7%     0.644           0.734
+  Library           2       2    100.0%     0.847           0.808
+  List              5       4     80.0%     0.736           0.701
+  MultiHop          5       5    100.0%     0.899           0.723
+  Negation          5       5    100.0%     0.846           0.698
+  Numeric           2       2    100.0%     0.833           0.394
+  Procedure         3       2     66.7%     0.801           0.584
+  Registration      2       1     50.0%     0.737           0.369
+  Scholarship       2       2    100.0%     0.777           0.580
+  Undergraduate     3       2     66.7%     0.784           0.454
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  OVERALL: 34/45 passed (75.6%) | avg composite=0.736 | avg kw-coverage(legacy)=0.647
+
+  ▶  Old metric (keyword coverage ≥ 0.5) vs New metric (composite ≥ 0.70):
+     Old pass count : 34/45
+     New pass count : 34/45
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+📄 Table saved         → C:\bitirme3\ENS491-MACKIS\testing\test_results\eval_table_20260418_191334.txt
+
+⏱️  Total wall-clock time: 3466s
