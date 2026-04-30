@@ -76,19 +76,17 @@ _loaded = False
 
 
 # =================== EMBEDDING HELPER ===================
+from services.core.embedding_service import EmbeddingService
+
+_embed_service = EmbeddingService(_config.ollama)
 
 def embed_text(text: str) -> np.ndarray:
-    """Embed text using Ollama."""
-    url = f"{OLLAMA_HOST}/api/embeddings"
+    """Embed text using configured provider."""
     try:
-        r = requests.post(
-            url,
-            json={"model": EMBED_MODEL, "prompt": text},
-            timeout=60
-        )
-        r.raise_for_status()
-        vec = np.array(r.json()["embedding"], dtype=np.float32)
-        vec /= (np.linalg.norm(vec) + 1e-12)
+        vec = _embed_service.embed(text, is_query=True)
+        norm = np.linalg.norm(vec)
+        if norm > 0:
+            vec /= norm
         return vec
     except Exception as e:
         print(f"[KG Service embed error] {e}")

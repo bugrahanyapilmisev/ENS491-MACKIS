@@ -17,12 +17,17 @@ import requests
 from typing import Dict, List, Tuple
 from dotenv import load_dotenv
 
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from services.config.settings import RAGConfig
+from services.core.llm_service import LLMService
+
 load_dotenv()
 
 # =================== CONFIG ===================
 
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-CHAT_MODEL = os.getenv("CHAT_MODEL", "llama3.1:latest")
+settings = RAGConfig.from_env()
+_llm_service = LLMService(settings.ollama)
 
 PREPROCESSING_DIR = os.path.dirname(os.path.abspath(__file__))
 KG_DIR = os.path.join(PREPROCESSING_DIR, "knowledge_graph")
@@ -88,12 +93,14 @@ FACT TO VALIDATE:
 VALIDATION RULES - Mark as INVALID if ANY of these apply:
 1. GNO/GPA values must be between 0.0 and 4.0 (values like 3.17, 10.3, 9.3 are section numbers, NOT valid GPAs)
 2. Value is just a word like "GNO" or "GPA" without an actual number
-3. Value is a document code (e.g., "IIPAR-C710-02", "FIC-C82007-02")
+3. Value is a document or form code (e.g., "IIPAR-C710-02", "FPOP-S230-01-08")
 4. Value is a date used as GNO (e.g., "23.01.2001", "21-06-2016")
 5. Duration values that are years (e.g., "2024", "January 2020")
 6. Value is placeholder text like "...", ".../../....."
-7. Value doesn't match what the relation describes
-8. Value is too generic or meaningless
+7. The value is clearly truncated/chopped off mid-sentence (e.g. ends with "ve", "ile", "çalışanla")
+
+CRITICAL: Do NOT use your own external knowledge to verify if a fact is true! Assume the source text is always true. 
+You are ONLY checking if the FORMAT and CATEGORY make logical sense. For example, if relation is 'duration' and value is '15 gün', it is perfectly VALID. If relation is 'limit' and value is '10 gün', it is INVALID because '10 gün' is a duration. Always lean towards VALID if it makes basic logical sense.
 
 EXAMPLES:
 - Topic: "Erasmus", Relation: "minimum_gno", Value: "2.20 (lisans)" → VALID (proper GPA)
@@ -106,18 +113,11 @@ Answer with EXACTLY one word: VALID or INVALID"""
 
     for attempt in range(retries + 1):
         try:
-            resp = requests.post(
-                f"{OLLAMA_HOST}/api/chat",
-                json={
-                    "model": CHAT_MODEL,
-                    "messages": [{"role": "user", "content": prompt}],
-                    "stream": False,
-                    "options": {"temperature": 0.0}
-                },
-                timeout=90
-            )
-            
-            content = resp.json().get("message", {}).get("content", "").strip().upper()
+            content = _llm_service.chat(
+                prompt=prompt,
+                system_prompt="You are a data validation expert. Answer EXACTLY with either VALID or INVALID.",
+                temperature=0.0
+            ).strip().upper()
             
             # Parse response - be strict
             if "INVALID" in content:
@@ -158,11 +158,12 @@ TRIPLE TO VALIDATE:
 
 VALIDATION RULES - Mark as INVALID if ANY of these apply:
 1. Head or tail contains garbled text, JSON artifacts, or formatting errors
-2. The relationship doesn't make logical sense
-3. Head or tail is a generic placeholder (e.g., "...", "N/A", "TBD")
-4. The triple is about internal IT systems (SUTicket, Otomasyon, Mimari İnşaat) unless directly relevant to students
-5. The triple is too vague to be useful for answering student questions
-6. Head or tail is just a document code without meaningful content
+2. Head or tail is a generic placeholder (e.g., "...", "N/A", "TBD")
+3. The triple is explicitly about internal university IT systems (SUTicket, Otomasyon, Mimari İnşaat)
+4. Head or tail is just a document code without meaningful content (e.g. PIC-C840-0201)
+5. Head or tail is clearly chopped off mid-sentence (e.g. ends with "ve", "ile")
+
+CRITICAL: Do NOT use your own external knowledge to verify if the relationship is true in the real world! Assume the source text is always accurate. You are ONLY checking if the Head -> Relation -> Tail structure makes basic semantic sense. Assume true unless it is completely incomprehensible.
 
 EXAMPLES:
 - Head: "Erasmus Staj", Relation: "requires", Tail: "minimum 2.20 GNO" → VALID
@@ -174,18 +175,11 @@ Answer with EXACTLY one word: VALID or INVALID"""
 
     for attempt in range(retries + 1):
         try:
-            resp = requests.post(
-                f"{OLLAMA_HOST}/api/chat",
-                json={
-                    "model": CHAT_MODEL,
-                    "messages": [{"role": "user", "content": prompt}],
-                    "stream": False,
-                    "options": {"temperature": 0.0}
-                },
-                timeout=90
-            )
-            
-            content = resp.json().get("message", {}).get("content", "").strip().upper()
+            content = _llm_service.chat(
+                prompt=prompt,
+                system_prompt="You are a data validation expert. Answer EXACTLY with either VALID or INVALID.",
+                temperature=0.0
+            ).strip().upper()
             
             if "INVALID" in content:
                 return False, "LLM: INVALID"
@@ -266,23 +260,23 @@ def validate_facts():
     
     # Check for resume
     facts_done, _ = load_progress()
-    if facts_done > 0:
-        log_print(f"[RESUME] Continuing from fact {facts_done}/{total_facts}")
-    
-    # Validate facts
     validated_facts: Dict[str, List[Dict]] = {}
     removed_count = 0
     kept_count = 0
+
+    if facts_done > 0:
+        log_print(f"[RESUME] Continuing from fact {facts_done}/{total_facts}")
+        if os.path.exists(KG_FACTS_VALIDATED_PATH):
+            with open(KG_FACTS_VALIDATED_PATH, "r", encoding="utf-8") as f:
+                validated_facts = json.load(f)
+            kept_count = sum(len(f) for f in validated_facts.values())
+            removed_count = facts_done - kept_count
+            log_print(f"  - Loaded {kept_count} previously validated facts")
     
     start_time = time.time()
     
     for idx, (topic, fact) in enumerate(all_facts):
         if idx < facts_done:
-            # Already processed - add to validated if we have saved progress
-            if topic not in validated_facts:
-                validated_facts[topic] = []
-            validated_facts[topic].append(fact)
-            kept_count += 1
             continue
         
         relation = fact.get("relation", "")
@@ -357,17 +351,24 @@ def validate_triples():
     
     # Check for resume
     _, triples_done = load_progress()
-    if triples_done > 0:
-        log_print(f"[RESUME] Continuing from triple {triples_done}/{total_triples}")
-    
     validated_triples = []
     removed_count = 0
+    kept_count = 0
+
+    if triples_done > 0:
+        log_print(f"[RESUME] Continuing from triple {triples_done}/{total_triples}")
+        if os.path.exists(KG_TRIPLES_VALIDATED_PATH):
+            with open(KG_TRIPLES_VALIDATED_PATH, "r", encoding="utf-8") as f:
+                saved = json.load(f)
+                validated_triples = saved.get("triples", [])
+            kept_count = len(validated_triples)
+            removed_count = triples_done - kept_count
+            log_print(f"  - Loaded {kept_count} previously validated triples")
     
     start_time = time.time()
     
     for idx, triple in enumerate(triples):
         if idx < triples_done:
-            validated_triples.append(triple)
             continue
         
         head = str(triple.get("head", ""))
@@ -393,7 +394,7 @@ def validate_triples():
         
         # Save progress every 200 triples
         if idx % 200 == 0 and idx > 0:
-            save_progress(len(triples), idx, {}, validated_triples)
+            save_progress(99999, idx, {}, validated_triples)
     
     # Save validated triples
     validated_data = {

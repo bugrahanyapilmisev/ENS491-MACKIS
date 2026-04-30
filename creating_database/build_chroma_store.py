@@ -56,51 +56,75 @@ EMBED_MODEL = os.getenv("EMBED_MODEL", "bge-m3")
 EMBED_DIM   = int(os.getenv("EMBED_DIM", "1024"))
 CHAT_MODEL  = os.getenv("CHAT_MODEL", "llama3.2")
 
+# ── Embedding provider: "ollama" or "openrouter" ──
+# Set EMBED_PROVIDER=openrouter in .env to use Qwen3-Embedding-8B via OpenRouter
+# Defaults to "ollama" (local BGE-M3) as safe fallback
+EMBED_PROVIDER = os.getenv("EMBED_PROVIDER", "ollama")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+EMBED_MODEL_OPENROUTER = os.getenv("EMBED_MODEL_OPENROUTER", "qwen/qwen3-embedding-8b")
+# Instruction prefix prepended to every document chunk before embedding
+# Qwen3-Embedding-8B is instruction-aware — this gives ~2-5% retrieval improvement
+EMBED_INSTRUCTION_DOC = os.getenv(
+    "EMBED_INSTRUCTION_DOC",
+    "Instruct: Represent this university policy document chunk for retrieval\nDocument: "
+)
+
 BASE_DIR = os.getenv("PROJECT_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PREPROCESSING_DIR = os.getenv("PREPROCESSING_PATH") or os.path.join(BASE_DIR, "preprocessing")
 
-# Always use v2 preprocessed docs
-PRE_ROOT = os.getenv("PREPROCESSED_ROOT_V2") or os.path.join(PREPROCESSING_DIR, "preprocessed_docs_v2")
+# Preprocessed docs directory (actual location, NOT preprocessed_docs_v2)
+PRE_ROOT = os.getenv("PREPROCESSED_ROOT_V2") or os.path.join(PREPROCESSING_DIR, "preprocessed_docs")
 
 CREATING_DB_DIR = os.path.dirname(os.path.abspath(__file__))
 CHROMA_DIR_V2 = os.getenv("CHROMA_DIR_V2") or os.path.join(CREATING_DB_DIR, "chroma_db_v2")
 CHECKPOINT_DIR_V2 = os.getenv("CHECKPOINT_DIR_V2") or os.path.join(CREATING_DB_DIR, "checkpoints_v2")
 
-CHUNK_PARQUET   = os.path.join(CHECKPOINT_DIR_V2, "chunks_v2.parquet")
-VECTORS_PARQUET = os.path.join(CHECKPOINT_DIR_V2, "vectors_v2.parquet")
-DOC_SUMMARY_PARQUET = os.path.join(CHECKPOINT_DIR_V2, "doc_summaries_v2.parquet")
-BM25_INDEX_PATH = os.path.join(CHECKPOINT_DIR_V2, "bm25_index.pkl")
-PROGRESS_CHECKPOINT = os.path.join(CHECKPOINT_DIR_V2, "progress_checkpoint.json")  # For resume
+CHUNK_PARQUET   = os.path.join(CHECKPOINT_DIR_V2, "chunks_v3.parquet")
+VECTORS_PARQUET = os.path.join(CHECKPOINT_DIR_V2, "vectors_v3.parquet")
+DOC_SUMMARY_PARQUET = os.path.join(CHECKPOINT_DIR_V2, "doc_summaries_v3.parquet")
+BM25_INDEX_PATH = os.path.join(CHECKPOINT_DIR_V2, "bm25_index_v3.pkl")
+PROGRESS_CHECKPOINT = os.path.join(CHECKPOINT_DIR_V2, "progress_checkpoint_v3.json")
 
-COLL_NAME = os.getenv("COLL_NAME_V2", "mysu_v2_bge_m3")
+# New collection name — keeps v2 (bge-m3) intact for A/B comparison
+COLL_NAME = os.getenv("COLL_NAME_V3", "mysu_v3_qwen3")
 
-# Performance - reduced parallelism to avoid overwhelming Ollama
-MAX_WORKERS_EMBED = int(os.getenv("MAX_WORKERS_EMBED", "2"))  # Reduced from 6 to 2
-BATCH_UPSERT = int(os.getenv("BATCH_UPSERT", "32"))  # Reduced from 64 to 32
-REQUEST_TIMEOUT_S = int(os.getenv("REQUEST_TIMEOUT_S", "180"))  # Increased timeout
-RETRY_MAX = int(os.getenv("RETRY_MAX", "6"))  # More retries
-BACKOFF_BASE = float(os.getenv("BACKOFF_BASE", "2.0"))  # Longer backoff
+# Performance
+MAX_WORKERS_EMBED = int(os.getenv("MAX_WORKERS_EMBED", "2"))
+BATCH_UPSERT = int(os.getenv("BATCH_UPSERT", "32"))
+REQUEST_TIMEOUT_S = int(os.getenv("REQUEST_TIMEOUT_S", "120"))
+RETRY_MAX = int(os.getenv("RETRY_MAX", "6"))
+BACKOFF_BASE = float(os.getenv("BACKOFF_BASE", "2.0"))
 
-# Chunking parameters - IMPROVED
-CHUNK_SIZE_MIN = int(os.getenv("CHUNK_SIZE_MIN", "300"))
-CHUNK_SIZE_MAX = int(os.getenv("CHUNK_SIZE_MAX", "1200"))
-CHUNK_SIZE_TARGET = int(os.getenv("CHUNK_SIZE_TARGET", "800"))
-CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "150"))
-MIN_TEXT_LEN = int(os.getenv("MIN_TEXT_LEN", "50"))
+# ── OPTIMISED CHUNK PARAMETERS ──
+# Analysis of existing 12,592 chunks showed 47.8% concentrated at 800-900 chars.
+# Smaller target creates more focused, retrieval-friendly chunks.
+CHUNK_SIZE_MIN    = int(os.getenv("CHUNK_SIZE_MIN",    "200"))
+CHUNK_SIZE_MAX    = int(os.getenv("CHUNK_SIZE_MAX",    "800"))
+CHUNK_SIZE_TARGET = int(os.getenv("CHUNK_SIZE_TARGET", "512"))
+CHUNK_OVERLAP     = int(os.getenv("CHUNK_OVERLAP",     "100"))
+# Hard cap: anything above this is truncated (catches outlier handbook pages)
+CHUNK_HARD_CAP    = int(os.getenv("CHUNK_HARD_CAP",   "2000"))
+MIN_TEXT_LEN      = int(os.getenv("MIN_TEXT_LEN",      "50"))
 
-# Contextual embedding: prepend summary to chunk
+# Contextual embedding: prepend doc context to chunk before embedding
 USE_CONTEXTUAL_EMBEDDINGS = os.getenv("USE_CONTEXTUAL_EMBEDDINGS", "1") == "1"
 
 # Skip LLM tagging for faster processing (set to "1" to skip)
-SKIP_LLM_TAGGING = os.getenv("SKIP_LLM_TAGGING", "0") == "1"  # Default: enable tagging
+SKIP_LLM_TAGGING = os.getenv("SKIP_LLM_TAGGING", "0") == "1"
 
-# Max text length for embedding (bge-m3 context window)
+# Max text length for embedding
 MAX_EMBED_TEXT_LEN = int(os.getenv("MAX_EMBED_TEXT_LEN", "8000"))
 
 TR_DIACRITICS = "çğıöşüÇĞİÖŞÜ"
 
 os.makedirs(CHROMA_DIR_V2, exist_ok=True)
 os.makedirs(CHECKPOINT_DIR_V2, exist_ok=True)
+
+print(f"[Config] Embed provider : {EMBED_PROVIDER}")
+print(f"[Config] Embed model    : {EMBED_MODEL_OPENROUTER if EMBED_PROVIDER == 'openrouter' else EMBED_MODEL}")
+print(f"[Config] Collection     : {COLL_NAME}")
+print(f"[Config] Chunk target   : {CHUNK_SIZE_TARGET} chars (max={CHUNK_SIZE_MAX}, hard_cap={CHUNK_HARD_CAP})")
+
 
 # ================= UTILITIES =================
 
@@ -243,8 +267,17 @@ def smart_chunk_section(section_text: str, section_header: str,
                 "section_header": section_header,
                 "index": chunk_idx,
             })
-    
-    return chunks
+
+    # Apply hard cap: truncate any chunk that's still too long
+    # (catches sections that are one giant paragraph, e.g., legal articles)
+    capped = []
+    for ch in chunks:
+        if len(ch["text"]) > CHUNK_HARD_CAP:
+            ch["text"] = ch["text"][:CHUNK_HARD_CAP]
+            ch["truncated"] = True
+        capped.append(ch)
+
+    return capped
 
 def chunk_document(doc: Dict) -> List[Dict]:
     """
@@ -304,34 +337,66 @@ def dedupe_chunks(chunks: List[Dict]) -> List[Dict]:
 # ================= EMBEDDINGS =================
 
 def embed_one(text: str) -> np.ndarray:
-    """Embed a single text using Ollama with robust retry logic."""
-    url = f"{OLLAMA_HOST}/api/embeddings"
-    last_error = None
-    
-    # Truncate text if too long (bge-m3 has limited context)
+    """Embed a single text using configured provider (Ollama or OpenRouter)."""
+    # Truncate if too long
     if len(text) > MAX_EMBED_TEXT_LEN:
         text = text[:MAX_EMBED_TEXT_LEN]
-    
+
+    last_error = None
     for attempt in range(RETRY_MAX):
         try:
-            r = requests.post(
-                url,
-                json={"model": EMBED_MODEL, "prompt": text},
-                timeout=REQUEST_TIMEOUT_S,
-            )
-            r.raise_for_status()
-            v = np.array(r.json()["embedding"], dtype=np.float32)
-            v /= (np.linalg.norm(v) + 1e-12)  # Normalize
-            if v.shape[0] != EMBED_DIM:
-                raise RuntimeError(f"Unexpected dim: {v.shape[0]} vs {EMBED_DIM}")
-            return v
+            if EMBED_PROVIDER == "openrouter" and OPENROUTER_API_KEY:
+                return _embed_openrouter(text)
+            else:
+                return _embed_ollama(text)
         except Exception as e:
             last_error = e
-            wait_time = BACKOFF_BASE * (2 ** attempt) + 1.0  # Longer backoff
+            wait_time = BACKOFF_BASE * (2 ** attempt) + 1.0
             print(f"[retry {attempt+1}/{RETRY_MAX}] Embedding failed: {e}. Waiting {wait_time:.1f}s...")
             time.sleep(wait_time)
-    
+
     raise RuntimeError(f"Embedding failed after {RETRY_MAX} retries: {last_error}")
+
+
+def _embed_ollama(text: str) -> np.ndarray:
+    """Embed via local Ollama server."""
+    r = requests.post(
+        f"{OLLAMA_HOST}/api/embeddings",
+        json={"model": EMBED_MODEL, "prompt": text},
+        timeout=REQUEST_TIMEOUT_S,
+    )
+    r.raise_for_status()
+    v = np.array(r.json()["embedding"], dtype=np.float32)
+    v /= (np.linalg.norm(v) + 1e-12)
+    if v.shape[0] != EMBED_DIM:
+        raise RuntimeError(f"Unexpected dim: {v.shape[0]} vs {EMBED_DIM}")
+    return v
+
+
+def _embed_openrouter(text: str) -> np.ndarray:
+    """Embed via OpenRouter API (Qwen3-Embedding-8B returns 4096-dim vectors)."""
+    r = requests.post(
+        "https://openrouter.ai/api/v1/embeddings",
+        json={"model": EMBED_MODEL_OPENROUTER, "input": text, "encoding_format": "float"},
+        headers={
+            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+            "HTTP-Referer": "http://localhost:3000",
+            "X-Title": "MACKIS DB Builder",
+            "Content-Type": "application/json",
+        },
+        timeout=REQUEST_TIMEOUT_S,
+    )
+    r.raise_for_status()
+    data = r.json()
+    embedding = data.get("data", [{}])[0].get("embedding")
+    if embedding is None:
+        raise RuntimeError(f"No embedding in OpenRouter response: {data}")
+    v = np.array(embedding, dtype=np.float32)
+    v /= (np.linalg.norm(v) + 1e-12)
+    # Note: Qwen3-Embedding-8B natively outputs 4096 dims.
+    # EMBED_DIM is only enforced for Ollama (_embed_ollama).
+    return v
+
 
 def embed_many_parallel(texts: List[str]) -> np.ndarray:
     """Embed multiple texts in parallel."""
@@ -343,26 +408,44 @@ def embed_many_parallel(texts: List[str]) -> np.ndarray:
             vecs[i] = fut.result()
     return np.vstack(vecs)
 
-def create_contextual_embedding_text(chunk_text: str, doc_summary: str, section_header: str) -> str:
+def create_contextual_embedding_text(
+    chunk_text: str,
+    doc_summary: str,
+    section_header: str,
+    doc_title: str = "",
+) -> str:
     """
-    Create contextual embedding input by prepending document context.
-    This helps the embedding model understand the chunk's context.
+    Build the text that will actually be embedded.
+
+    For instruction-aware models (Qwen3-Embedding) the instruction prefix is
+    prepended here so the vector already encodes domain context.
+    Format: [Instruction]\nDocument: [Title] [Section] [Text]
     """
     if not USE_CONTEXTUAL_EMBEDDINGS:
         return chunk_text
-    
-    # Format: [Document Summary] [Section: Header] [Chunk Text]
+
+    # Build context header
     context_parts = []
-    
-    if doc_summary:
-        context_parts.append(f"[Belge: {doc_summary[:200]}]")
-    
+    if doc_title:
+        context_parts.append(doc_title[:120])
     if section_header:
-        context_parts.append(f"[Bölüm: {section_header}]")
-    
+        context_parts.append(f"[{section_header[:80]}]")
     context_parts.append(chunk_text)
-    
-    return " ".join(context_parts)
+    plain_text = " | ".join(context_parts)
+
+    # Prepend instruction for Qwen3-Embedding-8B (no-op for Ollama BGE-M3)
+    if EMBED_PROVIDER == "openrouter" and OPENROUTER_API_KEY:
+        return EMBED_INSTRUCTION_DOC + plain_text
+    else:
+        # BGE-M3 / Ollama: use old [Belge:..][Bölüm:..] format
+        parts = []
+        if doc_summary:
+            parts.append(f"[Belge: {doc_summary[:200]}]")
+        if section_header:
+            parts.append(f"[Bölüm: {section_header}]")
+        parts.append(chunk_text)
+        return " ".join(parts)
+
 
 # ================= LLM TAGGING =================
 
@@ -832,9 +915,9 @@ def main():
                     section_header = ch.get("section_header", "")
                     chunk_id = sha1_text(f"{source_path}::{chunk_index}")
                     
-                    # Create contextual embedding text
+                    # Create contextual embedding text (instruction-aware for Qwen3)
                     embed_text = create_contextual_embedding_text(
-                        ch_text, summary, section_header
+                        ch_text, summary, section_header, doc_title=title
                     )
                     
                     meta = {

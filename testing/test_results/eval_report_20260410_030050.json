@@ -1,0 +1,1198 @@
+{
+  "generated_at": "20260410_030050",
+  "pass_threshold": 0.7,
+  "ollama_host": "http://localhost:11434",
+  "chat_model": "meta-llama/llama-3.1-8b-instruct",
+  "judge_provider": "gemini",
+  "judge_model": "gemini-2.5-flash",
+  "composite_formula": "0.30×similarity + 0.30×faithfulness + 0.25×factual_accuracy + 0.15×relevance | gate: if faithfulness<0.35 → composite×=(faith/0.35)²",
+  "overall": {
+    "total": 45,
+    "passed": 29,
+    "failed": 16,
+    "pass_rate": 0.644,
+    "avg_answer_similarity": 0.7715,
+    "avg_faithfulness": 0.72,
+    "avg_answer_relevance": 0.8644,
+    "avg_factual_accuracy": 0.5127,
+    "avg_keyword_coverage": 0.5598,
+    "avg_composite_score": 0.6404,
+    "avg_latency": 70.56
+  },
+  "by_category": {
+    "Erasmus": {
+      "n": 4,
+      "passed": 3,
+      "pass_rate": 0.75,
+      "avg": {
+        "answer_similarity": 0.8218,
+        "faithfulness": 0.75,
+        "answer_relevance": 0.875,
+        "factual_accuracy": 0.785,
+        "keyword_coverage": 0.7252,
+        "composite_score": 0.7128
+      }
+    },
+    "Library": {
+      "n": 2,
+      "passed": 1,
+      "pass_rate": 0.5,
+      "avg": {
+        "answer_similarity": 0.8086,
+        "faithfulness": 0.5,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.3969,
+        "keyword_coverage": 0.5542,
+        "composite_score": 0.4229
+      }
+    },
+    "Discipline": {
+      "n": 3,
+      "passed": 2,
+      "pass_rate": 0.667,
+      "avg": {
+        "answer_similarity": 0.7776,
+        "faithfulness": 0.6333,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5121,
+        "keyword_coverage": 0.5765,
+        "composite_score": 0.559
+      }
+    },
+    "Scholarship": {
+      "n": 2,
+      "passed": 1,
+      "pass_rate": 0.5,
+      "avg": {
+        "answer_similarity": 0.7532,
+        "faithfulness": 0.45,
+        "answer_relevance": 0.75,
+        "factual_accuracy": 0.3631,
+        "keyword_coverage": 0.4123,
+        "composite_score": 0.5642
+      }
+    },
+    "Graduate": {
+      "n": 3,
+      "passed": 2,
+      "pass_rate": 0.667,
+      "avg": {
+        "answer_similarity": 0.8506,
+        "faithfulness": 0.6333,
+        "answer_relevance": 0.7667,
+        "factual_accuracy": 0.668,
+        "keyword_coverage": 0.7286,
+        "composite_score": 0.6303
+      }
+    },
+    "Undergraduate": {
+      "n": 3,
+      "passed": 3,
+      "pass_rate": 1.0,
+      "avg": {
+        "answer_similarity": 0.8497,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5821,
+        "keyword_coverage": 0.5741,
+        "composite_score": 0.8504
+      }
+    },
+    "Registration": {
+      "n": 2,
+      "passed": 0,
+      "pass_rate": 0.0,
+      "avg": {
+        "answer_similarity": 0.7447,
+        "faithfulness": 0.45,
+        "answer_relevance": 0.35,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.3696,
+        "composite_score": 0.4109
+      }
+    },
+    "English": {
+      "n": 3,
+      "passed": 3,
+      "pass_rate": 1.0,
+      "avg": {
+        "answer_similarity": 0.7956,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.6092,
+        "keyword_coverage": 0.9048,
+        "composite_score": 0.841
+      }
+    },
+    "Numeric": {
+      "n": 2,
+      "passed": 1,
+      "pass_rate": 0.5,
+      "avg": {
+        "answer_similarity": 0.7496,
+        "faithfulness": 0.35,
+        "answer_relevance": 0.75,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 0.3144,
+        "composite_score": 0.395
+      }
+    },
+    "Procedure": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333,
+      "avg": {
+        "answer_similarity": 0.7085,
+        "faithfulness": 0.8,
+        "answer_relevance": 0.8333,
+        "factual_accuracy": 0.3028,
+        "keyword_coverage": 0.4641,
+        "composite_score": 0.6532
+      }
+    },
+    "Edge": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333,
+      "avg": {
+        "answer_similarity": 0.6328,
+        "faithfulness": 0.6667,
+        "answer_relevance": 0.6667,
+        "factual_accuracy": 0.4611,
+        "keyword_coverage": 0.4172,
+        "composite_score": 0.4933
+      }
+    },
+    "Negation": {
+      "n": 5,
+      "passed": 5,
+      "pass_rate": 1.0,
+      "avg": {
+        "answer_similarity": 0.782,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5682,
+        "keyword_coverage": 0.6197,
+        "composite_score": 0.8266
+      }
+    },
+    "List": {
+      "n": 5,
+      "passed": 4,
+      "pass_rate": 0.8,
+      "avg": {
+        "answer_similarity": 0.7813,
+        "faithfulness": 0.84,
+        "answer_relevance": 0.94,
+        "factual_accuracy": 0.7139,
+        "keyword_coverage": 0.6131,
+        "composite_score": 0.8059
+      }
+    },
+    "MultiHop": {
+      "n": 5,
+      "passed": 2,
+      "pass_rate": 0.4,
+      "avg": {
+        "answer_similarity": 0.7311,
+        "faithfulness": 0.5,
+        "answer_relevance": 0.84,
+        "factual_accuracy": 0.3186,
+        "keyword_coverage": 0.3659,
+        "composite_score": 0.4276
+      }
+    }
+  },
+  "questions": [
+    {
+      "question_id": "Q1",
+      "category": "Erasmus",
+      "question": "Erasmus staj programına başvurmak için minimum GNO ne olmalı?",
+      "expected": "Lisans için en az 2.20, Lisansüstü için en az 2.5 GNO gereklidir.",
+      "actual": "Erasmus staj programına başvurmak için minimum GNO:\n\n* Lisans öğrencileri için en az 2.20\n* Lisansüstü öğrencileri için en az 2.5",
+      "latency": 61.547,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.79,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.75,
+        "composite_score": 0.937
+      },
+      "notes": [
+        "faithfulness note: The system's answer regarding the minimum GNO for Erasmus internship applications for both undergraduate and graduate st",
+        "relevance note: The answer directly and completely addresses the question by providing the minimum GPA requirements for both undergradua",
+        "factual note: found 2/2 facts"
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "category": "Erasmus",
+      "question": "Erasmus staj hareketliliği minimum süresi ne kadar?",
+      "expected": "Staj hareketliliği süresi minimum 2 aydır.",
+      "actual": "Erasmus staj hareketliliği minimum süresi 2 aydır.",
+      "latency": 55.84,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8916,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.9675
+      },
+      "notes": [
+        "faithfulness note: The system answer accurately states that the minimum duration for Erasmus internship mobility is 2 months, which is dire",
+        "relevance note: The answer directly and completely states the minimum duration for Erasmus internship mobility, which is exactly what th",
+        "factual note: found 1/1 facts"
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "category": "Erasmus",
+      "question": "How can I apply for Erasmus internship program?",
+      "expected": "Students submit their application documents (CV, transcript) together with a minimum 2-month acceptance letter from the host organization to the Internship Office. Minimum GPA requirement is 2.20 for undergraduates and 2.5 for graduate students.",
+      "actual": "To apply for the Erasmus internship program, follow these steps:\n\nFirst, check the eligibility criteria: you must have a GPA of at least 2.20 for undergraduates or 2.5 for graduate students, and obtain an \"Acceptance Letter\" from the host organization for a minimum internship period of 2 months.\n\nNext, submit your application documents, including your CV and transcript, together with the acceptance letter, to the Internship Office. The application requirements and necessary documents are published on the internal web and internship website starting at the end of October.\n\nAfter submitting your application, the Internship Office will list students in order of highest Erasmus+ Score, which is calculated by taking 50% of the calculated language score and 50% of the GPA. The list is then submitted for approval to the Student Selection Committee.\n\nIf your application is approved, you will be notified by the Internship Office, and you must have the Erasmus+ Internship Mobility Agreement signed by the host organization. You will also need to complete the Learning Agreement, Grant Agreement, and Travel and Insurance documents.\n\nTo complete the application process, you will need to upload all documents to the application system and obtain approval for the Learning Internship Agreement from the relevant faculty member via SUFORM.",
+      "latency": 55.225,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8219,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.9565,
+        "composite_score": 0.9466
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 10",
+        "relevance note: The answer directly and completely addresses the question by providing a detailed, step-by-step guide on how to apply fo",
+        "factual note: found 3/3 facts"
+      ]
+    },
+    {
+      "question_id": "Q4",
+      "category": "Erasmus",
+      "question": "Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?",
+      "expected": "Erasmus+ hibesi Ulusal Ajans (UA) tarafından her akademik yıl belirlenen miktarlar üzerinden hesaplanır. Hibe ödemesi iki taksit olarak yapılır. Öğrenciler hibe almadan önce üniversiteyle bir Öğrenci Sözleşmesi imzalar. Nihai ödeme öğrencinin karşı kurumda kaldığı gün sayısına göre yapılır.",
+      "actual": "Erasmus öğrenim hareketliliğinde hibe hesaplanırken, öğrencinin dil puanının %50'si ve Genel Not Ortalaması (GNO)'nun %50'si alınarak her bir öğrencinin Erasmus+ Puanı hesaplanır.",
+      "latency": 54.512,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7836,
+        "faithfulness": 0.0,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.1401,
+        "keyword_coverage": 0.1944,
+        "composite_score": 0.0
+      },
+      "notes": [
+        "faithfulness note: retry_ok:",
+        "relevance note: The answer explains how the Erasmus+ score is calculated, which is a factor in determining eligibility for a grant, but ",
+        "factual note: no numeric facts; char-4gram overlap=0.14"
+      ]
+    },
+    {
+      "question_id": "Q5",
+      "category": "Library",
+      "question": "Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?",
+      "expected": "Öğrenciler (lisans, lisansüstü, değişim) 60 gün süre ile 60 adet kitap ödünç alabilir. Ayrıca 5 multimedya kaynağı 7 gün, 2 ciltli süreli yayın 7 gün ve 5 popüler dergi 3 gün süreliğine ödünç alınabilir.",
+      "actual": "Paket 2 kullanıcıları, yayınlardan yerinde yararlanacağı gibi, 30 gün süre ile 10 adet kitap ödünç alabilir.",
+      "latency": 50.416,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7926,
+        "faithfulness": 0.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.2,
+        "keyword_coverage": 0.4583,
+        "composite_score": 0.0
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 0,",
+        "relevance note: The answer directly and completely addresses both parts of the question by stating the number of books and the loan dura",
+        "factual note: found 1/5 facts; missing: ['60', '3', '5', '7']"
+      ]
+    },
+    {
+      "question_id": "Q6",
+      "category": "Library",
+      "question": "Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?",
+      "expected": "Kütüphanelerarası ödünç alma (ILL) hizmeti ile Bilgi Merkezi koleksiyonunda bulunmayan kitap ve makaleler diğer kütüphanelerden temin edilebilir. Başvuru Bilgi Merkezi üzerinden yapılır.",
+      "actual": "Kütüphanelerarası ödünç alma (ILL) hizmeti aşağıdaki adımları içerir:\n\n1. **İsteklerin Alınması**: İsteğin Bilgi Merkezi Web sayfasındaki \"Ödünç Kitap İstek Formu (FIC-C82004-01)\" doldurularak, E-posta ile gönderilerek, Bilgi Merkezi bölümleri Çağrı Takip Sistemi'nden iş açarak alınır.\n2. **İsteklerin Değerlendirilmesi ve İstenmesi**: İsteekler \"Kütüphanelerarası Ödünç Uygulama Talimatı (FIC-C82004-02)\" doğrultusunda değerlendirilir ve diğer kurumlardan istenir. İstek takip edilir, istek sahibi bilgilendirilir, yazışmalar e-posta ortamında saklanır.\n3. **İzleme, Uzatma ve İade**: \n   a. İstekler \"Kütüphanelerarası Ödünç Uygulama Talimatı (FIC-C82004-02)\" doğrultusunda izlenir. ILLU / Sürekli\n   b. İstek sahibine hatırlatma mesajı gönderilir, ILLU / 1 iş günü\n   c. İade tarihi geçen materyaller belirlenir ve \"Ödünç Verme Prosedürü (PIC-C840-0201)\" doğrultusunda işlem yapılır. ILLU / Sürekli\n4. **Süre Uzatma İşlemleri**: \n   a. İstek sahibinin süre uzatma isteği alınır, \"Kütüphanelerarası Ödünç Uygulama Talimatı (FIC-C82004-02)\" doğrultusunda işlemleri yapılır. İlgili kuruma bildirilir, yazışmalar e-posta ortamında saklanır. İstek Sahibi / ILLU / İlgili Kurum / 1 iş günü\n   b. İlgili kurum süre uzatımını uygun görmez ise, istek sahibine bildirilir. İstenilen sürede iade edilmesi sağlanır. Yazışmalar e-posta ortamında saklanır.\n\nKütüphanelerarası ödünç alma hizmeti, Bilgi Merkezi bünyesinde bulunmayan bilgi kaynaklarının diğer kurumlardan, kurumların kuralları doğrultusunda ödünç getirtilmesi, süresi sonunda iade edilmesi ve diğer kurumların aynı tür isteklerinin karşılanması hizmeti olarak tanımlanır.",
+      "latency": 72.188,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8246,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5938,
+        "keyword_coverage": 0.65,
+        "composite_score": 0.8458
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10, \"un",
+        "relevance note: The answer directly and completely explains how the interlibrary loan service works by detailing the steps involved from",
+        "factual note: no numeric facts; char-4gram overlap=0.59"
+      ]
+    },
+    {
+      "question_id": "Q7",
+      "category": "Discipline",
+      "question": "Öğrenci disiplin cezaları nelerdir?",
+      "expected": "Uyarma, kınama, 1 haftadan 1 aya kadar uzaklaştırma, 1-2 yarıyıl uzaklaştırma, yükseköğretim kurumundan çıkarma.",
+      "actual": "Öğrenci disiplin cezaları şunlardır:\n\n1. Uyarma\n2. Kınama\n3. Yükseköğretim kurumundan bir haftadan bir aya kadar uzaklaştırma\n4. Yükseköğretim kurumundan bir veya iki yarıyıl için uzaklaştırma\n5. Yükseköğretim kurumundan çıkarma\n\nBu cezalar, öğrencinin davranışlarından dolayı verilebilir.",
+      "latency": 58.576,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7766,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.933
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 10",
+        "relevance note: The answer directly and completely lists the student disciplinary penalties as requested by the question.",
+        "factual note: found 2/2 facts"
+      ]
+    },
+    {
+      "question_id": "Q8",
+      "category": "Discipline",
+      "question": "Disiplin soruşturması ne kadar sürede sonuçlanmalı?",
+      "expected": "Disiplin soruşturmasında karar en geç 10 gün içinde bildirilmelidir. Disiplin cezası gerektiren fiillerin işlendiği tarihten itibaren 2 yıl geçmesi halinde zamanaşımı oluşur.",
+      "actual": "Disiplin soruşturması sonunda verilen ceza, soruşturmanın usulüne uygun bir şekilde yürütülmesini sağlamakla, tüm delilleri toplamakla, soruşturma sonucunda uygulanacak disiplin cezasının da önerildiği Soruşturma Raporunu hazırlayarak Disiplin Amirine göndermekle yükümlüdür. Bu rapor, soruşturma onayı tarihinden itibaren en geç 15 gün içinde hazırlanmalıdır.",
+      "latency": 53.022,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8027,
+        "faithfulness": 0.9,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.3333,
+        "keyword_coverage": 0.3684,
+        "composite_score": 0.7441
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 9",
+        "relevance note: regex_extracted:{\"score\": 10, \"reason",
+        "factual note: found 1/3 facts; missing: ['2', '2 yıl']"
+      ]
+    },
+    {
+      "question_id": "Q9",
+      "category": "Discipline",
+      "question": "Kopya çekmek hangi disiplin cezasını gerektirir?",
+      "expected": "Sınavlarda kopyaya teşebbüs etmek kınama cezası gerektirir. Kopya çekmek veya çektirmek bir yarıyıl uzaklaştırma cezası gerektirir. Tehditle kopya çekmek, kopya çeken öğrencilerin sınav salonundan çıkarılmasına engel olmak veya başkasının yerine sınava girmek iki yarıyıl uzaklaştırma cezası gerektirir.",
+      "actual": "Kopya çekmek 1 haftadan 1 aya kadar Uzaklaştırma cezasını gerektirir.",
+      "latency": 57.552,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7536,
+        "faithfulness": 0.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.203,
+        "keyword_coverage": 0.3611,
+        "composite_score": 0.0
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 0,",
+        "relevance note: The answer directly and completely addresses the question by stating the specific disciplinary action and its duration.",
+        "factual note: no numeric facts; char-4gram overlap=0.20"
+      ]
+    },
+    {
+      "question_id": "Q10",
+      "category": "Scholarship",
+      "question": "Burs başvurusu nasıl yapılır?",
+      "expected": "Burs başvurusu ilan edilen tarihlerde başvuru sistemi üzerinden yapılır. Akademik Başarı ve İhtiyaç Bursu için ihtiyacı kanıtlayıcı belgeler sunulması gerekir. Üstün Akademik Başarı Bursu için herhangi bir başvuru yapılmasına gerek yoktur.",
+      "actual": "Burs başvurusu nasıl yapılır?\n\nBurs başvurusu, öğrencinin burs talebini başvuru sistemi üzerinden iletmesi ile başlar. Lisansüstü programlara başvuran adaylar, burs isteklerini başvuru sistemi üzerinden iletir. Aday Öğrenci Burs Başvurusu, lisansüstü programlara başvuru sırasında yapılır.\n\nBurs değerlendirmesine alınabilmesi için öğrencilerin, değerlendirmenin yapılacağı Bahar dönemi sonu sınav notlarına itiraz işlemleri ve sürecinin tamamlanması itibariyle aşağıdaki koşulları sağlaması gerekir:\n\n* Başvurunun ilan edilen tarihlerde gerçekleştirilmesi\n* Gerekli belgelerinin eksiksiz tamamlanması\n* Lisans öğreniminde normal öğrenim süresi içerisinde olunması\n* İzinli geçirilen süreler dışında lisans seviyesinde en az iki dönemin bitirilmiş olması\n* Lisans seviyesinde en az 34 SÜ kredinin kazanılmış olması\n* Ağırlıklı genel not ortalamasının (GNO) en az 2.50 olması\n* İhtiyaç sahibi olunması\n\nBurs değerlendirmesine alınan öğrenciler, başvuruya esas ihtiyaçlılık durumunu kanıtlayan belgelerin bir puantaj tablosu yardımı ile değerlendirilir ve mevcut kaynaklar ölçüsünde ihtiyaçlılık durumlarına göre burs tahsisi gerçekleştirilir.\n\nBurs alma hakkı kazanan öğrencilerin, ayrıca başvuru yapmalarına gerek yoktur. Söz konusu öğrenciler, ders kayıtlarını tamamladıktan sonra, burslarını doğrudan almaya başlar.\n\nBurslar, Burs Komitesinin önerisi, Rektör ve Genel Sekreter onayı ile tahsis edilir. Burslar, akademik yıl için belirlenen süre için geçerlidir ve bir sonraki akademik yıla ya da döneme aktarılmaz.\n\nÖğrenciler, burs başvurusu için \"Burs ve Öğrenim Kredisi Başvuru Formu\"nu kuruma ait herhangi bir Dağıtım-Kabul Bürosundan, www.kyk.gov.tr adresinden veya ÖSYS Tercih Kılavuzu'ndan temin edebilir.",
+      "latency": 67.057,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8313,
+        "faithfulness": 0.4,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.7263,
+        "keyword_coverage": 0.6667,
+        "composite_score": 0.701
+      },
+      "notes": [
+        "faithfulness note: retry_ok:",
+        "relevance note: The answer directly and completely explains the process of applying for a scholarship, including where and when to apply",
+        "factual note: no numeric facts; char-4gram overlap=0.73"
+      ]
+    },
+    {
+      "question_id": "Q11",
+      "category": "Scholarship",
+      "question": "Burs devam şartları nelerdir?",
+      "expected": "Burs devam şartları bursun türüne göre değişir. Üstün Akademik Başarı Bursu için GNO en az 3.00, ilk yıl 34 SÜ / sonraki yıllar 30 SÜ kredi gerekir. Akademik Başarı ve İhtiyaç Bursu için GNO en az 2.50 ve 34 SÜ kredi gerekir. İlk giriş bursları akademik başarı durumuna bakılmaksızın normal öğrenim süresince devam eder. Disiplin cezalarında: kınama ve kısa süreli uzaklaştırmada burs devam eder, 1-2 yarıyıl uzaklaştırmada o dönem kesilir ama sonra yeniden bağlanır, çıkarmada tamamen kesilir.",
+      "actual": "Lisansüstü burslar için burs süresinin ve devam koşullarının belirlenmesi, Enstitü Yönetim Kurulu kararı ile her akademik dönemin başında yapılır. Lisansüstü burslar için burs süresinin ve devam koşullarının belirlenmesi, Enstitü Yönetim Kurulu kararı ile her akademik dönemin başında yapılır. Lisansüstü burslar için burs süresinin ve devam koşullarının belirlenmesi, Enstitü Yönetim Kurulu kararı ile her akademik dönemin başında yapılır.",
+      "latency": 56.641,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6751,
+        "faithfulness": 0.5,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.1579,
+        "composite_score": 0.4275
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 5, \"unsupported",
+        "relevance note: The answer explains who determines the scholarship continuation conditions and when, but does not list the actual condit",
+        "factual note: found 0/6 facts; missing: ['2.50', '1', '3.00', '2', '30']"
+      ]
+    },
+    {
+      "question_id": "Q12",
+      "category": "Graduate",
+      "question": "Yüksek lisans programı kaç yarıyıl sürer?",
+      "expected": "Tezli yüksek lisans en fazla 6 yarıyıl, tezsiz yüksek lisans en fazla 3 yarıyıldır.",
+      "actual": "Tezsiz yüksek lisans programının tamamlanma süresi, bilimsel hazırlık ve isteğe bağlı yaz dönemi hariç, her dönem için kayıt yaptırıp yaptırmadığına bakılmaksızın en az iki dönem, azami üç dönemdir.",
+      "latency": 82.207,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8407,
+        "faithfulness": 1.0,
+        "answer_relevance": 0.8,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 0.5,
+        "composite_score": 0.7972
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10, \"un",
+        "relevance note: regex_extracted:{\"score\": 8, \"",
+        "factual note: found 1/2 facts; missing: ['6']"
+      ]
+    },
+    {
+      "question_id": "Q13",
+      "category": "Graduate",
+      "question": "Doktora yeterlik sınavı ne zaman yapılır?",
+      "expected": "Derslerini ve seminerini tamamlayan öğrenciler doktora yeterlik sınavına girebilir. Bir yılda en fazla iki kez girebilirler.",
+      "actual": "Doktora yeterlik sınavı, ilgili enstitü yönetim kurulu tarafından onaylanan doktora yeterlik komitesi tarafından düzenlenir ve yürütülür. Komite, farklı alanlardaki sınavları hazırlamak, uygulamak ve değerlendirmek amacıyla sınav jürileri kurar. Doktora yeterlik sınavı; en az ikisi Üniversite dışından olmak üzere, danışman dâhil, beş öğretim üyesinden oluşan jüri tarafından yapılır.\n\nSınavlar, öğrencinin yazılı ve sözlü sınavlardaki başarı durumunu değerlendirerek öğrencinin başarılı veya başarısız olduğuna salt çoğunlukla karar verir. Bu karar, program koordinatörlüğünce, yeterlik sınavını izleyen 3 gün içinde enstitüye tutanakla bildirilir.\n\nDoktora yeterlik sınavına, derslerini ve seminerini tamamlayan öğrenciler, bir yılda en fazla iki kez girebilirler.",
+      "latency": 74.464,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.8066,
+        "faithfulness": 0.1,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.9369,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.2906
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 1",
+        "relevance note: regex_extracted:{\"score\": 5, \"reasoning",
+        "factual note: no numeric facts; char-4gram overlap=0.94"
+      ]
+    },
+    {
+      "question_id": "Q14",
+      "category": "Graduate",
+      "question": "Tez savunması için jüri kaç kişiden oluşur?",
+      "expected": "Yüksek lisans tez savunma jürisi, biri tez danışmanı ve en az biri üniversite dışından olmak üzere üç veya beş öğretim üyesinden oluşur. Doktora tez savunma jürisi, danışman dahil beş öğretim üyesinden oluşur ve en az ikisi başka bir yükseköğretim kurumunun öğretim üyesi olmalıdır.",
+      "actual": "Tez savunması için jüri, öğrencinin tez izleme komitesinde yer alan öğretim üyeleri ve en az ikisi başka bir yükseköğretim kurumunun öğretim üyesi olmak üzere danışman dahil beş öğretim üyesinden oluşur.",
+      "latency": 52.499,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.9044,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.567,
+        "keyword_coverage": 0.6857,
+        "composite_score": 0.8031
+      },
+      "notes": [
+        "faithfulness note: retry_ok:",
+        "relevance note: The answer directly and completely states the number of people on the jury for a thesis defense, which is exactly what t",
+        "factual note: no numeric facts; char-4gram overlap=0.57"
+      ]
+    },
+    {
+      "question_id": "Q15",
+      "category": "Undergraduate",
+      "question": "Yatay geçiş başvuru şartları nelerdir?",
+      "expected": "Yatay geçiş başvurusu için belirli bir GNO şartı yoktur. Başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca ÖSYM puanının taban puanına eşit veya yüksek olması şartı aranır.",
+      "actual": "Yatay geçiş başvuru şartları aşağıdaki gibidir:\n\n- Yükseköğretim Kurulu tarafından tanınan bir üniversitenin bir lisans programında, hazırlık sınıfı dışında 2 dönemi en az 60/100 genel not ortalaması ile tamamlamış olmak,\n- Başvuru sırasında yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak ve herhangi bir nedenle öğrencilik kaydı sona ermemiş olmak,\n- İngilizce dil yeterliliğini sağlamış olmak,\n- Merkezi yerleştirme puanı ile yatay geçiş yapan adaylar için, eğitim gördüğü programdan farklı bir programa yatay geçiş yapan öğrencilerin azami öğrenim süreleri, programın azami öğrenim süresinden kabul edildiği sınıf/dönem çıkartılarak hesaplanır,\n- Hazırlık sınıfında başarısız olan ve halen yükseköğretim programında kayıtlı olan öğrenciler de başvuru koşullarını sağlamaları halinde yatay geçiş için başvuru yapabilir, ancak kabul edilirlerse tekrar hazırlık sınıfında okuyamazlar,\n- Yurt dışındaki üniversitelerden yatay geçiş başvurusu yapan T.C. ve K.K.T.C. uyruklu adayların, YÖK ve SÜ tarafından belirlenen sınav yeterliliklerini de sağlamaları gerekir,\n- Üniversite tarafından eşdeğerliliği kabul edilen ulusal ve/veya uluslararası yabancı dil sınavlarının birinden yine Üniversitece belirlenen düzeyde başarılı olduğunu belgeleyen öğrenciler ile eğitim dili tamamiyle İngilizce olan yükseköğretim kurumlarından başvuran öğrenciler, İngilizce sınavından muaftır,\n- Temel Geliştirme Yılında veya birinci sınıfın ilk dönemine geçiş yapmak isteyen öğrencilerin, İngilizce muafiyetini sağlayamaması durumunda, Temel Geliştirme Yılına kayıt olmaları gerekir.",
+      "latency": 77.513,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8565,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.6693,
+        "keyword_coverage": 0.5294,
+        "composite_score": 0.8743
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 10,",
+        "relevance note: The answer directly and comprehensively lists the application requirements for horizontal transfer, fully addressing the",
+        "factual note: no numeric facts; char-4gram overlap=0.67"
+      ]
+    },
+    {
+      "question_id": "Q16",
+      "category": "Undergraduate",
+      "question": "Çift anadal programına nasıl başvurulur?",
+      "expected": "Çift anadal programına başvuru için GNO en az 3.20 olmalı ve öğrenci sınıfının ilk %20'sinde yer almalıdır. Tüm dersleri geçmiş olmalıdır. Başvuru en erken 2. dönem, en geç 4. dönemde yapılabilir. En fazla bir diploma programına daha kayıt yaptırılabilir.",
+      "actual": "Çift anadal programına başvurular, Akademik Takvim'de belirtilen tarihlerde, ilgili çift anadal diploma programının bağlı olduğu Fakülte'ye dilekçe ile yapılır. Öğrenciler, lisans öğrenimlerinin en erken üçüncü, en geç beşinci dönemlerinin başında programa başlayacakları şekilde; en erken ikinci en geç dördüncü dönemlerinde çift anadal başvurusu yapabilirler.",
+      "latency": 56.307,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8266,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.25,
+        "keyword_coverage": 0.3929,
+        "composite_score": 0.7605
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n \"score\": 10",
+        "relevance note: The answer directly and completely explains how to apply for a double major program, including when, where, and with wha",
+        "factual note: found 1/4 facts; missing: ['4', '3.20', '20']"
+      ]
+    },
+    {
+      "question_id": "Q17",
+      "category": "Undergraduate",
+      "question": "Ders ekleme-bırakma süresi ne kadar?",
+      "expected": "Ders ekleme-bırakma işlemi, sonbahar ve ilkbahar dönemlerinde derslerin başladığı haftayı takip eden ikinci hafta içinde, akademik takvimde belirtilen tarihlerde yapılır.",
+      "actual": "Ders ekleme-bırakma süresi, akademik takvimde belirtilen tarihlerde öğrenciler, kayıt yaptırdıkları derslerde değişiklik yapabilir. Bu tarihler, Güz ve Bahar dönemlerinde derslerin başladığı haftayı takip eden ikinci hafta içinde ve isteğe bağlı yaz dönemi için derslerin başladığı ilk hafta içinde, akademik takvimde belirtilen tarihlerde öğrenciler, kayıt yaptırdıkları derslerde değişiklik yapabilir.",
+      "latency": 57.457,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.866,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.8269,
+        "keyword_coverage": 0.8,
+        "composite_score": 0.9165
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10, \"",
+        "relevance note: The answer directly specifies the duration of the add-drop period for different academic terms, completely addressing th",
+        "factual note: no numeric facts; char-4gram overlap=0.83"
+      ]
+    },
+    {
+      "question_id": "Q18",
+      "category": "Registration",
+      "question": "Mezuniyet başvurusu nasıl yapılır?",
+      "expected": "Mezuniyet başvurusu akademik takvimde belirtilen tarihlerde ÖBS üzerinden yapılır. Mezun adayı öğrencilerin programa ait tüm mezuniyet yükümlülüklerini tamamlaması ve genel not ortalamasının en az 2.00 olması gerekir.",
+      "actual": "Mezuniyet başvurusu aşağıdaki adımlarla yapılır:\n\n1. Öğrenci, ÖBS üzerinden ÖK'ya başvuru yapar. Başvuru, akademik takvimde belirtilen tarih aralığında yapılır.\n2. Öğrenci, dönem sonunda mezuniyet hakkını elde edemeyenler, bir sonraki dönem başvurularını yenilemeleri gerekir.\n3. ÖK, mezuniyet başvurusunda bulunmayan öğrencileri tespit eder ve ilgili Enstitü veya Fakülteye hatırlatma mesajı gönderir.\n4. Öğrenci, geç mezuniyet başvuru formunu (FSR-C24001-20) doldurarak Fakültesine/Enstitüsüne iletir.\n5. Fakülte/Enstitü, öğrencinin başvurusunu kabul ederse, FYK/EYK kararı ile ÖK'ya iletir.\n6. ÖK, mezuniyet için başvuru yaptığı halde söz konusu dönem sonunda mezuniyet hakkı elde edemeyeceği tespit edilen öğrencilere, e-posta ile mezuniyet başvurularının işleme alınamayacağı konusunda bilgi verir.\n7. ÖK, varsa düzeltme, ekleme isteklerini inceleyerek, ilgili Fakülte/Enstitü ile temasa geçerek, Aday Mezun Listeleri (FSR-C24001-21) için onay alır ve listeleri sonuçlandırır.\n8. Mezun adayları, neden MSK'ya aday olmak istediklerini belirten maksimum 300 kelimelik başvuru yazılarını fotoğraflarıyla birlikte SÜMED'e iletir.\n9. Mezun adaylarının katılımıyla yapılan elektronik oylama sonucunda, her fakülteden 2 mezun adayı olacak şekilde maksimum 6 öğrenci (lisans ya da lisans üstü) MSK üyesi olarak seçilir.\n\nÖnemli notlar:\n\n* Mezuniyet başvurusu, akademik takvimde belirtilen tarih aralığında yapılır.\n* Öğrenci, dönem sonunda mezuniyet hakkını elde edemeyenler, bir sonraki dönem başvurularını yenilemeleri gerekir.\n* ÖK, mezuniyet başvurusunda bulunmayan öğrencileri tespit eder ve ilgili Enstitü veya Fakülteye hatırlatma mesajı gönderir.\n* Fakülte/Enstitü, öğrencinin başvurusunu kabul ederse, FYK/EYK kararı ile ÖK'ya iletir.\n* ÖK, mezuniyet için başvuru yaptığı halde söz konusu dönem sonunda mezuniyet hakkı elde edemeyeceği tespit edilen öğrencilere, e-posta ile mezuniyet başvurularının işleme alınamayacağı konusunda bilgi verir.\n* ÖK, varsa düzeltme, ekleme isteklerini inceleyerek, ilgili Fakülte/Enstitü ile temasa geçerek, Aday Mezun Listeleri (FSR-C24001-21) için onay alır ve listeleri sonuçlandırır.\n* Mezun adayları, neden MSK'ya aday olmak istediklerini belirten maksimum 300 kelimelik başvuru yazılarını fotoğraflarıyla birlikte SÜMED'e iletir.\n* Mezun adaylarının katılımıyla yapılan elektronik oylama sonucunda, her fakülteden 2 mezun adayı olacak şekilde maksimum 6 öğrenci (lisans ya da lisans üstü) MSK üyesi olarak seçilir.",
+      "latency": 83.704,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7945,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.7,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.5652,
+        "composite_score": 0.5533
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 7",
+        "relevance note: regex_extracted:{\"score\": 7, \"reasoning",
+        "factual note: found 0/1 facts; missing: ['2.00']"
+      ]
+    },
+    {
+      "question_id": "Q19",
+      "category": "Registration",
+      "question": "Kayıt dondurma şartları nelerdir?",
+      "expected": "Dönem izni (kayıt dondurma); sağlık, maddi, aile, kişisel, akademik ve beklenmedik zorunlu olaylar gibi nedenlerle, ayrıca askerlik, gözaltı, tutukluluk veya mahkûmiyet durumlarında verilebilir. İzin gerekçesine ilişkin belgeler eklenerek dilekçe ile derslerin başlamasını takip eden 4. haftanın son iş gününe kadar ilgili fakülte dekanlığına başvurulur. Bir defada en çok 2 dönem, toplam 4 dönem izin verilebilir.",
+      "actual": "Kayıt dondurma şartları aşağıdaki gibidir:\n\n- Kayıt dondurma tarihi itibariyle ikamet kartlarının iptal edileceği ÖK tarafından bildirilir.\n- Kayıt dondurma, öğrencinin öğrenimi süresince tüm güncel bilgileri, İl Göç İdaresi Genel Müdürlüğü resmi web sitesi ve Üniversitemiz resmi web sitesinden takip etmemesi durumunda gerçekleşebilir.\n- Kayıt dondurma, öğrencinin kayıt dondurma tarihinden sonra kaydını yenilememesi durumunda gerçekleşebilir.\n- Kayıt dondurma, öğrencinin kayıt dondurma tarihinden sonra ders kayıtlarını yapmaması durumunda gerçekleşebilir.\n- Kayıt dondurma, öğrencinin kayıt dondurma tarihinden sonra mazeretli kayıt talebinde bulunmaması durumunda gerçekleşebilir.\n- Kayıt dondurma, öğrencinin kayıt dondurma tarihinden sonra kayıt ücretini ödememesi durumunda gerçekleşebilir.\n- Kayıt dondurma, öğrencinin kayıt dondurma tarihinden sonra Üniversite tarafından sağlanan mal ve teçhizatı iade etmemesi durumunda gerçekleşebilir.\n- Kayıt dondurma, öğrencinin kayıt dondurma tarihinden sonra en erken izleyen dönemde ders kayıtlarından en geç 1 hafta öncesine kadar kayıt yenilememesi durumunda gerçekleşebilir.",
+      "latency": 72.399,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6949,
+        "faithfulness": 0.2,
+        "answer_relevance": 0.0,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.1739,
+        "composite_score": 0.2685
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 2,",
+        "relevance note: regex_extracted:{\"score\": 0, \"reasoning",
+        "factual note: found 0/2 facts; missing: ['4', '2']"
+      ]
+    },
+    {
+      "question_id": "Q20",
+      "category": "English",
+      "question": "What is the minimum GPA requirement for Erasmus?",
+      "expected": "Minimum GPA is 2.20 for undergrad and 2.5 for graduate students.",
+      "actual": "The minimum GPA requirement for Erasmus is 2.20 for undergraduate students and 2.50 for graduate students.",
+      "latency": 69.757,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8234,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.822
+      },
+      "notes": [
+        "faithfulness note: The system answer accurately states the minimum GPA requirements for Erasmus for both undergraduate and graduate student",
+        "relevance note: The answer directly and completely provides the minimum GPA requirements for Erasmus, differentiating between student le",
+        "factual note: found 1/2 facts; missing: ['2.5']"
+      ]
+    },
+    {
+      "question_id": "Q21",
+      "category": "English",
+      "question": "How many books can I borrow from the library?",
+      "expected": "Undergraduate, graduate, and exchange students can borrow 60 books for 60 days, 5 multimedia items for 7 days, and 2 bound periodicals for 7 days.",
+      "actual": "According to the context, the number of books that can be borrowed from the library varies depending on the group. \n\nUndergraduate, Graduate, and Exchange Students can borrow 60 books for 60 days. \n\nAdministrative Staff can borrow 60 books for 60 days. \n\nMembers of other universities can borrow two books for a period of 15 days. \n\nSabancı University alumni and retirees who pay the membership fee can borrow 2 books for 30 days. \n\nAcademic and Teaching “Emeritus” Employees can borrow unlimited books for 60 days.",
+      "latency": 49.092,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8102,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 0.7143,
+        "composite_score": 0.8181
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10, \"unsupported_claims\": [], \"reasoning\": \"All claims regarding the n",
+        "relevance note: The answer directly and completely addresses the question by detailing the number of books various user groups can borro",
+        "factual note: found 2/4 facts; missing: ['5', '7']"
+      ]
+    },
+    {
+      "question_id": "Q22",
+      "category": "English",
+      "question": "What are the disciplinary penalties for students?",
+      "expected": "Warning, reprimand, suspension, and expulsion from university.",
+      "actual": "Disciplinary penalties for students include:\n\nWarning: a written warning made to the student to be more careful about his/her behaviors related to the status of student. The actions and situations requiring a warning sanction are indicated below:\n1. Failing to answer on time matters questioned by the officials of the University without any justified reason,\n2. Putting up notices at places other than those designated by the Higher education officials,\n3. Tearing up, taking off, changing, crossing out or soiling notices put up with the permission of the higher education council.\n\nReprimand: It is a notification in written stating that the student has been reprimanded due to his/her misconduct.\n\nSuspension: The punishment for sexual harassment or assault is suspension for two semesters or expulsion. Students who have received punishment of suspension due to disciplinary crimes are required to pay the semester tuition they are responsible for paying.\n\nDismissal: The punishment for suspension from the higher education institution for one or two semesters and dismissal from the higher education institution is subject to prescription within 3 months. If the disciplinary proceedings are not started within 1 month for the punishments of warning, reprimand, and suspension (1 week up to one month), the authority to impose disciplinary punishment drops due to prescription.\n\nRemoval from dormitories: Warning and reprimand punishments can be inflicted by the Dormitory Manager while removal from the dormitories can be decided on by the Disciplinary Board considering the principles below: a) Students can object to warning and reprimand punishments by appealing to the Disciplinary Board, and to the Provincial Directorate to object to removal within five working days following the notification date of the punishment. b) The Disciplinary Board shall decide on objections within seven working days.\n\nNote that the specific penalties may vary depending on the nature of the disciplinary offense and the student's actions.",
+      "latency": 53.412,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7533,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.8276,
+        "keyword_coverage": 1.0,
+        "composite_score": 0.8829
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 10",
+        "relevance note: The answer directly and completely lists and describes various disciplinary penalties for students, directly addressing ",
+        "factual note: no numeric facts; char-4gram overlap=0.83"
+      ]
+    },
+    {
+      "question_id": "Q23",
+      "category": "Numeric",
+      "question": "Lisans mezuniyeti için kaç kredi gerekiyor?",
+      "expected": "Lisans mezuniyeti için belirli bir sabit kredi sayısı yoktur. Kayıtlı olunan diploma programının gerektirdiği tüm ders ve kredi yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
+      "actual": "Lisans mezuniyeti için 64 SU kredi gereklidir.",
+      "latency": 60.026,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6496,
+        "faithfulness": 0.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.16,
+        "composite_score": 0.0
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 0, \"",
+        "relevance note: The answer directly and completely provides the number of credits required for undergraduate graduation, which is exactl",
+        "factual note: found 0/1 facts; missing: ['2.00']"
+      ]
+    },
+    {
+      "question_id": "Q24",
+      "category": "Numeric",
+      "question": "Bir dersin kaç kez tekrar edilebilir?",
+      "expected": "Geçer not alınan dersler, notun alındığı dönemi izleyen en çok 3 dönem içinde tekrar edilebilir (izinli dönemler ve yaz dönemleri hariç). Bu bir zaman sınırıdır, tekrar sayısı sınırı değildir. Başarısız olunan zorunlu dersler ise mezuniyete kadar tekrar edilerek başarılmalıdır.",
+      "actual": "Bir dersin kaç kez tekrar edilebileceği hususunda çeşitli kurallar var. Lisans öğrencileri, daha önce geçer not aldıkları derslere, notun alındığı dönemi izleyen en çok 3 dönem içinde tekrar kayıt olabilirler. Lisansüstü öğrenciler ise daha önce \"C, C+\", \"B-\", \"B\", \"A-\" veya \"A\" notu aldıkları derslere, en geç kayıtlı olunan programdaki dersleri tamamlama süresinin sonuna kadar tekrar kayıt olabilirler.",
+      "latency": 61.741,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8497,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.4688,
+        "composite_score": 0.7899
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 7,",
+        "relevance note: regex_extracted:{\"score\": 5, \"reason",
+        "factual note: found 1/1 facts"
+      ]
+    },
+    {
+      "question_id": "Q25",
+      "category": "Procedure",
+      "question": "Zorunlu staj başvurusu nasıl yapılır?",
+      "expected": "Zorunlu staj başvurusu Kariyer Geliştirme ve Staj Ofisi üzerinden yapılır. Öğrenciler özgeçmiş ve transkript ile başvuru yapar. Staj süresi ve şartları ilgili fakülte tarafından belirlenir.",
+      "actual": "Zorunlu staj başvurusu nasıl yapılır?\n\nÖğrenciler, OMS'a girerek Yeni Staj Projesi Formu (FIPAR-C71001-02) üzerinden kurumdaki projenin tanımını ve diğer bilgileri doldururlar. Staj Ofisi, öğrencilere kabul edildikleri kurum ve kuruluşa teslim edilmek üzere Zorunlu Staj Belgesi (FIPAR-C71001-01) verir. Öğrenciler, staj başvurularını yapmadan önce staj danışmanlarından onay almalıdır. Staj danışmanları, öğrencinin proje tanımını değerlendirerek projeye onay veya red verir.\n\nÖğrenciler, staj başvurularını yapmadan önce aşağıdaki adımları takip ederler:\n\n1. OMS'a girerek Yeni Staj Projesi Formu (FIPAR-C71001-02) doldururlar.\n2. Staj Ofisi, öğrencilere Zorunlu Staj Belgesi (FIPAR-C71001-01) verir.\n3. Öğrenciler, staj danışmanlarından onay alırlar.\n4. Staj danışmanları, öğrencinin proje tanımını değerlendirerek projeye onay veya red verir.\n\nÖğrenciler, staj başvurularını yapmaları gereken tarihleri aşağıdaki gibidir:\n\n* Haziran ayı ortasına kadar\n* Temmuz ayının sonuna kadar (yurtiçi staj için)\n* Haziran ayının sonuna kadar (yurtdışı staj için)\n\nÖğrenciler, staj başvurularını yapmaları gereken kuralları aşağıdaki gibidir:\n\n* Staj başvurularını yapmadan önce staj danışmanlarından onay alması gerekir.\n* Staj danışmanları, öğrencinin proje tanımını değerlendirerek projeye onay veya red verir.\n* Öğrenciler, staj başvurularını yapmaları gereken tarihleri takip etmelidir.",
+      "latency": 71.408,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6864,
+        "faithfulness": 0.7,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.3837,
+        "keyword_coverage": 0.4762,
+        "composite_score": 0.6618
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 7,",
+        "relevance note: The answer directly and completely addresses the question by providing a detailed step-by-step guide on how to apply for",
+        "factual note: no numeric facts; char-4gram overlap=0.38"
+      ]
+    },
+    {
+      "question_id": "Q26",
+      "category": "Procedure",
+      "question": "Transkript nasıl alınır?",
+      "expected": "Transkript, MySU'daki online belge talep formu doldurularak Öğrenci Kaynakları'ndan (ÖK) talep edilir. ÖK raporlama yazılımı ile hazırlar. Basılı kopya ücretlidir, e-imzalı transkript ücretsizdir. Transkriptte öğrencinin tüm dersleri, kodları, SÜ ve AKTS kredileri, notları, DNO ve GNO bilgileri yer alır.",
+      "actual": "Transkript alma prosedürü aşağıdaki adımları içerir:\n\n1. Öğrenci, Mysu'da yer alan Öğrenci Kaynakları (Akademik ve İdari) web sayfasında bulunan online belge talep formunu doldurarak transkript talebinde bulunur.\n2. Öğrenci, Mütevelli Heyeti Kararı ile o yıl için belirlenen transkript ücretini, Akbank Merkez Şube 9999 hesabına açıklamalı olarak yatırır.\n3. Öğrenci, online belge talep formu ile basılı kopya transkript başvurusu yapan öğrencilerin ücreti ödemiş olduklarını gösteren banka dekontunu ilgili forma yükler.\n4. Öğrenci, transkript talebi olduğunda, ÖK tarafından hazırlanmış (tercihen kapalı zarf içinde), alınan tüm dersleri, notları, not ortalamalarını ve öğrenci değerlendirme sistemi ile ilgili açıklayıcı bilgileri içeren resmi belgeyi alabilir.\n\nTranskript alma prosedürü, öğrencinin talebi üzerine ÖK tarafından hazırlanır ve onaylanır. Öğrenci, transkriptini \"Information System Faculty/Students\" üzerinden görüntüleyebilir, isteyebilir ve resmi olmayan işleri için kullanabilir.",
+      "latency": 62.221,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7915,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5247,
+        "keyword_coverage": 0.5714,
+        "composite_score": 0.8186
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 10",
+        "relevance note: The answer directly and completely addresses the question by providing a detailed, step-by-step procedure for obtaining ",
+        "factual note: no numeric facts; char-4gram overlap=0.52"
+      ]
+    },
+    {
+      "question_id": "Q27",
+      "category": "Procedure",
+      "question": "Öğrenci belgesi nereden alınır?",
+      "expected": "Öğrenci belgesi, Öğrenci Kaynakları (ÖK) birimi tarafından hazırlanır. MySU'daki online Belge Talep Formu doldurularak başvuru yapılır. Belge 2 iş günü içinde hazırlanır ve en fazla 2 hafta muhafaza edilir; bu sürede teslim alınmazsa imha edilir.",
+      "actual": "Öğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir. Öğrenci belgesi, öğrencinin talebi üzerine hazırlanır ve öğrenciye ait bilgiler tek belge üzerinde Türkçe ve İngilizce olarak belirtilir.\n\nÖğrenci belgesi, Öğrenci İşleri tarafından hazırlanmış ve adayın başvuru sırasında halen kurumun kayıtlı öğrencisi olduğunu gösterir belge olarak tanımlanmaktadır. Bu belge, öğrencinin akademik durumunu ve kayıt bilgilerini içerir.",
+      "latency": 131.794,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6475,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.3448,
+        "composite_score": 0.4792
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 7,",
+        "relevance note: regex_extracted:{\"score\": 5, \"",
+        "factual note: found 0/1 facts; missing: ['2']"
+      ]
+    },
+    {
+      "question_id": "Q28",
+      "category": "Edge",
+      "question": "Cinsel taciz şikayeti nasıl yapılır?",
+      "expected": "Cinsel taciz şikayeti Cinsel Tacize Karşı Önlem ve Destek Komitesi'ne telefon, e-posta, yüz yüze görüşme veya yazılı olarak yapılabilir. Başvuranın ispatla yükümlülüğü yoktur.",
+      "actual": "Cinsel taciz şikayeti nasıl yapılır sorusuna cevap vermek için, ilk olarak sorunun hangi gruba (öğrenci, personel, misafir) uygulanacağını belirlemek gerekir. Soru öğrencilere uygulanıyorsa, öğrenci-applicable bölümü bulup oradan cevap vermeliyiz.\n\nCinsel taciz şikayeti için öğrenci-applicable bölümü bulduğumuzda, ilgili bölümde \"Cinsel tacize herhangi biçimde doğrudan veya dolaylı olarak maruz kaldığını düşünen kişi veya grup, olayın niteliğinden emin olmasalar dahi, başvuruda bulunabilirler.\" ifadesini görmekteyiz. Bu ifadede, öğrenci veya grup cinsel tacize maruz kaldığını düşündüğünde başvuruda bulunabilirler. Bu nedenle, öğrenciler cinsel taciz şikayeti için başvuruda bulunabilirler.\n\nAncak, şikayetçi olunan kişi öğrenci ise, ilgili disiplin süreci için Yükseköğretim Kurumları Öğrenci Disiplin Yönetmeliği ve Öğrenci Disiplin Yönergesi uygulanır. Bu yönetmelik ve yönerge gereği, cinsel taciz/saldırı ile ilgili ceza 2 yarıyıl uzaklaştırma veya yükseköğretim kurumundan çıkarmadır. Öğrencilerin işlediği bu tip suçlarla ilgili, eylemin işlendiği tarihten itibaren en geç 2 yıl içinde soruşturma tamamlanmalı ve karara bağlanmalıdır. Fiilin öğrenilmesini müteakip de en geç 3 ay içinde disiplin soruşturmasına başlanmış olmalıdır.\n\nBu nedenle, öğrenciler cinsel taciz şikayeti için başvuruda bulunabilirler ve ilgili disiplin süreci için Yükseköğretim Kurumları Öğrenci Disiplin Yönetmeliği ve Öğrenci Disiplin Yönergesi uygulanır.",
+      "latency": 62.485,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.6891,
+        "faithfulness": 1.0,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.3148,
+        "keyword_coverage": 0.3182,
+        "composite_score": 0.6604
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 10,",
+        "relevance note: The answer confirms that a complaint can be made and details the disciplinary process and timelines if the accused is a ",
+        "factual note: no numeric facts; char-4gram overlap=0.31"
+      ]
+    },
+    {
+      "question_id": "Q29",
+      "category": "Edge",
+      "question": "İtiraz süresi ne kadar?",
+      "expected": "Disiplin kararlarına itiraz süresi, cezanın tebliğ tarihinden itibaren 15 gündür. İdari yargı yoluna başvuru süresi 60 gündür.",
+      "actual": "İtiraz süresi 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün, 15 gün, 2 ay, 1 ay, 4 ay, 15 gün, 3 gün, 1 ay, 4 ay, 15 gün, 3 gün,",
+      "latency": 508.188,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.4516,
+        "faithfulness": 0.0,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.5,
+        "keyword_coverage": 0.1333,
+        "composite_score": 0.0
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n \"score\": 0,",
+        "relevance note: regex_extracted:{\"score\": 5, \"",
+        "factual note: found 1/2 facts; missing: ['60']"
+      ]
+    },
+    {
+      "question_id": "Q30",
+      "category": "Edge",
+      "question": "Sabancı Üniversitesi nerede?",
+      "expected": "Sabancı Üniversitesi İstanbul Tuzla'da bulunmaktadır.",
+      "actual": "Sabancı Üniversitesi'nin adresi, Orta Mahalle, Üniversite Caddesi No: 27, 34956 Tuzla-İstanbul'dadır.",
+      "latency": 64.684,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7578,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5686,
+        "keyword_coverage": 0.8,
+        "composite_score": 0.8195
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10,",
+        "relevance note: The answer directly provides the full address, which completely answers the question about the university's location.",
+        "factual note: no numeric facts; char-4gram overlap=0.57"
+      ]
+    },
+    {
+      "question_id": "Q31",
+      "category": "Negation",
+      "question": "Can audience students borrow books from the library?",
+      "expected": "No, audience students cannot use borrowing services. They can only access the Information Center and use information resources on-site. They also cannot access electronic resources from off-campus.",
+      "actual": "No, audience students cannot borrow books from the library. They can use the Information Center's services and facilities on-site, but they cannot use borrowing services.",
+      "latency": 44.823,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8872,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.5669,
+        "keyword_coverage": 0.64,
+        "composite_score": 0.8579
+      },
+      "notes": [
+        "faithfulness note: The system answer is directly supported by context [1], which states that 'Audience and Special Students Users with Audi",
+        "relevance note: The answer directly and completely addresses whether audience students can borrow books from the library.",
+        "factual note: no numeric facts; char-4gram overlap=0.57"
+      ]
+    },
+    {
+      "question_id": "Q32",
+      "category": "Negation",
+      "question": "Üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalabilir mi?",
+      "expected": "Hayır, üniversiteden uzaklaştırma cezası alan öğrenciler ceza süresi boyunca yurtlarda konaklayamaz.",
+      "actual": "Üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalabilir mi?\n\nYurtlarda kalmadığı halde, sadece ara dönem tatillerinde yurtlarda kalmak isteyen öğrencilerin talepleri kabul edilmez. (Yurtlar Yönergesi, 1.2.4)\n\nÜniversite'den uzaklaştırma cezası alan öğrenciler, ceza süresi boyunca yurtlarda konaklayamaz. (Yurtlar Yönergesi, 1.2.5)\n\nBu nedenle, üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalamaz.",
+      "latency": 58.304,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8284,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.9149,
+        "keyword_coverage": 0.9091,
+        "composite_score": 0.9272
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10, \"unsupported_claims\": [], \"reasoning\": \"All claims in the system a",
+        "relevance note: The answer directly and completely addresses the question by stating that students suspended from the university cannot ",
+        "factual note: no numeric facts; char-4gram overlap=0.91"
+      ]
+    },
+    {
+      "question_id": "Q33",
+      "category": "Negation",
+      "question": "Kafeteryadan paket yemek servisi yapılır mı?",
+      "expected": "Hayır, kafeteryada paket yemek servisi yapılmaz. Bu kural yalnızca pandemi veya doğal afet gibi olağanüstü durumlarda esnetilebilir.",
+      "actual": "Kafeteryada paket yemek servisi yapılmaz.",
+      "latency": 45.272,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.6172,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.2992,
+        "keyword_coverage": 0.375,
+        "composite_score": 0.71
+      },
+      "notes": [
+        "faithfulness note: The system's answer is directly supported by source [1], which states that package food service is not provided at the u",
+        "relevance note: The answer directly and completely addresses the question about whether take-out food service is available from the cafe",
+        "factual note: no numeric facts; char-4gram overlap=0.30"
+      ]
+    },
+    {
+      "question_id": "Q34",
+      "category": "Negation",
+      "question": "Can students access the Faculty Reserve Collection?",
+      "expected": "No, students cannot benefit from the Faculty Reserve Collection. Only academic staff and emeritus faculty can access it.",
+      "actual": "No, students cannot access the Faculty Reserve Collection. According to chunk id=\"1\", only Academic and teaching “Emeritus” employees can access and borrow the \"Faculty Reserve Collection.\"",
+      "latency": 45.547,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8985,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.6727,
+        "keyword_coverage": 0.7857,
+        "composite_score": 0.8877
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 10,",
+        "relevance note: The answer directly and completely addresses the question by stating that students cannot access the collection and expl",
+        "factual note: no numeric facts; char-4gram overlap=0.67"
+      ]
+    },
+    {
+      "question_id": "Q35",
+      "category": "Negation",
+      "question": "Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu nedir?",
+      "expected": "Adayların uyarma cezası dışında disiplin cezası almamış olması gerekir. Ayrıca siyasi parti organlarında üye veya görevli olmaması zorunludur.",
+      "actual": "Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu, aday olan öğrencinin \"uyarma cezası dışında disiplin cezası almamış olması\" gerektiği yönündedir.",
+      "latency": 49.905,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.6787,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.3871,
+        "keyword_coverage": 0.3889,
+        "composite_score": 0.7504
+      },
+      "notes": [
+        "faithfulness note: The system's answer regarding the disciplinary condition for Student Council elections is directly supported by context ",
+        "relevance note: The answer directly and completely addresses the question by stating the specific disciplinary condition required for ca",
+        "factual note: no numeric facts; char-4gram overlap=0.39"
+      ]
+    },
+    {
+      "question_id": "Q36",
+      "category": "List",
+      "question": "How many types of disciplinary penalties exist for students?",
+      "expected": "There are 5 types: (1) Warning, (2) Reprimand, (3) Suspension from university for 1 week to 1 month, (4) Suspension from university for 1 or 2 semesters, (5) Dismissal from the higher education institution.",
+      "actual": "There are four types of disciplinary penalties for students: \n\n1. Warning\n2. Reprimand\n3. Suspension (from 1 week up to 1 month)\n4. Suspension for 1 semester / 2 semesters or Dismissal from the Higher Education Institution.",
+      "latency": 52.152,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8087,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.8333,
+        "keyword_coverage": 0.8947,
+        "composite_score": 0.9009
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10, \"un",
+        "relevance note: The answer directly states the number of disciplinary penalties and then lists them, completely addressing the question.",
+        "factual note: found 5/6 facts; missing: ['5']"
+      ]
+    },
+    {
+      "question_id": "Q37",
+      "category": "List",
+      "question": "Yurt disiplin cezaları nelerdir?",
+      "expected": "Yurt disiplin cezaları üç türdür: (1) Uyarma, (2) Kınama, (3) Kurumdan çıkarma. Uyarma ve kınama müdür tarafından, kurumdan çıkarma ise disiplin kurulu kararıyla verilir.",
+      "actual": "Yurt disiplin cezaları aşağıdaki gibidir:\n\n* Yurt ücretini geç yatırmak\n* Depozito ücretini zamanında yatırmamak\n* Oda teslimini belirtilen zamanda yapmamak\n* Kendisine tahsis edilen yurt odasını başkasına kullandırmak\n* 1.4.1. (belirtilen maddeye göre)\n* Disiplin kurulu tarafından savunması alınmadan öğrenciye ceza verilmez.\n* Disiplin kurulu, savunmanın kurula intikal ettiği tarihten itibaren 3 iş günü içerisinde toplanır ve 7 iş günü içinde karar verir.\n* Uzaklaştırma cezası alan öğrenciler için uzaklaştırma süresi, azami öğrenim süresine katılmaz.\n* Yükseköğretim kurumundan çıkarma cezası alan öğrencilerin kendilerine ceza bildirimini izleyen 15 gün içerisinde Üniversite tarafından sunulan mal ve teçhizatı ilgili birimlere iade ederek ve yükümlülükleri olmadığına dair gerekli onayları alarak Üniversiteden ayrılma işlemlerini tamamlamaları gerekmektedir.\n\nBu cezalar, yurt başvurusunu engelleyecek tutum ve davranışlar olarak tanımlanmıştır.",
+      "latency": 53.938,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7642,
+        "faithfulness": 0.2,
+        "answer_relevance": 0.7,
+        "factual_accuracy": 0.6667,
+        "keyword_coverage": 0.4211,
+        "composite_score": 0.5609
+      },
+      "notes": [
+        "faithfulness note: retry_ok:",
+        "relevance note: The answer lists some specific dormitory disciplinary penalties but also includes several procedural details about the d",
+        "factual note: found 2/3 facts; missing: ['2']"
+      ]
+    },
+    {
+      "question_id": "Q38",
+      "category": "List",
+      "question": "Disiplin suçlarında zamanaşımı süreleri ne kadardır?",
+      "expected": "Uyarma, kınama ve kısa süreli uzaklaştırma cezası gerektiren fiillerde soruşturma zamanaşımı 1 aydır. 1-2 yarıyıl uzaklaştırma ve çıkarma cezası gerektiren fiillerde zamanaşımı 3 aydır. Tüm disiplin suçlarında mutlak zamanaşımı süresi 2 yıldır.",
+      "actual": "1 ay içinde, b) Yükseköğretim kurumundan bir veya iki yarıyıl için uzaklaştırma ile yükseköğretim kurumundan çıkarma cezalarında 3 ay içinde, disiplin soruşturmasına başlanmadığı takdirde, disiplin cezası verme yetkisi zaman aşımına uğrar.",
+      "latency": 61.644,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.7916,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 1.0,
+        "keyword_coverage": 0.3077,
+        "composite_score": 0.9375
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10,",
+        "relevance note: The answer directly provides specific timeframes for the statute of limitations regarding disciplinary investigations an",
+        "factual note: found 3/3 facts"
+      ]
+    },
+    {
+      "question_id": "Q39",
+      "category": "List",
+      "question": "Sabancı Üniversitesi'nde kaç fakülte vardır?",
+      "expected": "Sabancı Üniversitesi'nde üç fakülte vardır: Mühendislik ve Doğa Bilimleri Fakültesi (FENS), Sanat ve Sosyal Bilimler Fakültesi (FASS) ve Yönetim Bilimleri Fakültesi (SOM).",
+      "actual": "Sabancı Üniversitesi'nde 3 fakülte vardır:\n\n1. Mühendislik ve Doğa Bilimleri Fakültesi\n2. Sanat ve Sosyal Bilimler Fakültesi\n3. Yönetim Bilimleri Fakültesi",
+      "latency": 68.326,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8448,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.736,
+        "keyword_coverage": 0.8421,
+        "composite_score": 0.8875
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 10",
+        "relevance note: The answer directly states the number of faculties and then lists them, completely addressing the question.",
+        "factual note: no numeric facts; char-4gram overlap=0.74"
+      ]
+    },
+    {
+      "question_id": "Q40",
+      "category": "List",
+      "question": "How many books can alumni borrow from the library?",
+      "expected": "Alumni and retirees can borrow 2 books for 30 days, 1 multimedia item for 7 days, 1 bound periodical for 7 days, and 5 popular magazines for 3 days.",
+      "actual": "Sabancı University alumni and retirees who pay the membership fee can borrow 2 books for 30 days.",
+      "latency": 41.95,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.6974,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.3333,
+        "keyword_coverage": 0.6,
+        "composite_score": 0.7425
+      },
+      "notes": [
+        "faithfulness note: The system answer is directly supported by context [1], which states that Sabancı University alumni and retirees who pay",
+        "relevance note: The answer directly and completely states the number of books alumni can borrow.",
+        "factual note: found 2/6 facts; missing: ['1', '3', '5', '7']"
+      ]
+    },
+    {
+      "question_id": "Q41",
+      "category": "MultiHop",
+      "question": "Disiplin cezası alan öğrencinin bursu kesilir mi?",
+      "expected": "Disiplin cezasının bursa etkisi cezanın türüne göre değişir. Kınama ve kısa süreli uzaklaştırmada (1 hafta-1 ay) burs devam eder. 1-2 yarıyıl uzaklaştırma cezasında burs o dönem kesilir ancak ceza bitiminde yeniden bağlanır. Yükseköğretim kurumundan çıkarma cezasında burs tamamen kesilir.",
+      "actual": "Disiplin cezası alan öğrencinin bursu kesilir.",
+      "latency": 49.758,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7844,
+        "faithfulness": 0.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.0,
+        "keyword_coverage": 0.2059,
+        "composite_score": 0.0
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 0, \"unsupported",
+        "relevance note: The answer directly and completely addresses the question by providing a clear affirmative statement regarding the schol",
+        "factual note: found 0/3 facts; missing: ['2', '1', '1 ay']"
+      ]
+    },
+    {
+      "question_id": "Q42",
+      "category": "MultiHop",
+      "question": "Can a suspended student take courses at another university and transfer credits back to Sabancı?",
+      "expected": "No. Even if students who have received suspension or dismissal take courses from another university during the suspension period, they may not have these courses substituted with their programs at Sabancı University.",
+      "actual": "A suspended student cannot take courses at another university and transfer credits back to Sabancı University. According to the context, students who are enrolled in a diploma program at Sabancı University cannot take courses as a special student from the university during the period they are enrolled in the diploma program. Additionally, the context states that students who are suspended cannot take courses at another university and transfer credits back to Sabancı University.",
+      "latency": 52.867,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8147,
+        "faithfulness": 0.8,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.4645,
+        "keyword_coverage": 0.5185,
+        "composite_score": 0.7505
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 8,",
+        "relevance note: The answer directly and completely addresses the question by stating a clear 'no' and providing supporting details from ",
+        "factual note: no numeric facts; char-4gram overlap=0.46"
+      ]
+    },
+    {
+      "question_id": "Q43",
+      "category": "MultiHop",
+      "question": "Kütüphane gecikme borcu mezuniyeti engeller mi?",
+      "expected": "Evet, gecikme borcu olan öğrencilerin öğrenci belgesi, transkript ve mezuniyet için gerekli diğer belgeleri alması engellenir. Gecikme ücreti ödenene kadar ödünç alma hizmetleri de askıya alınır.",
+      "actual": "Kütüphane gecikme borcu mezuniyeti engeller mi?\n\nContext'te öğrencilerin borç kayıtları ve ödemelerin takibi amacıyla, ders kayıt engelleri ÖK tarafından sistemde oluşturulur. Ödeme yükümlülüklerinin tamamlanmasını takiben, Öğrenci Ücretlerinin Belirlenmesi ve Ödemelerin Takibi Yönergesi (ISR-C170-01 ) kapsamında ders kayıt engelleri kaldırır.\n\nBu nedenle, kütüphane gecikme borcu mezuniyeti engeller.",
+      "latency": 53.136,
+      "passed": true,
+      "scores": {
+        "answer_similarity": 0.8373,
+        "faithfulness": 1.0,
+        "answer_relevance": 1.0,
+        "factual_accuracy": 0.2849,
+        "keyword_coverage": 0.2857,
+        "composite_score": 0.7724
+      },
+      "notes": [
+        "faithfulness note: retry_ok:",
+        "relevance note: The answer directly and completely addresses whether library late fees prevent graduation by stating that they do.",
+        "factual note: no numeric facts; char-4gram overlap=0.28"
+      ]
+    },
+    {
+      "question_id": "Q44",
+      "category": "MultiHop",
+      "question": "Hangi disiplin cezaları Öğrenci Konseyi adaylığına engel olur?",
+      "expected": "Uyarma dışındaki tüm disiplin cezaları Öğrenci Konseyi adaylığına engel olur. Yani kınama, uzaklaştırma (kısa ve uzun süreli) ve yükseköğretim kurumundan çıkarma cezası alan öğrenciler aday olamaz.",
+      "actual": "Öğrenci Konseyi adaylığına engel olan disiplin cezaları:\n\n* Siyasi parti organlarında üye veya görevli olmamak\n* Yüz kızartıcı suçlardan dolayı adli sicil kaydı bulunmamak\n* Uyarma cezası dışında disiplin cezası almamış olmak\n* Seçimin yapıldığı dönemde kayıt dondurmamış olmak\n* Genel not ortalamasının 4 üzerinden 2,75 ve üstü veya 100 üzerinden 70 ve üstü olmamak\n* Terör örgütlerine aidiyeti veya iltisakı ya da bunlarla irtibatı olmamak\n\nBu koşulların hepsini sağlayan adaylar, Öğrenci Konseyi adaylığına başvurabilirler.",
+      "latency": 53.277,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.7807,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.5,
+        "factual_accuracy": 0.3833,
+        "keyword_coverage": 0.375,
+        "composite_score": 0.615
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\n  \"score\": 7,",
+        "relevance note: regex_extracted:{\"score\": 5, \"",
+        "factual note: no numeric facts; char-4gram overlap=0.38"
+      ]
+    },
+    {
+      "question_id": "Q45",
+      "category": "MultiHop",
+      "question": "Uzaklaştırma cezası alan öğrenci ücret iadesi alabilir mi?",
+      "expected": "Hayır, uzaklaştırma cezası alan öğrencilere herhangi bir ücret iadesi yapılmaz.",
+      "actual": "Uzaklaştırma cezası alan öğrenciler, ödemekle yükümlü oldukları dönem öğrenim ücretinin %25'ini ödemeleri gerekir.",
+      "latency": 50.432,
+      "passed": false,
+      "scores": {
+        "answer_similarity": 0.4382,
+        "faithfulness": 0.0,
+        "answer_relevance": 0.7,
+        "factual_accuracy": 0.4605,
+        "keyword_coverage": 0.4444,
+        "composite_score": 0.0
+      },
+      "notes": [
+        "faithfulness note: regex_extracted:{\"score\": 0, \"unsupported",
+        "relevance note: regex_extracted:{\"score\": 7, \"reasoning",
+        "factual note: no numeric facts; char-4gram overlap=0.46"
+      ]
+    }
+  ]
+}
