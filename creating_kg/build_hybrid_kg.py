@@ -26,6 +26,11 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from services.config.settings import RAGConfig
+from services.core.llm_service import LLMService
+
 load_dotenv()
 
 # =================== CONFIG ===================
@@ -82,8 +87,8 @@ class LLMHybridExtractor:
     """Uses LLM to extract both Facts and Triples."""
     
     def __init__(self):
-        self.url = f"{OLLAMA_HOST}/api/chat"
-        self.model = CHAT_MODEL
+        settings = RAGConfig.from_env()
+        self.llm = LLMService(settings.ollama)
         
     def extract(self, chunk_text: str, title: str, chunk_id: str) -> Tuple[List[ExtractedFact], List[Triple]]:
         """Extract both facts and triples from chunk using LLM."""
@@ -149,31 +154,13 @@ JSON:"""
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                resp = requests.post(
-                    self.url,
-                    json={
-                        "model": self.model,
-                        "messages": [{"role": "user", "content": prompt}],
-                        "stream": False,
-                        "format": "json",
-                        "options": {"temperature": 0.0}
-                    },
-                    timeout=180
+                parsed = self.llm.chat_json(
+                    prompt=prompt,
+                    system_prompt="You are a Knowledge Graph extraction expert. Return ONLY valid JSON matching the schema.",
+                    temperature=0.0
                 )
-                
-                data = resp.json()
-                content = data.get("message", {}).get("content", "{}")
-                
-                # Parse JSON
-                try:
-                    parsed = json.loads(content)
-                except json.JSONDecodeError:
-                    # Try to extract JSON
-                    m = re.search(r"\{.*\}", content, flags=re.DOTALL)
-                    if m:
-                        parsed = json.loads(m.group(0))
-                    else:
-                        return [], []
+                if not parsed:
+                    continue
                 
                 # Extract facts
                 facts = []
@@ -214,8 +201,8 @@ JSON:"""
                     print(f"[LLM extraction failed: timeout]")
                     return [], []
             except Exception as e:
-                print(f"[LLM extraction error] {e}")
-                return [], []
+                print(f"      [!] Error extracting block: {str(e)}")
+                time.sleep(1)
         
         return [], []
 
@@ -510,7 +497,7 @@ def main():
     
     builder = HybridKGBuilder()
     builder.build_from_selected_chunks(chunks_df, selected_paths)
-    
+
     # Save
     print(f"\n[4/5] Saving knowledge graph...")
     builder.save()

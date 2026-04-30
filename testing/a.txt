@@ -1,0 +1,721 @@
+"""test_rag_detailed.py - Multi-Metric RAG Evaluation
+
+Integrates the Evaluator class for comprehensive quality assessment.
+Run: python test_rag_detailed.py
+All terminal output is also recorded to rag_test_output.txt
+
+Flags:
+  --eval         Use multi-metric Evaluator (default: True)
+  --no-eval      Legacy keyword-coverage-only mode
+  -q QUESTION    Ask a single question interactively
+"""
+
+import os
+import sys
+import time
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# ========== OUTPUT REDIRECTION ========== #
+class Tee:
+    def __init__(self, console, file_handle):
+        self.console = console
+        self.file_handle = file_handle
+    def write(self, obj):
+        try:
+            self.console.write(obj)
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            self.console.write(obj.encode('ascii', 'replace').decode('ascii'))
+        self.file_handle.write(obj)
+    def flush(self):
+        self.console.flush()
+        self.file_handle.flush()
+
+output_file_path = os.path.join(os.path.dirname(__file__), "rag_test_output.txt")
+# Check for --append flag early to decide file open mode
+_append_mode = "--append" in sys.argv
+output_file = open(output_file_path, "a" if _append_mode else "w", encoding="utf-8")
+original_stdout = sys.stdout
+original_stderr = sys.stderr
+sys.stdout = Tee(original_stdout, output_file)
+sys.stderr = Tee(original_stderr, output_file)
+
+from dotenv import load_dotenv
+load_dotenv()
+
+# Test questions with expected answers from documents
+# Organized by category for comprehensive coverage
+TEST_QUESTIONS = [
+    # =================== ERASMUS & INTERNATIONAL ===================
+    {
+        "id": "Q1",
+        "category": "Erasmus",
+        "question": "Erasmus staj programına başvurmak için minimum GNO ne olmalı?",
+        "expected_answer": "Lisans için en az 2.20, Lisansüstü için en az 2.5 GNO gereklidir.",
+        "source": "IID-C710-02 Uluslararası Staj Yönergesi §3.3"
+    },
+    {
+        "id": "Q2",
+        "category": "Erasmus", 
+        "question": "Erasmus staj hareketliliği minimum süresi ne kadar?",
+        "expected_answer": "Staj hareketliliği süresi minimum 2 aydır.",
+        "source": "IID-C710-02 Uluslararası Staj Yönergesi §3.9"
+    },
+    {
+        "id": "Q3",
+        "category": "Erasmus",
+        "question": "How can I apply for Erasmus internship program?",
+        "expected_answer": "Students submit their application documents (CV, transcript) together with a minimum 2-month acceptance letter from the host organization to the Internship Office. Minimum GPA requirement is 2.20 for undergraduates and 2.5 for graduate students.",
+        "source": "PIPAR-C710-0201 Erasmus Internship Mobility Procedure §3.2"
+    },
+    {
+        "id": "Q4",
+        "category": "Erasmus",
+        "question": "Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?",
+        "expected_answer": "Erasmus+ hibesi Ulusal Ajans (UA) tarafından her akademik yıl belirlenen miktarlar üzerinden hesaplanır. Hibe ödemesi iki taksit olarak yapılır. Öğrenciler hibe almadan önce üniversiteyle bir Öğrenci Sözleşmesi imzalar. Nihai ödeme öğrencinin karşı kurumda kaldığı gün sayısına göre yapılır.",
+        "source": "IIRO-C420-01 Değişim Programları Giden Öğrenci Yönergesi §7"
+    },
+    
+    # =================== LIBRARY ===================
+    {
+        "id": "Q5",
+        "category": "Library",
+        "question": "Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?",
+        "expected_answer": "Öğrenciler (lisans, lisansüstü, değişim) 60 gün süre ile 60 adet kitap ödünç alabilir. Ayrıca 5 multimedya kaynağı 7 gün, 2 ciltli süreli yayın 7 gün ve 5 popüler dergi 3 gün süreliğine ödünç alınabilir.",
+        "source": "IIC-C840-02 Ödünç Verme ve Yararlanma Yönergesi §1.3"
+    },
+    {
+        "id": "Q6",
+        "category": "Library",
+        "question": "Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?",
+        "expected_answer": "Kütüphanelerarası ödünç alma (ILL) hizmeti ile Bilgi Merkezi koleksiyonunda bulunmayan kitap ve makaleler diğer kütüphanelerden temin edilebilir. Başvuru Bilgi Merkezi üzerinden yapılır.",
+        "source": "IIC-C820-01 Kütüphanelerarası Ödünç Yönergesi"
+    },
+    
+    # =================== DISCIPLINE ===================
+    {
+        "id": "Q7",
+        "category": "Discipline",
+        "question": "Öğrenci disiplin cezaları nelerdir?",
+        "expected_answer": "Uyarma, kınama, 1 haftadan 1 aya kadar uzaklaştırma, 1-2 yarıyıl uzaklaştırma, yükseköğretim kurumundan çıkarma.",
+        "source": "ISR-C210-01 Öğrenci Disiplin Yönergesi §3 Madde 1"
+    },
+    {
+        "id": "Q8",
+        "category": "Discipline",
+        "question": "Disiplin soruşturması ne kadar sürede sonuçlanmalı?",
+        "expected_answer": "Disiplin soruşturmasında karar en geç 10 gün içinde bildirilmelidir. Disiplin cezası gerektiren fiillerin işlendiği tarihten itibaren 2 yıl geçmesi halinde zamanaşımı oluşur.",
+        "source": "PSR-C210-0101 Disiplin Prosedürü §1.6, §2.5"
+    },
+    {
+        "id": "Q9",
+        "category": "Discipline",
+        "question": "Kopya çekmek hangi disiplin cezasını gerektirir?",
+        "expected_answer": "Sınavlarda kopyaya teşebbüs etmek kınama cezası gerektirir. Kopya çekmek veya çektirmek bir yarıyıl uzaklaştırma cezası gerektirir. Tehditle kopya çekmek, kopya çeken öğrencilerin sınav salonundan çıkarılmasına engel olmak veya başkasının yerine sınava girmek iki yarıyıl uzaklaştırma cezası gerektirir.",
+        "source": "ISR-C210-01 Öğrenci Disiplin Yönergesi Madde 3"
+    },
+    
+    # =================== SCHOLARSHIPS & FINANCIAL ===================
+    {
+        "id": "Q10",
+        "category": "Scholarship",
+        "question": "Burs başvurusu nasıl yapılır?",
+        "expected_answer": "Burs başvurusu ilan edilen tarihlerde başvuru sistemi üzerinden yapılır. Akademik Başarı ve İhtiyaç Bursu için ihtiyacı kanıtlayıcı belgeler sunulması gerekir. Üstün Akademik Başarı Bursu için herhangi bir başvuru yapılmasına gerek yoktur.",
+        "source": "ISR-C160-01 Burs ve Mali Destek Yönergesi §2"
+    },
+    {
+        "id": "Q11",
+        "category": "Scholarship",
+        "question": "Burs devam şartları nelerdir?",
+        "expected_answer": "Burs devam şartları bursun türüne göre değişir. Üstün Akademik Başarı Bursu için GNO en az 3.00, ilk yıl 34 SÜ / sonraki yıllar 30 SÜ kredi gerekir. Akademik Başarı ve İhtiyaç Bursu için GNO en az 2.50 ve 34 SÜ kredi gerekir. İlk giriş bursları akademik başarı durumuna bakılmaksızın normal öğrenim süresince devam eder. Disiplin cezalarında: kınama ve kısa süreli uzaklaştırmada burs devam eder, 1-2 yarıyıl uzaklaştırmada o dönem kesilir ama sonra yeniden bağlanır, çıkarmada tamamen kesilir.",
+        "source": "ISR-C160-01 Burs ve Mali Destek Yönergesi §2-4"
+    },
+    
+    # =================== GRADUATE PROGRAMS ===================
+    {
+        "id": "Q12",
+        "category": "Graduate",
+        "question": "Yüksek lisans programı kaç yarıyıl sürer?",
+        "expected_answer": "Tezli yüksek lisans en fazla 6 yarıyıl, tezsiz yüksek lisans en fazla 3 yarıyıldır.",
+        "source": "Lisansüstü Yönetmeliği Madde 32(2), 34(2)"
+    },
+    {
+        "id": "Q13",
+        "category": "Graduate",
+        "question": "Doktora yeterlik sınavı ne zaman yapılır?",
+        "expected_answer": "Derslerini ve seminerini tamamlayan öğrenciler doktora yeterlik sınavına girebilir. Bir yılda en fazla iki kez girebilirler.",
+        "source": "Lisansüstü Yönetmeliği Madde 36(1)"
+    },
+    {
+        "id": "Q14",
+        "category": "Graduate",
+        "question": "Tez savunması için jüri kaç kişiden oluşur?",
+        "expected_answer": "Yüksek lisans tez savunma jürisi, biri tez danışmanı ve en az biri üniversite dışından olmak üzere üç veya beş öğretim üyesinden oluşur. Doktora tez savunma jürisi, danışman dahil beş öğretim üyesinden oluşur ve en az ikisi başka bir yükseköğretim kurumunun öğretim üyesi olmalıdır.",
+        "source": "Lisansüstü Yönetmeliği Madde 33 ve Madde 38"
+    },
+    
+    # =================== UNDERGRADUATE ===================
+    {
+        "id": "Q15",
+        "category": "Undergraduate",
+        "question": "Yatay geçiş başvuru şartları nelerdir?",
+        "expected_answer": "Yatay geçiş başvurusu için hazırlık sınıfı dışında 2 dönemi en az 60/100 genel not ortalaması ile tamamlamış olmak gerekir. Başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca merkezi yerleştirme puanının taban puanına eşit veya yüksek olması şartı aranır.",
+        "source": "PSR-C120-0103 Yatay Geçiş Prosedürü, ISR-C120-01 Yönergesi"
+    },
+    {
+        "id": "Q16",
+        "category": "Undergraduate",
+        "question": "Çift anadal programına nasıl başvurulur?",
+        "expected_answer": "Çift anadal programına başvuru için GNO en az 3.20 olmalı ve öğrenci sınıfının ilk %20'sinde yer almalıdır. Tüm dersleri geçmiş olmalıdır. Başvuru en erken 2. dönem, en geç 4. dönemde yapılabilir. En fazla bir diploma programına daha kayıt yaptırılabilir.",
+        "source": "ISR-C290-02 Çift Anadal Yönergesi ve Lisans Yönetmeliği Madde 34"
+    },
+    {
+        "id": "Q17",
+        "category": "Undergraduate",
+        "question": "Ders ekleme-bırakma süresi ne kadar?",
+        "expected_answer": "Ders ekleme-bırakma işlemi, sonbahar ve ilkbahar dönemlerinde derslerin başladığı haftayı takip eden ikinci hafta içinde, akademik takvimde belirtilen tarihlerde yapılır.",
+        "source": "Akademik Takvim / Lisans Yönetmeliği Madde 22"
+    },
+    
+    # =================== REGISTRATION & GRADUATION ===================
+    {
+        "id": "Q18",
+        "category": "Registration",
+        "question": "Mezuniyet başvurusu nasıl yapılır?",
+        "expected_answer": "Mezuniyet başvurusu akademik takvimde belirtilen tarihlerde ÖBS üzerinden yapılır. Mezun adayı öğrencilerin programa ait tüm mezuniyet yükümlülüklerini tamamlaması ve genel not ortalamasının en az 2.00 olması gerekir.",
+        "source": "PSR-C240-0101 Mezuniyet Denetimi ve Diploma Düzenleme Prosedürü §1.1-1.2"
+    },
+    {
+        "id": "Q19",
+        "category": "Registration",
+        "question": "Kayıt dondurma şartları nelerdir?",
+        "expected_answer": "Dönem izni (kayıt dondurma); sağlık, maddi, aile, kişisel, akademik ve beklenmedik zorunlu olaylar gibi nedenlerle, ayrıca askerlik, gözaltı, tutukluluk veya mahkûmiyet durumlarında verilebilir. İzin gerekçesine ilişkin belgeler eklenerek dilekçe ile derslerin başlamasını takip eden 4. haftanın son iş gününe kadar ilgili fakülte dekanlığına başvurulur. Bir defada en çok 2 dönem, toplam 4 dönem izin verilebilir.",
+        "source": "Lisans Yönetmeliği Madde 39-41, ISR-C210-02"
+    },
+    
+    # =================== ENGLISH QUESTIONS ===================
+    {
+        "id": "Q20",
+        "category": "English",
+        "question": "What is the minimum GPA requirement for Erasmus?",
+        "expected_answer": "Minimum GPA is 2.20 for undergrad and 2.5 for graduate students.",
+        "source": "IID-C710-02 International Internship Instruction §3.3"
+    },
+    {
+        "id": "Q21",
+        "category": "English",
+        "question": "How many books can I borrow from the library?",
+        "expected_answer": "Undergraduate, graduate, and exchange students can borrow 60 books for 60 days, 5 multimedia items for 7 days, and 2 bound periodicals for 7 days.",
+        "source": "IIC-C840-02 Circulation and Utilization Instruction §1.3"
+    },
+    {
+        "id": "Q22",
+        "category": "English",
+        "question": "What are the disciplinary penalties for students?",
+        "expected_answer": "Warning, reprimand, suspension, and expulsion from university.",
+        "source": "PSR-C210-0101 Student Disciplinary Procedure §1.3"
+    },
+    
+    # =================== SPECIFIC NUMERIC QUESTIONS ===================
+    {
+        "id": "Q23",
+        "category": "Numeric",
+        "question": "Lisans mezuniyeti için kaç kredi gerekiyor?",
+        "expected_answer": "Lisans mezuniyeti için belirli bir sabit kredi sayısı yoktur. Kayıtlı olunan diploma programının gerektirdiği tüm ders ve kredi yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
+        "source": "Lisans Yönetmeliği Madde 35"
+    },
+    {
+        "id": "Q24",
+        "category": "Numeric",
+        "question": "Bir dersin kaç kez tekrar edilebilir?",
+        "expected_answer": "Geçer not alınan dersler, notun alındığı dönemi izleyen en çok 3 dönem içinde tekrar edilebilir (izinli dönemler ve yaz dönemleri hariç). Bu bir zaman sınırıdır, tekrar sayısı sınırı değildir. Başarısız olunan zorunlu dersler ise mezuniyete kadar tekrar edilerek başarılmalıdır.",
+        "source": "Lisans Yönetmeliği Madde 30"
+    },
+    
+    # =================== PROCEDURAL QUESTIONS ===================
+    {
+        "id": "Q25",
+        "category": "Procedure",
+        "question": "Zorunlu staj başvurusu nasıl yapılır?",
+        "expected_answer": "Zorunlu staj başvurusu OMS (Online Management System) üzerinden staj talebi oluşturularak yapılır. Öğrenciler Yeni Staj Projesi Formu (FIPAR-C71001-02) doldurur ve kurumlarda yapacakları projenin tanımını girer. Staj Ofisi, kabul edildikleri kuruma teslim edilmek üzere Zorunlu Staj Belgesi verir.",
+        "source": "PIPAR-C710-0101 Lisans Yaz Stajı Prosedürü"
+    },
+    {
+        "id": "Q26",
+        "category": "Procedure",
+        "question": "Transkript nasıl alınır?",
+        "expected_answer": "Transkript, MySU'daki online belge talep formu doldurularak Öğrenci Kaynakları'ndan (ÖK) talep edilir. ÖK raporlama yazılımı ile hazırlar. Basılı kopya ücretlidir, e-imzalı transkript ücretsizdir. Transkriptte öğrencinin tüm dersleri, kodları, SÜ ve AKTS kredileri, notları, DNO ve GNO bilgileri yer alır.",
+        "source": "PSR-C230-0103 Transkript Düzenleme Prosedürü"
+    },
+    {
+        "id": "Q27",
+        "category": "Procedure",
+        "question": "Öğrenci belgesi nereden alınır?",
+        "expected_answer": "Öğrenci belgesi, Öğrenci Kaynakları (ÖK) birimi tarafından hazırlanır. MySU'daki online Belge Talep Formu doldurularak başvuru yapılır. Belge 2 iş günü içinde hazırlanır ve en fazla 2 hafta muhafaza edilir; bu sürede teslim alınmazsa imha edilir.",
+        "source": "PSR-C210-0402 Öğrenci Belgesi Düzenleme Prosedürü"
+    },
+    
+    # =================== EDGE CASES ===================
+    {
+        "id": "Q28",
+        "category": "Edge",
+        "question": "Cinsel taciz şikayeti nasıl yapılır?",
+        "expected_answer": "Cinsel taciz şikayeti Cinsel Tacize Karşı Önlem ve Destek Komitesi'ne telefon, e-posta, yüz yüze görüşme veya yazılı olarak yapılabilir. Başvuranın ispatla yükümlülüğü yoktur.",
+        "source": "IPO-A510-01 Cinsel Taciz Yönergesi §5"
+    },
+    {
+        "id": "Q29",
+        "category": "Edge",
+        "question": "İtiraz süresi ne kadar?",
+        "expected_answer": "Disiplin kararlarına itiraz süresi, cezanın tebliğ tarihinden itibaren 15 gündür. İdari yargı yoluna başvuru süresi 60 gündür.",
+        "source": "PSR-C210-0101 Disiplin Prosedürü §2.7"
+    },
+    {
+        "id": "Q30",
+        "category": "Edge",
+        "question": "Sabancı Üniversitesi nerede?",
+        "expected_answer": "Sabancı Üniversitesi İstanbul Tuzla'da bulunmaktadır.",
+        "source": "Genel Bilgi / Kurumsal Web"
+    },
+
+    # =================== NEGATION QUESTIONS ===================
+    {
+        "id": "Q31",
+        "category": "Negation",
+        "question": "Can audience students borrow books from the library?",
+        "expected_answer": "No, audience students cannot use borrowing services. They can only access the Information Center and use information resources on-site. They also cannot access electronic resources from off-campus.",
+        "source": "IIC-C840-02 Circulation and Utilization Instruction §1.4"
+    },
+    {
+        "id": "Q32",
+        "category": "Negation",
+        "question": "Üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalabilir mi?",
+        "expected_answer": "Hayır, üniversiteden uzaklaştırma cezası alan öğrenciler ceza süresi boyunca yurtlarda konaklayamaz.",
+        "source": "IOP-C310-01 Yurt Yönergesi §6"
+    },
+    {
+        "id": "Q33",
+        "category": "Negation",
+        "question": "Kafeteryadan paket yemek servisi yapılır mı?",
+        "expected_answer": "Hayır, kafeteryada paket yemek servisi yapılmaz. Bu kural yalnızca pandemi veya doğal afet gibi olağanüstü durumlarda esnetilebilir.",
+        "source": "IOP-C320-01 Yemek Hizmeti Yönergesi"
+    },
+    {
+        "id": "Q34",
+        "category": "Negation",
+        "question": "Can students access the Faculty Reserve Collection?",
+        "expected_answer": "No, students cannot benefit from the Faculty Reserve Collection. Only academic staff and emeritus faculty can access it.",
+        "source": "IIC-C840-02 Circulation and Utilization Instruction §1.1, §1.3"
+    },
+    {
+        "id": "Q35",
+        "category": "Negation",
+        "question": "Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu nedir?",
+        "expected_answer": "Adayların uyarma cezası dışında disiplin cezası almamış olması gerekir. Ayrıca siyasi parti organlarında üye veya görevli olmaması zorunludur.",
+        "source": "ISR-C620-02 Öğrenci Konseyi Yönergesi §5"
+    },
+
+    # =================== LIST / COUNT QUESTIONS ===================
+    {
+        "id": "Q36",
+        "category": "List",
+        "question": "How many types of disciplinary penalties exist for students?",
+        "expected_answer": "There are 5 types: (1) Warning, (2) Reprimand, (3) Suspension from university for 1 week to 1 month, (4) Suspension from university for 1 or 2 semesters, (5) Dismissal from the higher education institution.",
+        "source": "PSR-C210-0101 Student Disciplinary Procedure §1.3"
+    },
+    {
+        "id": "Q37",
+        "category": "List",
+        "question": "Yurt disiplin cezaları nelerdir?",
+        "expected_answer": "Yurt disiplin cezaları üç türdür: (1) Uyarma, (2) Kınama, (3) Kurumdan çıkarma. Uyarma ve kınama müdür tarafından, kurumdan çıkarma ise disiplin kurulu kararıyla verilir.",
+        "source": "IOP-C310-01 Yurt Yönergesi §7"
+    },
+    {
+        "id": "Q38",
+        "category": "List",
+        "question": "Disiplin suçlarında zamanaşımı süreleri ne kadardır?",
+        "expected_answer": "Uyarma, kınama ve kısa süreli uzaklaştırma cezası gerektiren fiillerde soruşturma zamanaşımı 1 aydır. 1-2 yarıyıl uzaklaştırma ve çıkarma cezası gerektiren fiillerde zamanaşımı 3 aydır. Tüm disiplin suçlarında mutlak zamanaşımı süresi 2 yıldır.",
+        "source": "PSR-C210-0101 Disiplin Prosedürü §2.5"
+    },
+    {
+        "id": "Q39",
+        "category": "List",
+        "question": "Sabancı Üniversitesi'nde kaç fakülte vardır?",
+        "expected_answer": "Sabancı Üniversitesi'nde üç fakülte vardır: Mühendislik ve Doğa Bilimleri Fakültesi (FENS), Sanat ve Sosyal Bilimler Fakültesi (FASS) ve Yönetim Bilimleri Fakültesi (SOM).",
+        "source": "Lisans Yönetmeliği / Lisansüstü Yönetmeliği"
+    },
+    {
+        "id": "Q40",
+        "category": "List",
+        "question": "How many books can alumni borrow from the library?",
+        "expected_answer": "Alumni and retirees can borrow 2 books for 30 days, 1 multimedia item for 7 days, 1 bound periodical for 7 days, and 5 popular magazines for 3 days.",
+        "source": "IIC-C840-02 Circulation and Utilization Instruction §1.5"
+    },
+
+    # =================== MULTI-HOP QUESTIONS ===================
+    {
+        "id": "Q41",
+        "category": "MultiHop",
+        "question": "Disiplin cezası alan öğrencinin bursu kesilir mi?",
+        "expected_answer": "Disiplin cezasının bursa etkisi cezanın türüne göre değişir. Kınama ve kısa süreli uzaklaştırmada (1 hafta-1 ay) burs devam eder. 1-2 yarıyıl uzaklaştırma cezasında burs o dönem kesilir ancak ceza bitiminde yeniden bağlanır. Yükseköğretim kurumundan çıkarma cezasında burs tamamen kesilir.",
+        "source": "ISR-C160-01 Burs Yönergesi §4 + PSR-C210-0101 Disiplin Prosedürü §1.5"
+    },
+    {
+        "id": "Q42",
+        "category": "MultiHop",
+        "question": "Can a suspended student take courses at another university and transfer credits back to Sabancı?",
+        "expected_answer": "No. Even if students who have received suspension or dismissal take courses from another university during the suspension period, they may not have these courses substituted with their programs at Sabancı University.",
+        "source": "PSR-C210-0101 Disciplinary Procedure §1.5"
+    },
+    {
+        "id": "Q43",
+        "category": "MultiHop",
+        "question": "Kütüphane gecikme borcu mezuniyeti engeller mi?",
+        "expected_answer": "Evet, gecikme borcu olan öğrencilerin öğrenci belgesi, transkript ve mezuniyet için gerekli diğer belgeleri alması engellenir. Gecikme ücreti ödenene kadar ödünç alma hizmetleri de askıya alınır.",
+        "source": "IIC-C840-02 Ödünç Verme Yönergesi §4 + PSR-C240-0101 Mezuniyet Prosedürü"
+    },
+    {
+        "id": "Q44",
+        "category": "MultiHop",
+        "question": "Hangi disiplin cezaları Öğrenci Konseyi adaylığına engel olur?",
+        "expected_answer": "Uyarma dışındaki tüm disiplin cezaları Öğrenci Konseyi adaylığına engel olur. Yani kınama, uzaklaştırma (kısa ve uzun süreli) ve yükseköğretim kurumundan çıkarma cezası alan öğrenciler aday olamaz.",
+        "source": "ISR-C620-02 Öğrenci Konseyi Yönergesi §5 + ISR-C210-01 Disiplin Yönergesi §3"
+    },
+    {
+        "id": "Q45",
+        "category": "MultiHop",
+        "question": "Uzaklaştırma cezası alan öğrenci ücret iadesi alabilir mi?",
+        "expected_answer": "Hayır, uzaklaştırma cezası alan öğrencilere herhangi bir ücret iadesi yapılmaz.",
+        "source": "PSR-C210-0101 Disiplin Prosedürü §1.5"
+    },
+]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper: wraps text at width chars with a leading indent
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _wrap(text: str, width: int = 74, indent: str = "   ") -> str:
+    """Word-wrap *text* and prefix each line with *indent*."""
+    import textwrap
+    return "\n".join(
+        indent + line
+        for line in textwrap.wrap(text, width=width) or [""]
+    )
+
+
+def _build_context_from_chunks(chunks):
+    """Convert a list of chunk dicts (from search_only) to a context string."""
+    parts = []
+    for i, c in enumerate(chunks, 1):
+        meta = c.get("meta", {}) or {}
+        title   = meta.get("title", "")
+        section = meta.get("section_header", "")
+        text    = c.get("text", "")
+        header  = f"[{i}] {title}" + (f" | {section}" if section else "")
+        parts.append(header + "\n" + text)
+    return "\n\n-----\n\n".join(parts)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MAIN TEST RUNNER  (multi-metric)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_detailed_test(use_evaluator: bool = True, start_from: int = 1):
+    """
+    Run TEST_QUESTIONS through the RAG pipeline.
+
+    When *use_evaluator* is True (default), the Evaluator class is used to
+    compute Answer Similarity, Faithfulness, Relevance, Factual Accuracy, and
+    a composite score.  Keyword coverage is also computed for side-by-side
+    comparison with the legacy metric.
+
+    When *use_evaluator* is False, only legacy keyword coverage is computed
+    (original behaviour).
+
+    When *start_from* > 1, skips questions before that index (1-based).
+    Useful for resuming after a crash.
+    """
+
+    print("=" * 80)
+    mode_label = "MULTI-METRIC" if use_evaluator else "LEGACY KEYWORD-COVERAGE"
+    print(f"🔬 RAG EVALUATION — {mode_label} MODE")
+    print(f"📊 Total Questions: {len(TEST_QUESTIONS)}")
+    print("=" * 80)
+
+    # ── Load RAG Pipeline ────────────────────────────────────────────────────
+    try:
+        from services.pipeline.rag_pipeline import RAGPipeline
+        from services.config.settings import RAGConfig
+        config = RAGConfig.from_env()
+        pipeline = RAGPipeline(config)
+        print(f"🤖 LLM model  : {config.ollama.chat_model}")
+        print(f"🔢 Embed model: {config.ollama.embed_model}")
+    except ImportError as e:
+        print(f"❌ Import error: {e}")
+        return
+
+    print(f"✅ ChromaDB connected : {pipeline.vector_store.count} chunks")
+    print(f"✅ BM25 loaded        : {pipeline.bm25_service.document_count} docs\n")
+
+    # ── Load Evaluator ───────────────────────────────────────────────────────
+    evaluator = None
+    if use_evaluator:
+        try:
+            from testing.evaluator import Evaluator
+        except ImportError:
+            try:
+                from evaluator import Evaluator
+            except ImportError:
+                print("⚠️  evaluator.py not found – falling back to legacy mode")
+                use_evaluator = False
+
+        if use_evaluator:
+            evaluator = Evaluator(
+                ollama_host=config.ollama.host,
+                embed_model=config.ollama.embed_model,
+                chat_model=config.ollama.chat_model,
+                pass_threshold=0.70,
+            )
+            print(f"✅ Evaluator ready (ollama_embed={evaluator._ollama_embed_ok}, "
+                  f"ollama_llm={evaluator._ollama_llm_ok})\n")
+
+    # ── Result containers ────────────────────────────────────────────────────
+    eval_results   = []   # EvaluationResult objects (new path)
+    legacy_results = []   # plain dicts             (old path / comparison)
+
+    total_start = time.time()
+
+    for i, test in enumerate(TEST_QUESTIONS, 1):
+        if i < start_from:
+            continue
+        qid      = test["id"]
+        category = test.get("category", "Other")
+        question = test["question"]
+        expected = test["expected_answer"]
+
+        print("=" * 80)
+        print(f"📝 TEST {i}/{len(TEST_QUESTIONS)}: {qid} [{category}]")
+        print("=" * 80)
+        print(f"\n❓ QUESTION:")
+        print(_wrap(question))
+        print(f"\n📚 SOURCE   : {test['source']}")
+        print(f"\n✅ EXPECTED :")
+        print(_wrap(expected))
+
+        # ── Run pipeline ─────────────────────────────────────────────────────
+        t0 = time.time()
+        try:
+            pipeline_result = pipeline.answer(question, history=[])
+            answer = pipeline_result["answer"] if isinstance(pipeline_result, dict) else pipeline_result
+            latency = time.time() - t0
+        except Exception as e:
+            latency = time.time() - t0
+            print(f"\n❌ PIPELINE ERROR: {e}")
+            legacy_results.append({"id": qid, "category": category, "error": str(e)})
+            print()
+            continue
+
+        print(f"\n🤖 RAG ANSWER ({latency:.1f}s):")
+        print("-" * 60)
+        print(_wrap(answer, width=74))
+        print("-" * 60)
+
+        # ── Legacy keyword coverage (always computed for comparison) ──────────
+        kws      = expected.lower().split()
+        ans_low  = answer.lower()
+        kw_found = sum(1 for kw in kws if kw in ans_low)
+        kw_cov   = kw_found / len(kws) * 100 if kws else 0
+
+        print(f"\n📊 Keyword coverage (legacy): {kw_cov:.0f}%")
+
+        legacy_entry = {
+            "id": qid,
+            "category": category,
+            "question": question,
+            "expected": expected,
+            "actual": answer,
+            "latency": latency,
+            "coverage": kw_cov,
+        }
+        legacy_results.append(legacy_entry)
+
+        # ── Multi-metric evaluation ───────────────────────────────────────────
+        if evaluator is not None:
+            # Use the EXACT chunks that were used during generation.
+            # pipeline.answer() returns retrieved_chunks already — using
+            # search_only() would give different (smaller, no neighbor expansion)
+            # context and cause false low-faithfulness scores.
+            try:
+                raw_chunks = (
+                    pipeline_result.get("retrieved_chunks", [])
+                    if isinstance(pipeline_result, dict) else []
+                )
+                context = _build_context_from_chunks(raw_chunks) if raw_chunks else ""
+            except Exception:
+                context = ""
+
+
+            result = evaluator.evaluate(
+                question_id=qid,
+                category=category,
+                question=question,
+                answer=answer,
+                expected=expected,
+                context=context,
+                latency=latency,
+            )
+            eval_results.append(result)
+
+            s = result.scores
+            print(f"\n📐 Multi-metric scores:")
+            print(f"   Answer Similarity : {s.answer_similarity:.3f}")
+            print(f"   Faithfulness      : {s.faithfulness:.3f}")
+            print(f"   Answer Relevance  : {s.answer_relevance:.3f}")
+            print(f"   Factual Accuracy  : {s.factual_accuracy:.3f}")
+            print(f"   ─────────────────────────────────────────")
+            comp_icon = "✅" if s.composite_score >= 0.70 else "❌"
+            print(f"   Composite Score   : {s.composite_score:.3f}  {comp_icon}")
+            kw_icon   = "✅" if kw_cov >= 50 else "❌"
+            print(f"   Keyword Coverage  : {kw_cov:.0f}%  {kw_icon}  (legacy)")
+
+        print()
+
+    total_elapsed = time.time() - total_start
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # LEGACY SUMMARY  (always shown for comparison)
+    # ─────────────────────────────────────────────────────────────────────────
+    valid_legacy = [r for r in legacy_results if "coverage" in r]
+
+    print("=" * 80)
+    print("📊 LEGACY SUMMARY (keyword coverage)")
+    print("=" * 80)
+    cat_kw: dict = {}
+    for r in valid_legacy:
+        c = r["category"]
+        cat_kw.setdefault(c, []).append(r["coverage"])
+        status = "✅" if r["coverage"] >= 50 else "⚠️"
+        print(f"  {status} {r['id']:<6} [{r['category']:<14}]  "
+              f"{r['coverage']:>5.0f}%  ({r['latency']:.1f}s)")
+
+    if valid_legacy:
+        avg_kw  = sum(r["coverage"] for r in valid_legacy) / len(valid_legacy)
+        old_pass = sum(1 for r in valid_legacy if r["coverage"] >= 50)
+        print(f"\n  Average: {avg_kw:.0f}%  |  Passed (≥50%): {old_pass}/{len(valid_legacy)}")
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # MULTI-METRIC REPORT
+    # ─────────────────────────────────────────────────────────────────────────
+    if evaluator is not None and eval_results:
+        test_results_dir = os.path.join(os.path.dirname(__file__), "test_results")
+        evaluator.generate_report(eval_results, output_dir=test_results_dir)
+
+    print(f"\n⏱️  Total wall-clock time: {total_elapsed:.0f}s")
+
+    # ── Close output file & save baseline report copy ─────────────────────────
+    output_file.close()
+    sys.stdout = original_stdout
+    sys.stderr = original_stderr
+
+    # Save a copy as baseline_report_v2.txt
+    import shutil
+    baseline_path = os.path.join(os.path.dirname(__file__), "baseline_report_v2.txt")
+    shutil.copy2(output_file_path, baseline_path)
+    print(f"📄 Baseline report saved: {baseline_path}")
+
+    return eval_results if evaluator is not None else legacy_results
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SINGLE-QUESTION MODE
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_single_question(question: str, use_evaluator: bool = True):
+    """Run a single question; optionally score with the Evaluator."""
+
+    print("=" * 80)
+    print(f"❓ Question: {question}")
+    print("=" * 80)
+
+    from services.pipeline.rag_pipeline import RAGPipeline
+    from services.config.settings import RAGConfig
+
+    config   = RAGConfig.from_env()
+    pipeline = RAGPipeline(config)
+
+    t0      = time.time()
+    answer  = pipeline.answer(question, history=[])
+    latency = time.time() - t0
+
+    print(f"\n🤖 ANSWER ({latency:.1f}s):")
+    print("-" * 60)
+    print(answer)
+    print("-" * 60)
+
+    if use_evaluator:
+        try:
+            from testing.evaluator import Evaluator
+        except ImportError:
+            from evaluator import Evaluator
+
+        evaluator = Evaluator(
+            ollama_host=config.ollama.host,
+            embed_model=config.ollama.embed_model,
+            chat_model=config.ollama.chat_model,
+        )
+        chunks  = pipeline.search_only(question, top_k=10)
+        context = _build_context_from_chunks(chunks)
+
+        result = evaluator.evaluate(
+            question_id="Q?",
+            category="adhoc",
+            question=question,
+            answer=answer,
+            expected="",   # no ground-truth in ad-hoc mode
+            context=context,
+            latency=latency,
+        )
+        s = result.scores
+        print(f"\n📐 Scores:")
+        print(f"   Faithfulness   : {s.faithfulness:.3f}")
+        print(f"   Answer Relevance: {s.answer_relevance:.3f}")
+        print(f"   Factual Accuracy: {s.factual_accuracy:.3f}  (no ground-truth)")
+        print(f"   Composite       : {s.composite_score:.3f}")
+
+    output_file.close()
+    sys.stdout = original_stdout
+    sys.stderr = original_stderr
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ENTRY POINT
+# ─────────────────────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="MACKIS RAG Evaluation Suite"
+    )
+    parser.add_argument("-q", "--question", type=str, help="Ask a single question")
+    parser.add_argument(
+        "--no-eval", dest="no_eval", action="store_true",
+        help="Disable multi-metric evaluator; use legacy keyword coverage only",
+    )
+    parser.add_argument(
+        "--start-from", type=int, default=1,
+        help="Start from question N (1-based). Skips earlier questions.",
+    )
+    parser.add_argument(
+        "--append", action="store_true",
+        help="Append to rag_test_output.txt instead of overwriting.",
+    )
+    args = parser.parse_args()
+
+    use_eval = not args.no_eval
+
+    if args.question:
+        run_single_question(args.question, use_evaluator=use_eval)
+    else:
+        run_detailed_test(use_evaluator=use_eval, start_from=args.start_from)
