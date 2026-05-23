@@ -30,3 +30,10 @@ pydantic[email]
 # Gemini API (external LLM judge)
 google-genai
 
+# Testing
+pytest
+pytest-mock
+pytest-cov
+pytest-asyncio
+httpx
+
