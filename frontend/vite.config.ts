@@ -1,4 +1,4 @@
-
+/// <reference types="vitest" />
   import { defineConfig } from 'vite';
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
@@ -70,6 +70,28 @@
           target: 'http://localhost:8000',
           changeOrigin: true,
         },
+      },
+    },
+    test: {
+      environment: 'jsdom',
+      environmentOptions: {
+        jsdom: {
+          url: 'http://localhost',
+        },
+      },
+      globals: true,
+      setupFiles: ['./src/__tests__/setup.ts'],
+      include: ['src/**/*.test.{ts,tsx}'],
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'html'],
+        include: ['src/**/*.{ts,tsx}'],
+        exclude: [
+          'src/**/*.test.{ts,tsx}',
+          'src/__tests__/**',
+          'src/main.tsx',
+          'src/vite-env.d.ts',
+        ],
       },
     },
   });
