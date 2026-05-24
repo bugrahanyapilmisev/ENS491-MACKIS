@@ -12,7 +12,7 @@ import { Message, ConversationData } from "./lib/mockData";
 import { Sparkles, Search, Brain, LogOut } from "lucide-react";
 import { Card } from "./components/ui/card";
 import { ChatMessage, } from "./components/ChatMessage";
-import { sendMessageToRAG, fetchChatHistory, ChatModel, DEFAULT_MODEL } from "./lib/api";
+import { sendMessageToRAG, fetchChatHistory } from "./lib/api";
 import sabancıLogo from "./assets/sabanci_logo.png";
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
   const [conversations, setConversations] = useState<ConversationData[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string>("");
   const [isTyping, setIsTyping] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<ChatModel>(DEFAULT_MODEL);
+
 
   useEffect(() => {
     const loadHistory = async () => {
@@ -34,20 +34,32 @@ export default function App() {
 
           // Normalize backend response:
           // 1. Convert numeric ids to strings (backend: number, frontend state: string)
-          // 2. Convert ISO timestamps to human-readable labels so the sidebar
-          //    grouping logic (which checks for "Today" / "day ago") works correctly
+          // 2. Convert ISO timestamps to human-readable labels (Istanbul timezone)
+          const TZ = "Europe/Istanbul";
+
+          const formatMsgTime = (isoString: string): string => {
+            const date = new Date(isoString);
+            if (isNaN(date.getTime())) return isoString;
+            return date.toLocaleTimeString("tr-TR", {
+              hour: "2-digit",
+              minute: "2-digit",
+              timeZone: TZ,
+            });
+          };
+
           const normalize = (isoString: string): string => {
             const date = new Date(isoString);
-            if (isNaN(date.getTime())) return isoString; // not a valid date, pass through
+            if (isNaN(date.getTime())) return isoString;
             const now = new Date();
             const diffDays = Math.floor(
               (now.setHours(0, 0, 0, 0) - new Date(date).setHours(0, 0, 0, 0)) /
               (1000 * 60 * 60 * 24)
             );
-            if (diffDays === 0) return `Today at ${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
-            if (diffDays === 1) return "1 day ago";
-            if (diffDays < 7) return `${diffDays} days ago`;
-            return date.toLocaleDateString();
+            const time = date.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit", timeZone: TZ });
+            if (diffDays === 0) return `Bugün ${time}`;
+            if (diffDays === 1) return "Dün";
+            if (diffDays < 7) return `${diffDays} gün önce`;
+            return date.toLocaleDateString("tr-TR", { timeZone: TZ });
           };
 
           const mapped: ConversationData[] = (history as any[]).map((conv) => ({
@@ -57,6 +69,7 @@ export default function App() {
             messages: (conv.messages ?? []).map((msg: any) => ({
               ...msg,
               id: String(msg.id),              // number → string
+              timestamp: formatMsgTime(msg.timestamp),
               sources: msg.sources || [],      // Include sources from backend
               confidence: msg.confidence,      // Include confidence score
             })),
@@ -151,7 +164,7 @@ export default function App() {
         : parseInt(convId, 10) || undefined;
 
       // 4. Send request to backend
-      const data = await sendMessageToRAG(content, selectedModel, numericConvId);
+      const data = await sendMessageToRAG(content, numericConvId);
 
       // 5. Build the assistant message
       const aiResponse: Message = {
@@ -208,7 +221,6 @@ export default function App() {
     setCurrentConversationId(id);
   };
 
-
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full bg-background">
@@ -258,7 +270,6 @@ export default function App() {
               <span className="hidden sm:inline">Logout</span>
             </Button>
           </header>
-
 
           {/* Main Content Area */}
           <div className="flex-1 flex min-h-0">
@@ -396,14 +407,14 @@ export default function App() {
               <ChatInput
                 onSend={handleSendMessage}
                 disabled={isTyping}
-                selectedModel={selectedModel}
-                onModelChange={setSelectedModel}
               />
             </div>
 
             {/* Right Sidebar - Resources & Actions */}
             <div className="w-80 border-l bg-card/50 p-4 space-y-4 overflow-y-auto shrink-0 hidden xl:block">
               <KnowledgeBaseStats />
+
+
             </div>
           </div>
         </div>
