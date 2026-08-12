@@ -3,5 +3,15 @@
   "title": "application-form",
   "lang": "en",
   "html_lang": "",
-  "text": "Application Form for Participation and Travel Support for Developing Research Projects"
+  "doc_type": "form",
+  "metadata": {},
+  "summary": "Belge: application-form",
+  "sections": [
+    {
+      "header": "Introduction",
+      "level": 0,
+      "text": "Application Form for Participation and Travel Support for Developing Research Projects"
+    }
+  ],
+  "full_text": "Application Form for Participation and Travel Support for Developing Research Projects"
 }

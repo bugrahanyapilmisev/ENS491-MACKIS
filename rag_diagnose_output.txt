@@ -1,0 +1,327 @@
+================================================================================
+📝 DIAGNOSIS FOR Q15: Kopya çekmek hangi disiplin cezasını gerektirir?
+Source: ISR-C210-01 Öğrenci Disiplin Yönergesi Madde 3
+================================================================================
+
+--- QUERY ANALYSIS ---
+Language: tr
+Intent: other
+Tags: ['discipline', 'academic_integrity', 'punishment']
+Negated Terms: []
+Expanded Queries: ['Kopya çekmek hangi disiplin cezasını gerektirir?', 'kopya çekmenin cezası nedir', 'akademik hile yaptığında ne olur', 'sınavda kopya çekmek disiplin cezası', 'kopya çekmek için disiplin cezası ne']
+
+--- RETRIEVAL FOUND 145 CANDIDATES ---
+Top 10 Reranked candidates:
+  1. hybrid=1.025 ce=0.674 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=d236be914785ee29d0b48d1265a9b97ce4ccc20b
+  2. hybrid=0.936 ce=0.612 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=b558d91caf0a9446e7324d63422a13dd00e0422d
+  3. hybrid=0.661 ce=0.397 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=08a1905bdc9a0476d30536e2c7f29c70da2cf87a
+  4. hybrid=0.343 ce=0.042 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=7c18b0db160832298ddc79071e75aed4034d7d54
+  5. hybrid=0.308 ce=0.017 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=e1a28121291641021f13787b8012262e6b177fb5
+  6. hybrid=0.302 ce=0.012 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=961774a0a827304d0e5b3c163f1887b1860ff14c
+  7. hybrid=0.301 ce=0.018 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=58aa3d9e7bfc836b2db3642ee388c921267d66a2
+  8. hybrid=0.299 ce=0.011 | fsr-c21001-19 | chunk=14cec1ab1b6113a0be30133fc561823ddc487a3c
+  9. hybrid=0.296 ce=0.040 | fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogrenci | chunk=08b6444965ad9452e696def53750c9f9108357ee
+  10. hybrid=0.277 ce=0.014 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge | chunk=887bccb67e405219c0df469f5febde01237605a1
+
+After CE threshold filtering (0.5): 12 chunks left.
+
+Selected 6 chunks for context. Chunks details:
+  Chunk 1 (ce=0.674, source=surecharitasi/tr/yonerge/isr-c210-01.html):
+    Text: Kurum personeli ve öğrencilerine fiili saldırıda bulunmak, 4. Yükseköğretim kurumlarında hırsızlık yapmak, 5. Yükseköğretim kurumu bünyesinde mevcut bina, demirbaş eşya ve benzeri malzemeyi tahrip etmek veya bilişim sistemine zarar vermek, 6. Sınavlarda kopya çekmek veya çektirmek, 7. Seminer, tez ve yayınlarında intihal yapmak. 8.Yükseköğretim kurumundan uzaklaştırma cezası almış olmasına rağmen,...
+
+  Chunk 2 (ce=0.612, source=surecharitasi/tr/yonerge/isr-c210-01.html):
+    Text: Yükseköğretim kurumundan iki yarıyıl için uzaklaştırmayı gerektiren fiil ve haller şunlardır: Yükseköğretim kurumu görevlilerine karşı cebir ve şiddet kullanarak görevin yapılmasına engel olmak, Öğrencilere karşı cebir ve şiddet kullanarak yükseköğretim hizmetlerinden yararlanmalarını engellemek, Herhangi bir kişiyi veya grubu, cebir veya tehditle suç sayılan bir eylemi düzenlemeye veya böyle bir ...
+
+  Chunk 3 (ce=0.397, source=surecharitasi/tr/yonerge/isr-c210-01.html):
+    Text: Yükseköğretim kurumu içinde izinsiz olarak bildiri dağıtmak, afiş ve pankart asmak, 4. Yükseköğretim kurumunca asılmış duyuruları, program ve benzerlerini koparmak, yırtmak, değiştirmek, karalamak veya kirletmek, 5. Sınavlarda kopyaya teşebbüs etmek. Uzaklaştırma (1 haftadan 1 aya kadar): Öğrenciye, yükseköğretim kurumundan bir haftadan bir aya kadar uzaklaştırıldığının ve bu süre içerisinde dersl...
+
+  Chunk 4 (ce=0.011, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/formlar/fsr-c21001-19.doc):
+    Text: Sayı : <………………………> Konu : Disiplin soruşturması- <Öğrenci Adı/Soyadı> İstanbul, <tarih> İadeli-Taahhütlü Gizli Kredi ve Yurtlar Kurumu Genel Müdürlüğü Ankara Üniversitemiz <Fakülte/Enstitü adı> <düzey> öğrencilerinden <Öğrenci Adı/Soyadı> hakkında, “<………………………………………………………>” gerekçesi ile disiplin soruşturması başlatılmış olup, ilgili soruşturma raporu sonucuna göre Yükseköğretim Kurumları Öğrenci ...
+
+  Chunk 5 (ce=0.040, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/formlar/fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogrenci.doc):
+    Text: Bilgi Merkezi birimlerine en kısa sürede teslim etmeniz beklenmektedir. <Ad/Soyad> Öğrenci Kaynakları Direktörü Kopya FSR-C21001-21 çıkarma cezalarında yazılacaktır. 1) Sn. <Dekan Adı/Soyadı>, <Fakülte/Enstitü adı> Dekanı 3) Yükseköğretim Kurulu Başkanlığı 4) Kredi ve Yurtlar Kurumu Genel Müdürlüğü FSR-C21001-21...
+
+  Chunk 6 (ce=0.008, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/formlar/fsr-c21001-21.doc):
+    Text: Sayı : <....................................> Konu : Disiplin soruşturması-<Öğrenci Adı/Soyadı> İstanbul, <tarih> İadeli-Taahhütlü Gizli Sayın <Öğrenci Adı/Soyadı>, < .....adres.............> < .....adres.............> ŞEHİR Sayın <Öğrenci Soyadı>, “<………………………………………………………>” gerekçesi ile hakkınızda açılan disiplin soruşturması sonuçlanmış olup, uygun görülen karar aşağıda belirtilmiştir. Karar : Y...
+
+--- KG FACTS RETRIEVED ---
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Disciplinary Penalty]
+  • Ceza Türü: 25%
+
+[Student Discipline]
+  • Ceza Türü: deemed to have waived defense and the necessary decision shall be based on other evidence
+  • Ceza Türü: legal proceeding
+  • Ceza Türü: administrative proceedings
+  • Ceza Türü: suspension for two semesters or expulsion
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Yazışmalar → [results in] → Bilgi Merkezi arşivine kopya iletimi
+  • Kopya Bilgisi → [uses language] → English
+  • Universite Disiplin Yönetmelikleri → [applies to] → uygunsuz kullanımlar
+
+--- GENERATED ANSWER ---
+Kopya çekmek veya çektirmek, yükseköğretim kurumundan iki yarıyıl uzaklaştırma cezasını gerektirir. 
+Ayrıca, sınavlarda kopyaya teşebbüs etmek ise bir haftadan bir aya kadar uzaklaştırma cezasını gerektirir.
+
+
+================================================================================
+📝 DIAGNOSIS FOR Q33: Yan dal programına başvuru şartları nelerdir?
+Source: ISR-C290-02 Çift Anadal Yönergesi / Lisans Yönetmeliği
+================================================================================
+
+--- QUERY ANALYSIS ---
+Language: tr
+Intent: other
+Tags: ['yandal', 'admission_requirements']
+Negated Terms: []
+Expanded Queries: ['Yan dal programına başvuru şartları nelerdir?', 'yandal için gerekli şartlar nelerdir', 'yandal programına kabul şartları', 'yandal başvurusu için ne gerekir', 'minor programı başvuru koşulları']
+
+--- RETRIEVAL FOUND 194 CANDIDATES ---
+Top 10 Reranked candidates:
+  1. hybrid=1.000 ce=0.998 | Minor Program Directive( ISR-C290-03) | Yönerge | chunk=c2b6111b7d2ef16b4d57597b1debdcbf7b360083
+  2. hybrid=0.984 ce=0.998 | Minor Program Directive( ISR-C290-03) | Yönerge | chunk=94a5caadde372812ceff7712b81854c5347f8dc8
+  3. hybrid=0.935 ce=0.981 | Minor Program Directive( ISR-C290-03) | Yönerge | chunk=47523d978533372a1ff5a2d0d1780f2ced1c526d
+  4. hybrid=0.912 ce=0.950 | lisans_yon_tr_v26 | chunk=c1fab2dabad9c4a3bcbd069cf0056373767169a3
+  5. hybrid=0.904 ce=0.948 | İstatistikler Ve Raporların Yönetimi Prosedürü ( PSR-C260-0101) | Yönerge | chunk=f6d7114a6a3c79c487919b17ffb56425a1bfd27a
+  6. hybrid=0.886 ce=0.919 | Minor Program Directive( ISR-C290-03) | Yönerge | chunk=ed09803097db141480811ac90dfbbb730c3ec1e5
+  7. hybrid=0.854 ce=0.902 | lisans_yon_tr_v26 | chunk=43f02f62ae4ecaa758d9c979ce703555f4be83f4
+  8. hybrid=0.849 ce=0.972 | Minor Program Directive( ISR-C290-03) | Yönerge | chunk=9ea2808a1a9de19c5cecece4dca407f6f98a0a54
+  9. hybrid=0.820 ce=0.717 | Yan Dal Programı Yönergesi ( ISR-C290-03) | Yönerge | chunk=04682a48bd717ecfe9a508f19c2e0f247ccdf9cd
+  10. hybrid=0.793 ce=0.905 | Minor Program Directive( ISR-C290-03) | Yönerge | chunk=2f3bb81dc853831e899e4d93cd9ef69351a0bd8a
+
+After CE threshold filtering (0.5): 17 chunks left.
+
+Selected 8 chunks for context. Chunks details:
+  Chunk 1 (ce=0.998, source=surecharitasi/en/yonerge/minor-program-directive-isr-c290-03.html):
+    Text: Başvuru, Akademik Takvimde ilan edilen tarihlerde, yan dal programının bağlı olduğu Fakülte Dekanlığına dilekçe ile yapılır. c. Başvuru koşullarını sağlayan ancak kontenjan nedeniyle, başvuru yaptığı yan dal programına kabul edilemeyen öğrenci, kontenjanı bulunan başka yan dal programına tekrar başvuru yapabilir. 3. Kabul ve Kayıt a. Yan dal programına yapılan başvurunun kabul edilebilmesi için pr...
+
+  Chunk 2 (ce=0.998, source=surecharitasi/en/yonerge/minor-program-directive-isr-c290-03.html):
+    Text: Yan Dal Programlarının Açılması a. Yan dal programları, ilgili Fakülte Yönetim Kurulunun önerisi ve ÜEK’in görüşleri alınarak AK onayı ile açılır veya kapatılır. b. Program kontenjanları her sene ilgili kurulların önerisi ile AK tarafından onaylanır. 2. Başvuru a. Yan dal programlarına başvuru yapılabilmesi için aşağıdaki koşulların sağlanması gerekir: i. Diploma programı seçiminin yapılmış olması...
+
+  Chunk 3 (ce=0.981, source=surecharitasi/en/yonerge/minor-program-directive-isr-c290-03.html):
+    Text: Diploma programına yerleşmiş olunması, ii. En erken üçüncü ve en geç altıncı yarıyılın başında olunması, iii. Yan dal programının bağlı olduğu Fakülte tarafından belirlenen ve ilgili web sayfalarında yayımlanan minimum GNO şartının sağlanmış olması, iv. Lisans programındaki tüm kredili derslerin başarıyla tamamlanmış olması, b. Kontenjan dâhilinde, GNO’su en yüksek olanlardan başlanarak, kabul kri...
+
+  Chunk 4 (ce=0.950, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/lisans_yon_tr_v26.pdf):
+    Text: Yan dal programı MADDE 33 – (1) Yan dal programları, ilgili Fakülte Kurulunun teklifi ve Akademik Kurulun onayı ile düzenlenir. (2) SÜ’de bir lisans diploma programına kayıtlı olan öğrenciler, bu lisans programına ek olarak yan dal programına kayıt yaptırabilir. Yan dal programı bir lisans diploma programı değildir. Bu programı tamamlayan öğrencilere bir sertifika verilir....
+
+  Chunk 5 (ce=0.902, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/lisans_yon_tr_v26.pdf):
+    Text: Yatay geçiş yolu ile öğrenci kabulü MADDE 9 – (1) Kurum içi veya kurumlar arası yatay geçiş başvuruları, Yükseköğretim Kurumlarında Önlisans ve Lisans Düzeyindeki Programlar Arasında Geçiş, Çift Anadal, Yan Dal ile Kurumlar Arası Kredi Transferi Yapılması Esaslarına İlişkin Yönetmelik ve SÜ tarafından belirlenen esaslar ve kontenjanlar çerçevesinde ilgili fakülte yönetim kurulları tarafından değer...
+
+  Chunk 6 (ce=0.635, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/lisans_yon_tr_v26.pdf):
+    Text: Yurt dışından öğrenci kabulü koşulları ise Akademik Kurul tarafından belirlenir; bu kapsamda başvuran ve SÜ tarafından ilan edilen koşulları taşıyan adayların başvuruları, fakülte yönetim kurulu tarafından değerlendirilerek karara bağlanır. (3) SÜ lisans diploma programlarına yatay geçiş yolu ile kabul, 24/4/2010 tarihli ve 27561 sayılı Resmî Gazete’de yayımlanan Yükseköğretim Kurumlarında Önlisan...
+
+  Chunk 7 (ce=0.948, source=surecharitasi/tr/prosedur/psr-c260-0101.html):
+    Text: YAN DAL PROGRAMLARI: a) ÖK, Güz ve Bahar dönemleri için, yan dal programlarına başvuruda bulunarak, Fakülte Yönetim Kurulu Kararı ile kabul edilen öğrencilerin, kabul edildikleri yan dal programına kayıtlarını, sistemde yaparak, ilgili raporların oluşmasını sağlar....
+
+  Chunk 8 (ce=0.717, source=surecharitasi/tr/yonerge/isr-c240-03.html):
+    Text: Yönerge No ISR-C290-03-V02 Yürürlük Tarihi 06-08-2002 Güncelleme Tarihi 30-10-2025 İlgili Birim / Sahibi SR / Öğrenci Kaynakları Direktörlüğü Onaylayan MH / Mütevelli Heyeti Amaç Yan dal programlarının amacı, SÜ'nde lisans diploma programlarına kayıtlı ve başarıyla devam etmekte olan öğrencilerden belirli başarı koşullarını yerine getirenlerin istedikleri ve kabul edildikleri takdirde ilgi duydukl...
+
+--- KG FACTS RETRIEVED ---
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Yan Dal Programi]
+  • Gereksinim: bir lisans diploma programına kayıtlı olmak (lisans)
+  • Adım: Fakülte Kurulunun teklifi ve Akademik Kurulun onayı ile düzenlenir (lisans)
+  • Gereksinim: yan dal programına kayıt yaptırabilir (lisans)
+  • Gereksinim: yan dal programı bir lisans diploma programı değildir (lisans)
+  • Gereksinim: programı tamamlayan öğrencilere bir sertifika verilir (lisans)
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • minor_program_admission → [has step] → Kontenjan dâhilinde, GNO’su en yüksek olanlardan başlanarak, kabul kriterlerini sağlayan öğrencilerin, FYK kararı ile yan dal programına kaydı yapılır
+  • ÖK → [responsible for] → Yan Dal Programına Kayıtların Yapılması
+  • Yan Dal Programına Kayıtların Yapılması → [has duration] → 2 iş günü
+
+--- GENERATED ANSWER ---
+Yan dal programına başvuru için aşağıdaki şartlar gereklidir: 
+Öğrencinin önce bir lisans diploma programına yerleşmiş olması gerekir, 
+Başvuru, en erken ikinci ve en geç beşinci yarıyılda yapılabilir, 
+Başvuru dönemindeki GNO değeri, yan dal programının bağlı olduğu fakülte tarafından belirlenen minimum GNO sınırını karşılamalıdır. 
+Başvuru, akademik takvimde ilan edilen tarihlerde ilgili fakülte dekanlığına dilekçe ile yapılır. 
+Kontenjan nedeniyle kabul edilemeyen öğrenciler, başka bir yan dal programına tekrar başvuru yapabilir.
+
+
+================================================================================
+📝 DIAGNOSIS FOR Q36: Kayıt dondurma şartları nelerdir?
+Source: Lisans Yönetmeliği Madde 39-41, ISR-C210-02
+================================================================================
+
+--- QUERY ANALYSIS ---
+Language: tr
+Intent: other
+Tags: ['registration', 'academic_status', 'leave_of_absence']
+Negated Terms: []
+Expanded Queries: ['Kayıt dondurma şartları nelerdir?', 'kayıt durdurma koşulları nelerdir', 'öğrenci kaydını askıya alma şartları', 'öğretim süresi durdurma kriterleri']
+
+--- RETRIEVAL FOUND 201 CANDIDATES ---
+Top 10 Reranked candidates:
+  1. hybrid=0.996 ce=0.239 | Vize ve İkamet İzni Yönergesi ( IIRO-C430-02) | Yönerge | chunk=444302c4811bc3195ebaf60f7ac8c7cb96bbe31e
+  2. hybrid=0.371 ce=0.008 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) | Yönerge | chunk=74ccca1dc3bdaf2a44689a770e18805c82b52507
+  3. hybrid=0.341 ce=0.025 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | Yönerge | chunk=f6c7d4db57e208332e54a7a6bd178bdcf6e334aa
+  4. hybrid=0.327 ce=0.009 | lisansustu_yon_tr_v22 | chunk=b720a25be0b8a92a9e9ffaee5342f01d0ccadabd
+  5. hybrid=0.317 ce=0.017 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | Yönerge | chunk=18d427cfa08bab56460d859550734b78be7f46eb
+  6. hybrid=0.306 ce=0.001 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (ISR-C210-02) | Yönerge | chunk=c2aaa429ededa44b8abe44dcc9268366975b96df
+  7. hybrid=0.301 ce=0.000 | lisansustu_yon_tr_v22 | chunk=bae3c63f77e8756c5cea29fd44fa3ffdd030e954
+  8. hybrid=0.293 ce=0.002 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (ISR-C210-02) | Yönerge | chunk=3113b1508cb36d7f119a1381a6f5f8374f0b5b29
+  9. hybrid=0.284 ce=0.001 | lisans_yon_tr_v26 | chunk=e92688e97c063d4427d7fb3a1e5fb0c08706722b
+  10. hybrid=0.272 ce=0.006 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) | Yönerge | chunk=89f963c4f46ef295d2a7a1195b06dc5f439c4c00
+
+After CE threshold filtering (0.5): 12 chunks left.
+
+Selected 8 chunks for context. Chunks details:
+  Chunk 1 (ce=0.239, source=surecharitasi/tr/yonerge/isr-c210-05.html):
+    Text: Bu durumdaki öğrencilere ilişik kesme ya da kayıt dondurma tarihi itibariyle ikamet kartlarının iptal edileceği ÖK tarafından bildirilir. 3. UYGULAMALARIN TAKİBİ Madde 2 ’de belirtilen bilgi ve kurallar, uygulamalardaki düzenlemeler sebebiyle değişiklik gösterebileceğinden, öğrencilerin öğrenimleri süresince tüm güncel bilgileri, İl Göç İdaresi Genel Müdürlüğü resmi web sitesi ve Üniversitemiz res...
+
+  Chunk 2 (ce=0.008, source=surecharitasi/tr/prosedur/psr-c220-0101.html):
+    Text: Bu şekilde kayıt yaptıran öğrencinin kayıtsız kaldığı dönem, azami öğrenim süresi hesabına katılır. Azami öğrenim süresi içinde, dört yıl üst üste öğrenim ücreti ödenmemesi ve dönem kayıtlarının yenilenmemesi sebebi ile kayıtsız kalan lisans ve TGY öğrencilerinin, Akademik Kurul kararı ve YÖK onayı ile ilişikleri kesilir....
+
+  Chunk 3 (ce=0.006, source=surecharitasi/tr/prosedur/psr-c220-0101.html):
+    Text: ÖK Kayıtsız Kalma İşlemleri / İlgili Prosedürde belirtilen zamanlamada 8.2. İsteğe bağlı yaz okulu haricindeki dönemlerde kayıtsız kalan öğrenci, Fakülte / Enstitü Yönetim Kurulu veya DO Kurulu tarafından mazeretinin kabul edilmesi ve Üniversite tarafından belirlenebilecek mali yükümlülükleri yerine getirmesi halinde, en erken izleyen dönem başında kaydını yenileyebilir. Bunun için öğrencinin tale...
+
+  Chunk 4 (ce=0.025, source=surecharitasi/tr/yonerge/isr-c220-01.html):
+    Text: 1 .4. Kayıtsız Kalma a) En geç “mazeretli kayıt” sonuna kadar, dönem kaydını yaptırmayan öğrenciler, kayıtsız duruma düşerler. b) Kayıtsız duruma düşen öğrencilerin, kendilerine bildirilen tarihe kadar, Üniversite tarafından sağlanan mal ve teçhizatı iade etmeleri gerekir. c) Kayıtsız duruma düşen öğrenciye, en erken izleyen dönem başında “yeniden kayıt” hakkı tanınabilir. Yeniden kayıt hakkının t...
+
+  Chunk 5 (ce=0.017, source=surecharitasi/tr/yonerge/isr-c220-01.html):
+    Text: Ancak, öğrencinin geçerli bir mazereti olması durumunda, lisans/lisansüstü ders ekleme-bırakma süresi bitiminden itibaren iki haftadan fazla geçmemiş olması koşulu ile öğrencinin başvurusu üzerine, kayıtlı olduğu Fakülte / Enstitü Yönetim Kurulu Kararı ile “mazeretli kayıt” hakkı tanınabilir. d) Süresi içinde dönem kayıtlarını yaptıramayan TGY öğrencilerine, geçerli bir mazeretleri olması ve dersl...
+
+  Chunk 6 (ce=0.009, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/lisansustu_yon_tr_v22.pdf):
+    Text: İsteğe bağlı yaz döneminin s on haftasından önce yapılan Üniversiteden ayrılma başvurularında, ilgili dönemde kayıt yaptırmış olduğu dersler öğrencinin dönem kaydından düşürülür. d) Üniversiteden ayrılan öğrencilerin Üniversiteye tekrar dönmek istemeleri halinde, öğrenci kabulüne ilişkin koşulları sağlamaları gerekir. İzinli sayılma MADDE 40- (1) Öğrenciler, belgelemek koşulu ile sağlık, maddi, ai...
+
+  Chunk 7 (ce=0.000, source=surecharitasi/sites/mysu.sabanciuniv.edu.surecharitasi/files/lisansustu_yon_tr_v22.pdf):
+    Text: Ayrıca öğrencinin, askere alınması, göz altına alınması, tutuklanması veya mahkumiyeti durumunda; söz konusu durumun meydana gelmesinden veya bitiminden itibaren 2 ay içerisinde başvurması halinde; 41 inci maddede b elirtilen izin süreleri ile sınırlı olmak üzere, ilgili enstitü yönetim kurulu kararıyla, öğrenci bu durumun başlangıcından itibaren izinli sayılabilir. Sayfa 17 / 18 İzin süreleri MAD...
+
+  Chunk 8 (ce=0.001, source=surecharitasi/tr/yonerge/isr-c210-02.html):
+    Text: ÜNİVERSİTEDEN İZİNLİ AYRILMA 1.1. İzin Başvurusu 1.1.1. İzin almak isteyen öğrenciler, izin gerekçesine ilişkin belgeleri (resmi sağlık kurulu raporu verme yetkisine sahip olan hastanelerin ilgili uzmanlık alanlarındaki hekimlerden alınan raporlar, askerlik sevk belgesi vb.) ekleyerek bir dilekçe ile kayıtlı olduğu akademik birime (TGY öğrencileri: DO Direktörlüğü, Lisans öğrencileri: kayıtlı oldu...
+
+--- KG FACTS RETRIEVED ---
+📊 DOĞRULANMIŞ BİLGİLER (Bilgi Grafiğinden):
+
+[Lisansustu Kayit]
+  • Gereksinim: gerekli belgeleri Öğrenci Kaynakları Birimine ulaştırmak (lisansustu)
+  • Adım: akademik takvimde belirlenen süreler içinde kayıt yaptırmak (lisansustu)
+
+[Yurt Depozitosu Kesintileri]
+  • Ceza Türü: hasar vb. kesintiler
+
+[Hesap Kapatma]
+  • Adım: son iş günü
+
+🔗 İLİŞKİLER (Bilgi Grafiğinden):
+
+  • Stoksuz Malzeme Giriş Kayıt ve Yönlendirme → [follows] → Mal/ Hizmet Alım ve Yapım İşleri Usul ve Esasları Prosedürü
+  • Stoklu Malzeme Giriş ve Kayıt İşlemleri → [follows] → Mal/ Hizmet Alım ve Yapım İşleri Usul ve Esasları Prosedürü
+  • teklif değerlendirme → [has criteria] → Uygun ödeme şartları
+
+--- GENERATED ANSWER ---
+Kayıt dondurma şartları contextte açıkça belirtilmemiştir. Ancak kayıt dondurulan öğrencinin ikamet izni, ilişik kesilme ya da kayıt dondurma tarihinden itibaren ikamet kartlarının iptal edileceği belirtilmiştir. Kayıt dondurma süreci için gerekli prosedürler, başvuru formları veya kriterler (örneğin GNO, kredi sayısı, mazeret vb.) bu belgelerde yer almamaktadır.
+
+
+================================================================================
+📝 DIAGNOSIS FOR Q45: How many books can I borrow from the library?
+Source: IIC-C840-02 Circulation and Utilization Instruction §1.3
+================================================================================
+
+--- QUERY ANALYSIS ---
+Language: en
+Intent: count_items
+Tags: ['library', 'borrowing_limit']
+Negated Terms: []
+Expanded Queries: ['How many books can I borrow from the library?', 'what is the maximum number of books I can check out', 'how many books am I allowed to borrow from the university library', 'library loan limit for students']
+
+--- RETRIEVAL FOUND 121 CANDIDATES ---
+Top 10 Reranked candidates:
+  1. hybrid=0.953 ce=0.579 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=81bb474ac31a08e1e650f13bd570c5a6e1e33efa
+  2. hybrid=0.937 ce=0.549 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=1db0e1f3bc7c3539eb53584f8eacc6b986976866
+  3. hybrid=0.705 ce=0.316 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=669c1341e138e03b374038e8388ddf01e0b356b0
+  4. hybrid=0.590 ce=0.271 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=951d3f48842f08ed89b47e6c3cf16d266133c212
+  5. hybrid=0.528 ce=0.183 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=356dfa7b99740f2869ad3e411b3b688b9b117be1
+  6. hybrid=0.512 ce=0.152 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=22b6e639667ce920803b0dc862c0555f8a8e8874
+  7. hybrid=0.405 ce=0.086 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=5812500b973b005cf183ee48f130c7fe02a176d9
+  8. hybrid=0.393 ce=0.053 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=a11408a7dab8d630504e358284aebbe4146e685d
+  9. hybrid=0.328 ce=0.005 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=6a967ce8abf74c514870eaa36cd4a1b4e9e870fa
+  10. hybrid=0.315 ce=0.003 | Circulation and Utilization Instruction Letter  | Yönerge | chunk=6e58d0c2d511d805d145424d56c1aea3991675cd
+
+After CE threshold filtering (0.5): 6 chunks left.
+
+Selected 3 chunks for context. Chunks details:
+  Chunk 1 (ce=0.579, source=surecharitasi/en/yonerge/circulation-and-utilization-instruction-letter.html):
+    Text: However, they can conduct any type of search in licensed electronic resources, view the results, send articles to any email address. Package 2: Package 2 users can access publications on-site or borrow 10 books for 30 days. They can renew the due dates once for the same period, unless requested by others. Users can access the "General Book Collection" and "Large-Size Book Collection" within the In...
+
+  Chunk 2 (ce=0.549, source=surecharitasi/en/yonerge/circulation-and-utilization-instruction-letter.html):
+    Text: They can perform any type of database search, view the results, send articles to any email address. They can review print journals. Package 3: Package 3 users can access publications on-site or borrow 10 books for 30 days. They can renew the due dates once for the same period, unless requested by others. Users can access the "General Book Collection" and "Large-Size Book Collection" within the Inf...
+
+  Chunk 3 (ce=0.316, source=surecharitasi/en/yonerge/circulation-and-utilization-instruction-letter.html):
+    Text: They cannot benefit from the "Faculty Reserve Collection" and “Student Reserve Collection”. They can benefit from the "Slide Collection" only in the Information Center. 1.3. Undergraduate, Graduate, and Exchange Students Sabancı University graduate, undergraduate and exchange students may borrow 60 books for 60 days, 5 multimedia items for 7 days, and 2 hardcover periodicals for 7 days and 5 popul...
+
+--- KG FACTS RETRIEVED ---
+📊 VERIFIED FACTS (From Knowledge Graph):
+
+[Library Borrowing]
+  • Limit: ödünç alma hizmetinden yararlanılamaz
+  • Limit: 7 gün süre ile 5 adet genel multimedya (academic)
+  • Limit: 3 gün süre ile 5 popüler dergi (academic)
+  • Limit: unlimited
+  • Limit: 60
+
+🔗 RELATIONS (From Knowledge Graph):
+
+  • Administrative Staff → [can borrow] → 60 books
+  • Mimari ve İnşaat işleri Prosedürü → [requires support from] → İSG
+  • Mimari ve İnşaat işleri Prosedürü → [requires support from] → Çevre Yetkilisi
+
+--- GENERATED ANSWER ---
+Undergraduate and graduate students at Sabancı University can borrow up to 60 books for 60 days. Books can be renewed unlimitedly for the same period, unless requested by others. Other user groups, such as administrative staff, have the same borrowing limit of 60 books, while members of other universities may borrow only two books for 15 days. Package 1, 2, and 3 users, as well as alumni and industrial organizations, are subject to different restrictions and cannot borrow 60 books.
+
+
+================================================================================
+📝 DIAGNOSIS FOR Q70: What are the research project fund types at Sabancı University?
+Source: ISUATT-A610-01 Araştırma Projeleri Yönetilmesi Yönergesi
+================================================================================
+
+--- QUERY ANALYSIS ---
+Language: en
+Intent: describe
+Tags: ['research_funding', 'grants', 'sabanci_university']
+Negated Terms: []
+Expanded Queries: ['What are the research project fund types at Sabancı University?', 'types of research grants at Sabancı University', 'Sabancı University research project funding options', 'how to apply for research funding at Sabancı University']
+
+--- RETRIEVAL FOUND 130 CANDIDATES ---
+Top 10 Reranked candidates:
+  1. hybrid=1.018 ce=0.960 | Sabanci University President’s Office Research Projects Procedure (PSUATT-A610-01-03) | Yönerge | chunk=5041f140666f51e79634fc295e04d467864b2af1
+  2. hybrid=0.975 ce=0.952 | Instruction Letter On Management  Of Research Projects Processes(ISUATT-A610-01) | Yönerge | chunk=9649d6e8346e973944d00d7e2a939885ed0c8753
+  3. hybrid=0.965 ce=0.867 | Personal Research Fund Instruction Letter (IRG-A440-02) | Yönerge | chunk=589d7ba39cdfab92924b27869825a1f1083e0670
+  4. hybrid=0.955 ce=0.944 | Project Research Fund Procedure (PSUATT-A610-01-06) | Yönerge | chunk=b31950a244af497826e5f96de3bab3f6bd1bcf18
+  5. hybrid=0.931 ce=0.950 | SOP Fund Procedure (PSUATT-A610-01-11) | Yönerge | chunk=4492a9a1f53d7227b10712309e592b1f7200aa81
+  6. hybrid=0.906 ce=0.858 | Instruction Letter On Management  Of Research Projects Processes(ISUATT-A610-01) | Yönerge | chunk=f4f5744be44cecd2c525e029b0c319e5f84df4db
+  7. hybrid=0.870 ce=0.956 | 001_aras_projeleri_yonetimi_yonergesi_v6_eng | chunk=60ba877484022c7082d66838cdba463a5dfcd56e
+  8. hybrid=0.868 ce=0.952 | Support Package Procedure For Participation In Eu-European Research Council (Erc) Projects(PSUATT-A610-01-07) | Yönerge | chunk=b2b9cd9ab18f0ca5b0c05e1905a76d09b7dbbdc8
+  9. hybrid=0.842 ce=0.790 | Individual Research Support Fund Procedure(PEDU-O410-0101) | Yönerge | chunk=d7a5ee5bb10443788894f57f0c6396f0e75297b8
+  10. hybrid=0.840 ce=0.750 | Personal Research Fund Procedure (IRG-A440-02-01) | Yönerge | chunk=d114322d88daa837601e049767eabec44f0c428c
+
+After CE threshold filtering (0.5): 18 chunks left.
+
+Selected 8 chunks for context. Chunks details:
+  Chunk 1 (ce=0.960, source=surecharitasi/en/prosedur/sabanci-university-presidents-office-research-projects-procedure-psuatt-a610-01-03.html):
+    Text: ERC, Horizon Europe, TÜBİTAK, etc.). The application proposed by faculty members must be compatible with their other initial/ongoing research activities. Scope Full-time faculty members who started their activities at Sabancı University in the last two years and have completed six months at the institution can benefit from the SU President’s Office Research Fund. Faculty members who have previousl...
+
+  Chunk 2 (ce=0.399, source=surecharitasi/en/prosedur/sabanci-university-presidents-office-research-projects-procedure-psuatt-a610-01-03.html):
+    Text: Procedure No PSUATT-A610-01-03V02 Effective Date 31-03-2023 Update Date 24-04-2025 Related Unit / Owner SUATT / Araştırma Geliştirme ve Teknoloji Transfer Ofisi Approved by MH / Mütevelli Heyeti Related Instruction Araştırma Projeleri Süreçlerinin Yönetilmesi Yönergesi (ISUATT-A610-01) Aim The aim of this fund is to provide time and preliminary resources for faculty members who have started workin...
+
+  Chunk 3 (ce=0.262, source=surecharitasi/en/prosedur/sabanci-university-presidents-office-research-projects-procedure-psuatt-a610-01-03.html):
+    Text: Faculty Members can apply to this fund only once. Definitions / Abbreviations İÇK: Internal Committee PP: Faculty of Engineering and Natural Sciences Project Partners, Faculty of Arts and Social Sciences Project Partners PY: Project Manager is responsible for directing the scientific studies of the project, ensuring the use of project financial support in accordance with the rules, monitoring and ...
+
+  Chunk 4 (ce=0.952, source=surecharitasi/en/yonerge/instruction-letter-management-research-projects-processesisuatt-a610-01.html):
+    Text: Mİ: Sabancı University Financial Affairs Directorate Overhead: It is the amount included in the project budget that must be transferred to SU within the determined rates in return for the indirect contributions provided by SU, in addition to the direct costs required for the financial realization of the project. PAF: Project Research Fund PI: Principal Investigator PP: Faculty of Engineering and N...
+
+  Chunk 5 (ce=0.858, source=surecharitasi/en/yonerge/instruction-letter-management-research-projects-processesisuatt-a610-01.html):
+    Text: Postdoctoral Researchers Procedure (PSUATT-A610-01-09): In the procedure, the functioning and implementation methods for assigning postdoctoral researchers working in Sabancı University faculties/centers to projects are explained under the following headings: Postdoctoral researchers receiving scholarship in TÜBİTAK ARDEB projects, Postdoctoral researchers working in EU and contracted R&D projects...
+
+  Chunk 6 (ce=0.867, source=surecharitasi/en/yonerge/personal-research-fund-instruction-letter-irg-a440-02.html):
+    Text: Instruction No IRG-A440-02-V07 Effective Date 27-06-2012 Update Date 04-07-2025 Related Unit / Owner RPD / Araştırma Süreci Planlama ve Politika Geliştirme Approved by BT / Board of Trustees Aim This instruction letter aims to determine the principles regarding the granting process of the Personal Research Fund (PRF) at Sabancı University. Scope This instruction letter covers the Personal Research...
+
+  Chunk 7 (ce=0.944, source=surecharitasi/en/prosedur/project-research-fund-procedure-psuatt-a610-01-06.html):
+    Text: Definitions / Abbreviations KAF: Personal Research Fund Mİ: Financial Affairs Directorate PAF: Project Research Fund PP: Faculty of Engineering and Natural Sciences Project Partners, Faculty of Arts and Social Sciences Project Partners, Sabancı Business School Project Partners PSA: PAF Owner Academic PU: Project Management Office Specialist PY: Project Manager PMO: Project Management Office SU: Sa...
+

@@ -1,0 +1,1680 @@
+================================================================================
+🔬 RAG v2 DETAILED TEST - Full Answers for Evaluation
+📊 Total Questions: 30
+================================================================================
+llama3.1:latest
+✅ ChromaDB connected: 12592 chunks
+🤖 Using model: llama3.1:latest
+
+================================================================================
+📝 TEST 1/30: Q1 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   Erasmus staj programına başvurmak için minimum GNO ne olmalı?
+
+📚 EXPECTED SOURCE: IIPAR-C710-02 Uluslararası Staj Yönergesi
+
+✅ EXPECTED ANSWER:
+   Lisans için en az 2.20, Lisansüstü için en az 2.5 GNO gereklidir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Erasmus staj programına başvurmak için minimum GNO ne olmalı?', "GNO'sız Erasmus staj başvurusu nasıl yapılır?", 'Erasmus staj programı başvurması için gereken en az GNO puanı nedir?', 'GNO puanı ne kadar olması gerekiyorsa da Erasmus stajına başvurmak']
+[debug] HyDE generated: Bu belgede, öğrencilerin Erasmus staj programına başvurabilecekleri en düşük yabancı dil yeterlilik ...
+[debug] query tags: ['erasmus', 'internship', 'exchange_program', 'gno_requirements']
+[info] Loaded BM25 index with 12592 documents
+[debug] multi-query retrieval: 5 queries, 79 unique chunks
+[debug] initial candidates: 79
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.220 ce=0.994 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 2. score=1.219 ce=0.976 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 3. score=0.789 ce=0.619 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 4. score=0.691 ce=0.510 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 5. score=0.618 ce=0.463 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 6. score=0.510 ce=0.366 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 7. score=0.342 ce=0.212 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 8. score=0.288 ce=0.272 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 9. score=0.175 ce=0.058 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+10. score=0.162 ce=0.058 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+===================================
+[debug] final context chunks: 5
+
+🤖 RAG ANSWER (84.1s):
+------------------------------------------------------------
+   Erasmus staj programına başvurmak için minimum GNO 2.20 olmalı, lisans
+   öğrencileri için.
+------------------------------------------------------------
+
+📊 Keyword coverage: 50%
+
+
+================================================================================
+📝 TEST 2/30: Q2 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   Erasmus staj hareketliliği minimum süresi ne kadar?
+
+📚 EXPECTED SOURCE: IIPAR-C710-02
+
+✅ EXPECTED ANSWER:
+   Staj hareketliliği süresi minimum 2 aydır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Erasmus staj hareketliliği minimum süresi ne kadar?', 'Erasmus staj programı için en az kaç ay kalış gereklidir?', 'Erasmus staj hareketliliği süresini belirleyen faktörler nelerdir?', 'Erasmus öğrenci değişim programında staj için minimum süre ne kadardır?']
+[debug] HyDE generated: Bu belge, öğrenci değişim programı kapsamında staj hareketliliğinin minimum süresini ve bu süre boyu...
+[debug] query tags: ['erasmus', 'internship', 'duration']
+[debug] multi-query retrieval: 5 queries, 87 unique chunks
+[debug] initial candidates: 87
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.133 ce=0.976 | 0_grant_agreement
+ 2. score=1.099 ce=0.883 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+ 3. score=1.040 ce=0.879 | 0_grant_agreement
+ 4. score=1.035 ce=0.868 | hibe_sozlesmesi_0
+ 5. score=1.011 ce=0.852 | hibe_sozlesmesi_firo-c42001-07_1
+ 6. score=0.929 ce=0.738 | Erasmus+ programı kapsamında Ders Verme Hareketlil
+ 7. score=0.919 ce=0.998 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 8. score=0.917 ce=0.997 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 9. score=0.865 ce=0.940 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+10. score=0.864 ce=0.682 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+===================================
+[debug] final context chunks: 12
+
+🤖 RAG ANSWER (70.3s):
+------------------------------------------------------------
+   Minimum 2 aydır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 50%
+
+
+================================================================================
+📝 TEST 3/30: Q3 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   How can I apply for Erasmus internship program?
+
+📚 EXPECTED SOURCE: PIPAR-C710-0201
+
+✅ EXPECTED ANSWER:
+   Application is made through Career Development and Internship Office. Requirements: acceptance letter from host organization, minimum GPA 2.20 for undergrad / 2.5 for graduate.
+
+[debug] detected language: en
+[debug] intent: other
+[debug] query expansion: ['How can I apply for Erasmus internship program?', 'How to participate in Erasmus internship', 'Erasmus internship application process explained', 'Apply for Erasmus work placement programme']
+[debug] HyDE generated: This document outlines the application procedures and deadlines for the Erasmus internship program, ...
+[debug] query tags: ['erasmus', 'internship', 'program', 'application', 'university']
+[debug] multi-query retrieval: 5 queries, 82 unique chunks
+[debug] initial candidates: 82
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.446 ce=0.952 | Procedure for Students Participating in Erasmus In
+ 2. score=1.403 ce=0.975 | International Internship Instruction Letter (IIPAR
+ 3. score=1.381 ce=0.941 | International Internship Instruction Letter (IIPAR
+ 4. score=1.368 ce=0.953 | International Internship Instruction Letter (IIPAR
+ 5. score=1.291 ce=0.855 | Procedure for Students Participating in Erasmus In
+ 6. score=1.246 ce=0.868 | International Internship Instruction Letter (IIPAR
+ 7. score=1.172 ce=0.807 | International Internship Instruction Letter (IIPAR
+ 8. score=0.904 ce=0.581 | International Internship Instruction Letter (IIPAR
+ 9. score=0.793 ce=0.485 | Procedure for Students Participating in Erasmus In
+10. score=0.667 ce=0.507 | C710 Coordinate Career Development  | Yönerge
+===================================
+[debug] final context chunks: 10
+
+🤖 RAG ANSWER (98.2s):
+------------------------------------------------------------
+   To apply for the Erasmus internship program, follow these steps: * An
+   announcement regarding the Erasmus+ Internship Mobility Program
+   application requirements and necessary documents is published on the
+   internal web and internship websites starting at the end of October
+   (Section 3.1). * Students who receive an acceptance letter of minimum 2
+   months from the host organization and meet the required GPA, submit their
+   application documents (CV, transcript) together with the acceptance
+   letter to the Internship Office (Section 3.2). * The minimum GPA
+   requirements are: + 2.20 for undergraduates + 2.5 for graduate students *
+   Eligible undergraduate and graduate students complete their applications
+   through the Online Application System by following the procedures defined
+   in the Erasmus+ Outgoing Student Procedure (PIPAR-C710-0201) and submit
+   their documents to the Internship Office (Section 3.12). Note: The
+   application process is described in detail in Section 3 of the
+   International Internship Instruction Letter (IIPAR-C710-02).
+------------------------------------------------------------
+
+📊 Keyword coverage: 67%
+
+
+================================================================================
+📝 TEST 4/30: Q4 [Erasmus]
+================================================================================
+
+❓ QUESTION:
+   Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?
+
+📚 EXPECTED SOURCE: Erasmus Hibe Sözleşmesi
+
+✅ EXPECTED ANSWER:
+   Hibe miktarı gidilen ülkeye göre belirlenir ve aylık olarak ödenir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?', 'Erasmus programında burs ücreti hesabında neye dikkat edilmeli?', 'Hibe hesaplama için Erasmus öğrenim hareketliliği şartları nelerdir?', 'Erasmus öğrencilik bursu hesabında hangi faktörler dikkate alınır?']
+[debug] HyDE generated: Bu belgede, öğrencilerin Erasmus öğrenim hareketliliği için hibe hesaplamaları ve kriterleri açıklan...
+[debug] query tags: ['erasmus', 'burs', 'hesaplamaci']
+[debug] multi-query retrieval: 5 queries, 101 unique chunks
+[debug] initial candidates: 101
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.108 ce=0.889 | hibe_sozlesmesi_0
+ 2. score=1.085 ce=0.872 | 0_grant_agreement
+ 3. score=1.073 ce=0.858 | hibe_sozlesmesi_firo-c42001-07_1
+ 4. score=1.035 ce=0.802 | Erasmus+ programı kapsamında Ders Verme Hareketlil
+ 5. score=0.940 ce=0.743 | hibe_sozlesmesi_firo-c42001-07_1
+ 6. score=0.877 ce=0.938 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 7. score=0.790 ce=0.614 | hibe_sozlesmesi_0
+ 8. score=0.778 ce=0.806 | Değişim Programları Kapsamında Giden Öğrenci Yöner
+ 9. score=0.776 ce=0.600 | hibe_sozlesmesi_firo-c42001-07_1
+10. score=0.741 ce=0.753 | Değişim Programları Kapsamında Giden Öğrenci Yöner
+===================================
+[debug] final context chunks: 14
+
+🤖 RAG ANSWER (87.4s):
+------------------------------------------------------------
+   Erasmus öğrenim hareketliliğinde hibe hesaplanırken, öğrencinin gitmeden
+   önce ilk ödemesini alabilmesi için Hibe Sözleşmesini imzalaması ve
+   birinci Öğrenim Anlaşmasını tamamlaması gerekir. Ödemeler iki taksit
+   olarak yapılır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 30%
+
+
+================================================================================
+📝 TEST 5/30: Q5 [Library]
+================================================================================
+
+❓ QUESTION:
+   Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?
+
+📚 EXPECTED SOURCE: IIC-C840-02 Ödünç Verme ve Yararlanma Yönergesi
+
+✅ EXPECTED ANSWER:
+   Paket 2 kullanıcıları 30 gün süre ile 10 adet kitap ödünç alabilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?', 'Kütüphane ödünç kitabı kaç adet alma sınırlaması var?', 'Kitap ödünç alma limiti nedir ve süre ne kadardır?', 'Ödünç edebileceğim kitap sayısını ve süresini öğrenebilir miyim?']
+[debug] HyDE generated: Bu belgede kütüphane üyeliği koşulları ile birlikte kitap ödünç alma limiti ve süreleri açıklanmakta...
+[debug] query tags: ['library', 'borrowing-limit', 'loan-duration']
+[debug] multi-query retrieval: 5 queries, 69 unique chunks
+[debug] initial candidates: 69
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.930 ce=0.923 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 2. score=0.907 ce=0.924 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 3. score=0.881 ce=0.869 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 4. score=0.850 ce=0.854 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 5. score=0.659 ce=0.642 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 6. score=0.624 ce=0.620 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 7. score=0.620 ce=0.602 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 8. score=0.563 ce=0.537 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+ 9. score=0.552 ce=0.528 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+10. score=0.421 ce=0.364 | Ödünç Verme ve Yararlanma Yönergesi (IIC-C840-02) 
+===================================
+[debug] final context chunks: 7
+
+🤖 RAG ANSWER (83.6s):
+------------------------------------------------------------
+   Paket 3 kullanıcıları, yayınlardan yerinde yararlanacağı gibi, 30 gün
+   süre ile 10 adet kitap ödünç alabilir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 92%
+
+
+================================================================================
+📝 TEST 6/30: Q6 [Library]
+================================================================================
+
+❓ QUESTION:
+   Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?
+
+📚 EXPECTED SOURCE: IIC-C820-01 Kütüphanelerarası Ödünç Yönergesi
+
+✅ EXPECTED ANSWER:
+   Diğer kütüphanelerden kitap ve makale temin edilebilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?', 'Kütüphane arası kitap ödünçleme sistemi nedir?', 'İll hizmetinin çalışma prensibi ne?', 'Ödünç alma servisi nasıl işler?']
+[debug] HyDE generated: Bu belge kütüphanelerarası ödünç alma (ILL) hizmetinin kurallarını ve süreçlerini açıklamaktadır. Hi...
+[debug] query tags: ['interlibrary_loan', 'ill_service', 'library_services', 'information_literacy']
+[debug] multi-query retrieval: 5 queries, 119 unique chunks
+[debug] initial candidates: 119
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.152 ce=0.970 | Rezerv Koleksiyon Oluşturma Yönergesi (IIC-C820-13
+ 2. score=0.945 ce=0.980 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+ 3. score=0.937 ce=0.994 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 4. score=0.927 ce=0.976 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 5. score=0.919 ce=0.949 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+ 6. score=0.866 ce=0.917 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 7. score=0.864 ce=0.923 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 8. score=0.862 ce=0.922 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+ 9. score=0.862 ce=0.901 | Kütüphanelerarası Ödünç (ILL) Yönergesi (IIC-C820-
+10. score=0.836 ce=0.893 | Kütüphanelerarası Ödünç (ILL) Prosedürü (PIC-C820-
+===================================
+[debug] final context chunks: 15
+
+🤖 RAG ANSWER (119.6s):
+------------------------------------------------------------
+   Kütüphanelerarası ödünç alma (ILL) hizmeti, Bilgi Merkezi bünyesinde
+   bulunmayan bilgi kaynaklarının diğer kurumlardan, kurumların kuralları
+   doğrultusunda ödünç getirtilmesi, süresi sonunda iade edilmesi ve diğer
+   kurumların aynı tür isteklerinin karşılanması hizmeti olarak çalışır.
+   İstekler, web sitesi üzerinden "Ödünç Kitap İstek Formu (FIC-C82004-01)"
+   doldurularak yapılır. İstekler, aynı anda 2 bilgi kaynağı ile sınırlıdır.
+   Ödünç getirilen bilgi kaynağının kullanımının, "Telif Hakları Yasası"
+   doğrultusunda olması gerektiği, istek sahibine bildirilir. Bibliyografik
+   bilgisi saptanamayan istekler, istek sahibine bildirilir ve iptal edilir.
+   Diğer kurumlardan ödünç alınan bilgi kaynaklarının ödünç işlemi "Ödünç
+   Verme Prosedürü (PIC-C840-0201)" doğrultusunda yürütülür. Yurt dışından
+   getirtilen bilgi kaynağının ödünç kullanım süresi kurumun politikasına
+   göre uygulanır. Sağlanan bilgi kaynağı geldiğinde istek sahibine
+   duyurulur. 1 hafta içerisinde alınmayanlar için ikinci duyuru yapılarak
+   bilgi kaynağının bir hafta sonra iade edileceği bildirilir. Belirtilen
+   süre içerisinde alınmayan bilgi kaynakları ilgili kuruma iade edilir ve
+   aynı kullanıcının bu yayına ilişkin ILL isteği, 6 ay süre ile kabul
+   edilmez.
+------------------------------------------------------------
+
+📊 Keyword coverage: 43%
+
+
+================================================================================
+📝 TEST 7/30: Q7 [Discipline]
+================================================================================
+
+❓ QUESTION:
+   Öğrenci disiplin cezaları nelerdir?
+
+📚 EXPECTED SOURCE: ISR-C210-01 Öğrenci Disiplin Yönergesi
+
+✅ EXPECTED ANSWER:
+   Uyarma, kınama, 1 haftadan 1 aya kadar uzaklaştırma, 1-2 yarıyıl uzaklaştırma, yükseköğretim kurumundan çıkarma.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Öğrenci disiplin cezaları nelerdir?', 'Öğrenci disiplin cezaları ne kadar?', 'Disiplin cezası alan öğrenciler hangi haklardan yoksun kalır?', 'Üniversite disiplin kurallarında ceza türleri nelerdir?']
+[debug] HyDE generated: Bu belge öğrencilerin alabileceği disiplin cezalarıyla ilgili kuralları ve prosedürleri içerir. Disi...
+[debug] query tags: ['student_discipline_punishments', 'turkish_law']
+[debug] multi-query retrieval: 5 queries, 80 unique chunks
+[debug] initial candidates: 80
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.284 ce=0.988 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 2. score=1.272 ce=0.986 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 3. score=1.266 ce=0.994 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=1.246 ce=0.970 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 5. score=1.245 ce=0.976 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 6. score=1.227 ce=0.963 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 7. score=1.223 ce=0.969 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 8. score=1.220 ce=0.936 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 9. score=1.208 ce=0.936 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+10. score=1.157 ce=0.979 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+===================================
+[debug] final context chunks: 16
+
+🤖 RAG ANSWER (98.4s):
+------------------------------------------------------------
+   Öğrenci disiplin cezaları şunlardır: 1. Uyarma 2. Kınama 3. Yükseköğretim
+   kurumundan bir haftadan bir aya kadar uzaklaştırma cezası 4.
+   Yükseköğretim kurumundan bir veya iki yarıyıl için uzaklaştırma cezası 5.
+   Yükseköğretim kurumundan çıkarma cezası Bu cezalar, öğrencinin disiplin
+   suçu niteliğindeki fiil ve halleri işlediği tarihten itibaren 1 ay içinde
+   (uyarma, kınama, yükseköğretim kurumundan bir haftadan bir aya kadar
+   uzaklaştırma cezaları) veya 3 ay içinde (yükseköğretim kurumundan bir
+   veya iki yarıyıl için uzaklaştırma cezası ve yükseköğretim kurumundan
+   çıkarma cezası) disiplin soruşturmasına başlanmadığı takdirde zaman
+   aşımına uğrar.
+------------------------------------------------------------
+
+📊 Keyword coverage: 71%
+
+
+================================================================================
+📝 TEST 8/30: Q8 [Discipline]
+================================================================================
+
+❓ QUESTION:
+   Disiplin soruşturması ne kadar sürede sonuçlanmalı?
+
+📚 EXPECTED SOURCE: PSR-C210-0101
+
+✅ EXPECTED ANSWER:
+   Soruşturmanın tamamlandığı günden itibaren en geç 10 gün içinde karar verilmelidir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Disiplin soruşturması ne kadar sürede sonuçlanmalı?', 'Disiplin soruşturmaları için gereken süre ne kadardır?', 'Soruşturma süreci kaç günde tamamlanmalıdır?', 'Disiplin soruşturmasının sonuçlanma süresi nedir?']
+[debug] HyDE generated: Bu belge disiplin soruşturmasının tamamlanma süresini ve süreci hakkında bilgi vermektedir. Disiplin...
+[debug] query tags: ['disciplinary_investigation', 'procedure', 'university_rules']
+[debug] multi-query retrieval: 5 queries, 103 unique chunks
+[debug] initial candidates: 103
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.063 ce=0.901 | disiplin_cezasi_nedeni_ile_universiteden_ayrilma_m
+ 2. score=0.989 ce=0.817 | fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogr
+ 3. score=0.919 ce=0.992 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=0.914 ce=0.996 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 5. score=0.900 ce=0.986 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 6. score=0.851 ce=0.965 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 7. score=0.841 ce=0.950 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 8. score=0.794 ce=0.867 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 9. score=0.699 ce=0.755 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+10. score=0.691 ce=0.731 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+===================================
+[debug] final context chunks: 12
+
+🤖 RAG ANSWER (77.9s):
+------------------------------------------------------------
+   Disiplin soruşturması, eylemin işlendiği tarihten itibaren en geç 2 yıl
+   içinde tamamlanmalı ve karara bağlanmalıdır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 45%
+
+
+================================================================================
+📝 TEST 9/30: Q9 [Discipline]
+================================================================================
+
+❓ QUESTION:
+   Kopya çekmek hangi disiplin cezasını gerektirir?
+
+📚 EXPECTED SOURCE: ISR-C210-01
+
+✅ EXPECTED ANSWER:
+   Sınavlarda kopya çekmek disiplin suçudur.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Kopya çekmek hangi disiplin cezasını gerektirir?', 'Kopyalama cezası hangi disiplinlerde verilir?', 'Plagiyarizm cezası hangi bölümde uygulanır?', 'Disiplin cezası kopyalamak hangi alanda alınır?']
+[debug] HyDE generated: Bu belgede, öğrencilerin kopya çekme eylemine ilişkin olarak uygulanacak disiplin cezaları açıklanma...
+[debug] query tags: ['plagiarism', 'academic-discipline', 'university-rules', 'turkish-law']
+[debug] multi-query retrieval: 5 queries, 98 unique chunks
+[debug] initial candidates: 98
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.404 ce=0.649 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 2. score=1.374 ce=0.624 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 3. score=0.729 ce=0.312 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=0.425 ce=0.141 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 5. score=0.368 ce=0.118 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 6. score=0.216 ce=0.056 | fsr-c21001-21_disiplin_cezasi_bildirim_mektubu_ogr
+ 7. score=0.192 ce=0.067 | Etik Kurul Çalışma Yönergesi (IGS-S1210-01) | Yöne
+ 8. score=0.171 ce=0.021 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 9. score=0.152 ce=0.024 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+10. score=0.141 ce=0.013 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+===================================
+[debug] final context chunks: 12
+
+🤖 RAG ANSWER (85.8s):
+------------------------------------------------------------
+   Sınavlarda kopya çekmek, 1) Kınama cezasını gerektirmez, 2) Uyarma
+   cezasını gerektirebilir, 3) Kınama cezasını gerektiren fiil ve hallerden
+   farklıdır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 60%
+
+
+================================================================================
+📝 TEST 10/30: Q10 [Scholarship]
+================================================================================
+
+❓ QUESTION:
+   Burs başvurusu nasıl yapılır?
+
+📚 EXPECTED SOURCE: PSR-C160-0101
+
+✅ EXPECTED ANSWER:
+   Burs başvurusu ilan edilen tarihlerde ÖBS (Öğrenci Bilgi Sistemi) üzerinden online olarak yapılır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Burs başvurusu nasıl yapılır?', 'Burs başvuru süreci nedir?', 'Bursa başvurmak için neler gerekir?', 'Burs başvurumu nasıl yapabilirim?']
+[debug] HyDE generated: Bu belgede burs başvurularının nasıl yapılacağı, gerekli evraklar ve değerlendirme süreci açıklanır....
+[debug] query tags: ['scholarship_application', 'procedure']
+[debug] multi-query retrieval: 5 queries, 118 unique chunks
+[debug] initial candidates: 118
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.222 ce=0.888 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 2. score=1.220 ce=0.907 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 3. score=1.100 ce=0.794 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 4. score=1.002 ce=0.746 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 5. score=0.909 ce=0.657 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 6. score=0.896 ce=0.659 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 7. score=0.872 ce=0.870 | Yüksek Öğrenim Kredi Ve Yurtlar Kurumu Burs Ve Öğr
+ 8. score=0.857 ce=0.623 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 9. score=0.846 ce=0.586 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+10. score=0.746 ce=0.750 | fmic-s52001-19_1
+===================================
+[debug] final context chunks: 11
+[debug] WARNING: Possible hallucinated numbers: {'4.'}
+[debug] Numbers in context: ['1.', '1', '01', '1.1', '1.2', '2', '2.', '2.1', '2.2', '2.3', '2.4', '2.50', '2.5', '3', '3.', '3.1', '3.2', '4', '5', '05']
+[debug] Found potential correct number in context: 2 (instead of 4.)
+[debug] Found potential correct number in context: 7 (instead of 4.)
+[debug] Found potential correct number in context: 5 (instead of 4.)
+[debug] Found potential correct number in context: 2.2 (instead of 4.)
+[debug] Found potential correct number in context: 07 (instead of 4.)
+[debug] Found potential correct number in context: 3 (instead of 4.)
+[debug] Found potential correct number in context: 6. (instead of 4.)
+[debug] Found potential correct number in context: 5.6 (instead of 4.)
+[debug] Found potential correct number in context: 05 (instead of 4.)
+[debug] Found potential correct number in context: 2.50 (instead of 4.)
+[debug] Found potential correct number in context: 3.2 (instead of 4.)
+[debug] Found potential correct number in context: 5.7 (instead of 4.)
+[debug] Found potential correct number in context: 2.4 (instead of 4.)
+[debug] Found potential correct number in context: 2.3 (instead of 4.)
+[debug] Found potential correct number in context: 2.5 (instead of 4.)
+[debug] Found potential correct number in context: 3. (instead of 4.)
+[debug] Found potential correct number in context: 4 (instead of 4.)
+[debug] Found potential correct number in context: 3.1 (instead of 4.)
+[debug] Found potential correct number in context: 2. (instead of 4.)
+[debug] Found potential correct number in context: 6.1 (instead of 4.)
+[debug] Found potential correct number in context: 06 (instead of 4.)
+[debug] Found potential correct number in context: 6 (instead of 4.)
+[debug] Found potential correct number in context: 2.1 (instead of 4.)
+
+🤖 RAG ANSWER (146.8s):
+------------------------------------------------------------
+   Burs başvurusu, öğrencilerin burs alma hakkı kazanması için gereken
+   koşulları sağlayan ve başvurularını online olarak yapan öğrenciler için
+   geçerlidir. Öğrenciler, normal öğrenim süresi içerisinde olmak ve ilgili
+   burs koşullarını sağlamak şartıyla her akademik yıl için burs başvuru ve
+   değerlendirmelerine katılabilirler. Buna göre, lisans öğrencileri için
+   Burs Komitesi tarafından burs dağıtımı yapılırken, lisansüstü öğrenciler
+   için ise EYK Kararı ile burs dağıtımı gerçekleştirilir. Burs başvuruları,
+   ilan edilen tarihlerde ÖBS üzerinden online olarak yapılır ve
+   öğrencilerin akademik performansı talep halinde ilgili kişiye/kuruma,
+   bursun ilk sağlandığı zaman ve her akademik yılın sonunda bildirilir.
+   Buna ek olarak, çalışma burslu öğrenci seçilme süreci için de başvurular
+   yapılır. Tüm başvuruları görmek için sistemden Hababam’a girilir ve
+   Aplications/Uygulamalar sekmesi tıklanır. Daha sonra Burs ve Mali Destek
+   Programına girilir ve son olarak Başvuru Listesinden içersinde bulunulan
+   yıl seçilerek yapılan başvurulara ulaşılır. Buna göre, burs başvurusu
+   için gereken adımlar şu şekildedir: 1. İlgili koşulları sağlayan
+   öğrenciler, normal öğrenim süresi içerisinde olmak şartıyla her akademik
+   yıl için burs başvuru ve değerlendirmelerine katılabilirler. 2. Lisans
+   öğrencileri için Burs Komitesi tarafından burs dağıtımı yapılırken,
+   lisansüstü öğrenciler için ise EYK Kararı ile burs dağıtımı
+   gerçekleştirilir. 3. Burs başvuruları, ilan edilen tarihlerde ÖBS
+   üzerinden online olarak yapılır. 4. Öğrencilerin akademik performansı
+   talep halinde ilgili kişiye/kuruma, bursun ilk sağlandığı zaman ve her
+   akademik yılın sonunda bildirilir. Bu adımları takip ederek öğrenciler
+   burs başvurusu yapabilirler.
+------------------------------------------------------------
+
+📊 Keyword coverage: 77%
+
+
+================================================================================
+📝 TEST 11/30: Q11 [Scholarship]
+================================================================================
+
+❓ QUESTION:
+   Burs devam şartları nelerdir?
+
+📚 EXPECTED SOURCE: ISR-C160-01 Burs ve Mali Destek Yönergesi
+
+✅ EXPECTED ANSWER:
+   Akademik başarı ve disiplin durumu değerlendirilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Burs devam şartları nelerdir?', 'Burs için devam koşulları ne?', 'Devam bursu şartları neler?', 'Bursu kazanmak için gerekenler']
+[debug] HyDE generated: Bu belgede burs devam koşulları ve öğrencilere sağlanan desteklerin sürekliliğine ilişkin kurallar y...
+[debug] query tags: ['scholarship', 'continuation', 'requirements']
+[debug] multi-query retrieval: 5 queries, 92 unique chunks
+[debug] initial candidates: 92
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.214 ce=0.937 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 2. score=1.173 ce=0.895 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 3. score=1.131 ce=0.842 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 4. score=1.129 ce=0.872 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 5. score=1.030 ce=0.776 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 6. score=0.878 ce=0.901 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 7. score=0.847 ce=0.610 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 8. score=0.840 ce=0.858 | Burs ve Mali Destek Başvuru ve Değerlendirme Prose
+ 9. score=0.794 ce=0.587 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+10. score=0.750 ce=0.557 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+===================================
+[debug] final context chunks: 11
+
+🤖 RAG ANSWER (189.1s):
+------------------------------------------------------------
+   Burs devam şartları aşağıdaki gibidir: - Lisans öğrencilerine
+   Üniversiteye ilk kayıtlarında tahsis edilen ve normal öğrenim süresince
+   geçerli olan burslardır. - SÜ Lisans programlarına yatay geçişle kabul
+   edilen öğrenciler burssuz öğrenci statüsü ile kayıt yaptırabilirler. Bu
+   öğrenciler, tam zamanlı öğrenci olarak öğrenime devam ettikleri süre
+   içerisinde, koşulları sağlamaları halinde, öğrenime devam ederken
+   sağlanan burslardan yararlanabilirler. - Burs tahsis edildiği akademik
+   yılda ya da dönemde, Burs Komitesi tarafından belirlenen süre için
+   geçerlidir. Bir sonraki akademik yıla ya da döneme aktarılmaz. -
+   Lisansüstü burslar kapsamındaki aylık nakit ödemeler, yüksek lisans
+   öğrencileri için en fazla 10 ay (Eylül-Haziran), doktora öğrencileri için
+   ise 12 ay (Eylül-Ağustos) süreyle yapılır. - Burs değerlendirmesine
+   alınabilmesi için öğrencilerin, değerlendirmenin yapılacağı Bahar dönemi
+   sonu sınav notlarına itiraz işlemleri ve sürecinin tamamlanması
+   itibariyle aşağıdaki koşulları sağlaması gerekir: - Lisans öğreniminde
+   normal öğrenim süresi içerisinde olunması, - İzinli geçirilen süreler
+   dışında lisans seviyesinde en az iki dönemin bitirilmiş olması, - Lisans
+   programının ilk yılında olan öğrenciler için 34 SÜ kredinin; ara
+   sınıflarda olan öğrenciler için ise son iki dönemde en az 30 SÜ kredinin
+   kazanılmış olması, - Ağırlıklı genel not ortalamasının (GNO) en az 3.00
+   olması, - Son iki döneminden birinde dönem not ortalamasının (DNO) en az
+   3.00 olması. - Burs değerlendirmesine alınan öğrenciler, SÜ kredi
+   kazanımları göz önünde bulundurularak aynı sınıfta yer alan diğer
+   öğrencilerle sınıf bazında 2. sınıf (34-63 kredi), 3. sınıf (64-93 kredi)
+   ve 4. sınıf (94 ve üstü kredi) olmak üzere ayrı ayrı listelenir ve bu
+   şekilde değerlendirmeye alınır. - Burs tahsisine ilişkin koşullar ile
+   süre ve devamlılık kriterleri farklılık gösterir. Bu şartlar, bursların
+   devamını sağlayan temel koşulları oluşturur.
+------------------------------------------------------------
+
+📊 Keyword coverage: 33%
+
+
+================================================================================
+📝 TEST 12/30: Q12 [Graduate]
+================================================================================
+
+❓ QUESTION:
+   Yüksek lisans programı kaç yarıyıl sürer?
+
+📚 EXPECTED SOURCE: Lisansüstü Yönetmeliği
+
+✅ EXPECTED ANSWER:
+   Tezli yüksek lisans en fazla 6 yarıyıl, tezsiz yüksek lisans en fazla 3 yarıyıldır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Yüksek lisans programı kaç yarıyıl sürer?', 'Hükümsel yüksek lisans programı ne kadar sürer?', 'Yüksek lisans eğitim süresi ne kadardır?', 'Doktora hazırlık programı kaç yıl sürer?']
+[debug] HyDE generated: Bu belge yüksek lisans programının süresini ve bu süre boyunca öğrencilerle ilgili kuralları içerir....
+[debug] query tags: ['master_program', 'duration', 'semester']
+[debug] multi-query retrieval: 5 queries, 127 unique chunks
+[debug] initial candidates: 127
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.000 ce=0.233 | lisansustu_yon_tr_v22
+ 2. score=0.796 ce=0.187 | yok-_saklama_sureli_standart_dosya_plani_fgs-s1010
+ 3. score=0.707 ce=0.162 | lisansustu_yon_tr_v22
+ 4. score=0.684 ce=0.157 | lisansustu_yon_tr_v22
+ 5. score=0.624 ce=0.139 | lisansustu_yon_tr_v22
+ 6. score=0.418 ce=0.088 | Öğrenci Askerlik İşlemleri Prosedürü (PSR-C210-030
+ 7. score=0.367 ce=0.078 | lisansustu_yon_tr_v22
+ 8. score=0.257 ce=0.045 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 9. score=0.256 ce=0.046 | lisansustu_yon_tr_v22
+10. score=0.255 ce=0.037 | Yüksek Lisans Programı Açma, Kapatma, Mevcut Progr
+===================================
+[debug] final context chunks: 5
+
+🤖 RAG ANSWER (326.6s):
+------------------------------------------------------------
+   Yüksek lisans programı, tezsiz yüksek lisans programının tamamlanma
+   süresi için en az iki dönem, azami üç dönemdir; tezsiz yüksek lisans
+   programı için ise bilimsel hazırlık ve isteğe bağlı yaz dönemi hariç her
+   dönem için kayıt yaptırıp yaptırmadığına bakılmaksızın en az iki dönem,
+   azami üç dönemdir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 50%
+
+
+================================================================================
+📝 TEST 13/30: Q13 [Graduate]
+================================================================================
+
+❓ QUESTION:
+   Doktora yeterlik sınavı ne zaman yapılır?
+
+📚 EXPECTED SOURCE: Lisansüstü Yönetmeliği
+
+✅ EXPECTED ANSWER:
+   Ders dönemini tamamladıktan sonra doktora yeterlik sınavına girilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Doktora yeterlik sınavı ne zaman yapılır?', 'Doktora yeterlik sınav tarihleri nelerdir?', 'Doktora yeterlilik sınavı ne zaman yapılacak?', 'Doktora yeterlik sınavı hangi tarihte yapılacaktır?']
+[debug] HyDE generated: Bu belge doktora yeterlik sınavının tarih ve saatlerini, sınava katılan öğrenci sayısını ve diğer ön...
+[debug] query tags: ['doctoral_exams', 'exam_schedule', 'graduate_school']
+[debug] multi-query retrieval: 5 queries, 90 unique chunks
+[debug] initial candidates: 90
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.898 ce=0.981 | lisansustu_yon_tr_v22
+ 2. score=0.888 ce=0.971 | lisansustu_yon_tr_v22
+ 3. score=0.638 ce=0.666 | lisansustu_yon_tr_v22
+ 4. score=0.533 ce=0.536 | lisansustu_yon_tr_v22
+ 5. score=0.208 ce=0.152 | lisansustu_yon_tr_v22
+ 6. score=0.189 ce=0.102 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+ 7. score=0.133 ce=0.084 | Doçentliğe Yükseltilme Prosedürü (PHR-S460-0401) |
+ 8. score=0.117 ce=0.066 | Ders ve Sınav Programlarını Hazırlama Yönergesi (I
+ 9. score=0.095 ce=0.042 | Doçentliğe Yükseltilme Prosedürü (PHR-S460-0401) |
+10. score=0.080 ce=0.011 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+===================================
+[debug] final context chunks: 12
+
+🤖 RAG ANSWER (88.7s):
+------------------------------------------------------------
+   Doktora yeterlik sınavı, öğrencinin dersleri tamamladıktan ve tez önerisi
+   kabul edilmesinden sonra yapılır. Bu sınavda öğrenci, yeterlik sınavında
+   başarılı bulunmak için gereken konuları sınanır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 62%
+
+
+================================================================================
+📝 TEST 14/30: Q14 [Graduate]
+================================================================================
+
+❓ QUESTION:
+   Tez savunması için jüri kaç kişiden oluşur?
+
+📚 EXPECTED SOURCE: Lisansüstü Yönetmeliği
+
+✅ EXPECTED ANSWER:
+   Tez savunma jürisi en az 3 öğretim üyesinden oluşur.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Tez savunması için jüri kaç kişiden oluşur?', 'Tez savunma komitesi kaç kişiden oluşur?', 'Doktora jürisi kaç kişinin oluşturduğu?', 'Tez savunma heyeti ne kadar kişi içerir?']
+[debug] HyDE generated: Bu belge, tez savunma jürisinin oluşumunda uyulması gereken kuralları ve sayısal dağılımını içermekt...
+[debug] query tags: ['thesisdefense', 'jurycomposition']
+[debug] multi-query retrieval: 5 queries, 124 unique chunks
+[debug] initial candidates: 124
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.000 ce=1.000 | lisansustu_yon_tr_v22
+ 2. score=0.998 ce=0.998 | Danışmanlık Süreci Akademik ve İdari İşlemler Pros
+ 3. score=0.981 ce=0.995 | lisansustu_yon_tr_v22
+ 4. score=0.636 ce=0.604 | lisansustu_yon_tr_v22
+ 5. score=0.610 ce=0.594 | lisansustu_yon_tr_v22
+ 6. score=0.456 ce=0.430 | lisansustu_yon_tr_v22
+ 7. score=0.408 ce=0.361 | lisansustu_yon_tr_v22
+ 8. score=0.341 ce=0.290 | Danışmanlık Süreci Akademik ve İdari İşlemler Pros
+ 9. score=0.180 ce=0.131 | lisansustu_yon_tr_v22
+10. score=0.154 ce=0.107 | lisansustu_yon_tr_v22
+===================================
+[debug] final context chunks: 5
+
+🤖 RAG ANSWER (72.4s):
+------------------------------------------------------------
+   Tez savunması için jüri, en az ikisi başka bir yükseköğretim kurumunun
+   öğretim üyesi olmak üzere danışman dahil beş öğretim üyesinden oluşur.
+------------------------------------------------------------
+
+📊 Keyword coverage: 78%
+
+
+================================================================================
+📝 TEST 15/30: Q15 [Undergraduate]
+================================================================================
+
+❓ QUESTION:
+   Yatay geçiş başvurusu için GNO şartı nedir?
+
+📚 EXPECTED SOURCE: Lisans Programlarına Yatay Geçiş
+
+✅ EXPECTED ANSWER:
+   Yatay geçiş için minimum GNO şartı aranır.
+
+[debug] detected language: tr
+[debug] intent: describe
+[debug] query expansion: ['Yatay geçiş başvurusu için GNO şartı nedir?', 'GNO koşulu yatay geçiş başvuruları nasıl yapılır?', 'GNO şartları nelerdir? Yatay geçiş başvurusu', 'GNO geçiş şartları nelerdir, yatay geçiş']
+[debug] HyDE generated: Bu belge yatay geçiş başvurularında GNO (Genel Not Ortalaması) koşullarını ve bu koşulun program kab...
+[debug] query tags: ['yatay_gecis_basvurusu', 'gno_sartlari', 'basvuru_sonucunu_belirle']
+[debug] multi-query retrieval: 5 queries, 73 unique chunks
+[debug] initial candidates: 73
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.932 ce=0.970 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 2. score=0.773 ce=0.823 | Akademik Programlara Başvuru ve Öğrenci Kabulu Yön
+ 3. score=0.570 ce=0.547 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 4. score=0.441 ce=0.430 | Akademik Programlara Başvuru ve Öğrenci Kabulu Yön
+ 5. score=0.347 ce=0.323 | lisans_yon_tr_v26
+ 6. score=0.325 ce=0.304 | lisansustu_yon_tr_v22
+ 7. score=0.209 ce=0.142 | Lisans Diploma Programı Bildirimi, Yerleştirme ve 
+ 8. score=0.206 ce=0.155 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 9. score=0.159 ce=0.113 | Değişim Programları Kapsamında Giden Öğrenci Yöner
+10. score=0.145 ce=0.081 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+===================================
+[debug] final context chunks: 12
+[debug] WARNING: Possible hallucinated numbers: {'2.20'}
+[debug] Numbers in context: ['1.', '1', '01', '1.1', '1.2', '1.3', '2', '2.2', '2.3', '3', '3.', '3.2', '3.3', '4.', '4', '4.3', '4.4', '4.5', '4.6', '5']
+[debug] Found potential correct number in context: 2 (instead of 2.20)
+[debug] Found potential correct number in context: 1.1 (instead of 2.20)
+[debug] Found potential correct number in context: 2.2 (instead of 2.20)
+[debug] Found potential correct number in context: 1.3 (instead of 2.20)
+[debug] Found potential correct number in context: 3 (instead of 2.20)
+[debug] Found potential correct number in context: 3.3 (instead of 2.20)
+[debug] Found potential correct number in context: 3.2 (instead of 2.20)
+[debug] Found potential correct number in context: 4. (instead of 2.20)
+[debug] Found potential correct number in context: 2.3 (instead of 2.20)
+[debug] Found potential correct number in context: 3. (instead of 2.20)
+[debug] Found potential correct number in context: 4 (instead of 2.20)
+[debug] Found potential correct number in context: 1.2 (instead of 2.20)
+[debug] Found potential correct number in context: 4.3 (instead of 2.20)
+
+🤖 RAG ANSWER (76.3s):
+------------------------------------------------------------
+   GNO (Genel Not Ortalaması) şartı, yatay geçiş başvurusu için en az 2.20
+   olarak belirtilmiştir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 71%
+
+
+================================================================================
+📝 TEST 16/30: Q16 [Undergraduate]
+================================================================================
+
+❓ QUESTION:
+   Çift anadal programına nasıl başvurulur?
+
+📚 EXPECTED SOURCE: Diploma Programı Yönergesi
+
+✅ EXPECTED ANSWER:
+   Çift anadal programı için belirli GNO şartı ve başvuru süreci vardır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Çift anadal programına nasıl başvurulur?', 'Dublörlü programa nasıl başvuru yapılır?', 'Cift anadal programa başvuru şartları nelerdir?', 'İki ana dal programına kabul nasıl alınır?']
+[debug] HyDE generated: Bu belgede çift anadal programı başvuru koşulları ve süreci açıklanmaktadır. Başvuru için gereken be...
+[debug] query tags: ['dual_degree_program', 'application_process', 'turkish_university']
+[debug] multi-query retrieval: 5 queries, 111 unique chunks
+[debug] initial candidates: 111
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.200 ce=0.994 | Double Major Directive (ISR-C290-02) | Yönerge
+ 2. score=1.193 ce=0.992 | Double Major Directive (ISR-C290-02) | Yönerge
+ 3. score=1.159 ce=0.967 | Double Major Directive (ISR-C290-02) | Yönerge
+ 4. score=1.137 ce=0.962 | Double Major Directive (ISR-C290-02) | Yönerge
+ 5. score=1.108 ce=0.929 | Double Major Directive (ISR-C290-02) | Yönerge
+ 6. score=1.034 ce=0.877 | Double Major Directive (ISR-C290-02) | Yönerge
+ 7. score=1.019 ce=0.848 | Double Major Directive (ISR-C290-02) | Yönerge
+ 8. score=0.894 ce=0.937 | Çift Anadal Yönergesi (ISR-C290-02) | Yönerge
+ 9. score=0.884 ce=0.993 | İstatistikler Ve Raporların Yönetimi Prosedürü ( P
+10. score=0.866 ce=0.980 | Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+===================================
+[debug] final context chunks: 14
+
+🤖 RAG ANSWER (111.4s):
+------------------------------------------------------------
+   Çift anadal programına başvurmak için aşağıdaki adımları takip etmek
+   gerekir: 1. **Gerekli koşullar**: Öğrenciler, kayıtlı oldukları anadal
+   diploma programının gerektirdiği bütün dersleri almak, belirlenmiş toplam
+   SÜ ve AKTS kredisini tamamlamak ve programın diğer gereklerini yerine
+   getirmekle yükümlüdür. 2. **Dönemlik ders yükü**: Çift anadal programları
+   dönemlik ders yükleri Sabancı Üniversitesi Lisans Eğitim ve Öğretim
+   Yönetmeliği ile belirlenir. 3. **Staj yükümlülüğü**: Çift Anadal Diploma
+   Programına kayıtlı öğrencilerin zorunlu staj yükümlülükleri; Anadal
+   diploma programı ve Çift Anadal diploma programının zorunlu yaz stajı
+   yükümlülüklerinin birleşiminden oluşacak şekilde tasarlanmak üzere, tek
+   yaz döneminde ortak proje ile hem Anadal hem de Çift Anadal Diploma
+   programı için tamamlanabilir. 4. **Başvuru**: Öğrenciler, çift anadal
+   diploma programından kendi isteği ile ayrılabilirler ve bu durumda, çift
+   anadal diploma programının bağlı olduğu fakülteye bir dilekçe ile
+   başvurarak ayrılma isteklerini iletirler. Bu adımları takip ederek
+   öğrenciler çift anadal programına başvurabilirler.
+------------------------------------------------------------
+
+📊 Keyword coverage: 55%
+
+
+================================================================================
+📝 TEST 17/30: Q17 [Undergraduate]
+================================================================================
+
+❓ QUESTION:
+   Ders ekleme-bırakma süresi ne kadar?
+
+📚 EXPECTED SOURCE: Akademik Takvim
+
+✅ EXPECTED ANSWER:
+   Her yarıyıl başında belirlenen süre içinde ders ekleme-bırakma yapılabilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Ders ekleme-bırakma süresi ne kadar?', 'Ders eklenme-kaçınma süresi kaç gün?', 'Eklenecek dersler için süre ne kadar?', 'Kurs ekleme-kaydetme süresi ne zaman?']
+[debug] HyDE generated: Bu dokümanda ders ekleme-bırakma süresinin belirlenmesi ve öğrencilerin bu süre içinde yapmaları ger...
+[debug] query tags: ['course-add-drop-period']
+[debug] multi-query retrieval: 5 queries, 106 unique chunks
+[debug] initial candidates: 106
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.634 ce=0.988 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 2. score=1.628 ce=0.988 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 3. score=1.496 ce=0.934 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 4. score=1.102 ce=0.915 | Dönemsel Dersleri Belirleme ve Haftalık Ders Progr
+ 5. score=1.088 ce=0.897 | Dönemsel Dersleri Belirleme ve Haftalık Ders Progr
+ 6. score=0.910 ce=0.983 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 7. score=0.908 ce=0.992 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 8. score=0.902 ce=0.979 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 9. score=0.892 ce=0.988 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+10. score=0.887 ce=0.987 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+===================================
+[debug] final context chunks: 16
+
+🤖 RAG ANSWER (78.1s):
+------------------------------------------------------------
+   Ders ekleme-bırakma süresi, akademik takvimde belirtilen tarihlerde
+   gerçekleşir. Bu süre için öğrenciler, danışmanlarının görüşünü alarak
+   istedikleri ders değişikliklerini bizzat yapmaları gerekir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 33%
+
+
+================================================================================
+📝 TEST 18/30: Q18 [Registration]
+================================================================================
+
+❓ QUESTION:
+   Mezuniyet başvurusu nasıl yapılır?
+
+📚 EXPECTED SOURCE: PSR-C240 Mezuniyet Prosedürü
+
+✅ EXPECTED ANSWER:
+   Mezuniyet başvurusu ÖBS üzerinden yapılır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Mezuniyet başvurusu nasıl yapılır?', 'Mezuniyet başvurumu nasıl yapabilirim?', 'Mevzuatımıza göre mezuniyet başvurusu ne zaman yapılır?', 'Mezuniyet başvuru işlemleri hakkında bilgi istiyorum.']
+[debug] HyDE generated: Bu belge mezunların diploma başvurularını yapmaları gereken adımları ve gerekli evrakları içerir. Me...
+[debug] query tags: ['graduation', 'application', 'procedure']
+[debug] multi-query retrieval: 5 queries, 125 unique chunks
+[debug] initial candidates: 125
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.245 ce=0.991 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+ 2. score=1.192 ce=0.960 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+ 3. score=1.132 ce=0.909 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 4. score=1.118 ce=0.900 | Mezuniyet Denetimi Ve Diploma Düzenleme Prosedürü 
+ 5. score=1.058 ce=0.765 | fsr-c24001-20_gec_mezuniyet_basvuru_formu_v02
+ 6. score=0.712 ce=0.561 | C240 Mezuniyet Denetimi | Yönerge
+ 7. score=0.652 ce=0.493 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 8. score=0.629 ce=0.489 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 9. score=0.629 ce=0.697 | Ön Lisans Diploması Düzenleme Prosedürü (PSR-C240-
+10. score=0.613 ce=0.461 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+===================================
+[debug] final context chunks: 10
+
+🤖 RAG ANSWER (147.6s):
+------------------------------------------------------------
+   Mezuniyet başvurusu, ÖBS üzerinden öğrencilerin akademik takvimde
+   belirtilen tarih aralığında ÖK'ya başvuru yapmaları ile başlar.
+   Öğrenciler, mezuniyet başvurularının başladığı gün "Mezuniyet Duyurusu"nu
+   iç web'de yapar. Başvuru yapan mezun aday öğrencilerden, dönem sonunda
+   mezuniyet hakkı elde edemeyenlerin, bir sonraki dönem başvurularını
+   yenilemeleri gerekir. Öğrenci Bilgi Sistemi üzerinden online olarak
+   yapılan mezuniyet yükümlülüklerinin takibinde, öğrenci memnumiyeti -
+   şikayet sayısı Yılda Bir/6 Ayda Bir'dir. Mezuniyet başvurusunda
+   bulunmayan Lisansüstü programlarda kayıtlı öğrencilere ilgili Enstitü,
+   Lisans programlarında kayıtlı öğrencilere ise ÖK hatırlatma mesajı
+   gönderilir. İlan edilen tarihlerde ÖBS üzerinden başvurusunu yapamayan
+   öğrenci, Geç Mezuniyet Başvuru Formu (FSR-C 24001-20) doldurarak
+   başvurabilir. Mezuniyet için gerekli koşulları en geç yaz okulu sonuna
+   kadar sağlayabilecek öğrenciler, cübbe giyerek mezuniyet törenine
+   katılabilirler. Lisansüstü programlarından mezun olabilmek için
+   öğrencilerin Sabancı Üniversitesi Lisansüstü Eğitim ve Öğretim
+   Yönetmeliği'nde belirtilen ders, kredi, not ortalaması (hem mezuniyet
+   yükümlülüklerinin yerine getirilmesinde kullanılan derslerin SÜ
+   kredilerine göre hesaplanmış olan PNO değeri, hem de alınan tüm derslerin
+   SÜ kredilerine göre hesaplanmış olan GNO değeri), mezuniyet başvurusu vb.
+   tüm koşulları sağlaması gerekir. Yönetmelik kapsamındaki koşullar ile
+   ders, kredi, not ortalaması vb. mezuniyet yükümlülükleri, öğrenci ve
+   Enstitüsü tarafından her dönem takip ve kontrol edilir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 80%
+
+
+================================================================================
+📝 TEST 19/30: Q19 [Registration]
+================================================================================
+
+❓ QUESTION:
+   Kayıt dondurma şartları nelerdir?
+
+📚 EXPECTED SOURCE: Kayıt Yönergesi
+
+✅ EXPECTED ANSWER:
+   Geçerli mazeretler ile kayıt dondurulabilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Kayıt dondurma şartları nelerdir?', 'Kayıt yenileme koşulları nedir?', 'Dondurma şartları ve kayıt yenileme nasıl yapılır?', 'Kayıt dondurma koşullarını öğrenmek için ne yapmalıyım?']
+[debug] HyDE generated: Bu belge, öğrencilerin kayıt işlemlerini durdurmaya yönelik hak ve yükümlülüklerini belirleyen kural...
+[debug] query tags: ['registration', 'freeze', 'conditions']
+[debug] multi-query retrieval: 5 queries, 142 unique chunks
+[debug] initial candidates: 142
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.894 ce=0.239 | Vize ve İkamet İzni Yönergesi ( IIRO-C430-02) | Yö
+ 2. score=0.163 ce=0.016 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 3. score=0.148 ce=0.017 | lisansustu_yon_tr_v22
+ 4. score=0.143 ce=0.017 | lisans_yon_tr_v26
+ 5. score=0.124 ce=0.018 | lisansustu_yon_tr_v22
+ 6. score=0.120 ce=0.010 | Öğrencilerin Kayıt Statülerini Yönetme Yönergesi (
+ 7. score=0.117 ce=0.016 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 8. score=0.111 ce=0.010 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+ 9. score=0.105 ce=0.012 | Ders Ve Dönem Kayıtları Prosedürü (PSR-C220-0101) 
+10. score=0.099 ce=0.009 | Lisans Programlarına Yurtdışından Öğrenci Kabulü Y
+===================================
+[debug] final context chunks: 12
+
+🤖 RAG ANSWER (92.0s):
+------------------------------------------------------------
+   Kayıt dondurma şartları, öğrencilerin kayıt işlemlerini tamamlamaması
+   veya gerekli belgeleri sağlayamaması durumunda uygulanabilir. Bu durumun
+   gerçekleşmesi için aşağıdaki koşulların gerçekleşmesi gerekir: * Süresi
+   içinde kayıt işlemini yapmayan veya gerekli belgeleri sağlayamayan
+   öğrenciler kayıt hakkından vazgeçmiş sayılırlar. * Belgelerinde eksiklik
+   veya tahrifat olanların, kayıtları yapılmış olsa dahi iptal edilir. *
+   Süresi içinde kayıt işlemlerini tamamlamayan öğrenciler, SÜ'ye kayıt
+   hakkını kaybeder ve sistemdeki bilgileri bu şekilde güncellenir. Bu
+   koşulların gerçekleşmesi durumunda, öğrencinin kayıt işlemleri
+   dondurulabilir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 60%
+
+
+================================================================================
+📝 TEST 20/30: Q20 [English]
+================================================================================
+
+❓ QUESTION:
+   What is the minimum GPA requirement for Erasmus?
+
+📚 EXPECTED SOURCE: International Internship Instruction
+
+✅ EXPECTED ANSWER:
+   Minimum GPA is 2.20 for undergrad and 2.5 for graduate students.
+
+[debug] detected language: en
+[debug] intent: describe
+[debug] query expansion: ['What is the minimum GPA requirement for Erasmus?', 'Erasmus program GPA eligibility requirements', 'What are the GPA requirements to participate in Erasmus?', 'GPA threshold for Erasmus student exchange']
+[debug] HyDE generated: This document outlines the academic prerequisites for participating in the Erasmus exchange program,...
+[debug] query tags: ['erasmus', 'gpa', 'requirement']
+[debug] multi-query retrieval: 5 queries, 82 unique chunks
+[debug] initial candidates: 82
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.244 ce=0.973 | Procedure for Students Participating in Erasmus In
+ 2. score=1.145 ce=0.929 | International Internship Instruction Letter (IIPAR
+ 3. score=0.776 ce=0.791 | Instruction letter for Outgoing Students within th
+ 4. score=0.696 ce=0.531 | International Internship Instruction Letter (IIPAR
+ 5. score=0.532 ce=0.360 | Procedure for Students Participating in Erasmus In
+ 6. score=0.244 ce=0.146 | International Internship Instruction Letter (IIPAR
+ 7. score=0.206 ce=0.095 | Procedure for Students Participating in Erasmus In
+ 8. score=0.143 ce=0.084 | lisansustu_yon_en_v22
+ 9. score=0.126 ce=0.057 | ogretim_plani_firo-c42003-01_1
+10. score=0.114 ce=0.016 | Procedure  for Erasmus Short-Term Doctoral Mobilit
+===================================
+[debug] final context chunks: 4
+
+🤖 RAG ANSWER (63.3s):
+------------------------------------------------------------
+   Minimum GPA requirements for Erasmus are: * 2.20 for undergraduates *
+   2.50 for graduate students
+------------------------------------------------------------
+
+📊 Keyword coverage: 73%
+
+
+================================================================================
+📝 TEST 21/30: Q21 [English]
+================================================================================
+
+❓ QUESTION:
+   How many books can I borrow from the library?
+
+📚 EXPECTED SOURCE: Library Lending Policy
+
+✅ EXPECTED ANSWER:
+   Package 2 users can borrow up to 10 books for 30 days.
+
+[debug] detected language: en
+[debug] intent: count_items
+[debug] query expansion: ['How many books can I borrow from the library?', 'What is the maximum number of library books I can check out?', 'How many library items can I borrow at a time?', 'Library borrowing limits and restrictions']
+[debug] HyDE generated: This document outlines the borrowing limits and restrictions for library materials, including the ma...
+[debug] query tags: ['library', 'borrowing', 'books']
+[debug] multi-query retrieval: 5 queries, 101 unique chunks
+[debug] initial candidates: 101
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.199 ce=0.399 | Circulation and Utilization Instruction Letter  | 
+ 2. score=0.958 ce=0.314 | Circulation and Utilization Instruction Letter  | 
+ 3. score=0.897 ce=0.287 | Circulation and Utilization Instruction Letter  | 
+ 4. score=0.692 ce=0.215 | Circulation and Utilization Instruction Letter  | 
+ 5. score=0.661 ce=0.201 | Circulation and Utilization Instruction Letter  | 
+ 6. score=0.505 ce=0.152 | Circulation and Utilization Instruction Letter  | 
+ 7. score=0.397 ce=0.107 | Circulation and Utilization Instruction Letter  | 
+ 8. score=0.184 ce=0.025 | Circulation and Utilization Instruction Letter  | 
+ 9. score=0.139 ce=0.010 | Circulation and Utilization Instruction Letter  | 
+10. score=0.116 ce=0.003 | Circulation and Utilization Instruction Letter  | 
+===================================
+[debug] single-doc mode for intent=count_items, using top-ranked doc: circulation-and-utilization-instruction-letter.html
+[debug] final context chunks: 24
+
+🤖 RAG ANSWER (126.7s):
+------------------------------------------------------------
+   Based on the provided text, here are the borrowing limits for books from
+   the library: * Academic staff: + Undergraduate students: 10 books for 30
+   days + Graduate students: 20 books for 60 days * Alumni and retirees: +
+   Can access the "General Book Collection" and "Large-Size Book Collection"
+   within the Information Center and borrow with their Sabancı University
+   ID. + No specific borrowing limit mentioned, but they can request
+   extensions and reservations for borrowed information resources in these
+   collections. * Families of those living in university housing: + Spouses
+   and children of academic or administrative staff residing at the
+   university may use the borrowing facilities and collections within the
+   borrowing quota and access rights of the Sabancı University Member. + No
+   specific borrowing limit mentioned, but they can request reservations for
+   multimedia/group study rooms from the Circulation desk. * Companies
+   providing services to the university: + Employees of companies providing
+   services to the university on campus may use the Information Center, for
+   1 year, as administrative employees upon written application by the
+   administrative unit to which the company manager is responsible. + No
+   specific borrowing limit mentioned, but they can access the "General Book
+   Collection" and "Large-Size Book Collection" within the Information
+   Center and borrow with an institutional ID card. * Those working on
+   temporary projects: + Those working on temporary projects, not on
+   university staff, may use the Information Center until the project
+   completion date or for 1 year, as administrative employees upon written
+   application by the project director. + No specific borrowing limit
+   mentioned, but they can access the "General Book Collection" and
+   "Large-Size Book Collection" within the Information Center and borrow
+   with an institutional ID card. Note that these are general guidelines and
+   may have additional conditions or restrictions. It's always best to check
+   with the library directly for more information on borrowing policies and
+   procedures.
+------------------------------------------------------------
+
+📊 Keyword coverage: 75%
+
+
+================================================================================
+📝 TEST 22/30: Q22 [English]
+================================================================================
+
+❓ QUESTION:
+   What are the disciplinary penalties for students?
+
+📚 EXPECTED SOURCE: Student Discipline Instruction
+
+✅ EXPECTED ANSWER:
+   Warning, reprimand, suspension, and expulsion from university.
+
+[debug] detected language: en
+[debug] intent: other
+[debug] query expansion: ['What are the disciplinary penalties for students?', 'What are the consequences of student misconduct?', 'Student disciplinary actions and punishments', 'University rules on student penalty']
+[debug] HyDE generated: This document outlines the disciplinary procedures and consequences for student misconduct, includin...
+[debug] query tags: ['disciplinary_penalties', 'students', 'university_rules', 'student_conduct']
+[debug] multi-query retrieval: 5 queries, 101 unique chunks
+[debug] initial candidates: 101
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.112 ce=0.782 | Student Housing Instruction Letter  (ISER-C910-01)
+ 2. score=0.934 ce=0.847 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 3. score=0.923 ce=0.840 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 4. score=0.846 ce=0.802 | A510 Procedures and Measures againts Sexual Harras
+ 5. score=0.842 ce=0.776 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 6. score=0.813 ce=0.733 | Disciplinary Procedure of Students ( PSR-C210-0101
+ 7. score=0.804 ce=0.738 | Instruction Letter for Student Discipline (ISR-C21
+ 8. score=0.714 ce=0.654 | Instruction Letter for Student Discipline (ISR-C21
+ 9. score=0.706 ce=0.628 | Instruction Letter for Student Discipline (ISR-C21
+10. score=0.621 ce=0.560 | Instruction Letter for Student Discipline (ISR-C21
+===================================
+[debug] final context chunks: 10
+[debug] WARNING: Possible hallucinated numbers: {'3,'}
+[debug] Numbers in context: ['1.', '1', '01', '1.4', '1.5', '2', '2.', '2.1', '2.6', '2.7', '3', '3.', '4.', '4', '4.1', '4.2', '4.3', '5', '6', '7']
+[debug] Found potential correct number in context: 2 (instead of 3,)
+[debug] Found potential correct number in context: 5 (instead of 3,)
+[debug] Found potential correct number in context: 3 (instead of 3,)
+[debug] Found potential correct number in context: 4. (instead of 3,)
+[debug] Found potential correct number in context: 4.2 (instead of 3,)
+[debug] Found potential correct number in context: 1.5 (instead of 3,)
+[debug] Found potential correct number in context: 2.6 (instead of 3,)
+[debug] Found potential correct number in context: 2.7 (instead of 3,)
+[debug] Found potential correct number in context: 3. (instead of 3,)
+[debug] Found potential correct number in context: 4 (instead of 3,)
+[debug] Found potential correct number in context: 2. (instead of 3,)
+[debug] Found potential correct number in context: 4.1 (instead of 3,)
+[debug] Found potential correct number in context: 4.3 (instead of 3,)
+[debug] Found potential correct number in context: 2.1 (instead of 3,)
+
+🤖 RAG ANSWER (104.0s):
+------------------------------------------------------------
+   Based on the provided context, the disciplinary penalties for students
+   are as follows: * Warning: A written warning made to the student to be
+   more careful about their behaviors related to the status of a student
+   (Section 3, Disciplinary Sanctions). * Reprimand: A notification in
+   writing stating that the student has been reprimanded due to their
+   misconduct (Section 3, Disciplinary Sanctions). * Suspension: + For one
+   week to one month: Imposed by the related Faculty Dean or the Graduate
+   School Director for undergraduate and graduate students, respectively. +
+   For one or two semesters: Decided by the Disciplinary Committee. *
+   Dismissal from the higher education institution: The punishment for
+   sexual harassment or assault is suspension for two semesters or expulsion
+   (Section 3 of Document [3], A510 Procedures and Measures against Sexual
+   Harassment). * Repetition of disciplinary offenses: + A sanction which is
+   one grade heavier shall be enforced. + In the event of repetition, a
+   sanction of dismissal from the higher education institution shall not be
+   imposed. Note: The context does not provide specific numbers or values
+   for GPA or GNO.
+------------------------------------------------------------
+
+📊 Keyword coverage: 43%
+
+
+================================================================================
+📝 TEST 23/30: Q23 [Numeric]
+================================================================================
+
+❓ QUESTION:
+   Lisans mezuniyeti için kaç kredi gerekiyor?
+
+📚 EXPECTED SOURCE: Lisans Yönetmeliği
+
+✅ EXPECTED ANSWER:
+   Lisans programı için belirli sayıda kredi tamamlanmalıdır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Lisans mezuniyeti için kaç kredi gerekiyor?', 'Lisans diploması için ne kadar kredilik?', 'Lisans bitirme için gereken kredi sayısı nedir?', 'Mezuniyet için lisansta kaç kredilik ders var?']
+[debug] HyDE generated: Bu belge, lisans diploması almak için gereken toplam krediler ve bunların nasıl hesaplanacağına iliş...
+[debug] query tags: ['university_degree_requirements', 'credit_points']
+[debug] multi-query retrieval: 5 queries, 107 unique chunks
+[debug] initial candidates: 107
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.065 ce=0.746 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 2. score=0.889 ce=0.839 | Derslerden Muafiyet Yönergesi (ISR-C220-02) | Yöne
+ 3. score=0.886 ce=0.824 | Derslerden Muafiyet Prosedürü (PSR-C220-0201) | Yö
+ 4. score=0.699 ce=0.660 | lisansustu_yon_tr_v22
+ 5. score=0.652 ce=0.606 | Burs ve Mali Destek Yönergesi (ISR-C160-01) | Yöne
+ 6. score=0.579 ce=0.519 | lisansustu_yon_tr_v22
+ 7. score=0.547 ce=0.356 | Mezuniyet Denetimi ve Diploma Düzenleme Yönergesi 
+ 8. score=0.480 ce=0.283 | Lisans Diploma Programı Bildirimi, Diploma Program
+ 9. score=0.466 ce=0.416 | Değişim Programları Kapsamında Giden Öğrenci Yöner
+10. score=0.435 ce=0.381 | Minor Program Directive( ISR-C290-03) | Yönerge
+===================================
+[debug] final context chunks: 5
+
+🤖 RAG ANSWER (85.2s):
+------------------------------------------------------------
+   Lisans mezuniyeti için öğrencilerin SÜ'de kayıtlı olduğu diploma
+   programından mezun olabilmek için alması gereken toplam kredisinin
+   %12'sini geçmemek üzere, özel öğrenci olarak aldığı dersler ile ulusal ve
+   uluslararası öğrenci değişim programları kapsamında aynı düzeyde başka
+   bir yükseköğretim kurumundan aldığı ders veya uygulamaların kredi
+   toplamı, öğrencinin kayıtlı olduğu diploma programının mezuniyet toplam
+   kredisinin %12'sini geçemez.
+------------------------------------------------------------
+
+📊 Keyword coverage: 57%
+
+
+================================================================================
+📝 TEST 24/30: Q24 [Numeric]
+================================================================================
+
+❓ QUESTION:
+   Bir dersin kaç kez tekrar edilebilir?
+
+📚 EXPECTED SOURCE: Eğitim-Öğretim Yönetmeliği
+
+✅ EXPECTED ANSWER:
+   Başarısız olunan dersler tekrar alınabilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Bir dersin kaç kez tekrar edilebilir?', 'Bir dersin ne kadar tekrarlanabilir?', 'Derslerin kaç kez tekrarı mümkün?', 'Dersin tekrar sayısı nedir?']
+[debug] HyDE generated: Bu belgede, bir dersin tekrarlanma sınırlaması ve hangi durumlarda tekrarlanabileceği açıklanmaktadı...
+[debug] query tags: ['course_repetition', 'academic_policy']
+[debug] multi-query retrieval: 5 queries, 100 unique chunks
+[debug] initial candidates: 100
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.230 ce=0.632 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 2. score=1.176 ce=0.724 | lisans_yon_tr_v26
+ 3. score=0.936 ce=0.574 | lisans_yon_tr_v26
+ 4. score=0.933 ce=0.558 | Dersten Çekilme Prosedürü (PSR-C220-0102) | Yönerg
+ 5. score=0.793 ce=0.631 | Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+ 6. score=0.744 ce=0.438 | lisans_yon_tr_v26
+ 7. score=0.665 ce=0.302 | Ders ve Dönem Kayıtları Yönergesi (ISR-C220-01) | 
+ 8. score=0.618 ce=0.353 | lisansustu_yon_tr_v22
+ 9. score=0.596 ce=0.331 | lisansustu_yon_tr_v22
+10. score=0.529 ce=0.397 | Ders Tekrarı Ve Ders Saydırma Prosedürü (PSR-C220-
+===================================
+[debug] final context chunks: 8
+
+🤖 RAG ANSWER (72.2s):
+------------------------------------------------------------
+   Bir dersin en çok 3 kez tekrar edilebilir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 20%
+
+
+================================================================================
+📝 TEST 25/30: Q25 [Procedure]
+================================================================================
+
+❓ QUESTION:
+   Staj başvurusu nasıl yapılır?
+
+📚 EXPECTED SOURCE: Staj Yönergesi
+
+✅ EXPECTED ANSWER:
+   Staj başvurusu Kariyer Geliştirme Merkezi üzerinden yapılır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Staj başvurusu nasıl yapılır?', 'Staj başvuruları ne zaman açılır?', 'Staj imtihanı ve başvuru süreci hakkında bilgi istiyorum.', 'Staj başvurumu nasıl online yapabilirim?']
+[debug] HyDE generated: Bu belge staj başvurularının nasıl yapılacağına dair genel kuralları ve adımları kapsar. Staj başvur...
+[debug] query tags: ['internship_application', 'how_to_apply', 'university_procedures']
+[debug] multi-query retrieval: 5 queries, 99 unique chunks
+[debug] initial candidates: 99
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.922 ce=0.955 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 2. score=0.900 ce=0.956 | İkili Anlaşmalarla Uluslararası Staja Giden Öğrenc
+ 3. score=0.864 ce=0.926 | Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+ 4. score=0.788 ce=0.814 | Uluslararası Staj Yönergesi (IIPAR-C710-02) | Yöne
+ 5. score=0.754 ce=0.795 | Lisans Öğrencileri Yaz Stajı Yönergesi (IIPAR-C710
+ 6. score=0.753 ce=0.799 | Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+ 7. score=0.751 ce=0.804 | Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+ 8. score=0.704 ce=0.745 | İkili Anlaşmalarla Uluslararası Staja Giden Öğrenc
+ 9. score=0.694 ce=0.707 | Erasmus Staj Hareketliliğine Giden Öğrenci Prosedü
+10. score=0.682 ce=0.716 | Lisans Yaz Stajı Prosedürü (PIPAR-C710-0101) | Yön
+===================================
+[debug] final context chunks: 12
+[debug] WARNING: Possible hallucinated numbers: {'4.', '1.'}
+[debug] Numbers in context: ['1', '01', '1.2', '2', '2.', '02', '2.10', '2.1', '2.11', '2.12', '2.13', '2.14', '2.15', '2.16', '2.2', '2.20', '2.3', '2.4', '2.5', '2.6']
+[debug] Found potential correct number in context: 3.5 (instead of 4.)
+[debug] Found potential correct number in context: 2 (instead of 4.)
+[debug] Found potential correct number in context: 7 (instead of 4.)
+[debug] Found potential correct number in context: 2.13 (instead of 4.)
+[debug] Found potential correct number in context: 5 (instead of 4.)
+[debug] Found potential correct number in context: 2.16 (instead of 4.)
+[debug] Found potential correct number in context: 2.11 (instead of 4.)
+[debug] Found potential correct number in context: 3.9 (instead of 4.)
+[debug] Found potential correct number in context: 2.2 (instead of 4.)
+[debug] Found potential correct number in context: 3.11 (instead of 4.)
+[debug] Found potential correct number in context: 2.8 (instead of 4.)
+[debug] Found potential correct number in context: 3.6 (instead of 4.)
+[debug] Found potential correct number in context: 3 (instead of 4.)
+[debug] Found potential correct number in context: 3.3 (instead of 4.)
+[debug] Found potential correct number in context: 3.2 (instead of 4.)
+[debug] Found potential correct number in context: 2.4 (instead of 4.)
+[debug] Found potential correct number in context: 2.12 (instead of 4.)
+[debug] Found potential correct number in context: 3.00 (instead of 4.)
+[debug] Found potential correct number in context: 2.6 (instead of 4.)
+[debug] Found potential correct number in context: 2.3 (instead of 4.)
+[debug] Found potential correct number in context: 2.5 (instead of 4.)
+[debug] Found potential correct number in context: 2.7 (instead of 4.)
+[debug] Found potential correct number in context: 3.10 (instead of 4.)
+[debug] Found potential correct number in context: 3. (instead of 4.)
+[debug] Found potential correct number in context: 4 (instead of 4.)
+[debug] Found potential correct number in context: 2.20 (instead of 4.)
+[debug] Found potential correct number in context: 2.14 (instead of 4.)
+[debug] Found potential correct number in context: 2.15 (instead of 4.)
+[debug] Found potential correct number in context: 3.1 (instead of 4.)
+[debug] Found potential correct number in context: 3.12 (instead of 4.)
+[debug] Found potential correct number in context: 2. (instead of 4.)
+[debug] Found potential correct number in context: 02 (instead of 4.)
+[debug] Found potential correct number in context: 2.9 (instead of 4.)
+[debug] Found potential correct number in context: 2.10 (instead of 4.)
+[debug] Found potential correct number in context: 6 (instead of 4.)
+[debug] Found potential correct number in context: 2.1 (instead of 4.)
+[debug] Found potential correct number in context: 1 (instead of 1.)
+[debug] Found potential correct number in context: 01 (instead of 1.)
+[debug] Found potential correct number in context: 1.2 (instead of 1.)
+
+🤖 RAG ANSWER (131.4s):
+------------------------------------------------------------
+   Staj başvurusu aşağıdaki adımlarla yapılır: 1. **Erasmus+ Staj
+   Hareketliliği Programı**: Kariyer Geliştirme ve Staj Ofisi tarafından
+   duyurulan başvuru koşulları ve gerekli belgelerle ilgili duyuru iç web ve
+   staj web sitelerinde yayınlanır. 2. **İkili Anlaşmalarla Uluslararası
+   Staja Giden Öğrenci Prosedürü**: Staj yapılacak kuruluştan minimum 2
+   aylık kabul belgesi alan ve gerekli GNO'yu sağlayan öğrenciler, kabul
+   belgesi ile birlikte başvuru evraklarını (özgeçmiş, transkript) Kariyer
+   Geliştirme ve Staj Ofisi'ne teslim eder. 3. **Mülakat**: Her bir aday
+   için mülakat değerlendirme formu doldurulur. Mülakatta başarılı olan
+   öğrenciler staja gitmeye hak kazanır. 4. **Protokol**: Protokoller yıl
+   gözden geçirilerek, ilgili kuruluşla o yılın stajyer gönderimini organize
+   etmek için görüşmeler başlatılır. GNO/GPA koşulları: * Lisans öğrencileri
+   için en az: 2.20 * Lisansüstü öğrencileri için en az: 2.5 Dikkat edilmesi
+   gereken diğer durumlar: * Staj başvurusu için gerekli belgeler ve
+   koşullar her yıl değişebilir. * Öğrenciler başvuru evraklarını Kariyer
+   Geliştirme ve Staj Ofisi'ne teslim etmelidir. * Mülakat sonucunda
+   başarılı olan öğrenciler staja gitmeye hak kazanır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 57%
+
+
+================================================================================
+📝 TEST 26/30: Q26 [Procedure]
+================================================================================
+
+❓ QUESTION:
+   Transkript nasıl alınır?
+
+📚 EXPECTED SOURCE: Öğrenci İşleri Prosedürleri
+
+✅ EXPECTED ANSWER:
+   Transkript ÖBS üzerinden veya Öğrenci İşleri'nden alınabilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Transkript nasıl alınır?', 'Transkripsiyon nasıl yapılır?', 'Nereden transkript alabilirim?', 'Transkripte ulaşmak için ne yapmalıyım?']
+[debug] HyDE generated: Bu belgede, öğrencilerin transkriptlerini nasıl alabilecekleri ve bu prosedürün adımları açıklanmakt...
+[debug] query tags: ['transcription', 'audio', 'video']
+[debug] multi-query retrieval: 5 queries, 115 unique chunks
+[debug] initial candidates: 115
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.049 ce=0.932 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 2. score=1.015 ce=0.901 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 3. score=0.997 ce=0.883 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 4. score=0.927 ce=0.876 | Akademik Durum Değerlendirme Prosedürü (PSR-C230-0
+ 5. score=0.774 ce=0.660 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 6. score=0.770 ce=0.715 | Derslerden Muafiyet Prosedürü (PSR-C220-0201) | Yö
+ 7. score=0.694 ce=0.601 | Transkript Düzenleme Prosedürü (PSR-C230-0103) | Y
+ 8. score=0.574 ce=0.520 | Değişim Programları Kapsamında Gelen Öğrenci Prose
+ 9. score=0.568 ce=0.513 | Değişim Programları Kapsamında Gelen Öğrenci Prose
+10. score=0.472 ce=0.407 | Değişim Programları Kapsamında Giden Öğrenci Prose
+===================================
+[debug] final context chunks: 7
+
+🤖 RAG ANSWER (105.6s):
+------------------------------------------------------------
+   Transkript nasıl alınır? Öğrenciler, Mysu’da yer alan Öğrenci Kaynakları
+   (Akademik ve İdari) web sayfasında bulunan online belge talep formunu
+   doldurarak transkript talebinde bulunabilirler. Basılı kopya transkript
+   talebi için öğrencinin Mütevelli Heyeti Kararı ile o yıl için belirlenen
+   transkript ücretini, Akbank Merkez Şube 9999 hesabına açıklamalı olarak
+   yatırması ve banka dekontunu ilgili forma yüklemesi gerekir. E imzalı
+   transkript ücretsiz olarak talep edilebilir. Transkript talebi olduğunda
+   öğrenciler, online belge talep formu ile basılı kopya transkript
+   başvurusu yapan öğrencilerin ücreti ödemiş olduklarını gösteren banka
+   dekontunu ilgili forma yüklemelidir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 29%
+
+
+================================================================================
+📝 TEST 27/30: Q27 [Procedure]
+================================================================================
+
+❓ QUESTION:
+   Öğrenci belgesi nereden alınır?
+
+📚 EXPECTED SOURCE: Öğrenci İşleri
+
+✅ EXPECTED ANSWER:
+   Öğrenci belgesi ÖBS üzerinden alınabilir.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Öğrenci belgesi nereden alınır?', 'Öğrenci kimlik belgesi hangi yerlerden temin edilebilir?', 'Öğrenci belgesini nasıl ve nerede alabilirim?', 'Nerede öğrenci belgesi alma işlemleri için başvurulur?']
+[debug] HyDE generated: Bu belge öğrencilerin resmi kimlik belgelerinden biridir ve genellikle öğrenci işleri bölümünden vey...
+[debug] query tags: ['student_certificate', 'where_to_get']
+[debug] multi-query retrieval: 5 queries, 118 unique chunks
+[debug] initial candidates: 118
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.075 ce=0.950 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 2. score=1.059 ce=0.938 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 3. score=1.033 ce=0.927 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 4. score=0.975 ce=0.943 | Lisans Programlarına Yatay Geçiş Başvuru ve Kabul 
+ 5. score=0.963 ce=0.898 | Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+ 6. score=0.909 ce=0.826 | Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+ 7. score=0.451 ce=0.390 | Üniversiteye Yeni Kayıt Prosedürü (PSR-C130-0101) 
+ 8. score=0.420 ce=0.335 | Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer Be
+ 9. score=0.258 ce=0.175 | Öğrenci Bilgi ve Belgelerinin Saklanması / Güncell
+10. score=0.252 ce=0.175 | Değişim Programları Kapsamında Gelen Öğrenci Prose
+===================================
+[debug] final context chunks: 6
+
+🤖 RAG ANSWER (101.9s):
+------------------------------------------------------------
+   Öğrenci belgesi, Öğrenci Belgesi Ve Kayıt Durumuna İlişkin Diğer
+   Belgelerin Düzenlenmesi Prosedürü (PSR-C210-0402) çerçevesinde ÖK
+   tarafından hazırlanır. Öğrenci, online Belge Talep Formu'nu kullanarak
+   ÖK'ya iletir ve belgeyi ÖK'den teslim alır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 40%
+
+
+================================================================================
+📝 TEST 28/30: Q28 [Edge]
+================================================================================
+
+❓ QUESTION:
+   Cinsel taciz şikayeti nasıl yapılır?
+
+📚 EXPECTED SOURCE: Cinsel Taciz Yönergesi
+
+✅ EXPECTED ANSWER:
+   Şikayet ilgili birime yazılı olarak yapılır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Cinsel taciz şikayeti nasıl yapılır?', 'Cinsel taciz ihbarı ne zaman yapılabilir?', 'Taciz şikayeti nasıl ve nereden yapılır?', 'Cinsel saldırı ihbarda bulunmak için hangi adımları izlemeliyim?']
+[debug] HyDE generated: Bu belgede cinsel taciz şikayetinin nasıl işleneceği, gerekli evraklar ve süreç açıklanmaktadır. Şik...
+[debug] query tags: []
+[debug] multi-query retrieval: 5 queries, 57 unique chunks
+[debug] initial candidates: 57
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.055 ce=0.978 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 2. score=1.051 ce=0.969 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 3. score=1.008 ce=0.931 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 4. score=1.004 ce=0.947 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 5. score=0.879 ce=0.857 | fpo-a510-01-01_0
+ 6. score=0.862 ce=0.793 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+ 7. score=0.832 ce=0.814 | fpo-a510-01-01_0
+ 8. score=0.788 ce=0.752 | fpo-a510-01-01_0
+ 9. score=0.784 ce=0.720 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+10. score=0.489 ce=0.405 | Cinsel Taciz Karşısında Uygulanacak Yöntem ve Alın
+===================================
+[debug] final context chunks: 9
+[debug] WARNING: Possible hallucinated numbers: {'3.', '2.', '5.', '1.', '4.'}
+[debug] Numbers in context: ['0', '0.', '01', '1', '2', '3', '4', '5', '6', '7', '8', '9', '510']
+[debug] Found potential correct number in context: 4 (instead of 3.)
+[debug] Found potential correct number in context: 2 (instead of 3.)
+[debug] Found potential correct number in context: 3 (instead of 3.)
+[debug] Found potential correct number in context: 5 (instead of 3.)
+[debug] Found potential correct number in context: 2 (instead of 2.)
+[debug] Found potential correct number in context: 3 (instead of 2.)
+[debug] Found potential correct number in context: 01 (instead of 2.)
+[debug] Found potential correct number in context: 1 (instead of 2.)
+[debug] Found potential correct number in context: 4 (instead of 5.)
+[debug] Found potential correct number in context: 9 (instead of 5.)
+[debug] Found potential correct number in context: 3 (instead of 5.)
+[debug] Found potential correct number in context: 7 (instead of 5.)
+[debug] Found potential correct number in context: 5 (instead of 5.)
+[debug] Found potential correct number in context: 8 (instead of 5.)
+[debug] Found potential correct number in context: 6 (instead of 5.)
+[debug] Found potential correct number in context: 01 (instead of 1.)
+[debug] Found potential correct number in context: 1 (instead of 1.)
+[debug] Found potential correct number in context: 4 (instead of 4.)
+[debug] Found potential correct number in context: 2 (instead of 4.)
+[debug] Found potential correct number in context: 3 (instead of 4.)
+[debug] Found potential correct number in context: 7 (instead of 4.)
+[debug] Found potential correct number in context: 5 (instead of 4.)
+[debug] Found potential correct number in context: 6 (instead of 4.)
+
+🤖 RAG ANSWER (145.1s):
+------------------------------------------------------------
+   Cinsel taciz şikayeti, aşağıdaki adımları takip ederek yapılabilir: 1.
+   Başvuran, cinsel tacize maruz kaldığını veya şahit olduğunu düşündüğü
+   kişiye (Cinsel Tacize Karşı Önlem ve Destek Çalışmaları Komitesi,
+   Dekanlıklar vb.) ya da kişiye (akademik danışman, psikolog, yönetici vb.)
+   aktarmalıdır. 2. Başvuran, başvurusunda yaşadığı/şahit olduğu olayı
+   istediği şekilde anlatabilir veya yalnızca böyle bir durum bulunduğunu
+   belirterek görüşme talep edebilir. 3. Başvuran kişi cinsel tacize maruz
+   kaldığını/şahit olduğunu ispatlamak zorunda değildir. 4. Komite’nin
+   başvuran ile iletişime geçebilmesi için iletişim bilgilerinin bulunması
+   beklenir. 5. Başvuruda bildirilmesi gereken bilgiler arasında, başvuru
+   sahibinin adı-soyadı, e-posta adresi ve telefon numarası yer alır. Cinsel
+   taciz şikayeti, resmi şikayet kanallarıyla ilgili bilgilendirildikten
+   sonra, Komite tarafından resmi şikayet süreci başlatılır. Bu süreçte,
+   başvurana destek mekanizmaları, şikâyetçi tarafın hakları, şik âyet
+   yolları ve istismara karşı uygulanacak işlemler konusunda
+   bilgilendirilir. Cinsel taciz veya saldırıya maruz kaldığını düşünen
+   kişinin, yaşadığı olayın niteliğinden emin olmasa dahi, bu durumu
+   kendisine yol gösterecek birime ya da kişiye aktarması, atacağı ilk
+   adımdır. Olayın gerçekleştiği ortama ve bağlama göre, ısrarla tekrarlanan
+   davranışlar, ya da bir tek olay cinsel taciz olarak değerlendirilebilir.
+   Süreklilik önkoşul değildir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 67%
+
+
+================================================================================
+📝 TEST 29/30: Q29 [Edge]
+================================================================================
+
+❓ QUESTION:
+   İtiraz süresi ne kadar?
+
+📚 EXPECTED SOURCE: Disiplin Prosedürü
+
+✅ EXPECTED ANSWER:
+   Kararlara itiraz belirli süre içinde yapılmalıdır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['İtiraz süresi ne kadar?', 'İtiraz süreleri kaç gün?', 'Yanlış not itirazı için ne zaman başvurabiliriz?', 'İtiraz süreci nasıl işler?']
+[debug] HyDE generated: Bu belgede, öğrencilerin akademik yılın belirli bir döneminde itiraz yapabilme hakları ve bu sürenin...
+[debug] query tags: ['university_rules', 'complaint_period']
+[debug] multi-query retrieval: 5 queries, 137 unique chunks
+[debug] initial candidates: 137
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=0.990 ce=0.922 | Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme 
+ 2. score=0.945 ce=0.892 | Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme 
+ 3. score=0.926 ce=0.846 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 4. score=0.800 ce=0.732 | Öğrenci Disiplin Prosedürü ( PSR-C210-0101) | Yöne
+ 5. score=0.775 ce=0.721 | sabanci_universitesi_ihale_yonetmeligi_21_subat_20
+ 6. score=0.707 ce=0.638 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 7. score=0.639 ce=0.591 | Yurtlar Yönergesi (ISER-C910-01) | Yönerge
+ 8. score=0.587 ce=0.519 | Öğrenci Disiplin Yönergesi (ISR-C210-01) | Yönerge
+ 9. score=0.510 ce=0.429 | İngilizce Dil Ölçme Sınavı Prosedürü (PSR-C140-010
+10. score=0.473 ce=0.407 | Dönem Sonu Notlarının Sisteme  Girilmesi  Ve Not D
+===================================
+[debug] final context chunks: 7
+[debug] WARNING: Possible hallucinated numbers: {'10'}
+[debug] Numbers in context: ['1', '01', '1.6', '1.7', '1.8', '2', '2.7', '3', '3.', '3.1', '3.2', '3.3', '3.5', '4', '4.3', '4.4', '5', '6', '7', '15']
+[debug] Found potential correct number in context: 7 (instead of 10)
+[debug] Found potential correct number in context: 5 (instead of 10)
+[debug] Found potential correct number in context: 15 (instead of 10)
+[debug] Found potential correct number in context: 6 (instead of 10)
+
+🤖 RAG ANSWER (74.1s):
+------------------------------------------------------------
+   İtiraz süresi 15 gün, 3 iş günü, 5 iş günü, 7 iş günü, 10 iş günü, 15 iş
+   günü, 2 ay, 4 ay olarak belirlenmiştir.
+------------------------------------------------------------
+
+📊 Keyword coverage: 17%
+
+
+================================================================================
+📝 TEST 30/30: Q30 [Edge]
+================================================================================
+
+❓ QUESTION:
+   Sabancı Üniversitesi nerede?
+
+📚 EXPECTED SOURCE: Genel Bilgi
+
+✅ EXPECTED ANSWER:
+   Sabancı Üniversitesi İstanbul Tuzla'da bulunmaktadır.
+
+[debug] detected language: tr
+[debug] intent: other
+[debug] query expansion: ['Sabancı Üniversitesi nerede?', "Sabancı Üniversitesi İstanbul'da mı?", 'Sabancı Üniversitesi konumu nedir?', 'Sabancı Üniversitesi hangi ilçede?']
+[debug] HyDE generated: Bu belgede, Sabancı Üniversitesi'nin kampüsleri ve adresleri ile ilgili genel bilgiler yer almaktadı...
+[debug] query tags: ['sabanci_university', 'location']
+[debug] multi-query retrieval: 5 queries, 146 unique chunks
+[debug] initial candidates: 146
+=== TOP CANDIDATES AFTER RERANK ===
+ 1. score=1.000 ce=0.999 | kalite_el_kitabiv13
+ 2. score=0.995 ce=0.998 | fipar-c720-02-02_0
+ 3. score=0.988 ce=0.999 | isg_el_kitabirev9
+ 4. score=0.985 ce=0.999 | cevre_el_kitabi_rev_07
+ 5. score=0.975 ce=0.977 | ekler4
+ 6. score=0.970 ce=0.984 | kdv_ist._sertifikasi_bilgi_formu
+ 7. score=0.963 ce=0.990 | frg-a410-01-01_0
+ 8. score=0.950 ce=0.973 | firo-c430-01-v01_
+ 9. score=0.944 ce=0.948 | t-fid-s620-01-05
+10. score=0.934 ce=0.954 | Sınai Mülkiyet Hakları Yönetimi ve Ticarileştirme 
+===================================
+[debug] final context chunks: 15
+
+🤖 RAG ANSWER (77.8s):
+------------------------------------------------------------
+   Sabancı Üniversitesi'nin adresi, Tuzla 34956 İstanbul'dadır.
+------------------------------------------------------------
+
+📊 Keyword coverage: 60%
+
+
+================================================================================
+📊 SUMMARY BY QUESTION
+================================================================================
+✅ Q1 [Erasmus]: 50% coverage, 84.1s
+✅ Q2 [Erasmus]: 50% coverage, 70.3s
+✅ Q3 [Erasmus]: 67% coverage, 98.2s
+⚠️ Q4 [Erasmus]: 30% coverage, 87.4s
+✅ Q5 [Library]: 92% coverage, 83.6s
+⚠️ Q6 [Library]: 43% coverage, 119.6s
+✅ Q7 [Discipline]: 71% coverage, 98.4s
+⚠️ Q8 [Discipline]: 45% coverage, 77.9s
+✅ Q9 [Discipline]: 60% coverage, 85.8s
+✅ Q10 [Scholarship]: 77% coverage, 146.8s
+⚠️ Q11 [Scholarship]: 33% coverage, 189.1s
+✅ Q12 [Graduate]: 50% coverage, 326.6s
+✅ Q13 [Graduate]: 62% coverage, 88.7s
+✅ Q14 [Graduate]: 78% coverage, 72.4s
+✅ Q15 [Undergraduate]: 71% coverage, 76.3s
+✅ Q16 [Undergraduate]: 55% coverage, 111.4s
+⚠️ Q17 [Undergraduate]: 33% coverage, 78.1s
+✅ Q18 [Registration]: 80% coverage, 147.6s
+✅ Q19 [Registration]: 60% coverage, 92.0s
+✅ Q20 [English]: 73% coverage, 63.3s
+✅ Q21 [English]: 75% coverage, 126.7s
+⚠️ Q22 [English]: 43% coverage, 104.0s
+✅ Q23 [Numeric]: 57% coverage, 85.2s
+⚠️ Q24 [Numeric]: 20% coverage, 72.2s
+✅ Q25 [Procedure]: 57% coverage, 131.4s
+⚠️ Q26 [Procedure]: 29% coverage, 105.6s
+⚠️ Q27 [Procedure]: 40% coverage, 101.9s
+✅ Q28 [Edge]: 67% coverage, 145.1s
+⚠️ Q29 [Edge]: 17% coverage, 74.1s
+✅ Q30 [Edge]: 60% coverage, 77.8s
+
+================================================================================
+📊 SUMMARY BY CATEGORY
+================================================================================
+✅ Discipline: 59% avg (2/3 passed)
+⚠️ Edge: 48% avg (2/3 passed)
+✅ English: 64% avg (2/3 passed)
+⚠️ Erasmus: 49% avg (3/4 passed)
+✅ Graduate: 63% avg (3/3 passed)
+✅ Library: 67% avg (1/2 passed)
+⚠️ Numeric: 39% avg (1/2 passed)
+⚠️ Procedure: 42% avg (1/3 passed)
+✅ Registration: 70% avg (2/2 passed)
+✅ Scholarship: 55% avg (1/2 passed)
+✅ Undergraduate: 53% avg (2/3 passed)
+
+================================================================================
+📊 OVERALL RESULTS
+================================================================================
+✅ Passed (≥50%): 20/30 (67%)
+📈 Average coverage: 55%
+⏱️  Average latency: 107.4s
+⏱️  Total time: 3222s

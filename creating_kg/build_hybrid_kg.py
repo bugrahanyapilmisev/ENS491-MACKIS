@@ -1,0 +1,609 @@
+"""
+build_hybrid_kg.py - Hybrid Knowledge Graph Builder with Full LLM Extraction
+
+Builds a hybrid KG combining:
+1. Topic -> Fact (structured facts)
+2. Entity -> Relation -> Entity (knowledge triples)
+
+Uses LLM for extraction - slower but more accurate.
+Processes only selected documents (from selected_docs.json).
+
+Usage:
+    python build_hybrid_kg.py
+"""
+
+import os
+import re
+import json
+import pickle
+import numpy as np
+from typing import List, Dict, Optional, Set, Tuple
+from collections import defaultdict
+from dataclasses import dataclass, asdict
+import time
+
+import pandas as pd
+import requests
+from dotenv import load_dotenv
+
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from services.config.settings import RAGConfig
+from services.core.llm_service import LLMService
+
+load_dotenv()
+
+# =================== CONFIG ===================
+
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+CHAT_MODEL = os.getenv("CHAT_MODEL", "llama3.1:latest")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "bge-m3")
+
+PREPROCESSING_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(PREPROCESSING_DIR)
+CHECKPOINT_DIR = os.path.join(ROOT_DIR, "creating_database", "checkpoints_v2")
+CHUNK_PARQUET = os.path.join(CHECKPOINT_DIR, "chunks_v3.parquet")
+SELECTED_DOCS_PATH = os.path.join(PREPROCESSING_DIR, "selected_docs.json")
+
+# Output paths
+KG_OUTPUT_DIR = os.path.join(PREPROCESSING_DIR, "knowledge_graph")
+KG_FACTS_PATH = os.path.join(KG_OUTPUT_DIR, "kg_facts.json")
+KG_TRIPLES_PATH = os.path.join(KG_OUTPUT_DIR, "kg_triples.json")
+KG_INDEX_PATH = os.path.join(KG_OUTPUT_DIR, "kg_index.pkl")
+
+os.makedirs(KG_OUTPUT_DIR, exist_ok=True)
+
+# Checkpoint for crash recovery
+KG_CHECKPOINT_PATH = os.path.join(KG_OUTPUT_DIR, "_build_checkpoint.json")
+CHECKPOINT_INTERVAL = 200  # Save every N chunks
+
+
+# =================== DATA CLASSES ===================
+
+@dataclass
+class ExtractedFact:
+    """Topic -> Fact structure."""
+    topic: str
+    relation: str
+    value: str
+    context_type: str  # lisans, lisansustu, general
+    source_chunk_id: str
+    source_title: str
+    confidence: float = 1.0
+
+
+@dataclass
+class Triple:
+    """Entity -> Relation -> Entity structure."""
+    head: str
+    head_type: str  # program, requirement, duration, etc.
+    relation: str
+    tail: str
+    tail_type: str
+    source_chunk_id: str
+    source_title: str
+    confidence: float = 1.0
+
+
+# =================== LLM EXTRACTION ===================
+
+class LLMHybridExtractor:
+    """Uses LLM to extract both Facts and Triples."""
+    
+    def __init__(self):
+        settings = RAGConfig.from_env()
+        self.llm = LLMService(settings.ollama)
+        
+    def extract(self, chunk_text: str, title: str, chunk_id: str) -> Tuple[List[ExtractedFact], List[Triple]]:
+        """Extract both facts and triples from chunk using LLM."""
+        
+        prompt = f"""You are a Knowledge Graph extraction expert for a UNIVERSITY information system.
+Extract BOTH structured facts AND entity-relation-entity triples from the given text.
+
+TEXT:
+Title: {title}
+Content: {chunk_text[:2000]}
+
+---
+
+Return JSON with two sections:
+
+1. **facts**: Extract ONLY student-facing rules and requirements:
+   - GPA thresholds (minimum_gno), credit requirements (credit_requirement)
+   - Deadlines and durations (duration, deadline)
+   - Borrowing limits, penalties, fees (limit, penalty_type, penalty_duration)
+   - Application procedures (process_step, requirement)
+   DO NOT extract: document dates, version numbers, committee names, form codes
+
+   Fields:
+   - topic: Use a CONCISE, CONSISTENT snake_case name for the main subject.
+     Examples: "erasmus_internship", "library_borrowing", "student_discipline",
+     "scholarship_requirements", "graduation_requirements", "course_registration"
+     AVOID creating new topic names for the same concept (e.g., don't create
+     both "burs" and "scholarship" and "burs_miktar" — use ONE name)
+   - relation: one of: minimum_gno, duration, limit, quantity_limit, credit_requirement,
+     penalty_type, penalty_duration, deadline, requirement, process_step, effective_date
+   - value: the EXACT specific value from the text (a number, duration, or short phrase).
+     Must be concrete — skip vague values like "belirlenir" or "ilgili birim"
+   - context: who it applies to (lisans, lisansustu, general)
+
+2. **triples**: Entity relationships
+   - head: source entity (concise name)
+   - head_type: entity type (program, office, requirement, penalty, document)
+   - relation: relationship (requires, has_duration, applies_to, results_in, responsible_for)
+   - tail: target entity (concise name)
+   - tail_type: entity type
+
+JSON OUTPUT SCHEMA:
+{{
+  "facts": [
+    {{"topic": "...", "relation": "...", "value": "...", "context": "general/lisans/lisansustu"}}
+  ],
+  "triples": [
+    {{"head": "...", "head_type": "...", "relation": "...", "tail": "...", "tail_type": "..."}}
+  ]
+}}
+
+RULES:
+1. Extract ONLY explicit information from the text
+2. Do NOT make up values - use exact numbers/phrases from text
+3. SKIP document metadata (effective dates, version numbers, approval dates)
+4. SKIP form codes and committee references unless they are the answer to "how to apply"
+5. Keep topic names consistent — reuse existing topic names when possible
+6. Values must be CONCRETE (numbers, durations, specific conditions) — not vague phrases
+7. Return empty lists if nothing useful is extractable
+
+JSON:"""
+
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                parsed = self.llm.chat_json(
+                    prompt=prompt,
+                    system_prompt="You are a Knowledge Graph extraction expert. Return ONLY valid JSON matching the schema.",
+                    temperature=0.0
+                )
+                if not parsed:
+                    continue
+                
+                # Extract facts
+                facts = []
+                for f in parsed.get("facts", []):
+                    if isinstance(f, dict) and f.get("value"):
+                        facts.append(ExtractedFact(
+                            topic=f.get("topic", "general"),
+                            relation=f.get("relation", "general"),
+                            value=str(f.get("value", "")),
+                            context_type=f.get("context", "general"),
+                            source_chunk_id=chunk_id,
+                            source_title=title,
+                            confidence=0.9
+                        ))
+                
+                # Extract triples
+                triples = []
+                for t in parsed.get("triples", []):
+                    if isinstance(t, dict) and t.get("head") and t.get("tail"):
+                        triples.append(Triple(
+                            head=str(t.get("head", "")),
+                            head_type=t.get("head_type", "entity"),
+                            relation=t.get("relation", "related_to"),
+                            tail=str(t.get("tail", "")),
+                            tail_type=t.get("tail_type", "entity"),
+                            source_chunk_id=chunk_id,
+                            source_title=title,
+                            confidence=0.9
+                        ))
+                
+                return facts, triples
+                
+            except requests.exceptions.Timeout:
+                if attempt < max_retries - 1:
+                    print(f"[LLM timeout, retry {attempt+1}/{max_retries}]")
+                    time.sleep(30)
+                else:
+                    print(f"[LLM extraction failed: timeout]")
+                    return [], []
+            except Exception as e:
+                print(f"      [!] Error extracting block: {str(e)}")
+                time.sleep(1)
+        
+        return [], []
+
+
+# =================== EMBEDDING HELPER ===================
+# Uses EmbeddingService which routes to OpenRouter (qwen/qwen3-embedding-8b)
+# or Ollama (bge-m3) based on EMBED_PROVIDER in .env
+
+from services.core.embedding_service import EmbeddingService
+
+
+# =================== HYBRID KG BUILDER ===================
+
+class HybridKGBuilder:
+    """Builds hybrid KG with both Facts and Triples."""
+    
+    def __init__(self):
+        self.extractor = LLMHybridExtractor()
+        
+        # Embedding service — uses EMBED_PROVIDER from .env
+        # (openrouter → qwen/qwen3-embedding-8b, ollama → bge-m3)
+        settings = RAGConfig.from_env()
+        self.embed_service = EmbeddingService(settings.ollama)
+        
+        # Storage
+        self.facts_by_topic: Dict[str, List[Dict]] = defaultdict(list)
+        self.all_triples: List[Dict] = []
+        self.topic_embeddings: Dict[str, List[float]] = {}
+        self.entity_embeddings: Dict[str, List[float]] = {}
+    
+    def build_from_selected_chunks(self, chunks_df: pd.DataFrame, selected_paths: List[str]):
+        """Build KG from selected documents only."""
+        
+        # Filter to selected documents
+        filtered_df = chunks_df[chunks_df['source_path'].isin(selected_paths)]
+        total = len(filtered_df)
+        print(f"[KG] Processing {total} chunks from {len(selected_paths)} documents...")
+        
+        unique_topics: Set[str] = set()
+        unique_entities: Set[str] = set()
+        
+        # Check for checkpoint to resume from
+        start_idx = 0
+        if os.path.exists(KG_CHECKPOINT_PATH):
+            try:
+                with open(KG_CHECKPOINT_PATH, "r", encoding="utf-8") as f:
+                    ckpt = json.load(f)
+                start_idx = ckpt.get("last_idx", 0) + 1
+                self.facts_by_topic = defaultdict(list, ckpt.get("facts_by_topic", {}))
+                self.all_triples = ckpt.get("all_triples", [])
+                unique_topics = set(ckpt.get("unique_topics", []))
+                unique_entities = set(ckpt.get("unique_entities", []))
+                print(f"[KG] RESUMING from chunk {start_idx}/{total} (checkpoint found)")
+                print(f"     {len(self.facts_by_topic)} topics, {len(self.all_triples)} triples so far")
+            except Exception as e:
+                print(f"[KG] Checkpoint corrupted, starting fresh: {e}")
+                start_idx = 0
+        
+        import_start = time.time()
+        
+        for idx, (_, row) in enumerate(filtered_df.iterrows()):
+            if idx < start_idx:
+                continue
+            
+            # Progress with ETA
+            if idx % 20 == 0:
+                elapsed = time.time() - import_start
+                processed = idx - start_idx + 1
+                rate = processed / elapsed if elapsed > 0 else 0
+                remaining = total - idx
+                eta_min = remaining / rate / 60 if rate > 0 else 0
+                eta_hr = eta_min / 60
+                print(f"[KG] Progress: {idx}/{total} ({100*idx/total:.1f}%) | "
+                      f"ETA: {eta_hr:.1f}h ({eta_min:.0f}min)")
+            
+            chunk_id = str(row.get("chunk_id", f"chunk_{idx}"))
+            content = str(row.get("content", ""))
+            title = str(row.get("title", ""))
+            
+            if len(content) < 50:
+                continue
+            
+            # LLM extraction (with connection-loss guard)
+            consecutive_errors = 0
+            max_consecutive = 5
+            facts, triples = [], []
+            while True:
+                try:
+                    facts, triples = self.extractor.extract(content, title, chunk_id)
+                    break  # Success
+                except requests.exceptions.ConnectionError:
+                    consecutive_errors += 1
+                    if consecutive_errors >= max_consecutive:
+                        print(f"\n[!] Connection lost — waiting 30s before retry (chunk {idx})...")
+                        # Save checkpoint before waiting
+                        if idx > 0:
+                            self._save_checkpoint(idx - 1, unique_topics, unique_entities)
+                        time.sleep(30)
+                        consecutive_errors = 0
+                    else:
+                        time.sleep(2)
+                except Exception as e:
+                    print(f"      [!] Extraction error at chunk {idx}: {e}")
+                    break
+            
+            # Store facts
+            for fact in facts:
+                unique_topics.add(fact.topic)
+                self.facts_by_topic[fact.topic].append({
+                    "relation": fact.relation,
+                    "value": fact.value,
+                    "context_type": fact.context_type,
+                    "source_chunk_id": fact.source_chunk_id,
+                    "source_title": fact.source_title,
+                    "confidence": fact.confidence
+                })
+            
+            # Store triples
+            for triple in triples:
+                unique_entities.add(triple.head)
+                unique_entities.add(triple.tail)
+                self.all_triples.append(asdict(triple))
+            
+            # CHECKPOINT: Save every N chunks for crash recovery
+            if idx > 0 and idx % CHECKPOINT_INTERVAL == 0:
+                self._save_checkpoint(idx, unique_topics, unique_entities)
+        
+        # Deduplicate
+        self._deduplicate()
+        
+        # Build embeddings via EmbeddingService (OpenRouter or Ollama per .env)
+        print(f"[KG] Building embeddings for {len(unique_topics)} topics + {len(unique_entities)} entities...")
+        
+        # Embed topics (batch)
+        topic_list = sorted(unique_topics)
+        print(f"  Embedding {len(topic_list)} topics...")
+        topic_texts = [t.replace("_", " ") for t in topic_list]
+        topic_vecs = self.embed_service.embed_batch(topic_texts, is_query=False, batch_size=64)
+        for topic, vec in zip(topic_list, topic_vecs):
+            self.topic_embeddings[topic] = vec.tolist()
+        print(f"  [OK] {len(topic_list)} topic embeddings done")
+        
+        # Embed entities (batch)
+        entity_list = sorted(unique_entities)
+        print(f"  Embedding {len(entity_list)} entities...")
+        entity_vecs = self.embed_service.embed_batch(entity_list, is_query=False, batch_size=64)
+        for entity, vec in zip(entity_list, entity_vecs):
+            self.entity_embeddings[entity] = vec.tolist()
+        print(f"  [OK] {len(entity_list)} entity embeddings done")
+        
+        # Clean up checkpoint after successful completion
+        if os.path.exists(KG_CHECKPOINT_PATH):
+            os.remove(KG_CHECKPOINT_PATH)
+            print("[KG] Checkpoint cleaned up")
+        
+        print(f"[KG] Done: {len(self.facts_by_topic)} topics, {len(self.all_triples)} triples")
+    
+    def _save_checkpoint(self, idx: int, unique_topics: Set[str], unique_entities: Set[str]):
+        """Save checkpoint for crash recovery (atomic write to prevent corruption)."""
+        ckpt = {
+            "last_idx": idx,
+            "facts_by_topic": dict(self.facts_by_topic),
+            "all_triples": self.all_triples,
+            "unique_topics": list(unique_topics),
+            "unique_entities": list(unique_entities),
+        }
+        # Atomic write: serialize to string first, write to temp file, then rename
+        tmp_path = KG_CHECKPOINT_PATH + ".tmp"
+        ckpt_json = json.dumps(ckpt, ensure_ascii=False)
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            f.write(ckpt_json)
+            f.flush()
+            os.fsync(f.fileno())
+        # Atomic rename (overwrites existing checkpoint safely)
+        if os.path.exists(KG_CHECKPOINT_PATH):
+            os.replace(tmp_path, KG_CHECKPOINT_PATH)
+        else:
+            os.rename(tmp_path, KG_CHECKPOINT_PATH)
+        total_facts = sum(len(v) for v in self.facts_by_topic.values())
+        print(f"  [CHECKPOINT] Saved at chunk {idx} | {len(self.facts_by_topic)} topics, "
+              f"{total_facts} facts, {len(self.all_triples)} triples")
+    
+    def _deduplicate(self):
+        """Remove duplicates and apply quality filters."""
+        # Deduplicate facts
+        for topic in list(self.facts_by_topic.keys()):
+            facts = self.facts_by_topic[topic]
+            seen = set()
+            unique = []
+            for f in facts:
+                key = (f["relation"], f["value"][:50], f["context_type"])
+                if key not in seen:
+                    seen.add(key)
+                    unique.append(f)
+            self.facts_by_topic[topic] = unique
+        
+        # Deduplicate triples
+        seen = set()
+        unique_triples = []
+        for t in self.all_triples:
+            key = (t["head"], t["relation"], t["tail"])
+            if key not in seen:
+                seen.add(key)
+                unique_triples.append(t)
+        self.all_triples = unique_triples
+        
+        # ── POST-BUILD QUALITY FILTER ──
+        self._quality_filter()
+    
+    def _quality_filter(self):
+        """Remove noisy/garbage facts and topics from the KG."""
+        import re as _re
+        
+        # 1. Remove noise topics entirely (document metadata, not student-facing)
+        NOISE_TOPICS = {
+            "effective_date", "update_date", "statutory_basis",
+            "prosedur", "procedure", "yonerge", "instruction",
+        }
+        for noise in NOISE_TOPICS:
+            self.facts_by_topic.pop(noise, None)
+        
+        # 2. Filter individual facts with bad values
+        for topic in list(self.facts_by_topic.keys()):
+            filtered = []
+            for f in self.facts_by_topic[topic]:
+                value = str(f.get("value", "")).strip()
+                relation = f.get("relation", "")
+                
+                # Skip empty or too-short values
+                if len(value) < 2:
+                    continue
+                
+                # Skip template placeholders
+                if "..." in value or "___" in value:
+                    continue
+                
+                # Skip form codes used as values for non-form relations
+                if relation in ("minimum_gno", "duration", "limit") and \
+                   _re.match(r'^[A-Z]{2,5}-[A-Z0-9]', value):
+                    continue
+                
+                # Skip years misidentified as durations
+                if relation == "duration" and _re.match(r'^(19|20)\d{2}$', value):
+                    continue
+                
+                # Skip vague values
+                vague_phrases = [
+                    "belirlenir", "ilgili birim", "gerektiğinde",
+                    "uygulanır", "yapılır", "none",
+                ]
+                if value.lower() in vague_phrases:
+                    continue
+                
+                # Skip wrong relation types (minimum_gno should contain a number or GNO-like value)
+                if relation == "minimum_gno":
+                    has_number = bool(_re.search(r'\d', value))
+                    gno_keywords = ["gno", "gpa", "%", "puan"]
+                    has_keyword = any(kw in value.lower() for kw in gno_keywords)
+                    if not has_number and not has_keyword:
+                        continue
+                
+                filtered.append(f)
+            
+            self.facts_by_topic[topic] = filtered
+        
+        # 3. Remove topics that ended up with 0 facts after filtering
+        empty = [t for t, f in self.facts_by_topic.items() if len(f) == 0]
+        for t in empty:
+            del self.facts_by_topic[t]
+        
+        # 4. Merge synonym topics (Turkish ↔ English duplicates)
+        TOPIC_MERGES = {
+            "burs": "scholarship_requirements",
+            "burslar": "scholarship_requirements",
+            "burs_miktar": "scholarship_requirements",
+            "burs_tutari": "scholarship_requirements",
+            "burs_suresi": "scholarship_requirements",
+            "burs_benefit": "scholarship_requirements",
+            "burs_payment": "scholarship_requirements",
+            "burs_form": "scholarship_requirements",
+            "scholarship": "scholarship_requirements",
+            "scholarship_payment": "scholarship_requirements",
+            "staj_suresi": "internship_requirements",
+            "staj_kurumu": "internship_requirements",
+            "erasmus_internship": "erasmus_internship",
+            "library_borrowing": "library_borrowing",
+        }
+        for old_name, new_name in TOPIC_MERGES.items():
+            if old_name in self.facts_by_topic and old_name != new_name:
+                if new_name not in self.facts_by_topic:
+                    self.facts_by_topic[new_name] = []
+                self.facts_by_topic[new_name].extend(self.facts_by_topic.pop(old_name))
+        
+        # 5. Re-deduplicate merged topics
+        for topic in self.facts_by_topic:
+            facts = self.facts_by_topic[topic]
+            seen = set()
+            unique = []
+            for f in facts:
+                key = (f["relation"], f["value"][:50], f["context_type"])
+                if key not in seen:
+                    seen.add(key)
+                    unique.append(f)
+            self.facts_by_topic[topic] = unique
+        
+        # Stats
+        total_facts = sum(len(f) for f in self.facts_by_topic.values())
+        single_fact = sum(1 for f in self.facts_by_topic.values() if len(f) == 1)
+        print(f"[KG Quality Filter] {len(self.facts_by_topic)} topics, {total_facts} facts")
+        print(f"[KG Quality Filter] Single-fact topics: {single_fact}/{len(self.facts_by_topic)}")
+    
+    def save(self):
+        """Save hybrid KG to files."""
+        
+        # Save facts
+        with open(KG_FACTS_PATH, "w", encoding="utf-8") as f:
+            json.dump(dict(self.facts_by_topic), f, ensure_ascii=False, indent=2)
+        print(f"[OK] Facts saved to {KG_FACTS_PATH}")
+        
+        # Save triples — NO entity_embeddings here (prevents 990MB bloat!)
+        triples_data = {
+            "triples": self.all_triples
+        }
+        with open(KG_TRIPLES_PATH, "w", encoding="utf-8") as f:
+            json.dump(triples_data, f, ensure_ascii=False, indent=2)
+        print(f"[OK] Triples saved to {KG_TRIPLES_PATH}")
+        
+        # Save index — entity_embeddings go HERE (binary, compact)
+        index_data = {
+            "topic_embeddings": self.topic_embeddings,
+            "entity_embeddings": self.entity_embeddings,
+            "topic_list": list(self.facts_by_topic.keys()),
+            "total_facts": sum(len(f) for f in self.facts_by_topic.values()),
+            "total_triples": len(self.all_triples)
+        }
+        with open(KG_INDEX_PATH, "wb") as f:
+            pickle.dump(index_data, f)
+        idx_size = os.path.getsize(KG_INDEX_PATH) / (1024*1024)
+        print(f"[OK] Index saved to {KG_INDEX_PATH} ({idx_size:.1f} MB)")
+
+
+# =================== MAIN ===================
+
+def main():
+    print("=" * 60)
+    print("[KG] HYBRID Knowledge Graph Builder (LLM)")
+    print("    Topic->Fact + Entity->Relation->Entity")
+    print("=" * 60)
+    
+    # Load selected documents
+    print(f"\n[1/5] Loading selected documents...")
+    if not os.path.exists(SELECTED_DOCS_PATH):
+        print(f"[ERROR] Run select_focused_docs.py first!")
+        return
+    
+    with open(SELECTED_DOCS_PATH, "r", encoding="utf-8") as f:
+        selected_data = json.load(f)
+    
+    # Get all selected paths
+    selected_paths = []
+    for category, docs in selected_data.get("documents", {}).items():
+        for doc in docs:
+            selected_paths.append(doc["source_path"])
+    
+    print(f"[OK] {len(selected_paths)} documents selected")
+    
+    # Load chunks
+    print(f"\n[2/5] Loading chunks...")
+    if not os.path.exists(CHUNK_PARQUET):
+        print(f"[ERROR] Chunk file not found: {CHUNK_PARQUET}")
+        return
+    
+    chunks_df = pd.read_parquet(CHUNK_PARQUET)
+    print(f"[OK] Loaded {len(chunks_df)} total chunks")
+    
+    # Build KG
+    print(f"\n[3/5] Building hybrid knowledge graph (LLM extraction)...")
+    print(f"      This will take ~1-2 hours for {selected_data.get('total_chunks', '?')} chunks")
+    
+    builder = HybridKGBuilder()
+    builder.build_from_selected_chunks(chunks_df, selected_paths)
+
+    # Save
+    print(f"\n[4/5] Saving knowledge graph...")
+    builder.save()
+    
+    # Summary
+    print(f"\n[5/5] Summary:")
+    print(f"  - Topics (facts): {len(builder.facts_by_topic)}")
+    print(f"  - Total facts: {sum(len(f) for f in builder.facts_by_topic.values())}")
+    print(f"  - Total triples: {len(builder.all_triples)}")
+    print(f"  - Topic embeddings: {len(builder.topic_embeddings)}")
+    print(f"  - Entity embeddings: {len(builder.entity_embeddings)}")
+    
+    print(f"\n[DONE] Hybrid KG built successfully!")
+    print(f"       Output: {KG_OUTPUT_DIR}/")
+
+
+if __name__ == "__main__":
+    main()
