@@ -1,16 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Any
 from datetime import datetime
 from uuid import UUID
-from enum import Enum
-
-# -----------------------------------
-# 0. Enums
-# -----------------------------------
-class ChatModel(str, Enum):
-    LLAMA31       = "llama3.1:latest"
-    QWEN25_7B     = "qwen2.5:7b"
-    GPT_OSS_120B  = "gpt-oss:120b-cloud"
 
 # -----------------------------------
 # 1. Temel Parçalar
@@ -50,6 +41,8 @@ class ChatResponse(BaseModel):
 # -----------------------------------
 class MessageOut(BaseModel):
     """Tek bir mesaj - frontend Message interface'i ile birebir uyumlu"""
+    model_config = ConfigDict(from_attributes=True)
+
     id: int              # message_id → id
     role: str            # "user" | "assistant"
     content: str
@@ -57,17 +50,13 @@ class MessageOut(BaseModel):
     sources: Optional[List[SourceReference]] = None  # Kaynaklar (assistant mesajları için)
     confidence: Optional[float] = None  # Güven skoru (assistant mesajları için)
 
-    class Config:
-        from_attributes = True
-
 class ConversationOut(BaseModel):
     """Tek bir konuşma - frontend ConversationData interface'i ile birebir uyumlu"""
+    model_config = ConfigDict(from_attributes=True)
+
     id: int              # conversation_id → id
     title: str
     timestamp: str       # ISO string (konuşmanın son güncelleme zamanı)
     preview: str         # Son mesajın kısa hali
     messages: List[MessageOut]
-
-    class Config:
-        from_attributes = True
 

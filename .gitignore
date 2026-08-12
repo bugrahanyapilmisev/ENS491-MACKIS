@@ -1,46 +1,63 @@
-# local state
-session.json
+# ── Credentials & secrets ──────────────────────────────────────────────────────
+.env
+.env.test
+.env.local
 
-# local Chroma DBs & zips
-preprocessing/chroma_db_mysu
-preprocessing/chroma_db_clean
-preprocessing/chroma_db_mysu/
-preprocessing/chroma_db_clean.zip
-preprocessing/version_plus/chroma_db_clean_plus
-
-
-
-# --- Python & Mac Gereksizleri ---
+# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
-.DS_Store
-.env
+*.pyo
 venv/
 .venv/
+.coverage
+htmlcov/
 
-# --- Veritabanı ve Büyük Dosyalar ---
-*.sqlite3
-*.db
-*.bin
-vectors_v3.parquet
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
 
-
-# --- ChromaDB ve RAG Verileri ---
-
-preprocessing/chroma_db_mysu_RESTORE/
-preprocessing/checkpoints_plus2/
-chroma_db_mysu/
-chroma_db_mysu_RESTORE/
-
-mackis/
-
-preprocessing/corpus_browser/
-
-# --- IDE ve Düzenleyici Dosyaları ---
+# ── IDE ───────────────────────────────────────────────────────────────────────
 .idea/
 .vscode/
 
+# ── Large data & binary files ─────────────────────────────────────────────────
+*.sqlite3
+*.db
+*.bin
+*.pkl
+*.parquet
 
-# --- Manuel Yoksayılanlar ---
-create_user.py
+# ── ChromaDB / local vector stores ────────────────────────────────────────────
+creating_database/chroma_db_v2/
+preprocessing/chroma_db_mysu/
+preprocessing/chroma_db_mysu_RESTORE/
+preprocessing/chroma_db_clean/
+preprocessing/chroma_db_clean.zip
+preprocessing/version_plus/chroma_db_clean_plus/
+preprocessing/checkpoints_plus2/
+chroma_db_mysu/
+chroma_db_mysu_RESTORE/
+mackis/
+preprocessing/corpus_browser/
+
+# ── BM25 index & checkpoints (generated — rebuild with scripts) ───────────────
+creating_database/checkpoints_v2/*.pkl
+creating_database/checkpoints_v2/*.parquet
+
+# ── Migration artefacts ───────────────────────────────────────────────────────
+scripts/missing_chunks.txt
+
+# ── Test artefacts ────────────────────────────────────────────────────────────
+htmlcov/
+.coverage
+.pytest_cache/
+
+# ── Fine-tuning large binary artefacts ────────────────────────────────────────
+fine_tuning/**/*.bin
+fine_tuning/**/*.safetensors
+fine_tuning/**/*.gguf
+fine_tuning/merged/
+fine_tuning/gguf/
+
+# ── Misc local state ──────────────────────────────────────────────────────────
+session.json
 
