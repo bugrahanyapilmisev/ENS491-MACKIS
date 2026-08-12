@@ -1,0 +1,2074 @@
+{
+  "generated_at": "20260602_034104",
+  "pass_threshold": 0.7,
+  "evaluation_framework": "RAGAS",
+  "chat_model": "qwen/qwen3-32b",
+  "judge_provider": "openrouter",
+  "judge_model": "openai/gpt-4o-mini",
+  "composite_formula": "0.30×faithfulness + 0.30×answer_correctness + 0.25×context_recall + 0.15×answer_relevancy",
+  "overall": {
+    "total": 95,
+    "passed": 64,
+    "failed": 31,
+    "pass_rate": 0.674,
+    "avg_faithfulness": 0.9116,
+    "avg_answer_relevancy": 0.5903,
+    "avg_answer_correctness": 0.5118,
+    "avg_context_recall": 0.8352,
+    "avg_composite_score": 0.7244,
+    "avg_latency": 81.55,
+    "avg_answer_similarity": 0.5118,
+    "avg_factual_accuracy": 0.5118,
+    "avg_answer_relevance": 0.5903,
+    "avg_keyword_coverage": 0.0
+  },
+  "by_category": {
+    "Erasmus": {
+      "n": 6,
+      "passed": 4,
+      "pass_rate": 0.667,
+      "avg": {
+        "faithfulness": 0.9427,
+        "answer_relevancy": 0.6527,
+        "answer_correctness": 0.5163,
+        "context_recall": 0.7222,
+        "composite_score": 0.7162
+      }
+    },
+    "Library": {
+      "n": 6,
+      "passed": 4,
+      "pass_rate": 0.667,
+      "avg": {
+        "faithfulness": 0.9722,
+        "answer_relevancy": 0.4824,
+        "answer_correctness": 0.4822,
+        "context_recall": 0.6945,
+        "composite_score": 0.6823
+      }
+    },
+    "Discipline": {
+      "n": 6,
+      "passed": 4,
+      "pass_rate": 0.667,
+      "avg": {
+        "faithfulness": 0.8788,
+        "answer_relevancy": 0.5563,
+        "answer_correctness": 0.6257,
+        "context_recall": 0.7917,
+        "composite_score": 0.7327
+      }
+    },
+    "Scholarship": {
+      "n": 5,
+      "passed": 4,
+      "pass_rate": 0.8,
+      "avg": {
+        "faithfulness": 0.9485,
+        "answer_relevancy": 0.4882,
+        "answer_correctness": 0.5689,
+        "context_recall": 1.0,
+        "composite_score": 0.7784
+      }
+    },
+    "Graduate": {
+      "n": 6,
+      "passed": 6,
+      "pass_rate": 1.0,
+      "avg": {
+        "faithfulness": 0.9815,
+        "answer_relevancy": 0.6981,
+        "answer_correctness": 0.6921,
+        "context_recall": 0.875,
+        "composite_score": 0.8256
+      }
+    },
+    "Undergraduate": {
+      "n": 5,
+      "passed": 4,
+      "pass_rate": 0.8,
+      "avg": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5723,
+        "answer_correctness": 0.5591,
+        "context_recall": 0.76,
+        "composite_score": 0.7436
+      }
+    },
+    "Registration": {
+      "n": 5,
+      "passed": 2,
+      "pass_rate": 0.4,
+      "avg": {
+        "faithfulness": 0.85,
+        "answer_relevancy": 0.4842,
+        "answer_correctness": 0.3398,
+        "context_recall": 0.64,
+        "composite_score": 0.5896
+      }
+    },
+    "Internship": {
+      "n": 4,
+      "passed": 2,
+      "pass_rate": 0.5,
+      "avg": {
+        "faithfulness": 0.9853,
+        "answer_relevancy": 0.5258,
+        "answer_correctness": 0.3452,
+        "context_recall": 0.9167,
+        "composite_score": 0.7072
+      }
+    },
+    "English": {
+      "n": 3,
+      "passed": 1,
+      "pass_rate": 0.333,
+      "avg": {
+        "faithfulness": 0.7176,
+        "answer_relevancy": 0.672,
+        "answer_correctness": 0.4218,
+        "context_recall": 1.0,
+        "composite_score": 0.6926
+      }
+    },
+    "Numeric": {
+      "n": 4,
+      "passed": 1,
+      "pass_rate": 0.25,
+      "avg": {
+        "faithfulness": 0.6667,
+        "answer_relevancy": 0.3891,
+        "answer_correctness": 0.4576,
+        "context_recall": 1.0,
+        "composite_score": 0.6456
+      }
+    },
+    "Procedure": {
+      "n": 5,
+      "passed": 4,
+      "pass_rate": 0.8,
+      "avg": {
+        "faithfulness": 0.9556,
+        "answer_relevancy": 0.6636,
+        "answer_correctness": 0.5842,
+        "context_recall": 0.82,
+        "composite_score": 0.7665
+      }
+    },
+    "Edge": {
+      "n": 4,
+      "passed": 0,
+      "pass_rate": 0.0,
+      "avg": {
+        "faithfulness": 0.8115,
+        "answer_relevancy": 0.5484,
+        "answer_correctness": 0.3447,
+        "context_recall": 0.6042,
+        "composite_score": 0.5802
+      }
+    },
+    "Negation": {
+      "n": 6,
+      "passed": 4,
+      "pass_rate": 0.667,
+      "avg": {
+        "faithfulness": 0.8903,
+        "answer_relevancy": 0.6147,
+        "answer_correctness": 0.5241,
+        "context_recall": 0.8611,
+        "composite_score": 0.7318
+      }
+    },
+    "List": {
+      "n": 6,
+      "passed": 5,
+      "pass_rate": 0.833,
+      "avg": {
+        "faithfulness": 0.7859,
+        "answer_relevancy": 0.718,
+        "answer_correctness": 0.5698,
+        "context_recall": 0.9048,
+        "composite_score": 0.7406
+      }
+    },
+    "MultiHop": {
+      "n": 6,
+      "passed": 6,
+      "pass_rate": 1.0,
+      "avg": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6148,
+        "answer_correctness": 0.6385,
+        "context_recall": 1.0,
+        "composite_score": 0.8338
+      }
+    },
+    "Housing": {
+      "n": 5,
+      "passed": 3,
+      "pass_rate": 0.6,
+      "avg": {
+        "faithfulness": 0.9857,
+        "answer_relevancy": 0.5281,
+        "answer_correctness": 0.524,
+        "context_recall": 0.8133,
+        "composite_score": 0.7355
+      }
+    },
+    "FoodServices": {
+      "n": 3,
+      "passed": 3,
+      "pass_rate": 1.0,
+      "avg": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6878,
+        "answer_correctness": 0.4566,
+        "context_recall": 1.0,
+        "composite_score": 0.7901
+      }
+    },
+    "Transportation": {
+      "n": 3,
+      "passed": 2,
+      "pass_rate": 0.667,
+      "avg": {
+        "faithfulness": 0.8944,
+        "answer_relevancy": 0.5117,
+        "answer_correctness": 0.3515,
+        "context_recall": 0.6,
+        "composite_score": 0.6005
+      }
+    },
+    "HealthSafety": {
+      "n": 4,
+      "passed": 3,
+      "pass_rate": 0.75,
+      "avg": {
+        "faithfulness": 0.875,
+        "answer_relevancy": 0.7742,
+        "answer_correctness": 0.3642,
+        "context_recall": 1.0,
+        "composite_score": 0.7379
+      }
+    },
+    "Research": {
+      "n": 3,
+      "passed": 2,
+      "pass_rate": 0.667,
+      "avg": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6028,
+        "answer_correctness": 0.5717,
+        "context_recall": 0.7333,
+        "composite_score": 0.7453
+      }
+    }
+  },
+  "questions": [
+    {
+      "question_id": "Q1",
+      "category": "Erasmus",
+      "question": "Erasmus staj programına başvurmak için minimum GNO ne olmalı?",
+      "expected": "Lisans için en az 2.20, Lisansüstü için en az 2.5 GNO gereklidir.",
+      "actual": "Erasmus+ Staj Hareketliliği Programına başvurmak için gereken minimum GNO değerleri şöyledir: \n- **Lisans öğrencileri için**: En az **2.20** GNO. \n- **Lisansüstü (Yüksek Lisans/Doktora) öğrencileri için**: En az **2.5** GNO. \n\nBu kriterler, başvuruların kabulüne esas alınan asli şartlardır.",
+      "latency": 93.11,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5729,
+        "answer_correctness": 0.9311,
+        "context_recall": 1.0,
+        "composite_score": 0.9153
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "category": "Erasmus",
+      "question": "Erasmus staj hareketliliği minimum süresi ne kadar?",
+      "expected": "Staj hareketliliği süresi minimum 2 aydır.",
+      "actual": "Erasmus staj hareketliliği süresi minimum 2 aydır. Bu süre, uluslararası staj hareketliliği için ev sahibi kuruluştan alınacak kabul belgesinde de belirtilir. Lisans ve lisansüstü öğrencileri için geçerli olan bu asgari süre, Erasmus+ Staj Hareketliliği Programı başvuru koşullarında açıkça tanımlanmıştır.",
+      "latency": 106.79,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5461,
+        "answer_correctness": 0.4527,
+        "context_recall": 1.0,
+        "composite_score": 0.7677
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "category": "Erasmus",
+      "question": "How can I apply for Erasmus internship program?",
+      "expected": "Students submit their application documents (CV, transcript) together with a minimum 2-month acceptance letter from the host organization to the Internship Office. Minimum GPA requirement is 2.20 for undergraduates and 2.5 for graduate students.",
+      "actual": "To apply for the Erasmus internship program, follow these steps: \n1. **Eligibility**: Ensure you have a minimum GPA of 2.20 (undergraduate) or 2.5 (graduate) and obtain an acceptance letter from a host organization for a minimum 2-month internship. \n2. **Application Documents**: Submit your CV, transcript, and acceptance letter to the Internship Office by the October deadline. \n3. **Selection**: Applicants are ranked based on their Erasmus+ score. A student list is approved by the Selection Committee in mid-April, with grant allocations determined sequentially. \n4. **Pre-Departure Requirements**: Secure the signed Erasmus+ Internship Mobility Agreement from the host organization, complete the Learning Agreement, Grant Agreement, and Travel/Insurance documents, and submit them via SUFORM for academic approval. \n5. **Online Application**: Finalize your application through the Online Application System, adhering to procedures outlined in the Erasmus+ Outgoing Student Procedure. Undergraduates must also provide language scores based on specified course grades.",
+      "latency": 86.853,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.9231,
+        "answer_relevancy": 0.9272,
+        "answer_correctness": 0.4499,
+        "context_recall": 1.0,
+        "composite_score": 0.801
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q4",
+      "category": "Erasmus",
+      "question": "Erasmus öğrenim hareketliliğinde hibe nasıl hesaplanır?",
+      "expected": "Erasmus+ hibesi Ulusal Ajans (UA) tarafından her akademik yıl belirlenen aylık hibe miktarı üzerinden hesaplanır. Hibe = ay sayısı × aylık birim masraf + (tamamlanmayan ayların gün sayısı × aylık birim masrafın 1/30'u). Öğrenciler hibe almadan önce Hibe Sözleşmesi imzalar ve ilk Öğrenim Anlaşması'nı tamamlar. Nihai ödeme öğrencinin karşı kurumda kaldığı gün sayısına göre yapılır.",
+      "actual": "Erasmus öğrenim hareketliliğinde hibe, hareketlilik süresi ve Ulusal Ajans tarafından belirlenen aylık hibe miktarına göre hesaplanır. Toplam hibe tutarı, hareketlilikte geçen hibeli ay sayısı ile ev sahibi ülke için belirlenen aylık hibe miktarının çarpımıyla belirlenir. Tamamlanmayan aylar, aylık birim masrafın 1/30’u ile gün sayısına göre hesaplanır. Öğrenci, hareketlilik süresinin tamamı için mali destek alıyorsa, ay ve gün sayısı toplam süreye eşit olur. Eğer sıfır-hibe dönemine sahipse, asgari hareketlilik süresi (öğrenim için 3 ay veya 1 akademik dönem) dikkate alınır. Özel ihtiyaçlara ilişkin harcamalar, destekleyici belgelerle birlikte geri ödenir. Hibenin ödemesi, hareketlilik başlamadan önce veya yurt dışına çıkmadan önce yapılır.",
+      "latency": 78.27,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0,
+        "answer_correctness": 0.7314,
+        "context_recall": 1.0,
+        "composite_score": 0.9194
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q5",
+      "category": "Erasmus",
+      "question": "Erasmus Kısa Dönem Doktora Hareketliliği ne kadar sürer?",
+      "expected": "Erasmus Kısa Dönem Doktora Hareketliliği 5 ila 30 gün arasında sürer.",
+      "actual": "Erasmus Kısa Dönem Doktora Hareketliliği için belgelerde doğrudan süre belirtilmemiştir. Ancak Erasmus+ hibe sözleşmeleri ve Uluslararası Staj Yönergesi'nde genel Erasmus hareketliliği süreleri şu şekilde tanımlanmıştır: \n- Hareketlilik süresi **en az 2 ay** ve **2 aydan fazla olamaz** (stajlar için). \n- Ders verme hareketliliğinde yükseköğretim personeli için **asgari 8 saat ders verme süresi** gereklidir. \n\nDoktora düzeyi için özel bir süre belirtilmediği için, genel Erasmus hareketliliği kuralları geçerlidir.",
+      "latency": 66.282,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.8,
+        "answer_relevancy": 0.0,
+        "answer_correctness": 0.18,
+        "context_recall": 0.0,
+        "composite_score": 0.294
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q6",
+      "category": "Erasmus",
+      "question": "How does the Learning Agreement process work for exchange students?",
+      "expected": "Students create a Learning Agreement (LA) specifying courses to be taken abroad. The Exchange Academic Advisor verifies course equivalencies (credits, types, ECTS). For double major students, separate approval from the DDPO program coordinator is needed. Minor program equivalencies also require advisor approval. The signed LA is submitted to the International Relations Office (IRO), which forwards it to the partner university. Changes during the exchange period require completing a Change Request in the LA system.",
+      "actual": "The Learning Agreement (LA) is prepared, signed, and submitted by the selected student within the timeframe announced by the university, with the approval of the exchange academic advisor. The advisor determines the equivalent credits, course types, and ECTS values for the selected courses at the partner institution. The student must ensure the courses taken abroad fulfill SU graduation requirements and inform the advisor of any changes before completing the term. The signed LA must be approved by the partner institution and submitted to the International Relations Office (IRO). For graduate students, the LA is prepared online in consultation with the advisor and submitted to IRO within the specified timeline. After signatures are obtained, the IRO forwards the LA to the Faculty Administrative Officer for approval. Students must also submit the signed LA, transcript, and Certificate of Attendance upon returning from the exchange program.",
+      "latency": 78.577,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.9333,
+        "answer_relevancy": 0.8699,
+        "answer_correctness": 0.3525,
+        "context_recall": 0.3333,
+        "composite_score": 0.5996
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q7",
+      "category": "Library",
+      "question": "Kütüphaneden kaç kitap ödünç alabilirim ve süresi ne kadar?",
+      "expected": "Öğrenciler (lisans, lisansüstü, değişim) 60 gün süre ile 60 adet kitap ödünç alabilir. Ayrıca 5 multimedya kaynağı 7 gün, 2 ciltli süreli yayın 7 gün ve 5 popüler dergi 3 gün süreliğine ödünç alınabilir.",
+      "actual": "Lisans, Lisansüstü ve Değişim Öğrencileri, Sabancı Üniversitesi kütüphanesinden 60 adet kitap ödünç alabilir. Kitapların ödünç alma süresi 60 gündür. Ayrıca, 5 adet multimedya kaynağı 7 gün, 2 adet ciltli süreli yayın 7 gün ve 5 adet popüler dergi 3 gün süreyle ödünç alınabilir. Multimedya kaynakları, başkalarınca istenmedikçe 1 kez aynı süre ile yenilenebilir. Kütüphanelerarası Ödünç (ILL) kapsamında, istekler 30 gün için en fazla 10 bilgi kaynağı ile sınırlıdır. Yurt dışından getirilen kaynakların kullanım süresi ise kurum politikasına göre belirlenir.",
+      "latency": 130.185,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4907,
+        "answer_correctness": 0.7829,
+        "context_recall": 1.0,
+        "composite_score": 0.8585
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q8",
+      "category": "Library",
+      "question": "Kütüphanelerarası ödünç alma (ILL) hizmeti nasıl çalışır?",
+      "expected": "Kütüphanelerarası ödünç alma (ILL) hizmeti ile Bilgi Merkezi koleksiyonunda bulunmayan kitap ve makaleler diğer kütüphanelerden temin edilebilir. Başvuru 'Ödünç Kitap İstek Formu' ile Bilgi Merkezi üzerinden yapılır. İstekler aynı anda lisans öğrencileri için en çok 3, lisansüstü öğrencileri için 5 bilgi kaynağı ile sınırlıdır. Süresinde iade edilmeyen kaynaklar için 2 kez uyarı yapılır, aksi halde 1 yıl hizmetten men edilir.",
+      "actual": "Kütüphanelerarası ödünç alma (ILL) hizmeti, Sabancı Üniversitesi Bilgi Merkezi'nde bulunmayan bilgi kaynaklarını diğer kurumlardan ödünç alma sürecini kapsar. Öğrenciler, \"Ödünç Kitap İstek Formu\" üzerinden, e-posta ile veya Çağrı Takip Sisteminden istek gönderebilir. Bibliyografik bilgisi eksik olan istekler iptal edilir ve kullanıcıya bildirilir. Başka üniversitelerden ödünç alınan en fazla 10 bilgi kaynağı 30 gün süreyle alınabilir. Ödünç alınan kaynaklar süresinde iade edilmezse 2 kez uyarı alındıktan sonra 1 yıl süreyle hizmetten men edilir. Kayıp veya hasar durumunda, ödünç veren kurumun kuralları uygulanır ve sorun çözülünceye kadar öğrenci belgesi, transcript veya mezuniyet belgesi alımı engellenir.",
+      "latency": 65.855,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5477,
+        "answer_correctness": 0.6233,
+        "context_recall": 0.75,
+        "composite_score": 0.7566
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q9",
+      "category": "Library",
+      "question": "What happens if I return library books late?",
+      "expected": "The qualified membership right to benefit from the circulation service of Sabancı University Alumni, Retirees and Families who do not pay the fees will be revoked and their subsequent applications will not be accepted for 1 year. Reminders are sent for returned items. Students with overdue fines are blocked from borrowing services until fees are paid.",
+      "actual": "If you fail to return, damage, or lose items obtained through interlibrary loan, your Information Center membership will be blocked, and your use of circulation services will be suspended. The context does not specify a duration for the suspension, but it emphasizes that such actions trigger immediate restrictions on borrowing privileges. No additional penalties for late returns are explicitly mentioned in the provided information.",
+      "latency": 55.712,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "answer_correctness": 0.114,
+        "context_recall": 0.6667,
+        "composite_score": 0.5009
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q10",
+      "category": "Library",
+      "question": "Who can access the Faculty Reserve Collection?",
+      "expected": "Only academic and teaching Emeritus employees can access and borrow the Faculty Reserve Collection. Renewals and reservations can be made. Students cannot access the Faculty Reserve Collection.",
+      "actual": "Only academic and teaching \"Emeritus\" employees can access and borrow the Faculty Reserve Collection. They can also renew and place holds on items in this collection using their SU ID. Members, including students and administrative staff, are explicitly prohibited from accessing the Faculty Reserve Collection. Proxy borrowers authorized by SU faculty members or individuals with disabilities may use the service through another member's account, but this does not extend access to the Faculty Reserve Collection itself.",
+      "latency": 64.665,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.8333,
+        "answer_relevancy": 0.9259,
+        "answer_correctness": 0.6624,
+        "context_recall": 1.0,
+        "composite_score": 0.8376
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q11",
+      "category": "Library",
+      "question": "Doküman sağlama hizmetinden kimler faydalanabilir?",
+      "expected": "Doküman sağlama hizmetinden Sabancı Üniversitesi mensupları (akademik, idari çalışanlar, öğrenciler, mezunlar, emekliler) faydalanabilir. Üniversite lojmanlarında oturanların aileleri ve dış kullanıcılar da maliyet bedelini ödeyerek yararlanabilir. SuNet kullanıcı adı gerekir. Akademik ve emeritus çalışanlara yurtiçinden 50, yurtdışından 15 adet ücretsiz doküman kontenjanı verilir.",
+      "actual": "Doküman sağlama hizmetinden yararlanabilecekler arasında Sabancı Üniversitesi mensupları (akademik, emeritus, idari çalışanlar, lisans, lisansüstü ve değişim öğrencileri, mezunlar, emekliler) yer alır. Üniversite lojmanlarında oturanların aileleri, üniversiteye hizmet sunan firmalar ve geçici projelerde görev yapanlar maliyet bedelini ödemek suretiyle hizmetten faydalanabilir. Diğer üniversitelerin mensupları, kamu kurumları ve sivil toplum kuruluşları Bilgi Merkezi koleksiyonu sınırlı olacak şekilde doküman isteğinde bulunabilir. Akademik ve emeritus çalışanlara akademik yılda yurtiçinden 50, yurtdışından 15 ücretsiz doküman kontenjanı verilir. Ek olarak, 50 USD’ye kadar olan ücretli dokümanların maliyetinin kısmen Bilgi Merkezi tarafından karşılandığı 5 kontenjan da sağlanır. Yayımlanmamış doküman istekleri için yazarla iletişime geçilir ve izin alınması gerekir. Bibliyografik bilgisi eksik olan istekler iptal edilir.",
+      "latency": 57.427,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9299,
+        "answer_correctness": 0.5796,
+        "context_recall": 0.75,
+        "composite_score": 0.8009
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q12",
+      "category": "Library",
+      "question": "What are the borrowing limits for alumni at the library?",
+      "expected": "Alumni and retirees can borrow 2 books for 30 days, 1 multimedia item for 7 days, 1 bound periodical for 7 days, and 5 popular magazines for 3 days.",
+      "actual": "The context does not provide specific borrowing limits for Sabancı University alumni. It only states that alumni and retirees who fail to pay fees will lose their \"qualified membership right to benefit from the lending service\" and cannot reapply for one year. No details about the number of items or durations for alumni with active membership are mentioned in the provided chunks.",
+      "latency": 83.69,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "answer_correctness": 0.1309,
+        "context_recall": 0.0,
+        "composite_score": 0.3393
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q13",
+      "category": "Discipline",
+      "question": "Öğrenci disiplin cezaları nelerdir?",
+      "expected": "Uyarma, kınama, 1 haftadan 1 aya kadar uzaklaştırma, 1-2 yarıyıl uzaklaştırma, yükseköğretim kurumundan çıkarma.",
+      "actual": "Öğrenci disiplin cezaları şunlardır: \n1. **Uyarma**: Öğrenci davranışlarında dikkatli olmaya ikaz edilir. Üniversite yetkililerine sorulan sorulara cevap verilmemesi gibi fiillere uygulanır. \n2. **Kınama**: Daha ciddi ihlaller için yazılı ikazdır. Akademik dürüstlük ilkelerine karşı teşvik edici davranışlar gibi durumlarda verilir. \n3. **1-4 Hafta Uzaklaştırma**: Üniversite kampüsüne giriş yasağı getirilir. Yurtlardan ayrılma prosedürüne tabi tutulur. \n4. **1 veya 2 Yarıyıl Uzaklaştırma**: Disiplin Kurulu kararı ile uygulanır. Bu süre azami öğrenim süresine eklenmez. \n5. **Yükseköğretim Kurumundan Çıkarma (Expulsion)**: Üniversiteye tamamen uzaklaştırma cezasıdır. Kampüs giriş yasağı ve burs durumu Burs ve Mali Destek Yönergesi ile değerlendirilir. \n\nCezaların uygulanması için gerekli kararları Fakülte Dekanı, Enstitü Müdürü veya Disiplin Kurulu verir. Uzaklaştırma süresi 15 gün itiraz süresinden sonra ilgili birimlere bildirilir.",
+      "latency": 64.809,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.9231,
+        "answer_relevancy": 0.6689,
+        "answer_correctness": 0.6013,
+        "context_recall": 1.0,
+        "composite_score": 0.8076
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q14",
+      "category": "Discipline",
+      "question": "Disiplin soruşturması ne kadar sürede sonuçlanmalı?",
+      "expected": "Genel disiplin cezaları (uyarma, kınama, kısa süreli uzaklaştırma) için soruşturma tamamlandıktan sonra en geç 10 gün içinde karar verilir. Cinsel taciz fiillerinde soruşturma fiilin öğrenilmesinden itibaren en geç 3 ay içinde başlar ve eylemin tarihinden itibaren 2 yıl içinde tamamlanır. Can ve mal güvenliği tehdit eden durumlarda çıkarma cezası 24 saat içinde sonuçlanabilir.",
+      "actual": "Disiplin soruşturması süresi duruma göre değişir: \n1. **Genel disiplin soruşturması**: Soruşturma tamamlandıktan sonra karar **en geç 10 gün** içinde verilmelidir. \n2. **Cinsel taciz/tehlike durumu**: \n - Şikayetçi öğrenci ise, soruşturma **en geç 3 ay** içinde başlatılmalı ve **en fazla 2 yıl** içinde sonuçlanmalıdır. \n - Şikayetçi SÜ çalışanı değilse, soruşturma **en geç 6 ay** içinde başlatılmalıdır.",
+      "latency": 88.966,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.5948,
+        "answer_correctness": 0.5781,
+        "context_recall": 1.0,
+        "composite_score": 0.7376
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q15",
+      "category": "Discipline",
+      "question": "Kopya çekmek hangi disiplin cezasını gerektirir?",
+      "expected": "Sınavlarda kopyaya teşebbüs etmek kınama cezası gerektirir. Kopya çekmek veya çektirmek bir yarıyıl uzaklaştırma cezası gerektirir. Tehditle kopya çekmek, kopya çeken öğrencilerin sınav salonundan çıkarılmasına engel olmak veya başkasının yerine sınava girmek iki yarıyıl uzaklaştırma cezası gerektirir.",
+      "actual": "Kopya çekmek, Sabancı Üniversitesi Öğrenci Disiplin Yönergesi'ne göre iki yarıyıl uzaklaştırma cezasını gerektirir. Bu ceza, öğrencinin öğrencilik haklarından iki yarıyıl boyunca yararlanamayacağını belirten bir yazı ile bildirilir. Sınavlarda kopya çekme fiili, kurumun hizmetlerini engellemek gibi ciddi ihlaller arasında yer alır. Ayrıca, kopya çekme girişimleri (tehditle kopya çekme veya kopya çekenleri engellemek) bir haftadan bir aya kadar uzaklaştırma cezasına neden olabilir. Ancak, doğrudan kopya çekme eylemi kesinlikle iki yarıyıl uzaklaştırma ile cezalandırılır.",
+      "latency": 104.05,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.6,
+        "answer_relevancy": 0.4313,
+        "answer_correctness": 0.7118,
+        "context_recall": 0.6667,
+        "composite_score": 0.6249
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q16",
+      "category": "Discipline",
+      "question": "How does the disciplinary objection process work?",
+      "expected": "In the event of an objection, the University Administrative Board examines the decision and accepts or rejects the sanction within fifteen days from the notification of punishment. If the student chooses to make an appeal at the administrative jurisdiction and a stay of execution decision comes from the administrative board, SR notifies suspension of execution of the disciplinary punishment.",
+      "actual": "The disciplinary objection process at Sabancı University allows students to object to sanctions within **15 days** of notification by submitting a written petition to the University Administrative Board. The board examines the objection and either accepts or rejects the sanction within 15 days. If rejected, the disciplinary board or supervisor reviews the objection considering the rejection grounds. For housing-related removal decisions, objections must be submitted within **5 working days** of notification, and the Disciplinary Board decides within **7 working days**. If a student appeals to the administrative jurisdiction and a stay of execution is granted, the Student Records (SR) notifies the disciplinary supervisor and relevant units in **1 day** upon receiving the court order. Notifications to units about disciplinary punishments are finalized within **3 days** after objection resolution if an objection is filed. Expelled students’ suspension periods are not counted toward their maximum study period, and suspended students must pay tuition for the semester they are suspended.",
+      "latency": 107.138,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6417,
+        "answer_correctness": 0.5255,
+        "context_recall": 1.0,
+        "composite_score": 0.8039
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q17",
+      "category": "Discipline",
+      "question": "Disiplin cezasına itiraz süresi ne kadardır?",
+      "expected": "Disiplin cezasına itiraz süresi, cezanın tebliğinden itibaren 15 gündür. İtiraz, Üniversite Yönetim Kuruluna yapılır ve 15 gün içinde kesin karara bağlanır. İdari yargı yolu olarak idare mahkemesine 60 gün içinde başvurulabilir. Yurt kurallarına özgü disiplin cezaları için ise 5 iş günü itiraz süresi geçerlidir.",
+      "actual": "Disiplin cezasına itiraz süresi, cezanın tebliğinden itibaren 15 gün olarak belirlenmiştir. Bu süre içinde öğrenci, itirazını Üniversite Yönetim Kuruluna sunabilir. İtiraz mercii olan Üniversite Yönetim Kurulu, itirazı 15 gün içinde kesin karara bağlamak zorundadır. Ayrıca, itiraz hakkı kullanılmadan da idari yargıya başvurulabilir; bu durumda ceza tebliğinden itibaren 60 gün içinde yürütmeyi durdurma kararı alınabilir.",
+      "latency": 112.85,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4717,
+        "answer_correctness": 0.6363,
+        "context_recall": 0.75,
+        "composite_score": 0.7492
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q18",
+      "category": "Discipline",
+      "question": "Disiplin suçlarında zamanaşımı süreleri ne kadardır?",
+      "expected": "Uyarma, kınama ve kısa süreli uzaklaştırma cezası gerektiren fiillerde soruşturma zamanaşımı 1 aydır. 1-2 yarıyıl uzaklaştırma ve çıkarma cezası gerektiren fiillerde zamanaşımı 3 aydır. Tüm disiplin suçlarında mutlak zamanaşımı süresi 2 yıldır.",
+      "actual": "Disiplin suçlarında zamanaşımı süreleri, ceza türüne göre değişir. Uyarma, kınama ve bir haftadan bir aya kadar uzaklaştırma cezaları için, fiilin işlendiğinin soruşturmaya yetkili amirlerce öğrenildiği tarihten itibaren **1 ay** içinde disiplin soruşturmasına başlanmazsa zamanaşımına uğrar. Bir veya iki yarıyıl uzaklaştırma ile yükseköğretim kurumundan çıkarma cezaları için bu süre **3 ay**dır. Genel olarak, disiplin cezası verme yetkisi, fiilin işlendiği tarihten itibaren **en geç 2 yıl** içinde kullanılmazsa zaman aşımına uğrar. Ancak adli yargı hükmüne ihtiyaç duyulan hallerde, zaman aşımı süresi adli yargı kararının kesinleştiği günden itibaren başlar. Cinsel taciz/saldırı gibi suçlar için ise eylemin işlendiği tarihten itibaren **en geç 2 yıl** içinde soruşturma tamamlanmalı ve karara bağlanmalıdır.",
+      "latency": 57.062,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5296,
+        "answer_correctness": 0.7013,
+        "context_recall": 0.3333,
+        "composite_score": 0.6732
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q19",
+      "category": "Scholarship",
+      "question": "Burs başvurusu nasıl yapılır?",
+      "expected": "Burs başvurusu, ilan edilen tarihlerde ÖBS üzerinden online olarak yapılır. Lisans öğrencileri başvuru formunu doldurur ve maddi gereksinimi kanıtlayan belgeler sunar. Lisansüstü öğrencileri program başvurusu sırasında burs talebini iletir. Burs değerlendirmeleri Güz dönemi için Ağustos, Bahar dönemi için Ocak ayında yapılır. Üstün Akademik Başarı Bursu için ayrıca başvuru yapılmasına gerek yoktur.",
+      "actual": "Lisans öğrencileri, ilan edilen tarihlerde Öğrenci Bilgi Sistemi (ÖBS) üzerinden online başvuru yapar ve aile gelir, çalışma durumu gibi kanıtlayıcı belgeler sunar. Akademik başarı nedeniyle burs hakkı kazanan öğrenciler için başvuru gerekmez; bu burslar değerlendirme sonucunda otomatik atanır. Lisansüstü öğrencileri, programlara başvuru sırasında burs talebini sistem üzerinden iletir ve değerlendirme kabul süreciyle yapılır. Lisansüstü burs güncellemeleri için her dönem başı Enstitüye başvurulur; Güz dönemi için en geç Ağustos ayının ilk haftası, Bahar dönemi için Ocak ayının ilk haftası içinde işlem tamamlanır. Çalışma bursu başvuruları için Hababam sistemi kullanılır, başvuru formu doldurulduktan sonra Öğrenci Koordinatörü (ÖK) personeline e-posta ile gönderilir ve onaylandıktan sonra yayınlanır.",
+      "latency": 128.659,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.8333,
+        "answer_relevancy": 0.3566,
+        "answer_correctness": 0.841,
+        "context_recall": 1.0,
+        "composite_score": 0.8058
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q20",
+      "category": "Scholarship",
+      "question": "Burs devam şartları nelerdir?",
+      "expected": "Burs devam şartları program türüne göre farklılık gösterir. Lisans bursları normal öğrenim süresi boyunca devam eder; mezun olma koşullarını yerine getiremeyen öğrencilerin burs süresi en fazla iki dönem uzatılabilir. Lisansüstü burslarında yüksek lisans için aylık nakit burs en fazla 10 ay (Eylül-Haziran), doktora için 12 ay (Eylül-Ağustos) ödenir. Burs devamı her akademik dönem başında Enstitü Yönetim Kurulu kararı ile değerlendirilir. Disiplin cezalarında: kınama ve kısa süreli uzaklaştırmada burs devam eder, 1-2 yarıyıl uzaklaştırmada o dönem kesilir ama sonra yeniden bağlanır, çıkarmada tamamen kesilir.",
+      "actual": "Burs devam şartları, lisans ve lisansüstü öğrenciler için farklı kriterlere sahiptir: \n\n1. **Lisans Bursları**: \n - Üniversiteye ilk girişte verilen burslar, normal öğrenim süresi boyunca devam eder. Mezun olma koşullarını yerine getiremeyen öğrencilerin burs süresi en fazla iki dönem uzatılabilir. \n - Aylık nakit burs, 9 ay (Ekim-Haziran) süreyle verilir. Öğrenci Güz döneminde izin alırsa burs kesilir, Bahar dönemi ders kaydıyla tekrar başlar. \n\n2. **Lisansüstü Bursları**: \n - Yüksek lisans öğrencileri için 10 ay (Eylül-Haziran), doktora öğrencileri için 12 ay (Eylül-Ağustos) ödeme yapılır. \n - Burs devamlılığı her dönem başında \"Lisansüstü Bursluluk Devam Koşulları Tablosu\"na göre değerlendirilir. Güz dönemi için 1",
+      "latency": 53.234,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.9091,
+        "answer_relevancy": 0.3138,
+        "answer_correctness": 0.3957,
+        "context_recall": 1.0,
+        "composite_score": 0.6885
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q21",
+      "category": "Scholarship",
+      "question": "What is the Sabancı University Main Endowment Scholarship Fund?",
+      "expected": "The Sabancı University Main Endowment Scholarship Fund is a financial aid initiative supporting students who demonstrate academic success and financial need. It is expanded through donations from SU employees, alumni, students, and international contributors via the 'Friends of Sabancı University Fund' under the Turkish Philanthropic Fund in New York. Employee donations are deducted from salaries at a self-determined rate. The Board of Trustees oversees governance, and IPAR manages donation acceptance procedures.",
+      "actual": "The Sabancı University Main Endowment Scholarship Fund is a financial aid initiative established to support undergraduate and graduate students in need. It is funded through donations from domestic and international sources, including contributions from SU employees via salary deductions (e.g., a specified percentage of their monthly gross salary). The fund aims to provide need-based financial assistance, with donations processed through procedures managed by the Institutional Partnerships and Alumni Relations (IPAR) unit. The Board of Trustees oversees the fund's regulations, and contributions are facilitated through forms like the SUFORM and SU Main Endowment Scholarship Fund Employees Contribution Form.",
+      "latency": 93.885,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9339,
+        "answer_correctness": 0.4705,
+        "context_recall": 1.0,
+        "composite_score": 0.8312
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q22",
+      "category": "Scholarship",
+      "question": "Çalışma burslu öğrenci nasıl işe alınır?",
+      "expected": "Çalışma burslu öğrenci işe alımı SUform üzerinden ilan yayınlanarak başlar. Başvuran öğrencilerle mülakat yapılır ve Çalışma Burslu Öğrenci İşe Alım Değerlendirme Formu doldurulur. Sözleşme bir dönem geçerlidir, ayda en fazla 40 saat çalışılır. Seçilen öğrencilere oryantasyon verilir.",
+      "actual": "Çalışma burslu öğrenci işe alım süreci şu adımları içerir: \n1. Tanıtım Sorumlusu tarafından yayımlanan iş ilanında çalışma saatleri ve yoğunluklar belirtilir. Öğrenciler ilanda belirtilen tarihler arasında başvurur. \n2. Başvurular, Hababam sisteminde \"Applications\" sekmesi üzerinden incelenir. Tanıtım Sorumlusu, öğrencilerin önceki tanıtım etkinliklerine katılımlarını, referanslarını ve Talimat ’a uygunluklarını dikkate alarak seçim yapar. \n3. Seçilen burslu öğrenci için \"Çalışma Burslu Öğrenci İşe Alım Değerlendirme Formu\" doldurulur. \n4. Öğrenci, Genel Not Ortalamasının (CGPA) en az 3.50 olması ve görev verdiği dersten en az A- notu alması gibi koşullara uymak zorundadır. \n5. Sözleşme, imzalandığı dönemin geçerliliğini taşır ve ayda en fazla 40 saat çalışma, saat başına 7 TL ödenmesini garanti eder. \n6. Seçilen öğrencilere iki aşamalı oryantasyon verilir: ilk aşamada sosyal iletişim ve davranış, ikinci aşamada üniversiteye dair teknik bilgiler anlatılır. \n7. Öğrenci, görev aldığı işlerde düzenli çalışma ve derslerle ilgili soruları öğretim üyesiyle koordineli çözme gibi sorumlulukları yerine getirmelidir.",
+      "latency": 57.774,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.3154,
+        "answer_correctness": 0.3915,
+        "context_recall": 1.0,
+        "composite_score": 0.7147
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q23",
+      "category": "Scholarship",
+      "question": "Disiplin cezası alan öğrencinin bursu ne olur?",
+      "expected": "Disiplin cezasının bursa etkisi cezanın türüne göre değişir. Kınama ve kısa süreli uzaklaştırmada (1 hafta-1 ay) burs devam eder. 1-2 yarıyıl uzaklaştırma cezasında burs o dönem kesilir ancak ceza bitiminde yeniden bağlanır. Yükseköğretim kurumundan çıkarma cezasında burs tamamen kesilir.",
+      "actual": "Disiplin cezası alan öğrencinin bursu, ceza türüne göre farklı şekilde etkilenir: \n1. **Kınama veya 1-1 ay uzaklaştırma cezası**: Burs kesintisiz devam eder. \n2. **1 veya 2 dönem uzaklaştırma cezası**: Uzaklaştırılan dönemler için burs kesilir; öğrenci bu dönemlerde öğrenim ücretinin %25’si ödenir. Cezanın sona erdiği dönemde burs yeniden bağlanır. \n3. **Üniversite’den çıkarma cezası**: Burs tamamen kesilir ve öğrenci tekrar burs alamaz. \n4. **Lisansüstü öğrenciler için ek durum**: Disiplin cezası alan lisansüstü öğrencilerin burs durumu, Enstitü Yönetim Kurulu tarafından yeniden değerlendirilir. \n5. **Erken mezuniyet durumu**: Disiplin cezası nedeniyle burs kesintisi uygulanmamışsa, öğrenci mezun olduktan sonra ceza süresi için geçerli olan ek ödemeleri bir ay içinde Burs Ana Varlık Fonu’na ödemek zorundadır.",
+      "latency": 66.013,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5215,
+        "answer_correctness": 0.7456,
+        "context_recall": 1.0,
+        "composite_score": 0.8519
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q24",
+      "category": "Graduate",
+      "question": "Yüksek lisans programı kaç yarıyıl sürer?",
+      "expected": "Tezli yüksek lisans programı, bilimsel hazırlık süresi hariç, en az dört dönem ve azami altı dönem sürer. Tezsiz yüksek lisans programı azami üç dönemdir. Lisans derecesiyle kabul edilen tezli yüksek lisans öğrencileri için azami altı dönem, tezli yüksek lisans derecesiyle kabul edilenler için azami dört dönem geçerlidir.",
+      "actual": "Tezli yüksek lisans programının normal süresi **dört dönem**dir. Azami (maksimum) süre ise **altı dönem** olarak belirlenmiştir. Bu süreler, bilimsel hazırlık süresi hariç, her dönem için kayıt yaptırılıp yapılmadığına bakılmaksızın geçerlidir. Dört dönem içinde seminer dersi ve diğer dersleri tamamlayamayan veya azami süreye kadar tez çalışmasında başarısız olan öğrencilerin üniversiteden ilişiği kesilir.",
+      "latency": 74.378,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5297,
+        "answer_correctness": 0.7781,
+        "context_recall": 1.0,
+        "composite_score": 0.8629
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q25",
+      "category": "Graduate",
+      "question": "Doktora yeterlik sınavı ne zaman yapılır?",
+      "expected": "Derslerini ve seminerini tamamlayan öğrenciler doktora yeterlik sınavına bir yılda en fazla iki kez girebilir. Yüksek lisans derecesiyle kabul edilenler en geç beşinci, lisans derecesiyle kabul edilenler en geç yedinci dönemlerinin sonuna kadar bu sınavı tamamlamalıdır. Sınav jürileri beş öğretim üyesinden oluşur, en az ikisi Üniversite dışından olmalıdır.",
+      "actual": "Doktora yeterlik sınavı, derslerini ve seminerini tamamlayan öğrenciler için bir yılda en fazla iki kez yapılır. Yüksek lisans derecesiyle kabul edilen öğrenciler en geç beşinci dönemlerinin sonuna kadar, lisans derecesiyle kabul edilen öğrenciler ise en geç yedinci dönemlerinin sonuna kadar bu sınava girmek zorundadır. Sınav jüri üyeleri, ilgili enstitü yönetim kurulu kararıyla belirlenir ve sınavlar yazılı ve sözlü olmak üzere iki bölümde uygulanır. Yeterlik sınavına belirlenen tarihlerde girmeyen ve geçerli mazeret sunmayan öğrenci başarısız sayılır. Sınavda başarısız olan öğrenciler bir sonraki dönemde sadece başarısız oldukları kısımdan tekrar sınava alınır.",
+      "latency": 74.077,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9383,
+        "answer_correctness": 0.5912,
+        "context_recall": 1.0,
+        "composite_score": 0.8681
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q26",
+      "category": "Graduate",
+      "question": "Tez savunması için jüri kaç kişiden oluşur?",
+      "expected": "Yüksek lisans tez savunma jürisi, biri tez danışmanı ve en az biri üniversite dışından olmak üzere üç veya beş öğretim üyesinden oluşur. Doktora tez savunma jürisi, danışman dahil beş öğretim üyesinden oluşur ve en az ikisi başka bir yükseköğretim kurumunun öğretim üyesi olmalıdır.",
+      "actual": "Tez savunması için jüri, programa göre farklılık gösterir: \n- **Yüksek lisans tezi** için jüri **3 veya 5 öğretim üyesinden** oluşur. Tez danışmanı jüri üyesi olur. Eğer ikinci tez danışmanı jüriye dahil edilirse, jüri **5 kişiden** oluşur. Ayrıca, jüride en az bir öğretim üyesi başka bir yükseköğretim kurumundan olmalıdır. \n- **Doktora tezi** için jüri **5 öğretim üyesinden** oluşur. Bu üyelerden en az ikisi başka bir yükseköğretim kurumundan olmak zorundadır. \nİkinci tez danışmanı, oy hakkı olmadan jüride yer alabilir. Danışmanın oy hakkı yoksa jüri **6 öğretim üyesinden** oluşabilir.",
+      "latency": 69.284,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.8889,
+        "answer_relevancy": 0.9395,
+        "answer_correctness": 0.7474,
+        "context_recall": 1.0,
+        "composite_score": 0.8818
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q27",
+      "category": "Graduate",
+      "question": "Lisansüstü programlara nasıl başvurulur?",
+      "expected": "Lisansüstü programlara başvuru online başvuru sistemi üzerinden yapılır. Adaylar transkript, diploma, referans mektupları, niyet mektubu ve İngilizce yeterlilik belgesini yükler. Başvurular ilgili program tarafından değerlendirilir, mülakatlar yapılabilir ve kabul kararı Enstitü Yönetim Kurulu tarafından onaylanır.",
+      "actual": "Lisansüstü programlara başvurmak için adaylar, ilgili enstitülerin belirlediği koşulları ve belgeleri sağlamalıdır. Başvuru için gereken belgeler arasında doldurulmuş başvuru formu, resmi transkript ve lisansüstü giriş sınavı sonuçları (ALES, GRE, GMAT vb.) yer alır. Güz dönemi başvuruları için son tarih Kasım/Aralık, bahar dönemi için Ekim ayıdır. Başvuru sırasında halen bir lisans programına kayıtlı olanlar, başvurdukları döneme kadar öğrenimlerini tamamlamak zorundadır. Ayrıca, İngilizce yeterlilik sınavı sonuçları istenir; bu şartı karşılayamayanlar SÜ'nün İngilizce hazırlık sınıfına alınır. Doktora başvuruları için uluslararası sınavlardan en az 55 puan alınması gerekir. Adaylar başvurularını SÜ'nün online sistemine yapar ve enstitü yönetim kurulu tarafından değerlendirilir.",
+      "latency": 69.242,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8371,
+        "answer_correctness": 0.6252,
+        "context_recall": 1.0,
+        "composite_score": 0.8631
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q28",
+      "category": "Graduate",
+      "question": "Lisansüstü programlarda tekrarlanan derslerde GNO nasıl hesaplanır?",
+      "expected": "Tekrarlanan derslerde, daha önce alınmış olan dersin toplam puanı GNO hesaplarından düşürülür ve en son alınan dersin toplam puanı GNO hesaplamalarına katılır. Bu işlem sistem tarafından otomatik yapılır. Lisansüstü öğrenciler C, C+ veya B- aldıkları dersleri tekrar alabilir. Öğrencinin kayıt yaptırdığı tüm dersler transkriptte gösterilir.",
+      "actual": "Lisansüstü programlarda tekrarlanan derslerden alınan en son not, GNO hesaplamasında dikkate alınır. Daha önce alınan dersin puanı GNO'dan çıkarılır ve tekrar edilen dersin en son notuna göre hesaplanan puan eklenir. \"P\", \"S\", \"U\", \"T\", \"W\" notları ortalama hesaplamasına katılmazken, \"NA\" notu \"U\" veya \"F\" olarak değerlendirilir. \"I\" (Incomplete) notu verilen derslerin SÜ kredisi, nihai harf notuna dönüştürülene kadar GNO hesaplamasına dahil edilmez. GNO, öğrencinin üniversitede kayıtlı olduğu tüm derslerin toplam puanının SÜ kredisi toplamına bölünmesiyle elde edilir. Tekrar edilen derslerin saydırılması otomatik olarak yapılır ve öğrenci için ek işlem gerekmez. Lisansüstü mezuniyet kriteri olarak GNO 3.00 ve üzeri olmalıdır.",
+      "latency": 90.416,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.3228,
+        "answer_correctness": 0.5809,
+        "context_recall": 0.75,
+        "composite_score": 0.7102
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q29",
+      "category": "Graduate",
+      "question": "How does the graduate program opening/closing process work?",
+      "expected": "To open a graduate program, the Graduate School Board provides required information in YOKSIS, including courses, total credits, advisor requirements, and admission criteria. The relevant Faculty Board and Academic Board approve the proposal, which is then sent to the Board of Trustees. Programs are closed by cancelling new admissions, and enrolled students must be transferred or allowed to complete. The Council of Higher Education (YÖK) is notified.",
+      "actual": "To open a graduate program at Sabancı University, the Graduate School Board, under the main coordination of the Vice President for Education (VP-E), submits an application to the Council of Higher Education (YOK) with the recommendation of the relevant Graduate School Board, the opinion of the University Education Council (UEC), approval from the Academic Council (AC), and final approval by the Board of Trustees. Education begins once YOK approves the program. For closure, the Graduate School Board proposes the closure, which requires the same approval process (UEC opinion, AC decision, Board of Trustees approval) and notification to YOK. The Student Records (SR) unit updates the YOKSIS system within one week of YOK’s approval for closures. Additionally, the SR sends the Board of Trustees’ decision to YOK within three business days after the Rector’s signature. The process for graduate program changes follows a separate procedure involving course adjustments. The opening process typically takes 3 months.",
+      "latency": 85.445,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6212,
+        "answer_correctness": 0.8301,
+        "context_recall": 0.5,
+        "composite_score": 0.7672
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q30",
+      "category": "Undergraduate",
+      "question": "Yatay geçiş başvuru şartları nelerdir?",
+      "expected": "Yatay geçiş başvurusu için hazırlık sınıfı dışında 2 dönemi en az 60/100 genel not ortalaması ile tamamlamış olmak gerekir. Başvuru sırasında bir yükseköğretim kurumunda öğrenci statüsünde kayıtlı olmak, ilişiği kesilmemiş olmak ve İngilizce dil yeterliliğini sağlamak gerekir. Ayrıca merkezi yerleştirme puanının taban puanına eşit veya yüksek olması şartı aranır.",
+      "actual": "Yatay geçiş başvurusu için adayların; \n1) Yükseköğretim Kurulu tarafından tanınan bir üniversitenin lisans programında, hazırlık sınıfı hariç en az 2 dönem (60/100 genel not ortalaması) tamamlamış ve başvuru sırasında öğrenci statüsünde kayıtlı olmaları gerekir. \n2) Geçiş yapmak istedikleri programın taban puanına eşit veya daha yüksek merkezi yerleştirme puanına sahip olmaları şarttır. \n3) Mühendislik programlarına yatay geçişte, YÖK tarafından belirlenen başarı sırasını sağlamaları istenir. \n4) İngilizce dil yeterliliğini karşılamaları zorunludur. \n5) Yurtdışı başvurular için pasaportun aslının kontrolü, öğrenim gördüğü yıllara ilişkin pasaport sayfalarının fotokopisi ve anne/babasının yurtdışı görev sonu veya işçi kesin dönüş belgesi gibi belgeler sunulmalıdır. \n6) Toplam öğrenim süresi, programın azami süresini aşmamalıdır. \n7) Güz dönemi başvuruları Nisan ayının dördüncü haftasında sona erer.",
+      "latency": 77.136,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.3717,
+        "answer_correctness": 0.487,
+        "context_recall": 1.0,
+        "composite_score": 0.7519
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q31",
+      "category": "Undergraduate",
+      "question": "Çift anadal programına nasıl başvurulur?",
+      "expected": "Çift anadal programına başvuru için GNO en az 3.20 olmalı ve öğrenci sınıfının ilk %20'sinde yer almalıdır. Tüm dersleri geçmiş olmalıdır. Başvuru en erken 2. dönem, en geç 4. dönemde yapılabilir. En fazla bir diploma programına daha kayıt yaptırılabilir.",
+      "actual": "Çift anadal programına başvurmak için öğrenciler, Akademik Takvim'de belirtilen tarihlerde ilgili fakülteye dilekçe ile başvurur. Başvuru, lisans öğrencileri için en erken ikinci, en geç dördüncü dönemlerinde yapılabilir. Başvurunun geçerli olması için anadal programındaki GNO'nun 3,20 veya üzeri olması gerekir. Başarı sıralaması şartı aranan programlarda, öğrenci aynı zamanda çift anadal programı için kayıt olduğu yıla ait YKS başarı sıralamasını sağlamış olmalıdır. Fakülte Yönetim Kurulu, başvuruları inceleyerek öğrenci kabul kararını verir. Kabul kararından sonra sistemde kayıt işlemi en geç 2 iş günü içinde tamamlanmalıdır.",
+      "latency": 90.308,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.952,
+        "answer_correctness": 0.5711,
+        "context_recall": 0.75,
+        "composite_score": 0.8016
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q32",
+      "category": "Undergraduate",
+      "question": "Ders ekleme-bırakma süresi ne kadar?",
+      "expected": "Ders ekleme-bırakma işlemi, sonbahar ve ilkbahar dönemlerinde derslerin başladığı haftayı takip eden ikinci hafta içinde, akademik takvimde belirtilen tarihlerde yapılır.",
+      "actual": "Ders ekleme-bırakma süresi, dönemlere ve öğrenci türüne göre değişir: \n- **Lisans öğrencileri** için Güz ve Bahar dönemlerinde derslerin başlamasını izleyen **2. hafta içinde**, isteğe bağlı yaz okulunda ise derslerin başladığı **ilk hafta içinde** yapılır. \n- **Lisansüstü öğrencileri** için Güz ve Bahar dönemlerinde ders ekleme-bırakma süresi **2. ya da 3. hafta içinde** olur. \n- **Yaz dönemleri** için hem lisans hem lisansüstü öğrencileri için ders ekleme-bırakma süresi derslerin başladığı **ilk hafta içinde** belirlenir. \n- Ders ekleme-bırakma süresi sona erdikten sonra, geçerli bir mazereti olan öğrenciler için **iki hafta içinde** fakülte yönetim kurulunun kararı ile mazeretli kayıt hakkı tanınabilir.",
+      "latency": 64.773,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.2126,
+        "answer_correctness": 0.6399,
+        "context_recall": 1.0,
+        "composite_score": 0.7739
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q33",
+      "category": "Undergraduate",
+      "question": "Yan dal programına başvuru şartları nelerdir?",
+      "expected": "Yan dal programına başvuru için öğrencinin GNO en az 3.00 olmalıdır. Başvuru en erken 3. dönemin başında, en geç 5. dönemin sonunda yapılabilir. Yan dal programı en az 5 dersi (minimum 30 SÜ / 60 AKTS) kapsar ve tüm derslerin en az C- notla geçilmesi gerekir. Çift anadal programına kayıtlı öğrenciler ayrıca bir yan dal programına da kayıt yaptırabilir.",
+      "actual": "Yan dal programına başvuru için öğrencilerin bir dönem itibarıyla en erken ikinci ve en geç beşinci yarıyılda olmaları gerekir. Başvuru yapılan dönemin not girişi sonrası oluşan GNO değeri, yan dal programının bağlı olduğu fakülte tarafından belirlenen minimum GNO şartını karşılamalıdır. Öğrenciler, Akademik Takvimde ilan edilen tarihlerde ilgili fakülte dekanlığına dilekçe ile başvurmalıdır. Yan dal programına kabul için kayıt olunan yarıyılın başı itibarıyla diploma programına yerleşmiş olmak ve tüm kredili dersleri başarıyla tamamlamış olmak zorunludur. Kontenjan dolu olan öğrenciler, başka bir yan dal programına tekrar başvuru yapabilir. Kurum içi veya kurumlar arası yatay geçiş başvurusu yapanlar, öğrenci statüsünde kayıtlı ve İngilizce dil yeterliliğini sağlamaları ek koşul olarak aranır.",
+      "latency": 59.267,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4184,
+        "answer_correctness": 0.6282,
+        "context_recall": 0.25,
+        "composite_score": 0.6137
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q34",
+      "category": "Undergraduate",
+      "question": "How is GPA calculated at Sabancı University?",
+      "expected": "GPA is calculated by multiplying the SU credit of each course by its grade coefficient, summing these total points, and dividing by the total SU credits taken. Averages are shown with two decimals. In academic ranking calculations, all digits after comma are taken into consideration. Courses taken at other universities during exchange and summer programs are included. For repeated courses, the last grade is used in GPA calculation.",
+      "actual": "Sabancı University calculates GPA (Grade Point Average) by dividing the total SU credit points earned in a term by the total SU credits of the courses taken in that term. For cumulative GPA (CGPA), the calculation includes all courses taken since enrollment. Undergraduate students use all courses taken, with the last grade of repeated courses counted, and results are displayed with two decimal places, though all decimal digits are considered in academic rankings. Graduate programs follow the same method, with CGPA calculated using all courses since enrollment, and repeated courses’ final grades included. Both undergraduate and graduate GPAs require SU credit-based calculations.",
+      "latency": 67.807,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9067,
+        "answer_correctness": 0.4692,
+        "context_recall": 0.8,
+        "composite_score": 0.7768
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q35",
+      "category": "Registration",
+      "question": "Mezuniyet başvurusu nasıl yapılır?",
+      "expected": "Mezuniyet başvurusu akademik takvimde belirtilen tarihlerde SIS üzerinden yapılır. Öğrencilerin programa ait tüm mezuniyet yükümlülüklerini (gerekli dersler, kredi sayıları) tamamlaması ve genel not ortalamasının en az 2.00 olması gerekir. Fakülte/Enstitü yönetimi gerekli kontrolleri yapar ve ÖK diplomayı düzenler.",
+      "actual": "Mezuniyet başvurusu, akademik takvimde belirtilen süreler içinde Öğrenci Bilgi Sistemi (ÖBS) üzerinden yapılır. Öğrenciler, her dönem aldıkları dersler ve mezuniyet kriterlerini takip ederek, başvurabilecekleri dönemlerde elektronik form doldurarak Öğrenci Kaynakları Birimine (ÖK) iletir. Fakülteler/Enstitüler, başvuruları inceleyip onaylar ve sonuçları ÖK'ya gönderir. Mezuniyet hakkı elde edemeyenlere, başvuruları işleme alınamadığı bildirilir. Lisansüstü öğrenciler için ayrıca, programın mezuniyet yükümlülüklerini yerine getirip genel not ortalamasının en az 3,00 olması gerekir. Gecikmiş başvurular için \"Geç Mezuniyet Başvuru Formu\" kullanılır.",
+      "latency": 84.359,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4503,
+        "answer_correctness": 0.4832,
+        "context_recall": 0.3333,
+        "composite_score": 0.5958
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q36",
+      "category": "Registration",
+      "question": "Kayıt dondurma şartları nelerdir?",
+      "expected": "Dönem izni (kayıt dondurma); sağlık, maddi, aile, kişisel, akademik ve beklenmedik zorunlu olaylar gibi nedenlerle, ayrıca askerlik, gözaltı, tutukluluk veya mahkûmiyet durumlarında verilebilir. İzin gerekçesine ilişkin belgeler eklenerek dilekçe ile derslerin başlamasını takip eden 4. haftanın son iş gününe kadar ilgili fakülte dekanlığına başvurulur. Bir defada en çok 2 dönem, toplam 4 dönem izin verilebilir.",
+      "actual": "Bu konuda bilgim yok. Verilen belgelerde kayıt dondurma işlemi için belirli şartlar veya koşullar açıkça belirtilmemiştir. Ancak, kayıt dondurulan öğrencilerin ikamet izninin iptal edildiği ve burs durumunun dondurulduğu bilgileri yer almaktadır.",
+      "latency": 54.773,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.0,
+        "answer_correctness": 0.137,
+        "context_recall": 0.6667,
+        "composite_score": 0.3578
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q37",
+      "category": "Registration",
+      "question": "Transkript nasıl alınır?",
+      "expected": "Transkript, MySU'daki online belge talep formu doldurularak Öğrenci Kaynakları'ndan (ÖK) talep edilir. ÖK raporlama yazılımı ile hazırlar. Basılı kopya ücretlidir, e-imzalı transkript ücretsizdir. Transkriptte öğrencinin tüm dersleri, kodları, SÜ ve AKTS kredileri, notları, DNO ve GNO bilgileri yer alır.",
+      "actual": "Transkript, öğrencinin talebi üzerine Öğrenci Kaynakları (ÖK) tarafından düzenlenir. Elektronik imzalı transkript ücretsiz olarak EBYS üzerinden hazırlanır ve öğrencinin e-postasına gönderilir. Basılı kopya talep edilmesi durumunda, öğrencinin belirlenen transkript ücretini Akbank’a yatırarak banka dekontunu ilgili forma yüklemesi gerekir. ÖK Müdürü, transkript belgesinin her sayfasını imzaladıktan sonra, öğrencinin talep ettiği adrese kargo veya normal posta ile gönderilmesi sağlanır. Transkript, öğrencinin kayıtlı olduğu tüm dersleri, kredileri, notlarını ve akademik durumlarını içeren İngilizce resmi bir belgedir. Talep edildiğinde 2 iş günü içinde hazırlanır.",
+      "latency": 64.512,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.498,
+        "answer_correctness": 0.5622,
+        "context_recall": 1.0,
+        "composite_score": 0.7934
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q38",
+      "category": "Registration",
+      "question": "How does the Leave of Absence process work?",
+      "expected": "Leave of absence (dönem izni) is granted for health, financial, family, personal, academic, and emergency reasons. Students must apply with supporting documents to the Faculty Dean's Office by the end of the 4th week after classes start. At most 2 semesters at once and 4 total are allowed. Students must return laptops and residence permits are cancelled during leave. Tuition percentage depends on application timing (25% if applied by 4th week).",
+      "actual": "The Leave of Absence process requires students to apply within specific deadlines and pay a percentage of tuition fees based on the timing of the request. For undergraduate students, if the request is submitted by the end of the 4th week following the academic year's start, 25% of the semester fee is paid for a semester leave, and 25% for an academic year leave. Applications submitted after the 4th week but before the 7th week require 50% payment for a semester leave and 50% for an academic year leave. If the request is made after the 7th week up to the 10th week, full tuition fees are required. Students enrolled from 2020-2021 onward must pay the full fee for",
+      "latency": 86.129,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.7915,
+        "answer_correctness": 0.343,
+        "context_recall": 0.2,
+        "composite_score": 0.4966
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q39",
+      "category": "Registration",
+      "question": "Diploma programı değişikliği nasıl yapılır?",
+      "expected": "Lisans diploma programı bildirimi, diploma programına yerleştirme ve diploma programı değiştirme (iç yatay geçiş) prosedürüne göre yapılır. Başvuru ilgili fakülte dekanlığına yapılır.",
+      "actual": "Diploma programı değişikliği için öğrencinin önce en fazla 93 SÜ kredisi olmak ve Üniversite ile ilişiğinin kesilmemiş olması gerekir. Başvuru, akademik danışmanına başvurarak başlar; danışman, öğrenciyi program değişikliği prosedürleri ve kontenjanlar hakkında bilgilendirir. Öğrenci, 2 hafta önce başvurulara başlamadan önce akademik danışmanının görüşünü alır ve gerekirse ilgili diploma alanı danışmanlarına yönlendirilir. Geçiş yapmak istediği programın Fakülte Dekanlığı’na \"Lisans Diploma Programı Değişikliği (İç Yatay Geçiş) Başvuru Formu\" ile başvurulur. Başvurular, öğrencinin kriterleri sağlayıp sağlamadığına göre değerlendirilir ve sonuçlar, ders kayıtları başlamadan önce duyurulur. 4.6 GNO (Genel Not Ortalaması) sınırı gibi programa özel koşullar varsa bu da sağlanmalıdır.",
+      "latency": 81.472,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.681,
+        "answer_correctness": 0.1736,
+        "context_recall": 1.0,
+        "composite_score": 0.7042
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q40",
+      "category": "Internship",
+      "question": "Zorunlu staj başvurusu nasıl yapılır?",
+      "expected": "Zorunlu staj başvurusu OMS (Online Management System) üzerinden staj talebi oluşturularak yapılır. Öğrenciler Yeni Staj Projesi Formu (FIPAR-C71001-02) doldurur ve kurumlarda yapacakları projenin tanımını girer. Staj Ofisi, kabul edildikleri kuruma teslim edilmek üzere Zorunlu Staj Belgesi verir.",
+      "actual": "Zorunlu staj başvurusu için öğrenciler, öncelikle staj yapmak istedikleri kurum veya kuruluşa irtibata geçerek yer ve projeyi belirler. Yurt içi/yurt dışı staj başvurusunda bulunacak öğrenciler, **Haziran ayı ortasına kadar** (mezuniyet hakkı olanlar için **Mayıs ayı başında**) staj talebini sunar. SSBF programına kayıtlı öğrenciler, **güz dönemi sonunda en az 3.00 GNO** sağlamalı ve **Mayıs'ın ilk haftasına kadar** bir öğretim üyesiyle iletişime geçerek araştırma projesini oluşturmalı, bu projeyi SSBF Dekanına başvurmalıdır. \n\nStaj projesi onaylandıktan sonra öğrenciler, **OMS sistemine girerek Yeni Staj Projesi Formu** üzerinden projenin tanımını ve detayları doldurur. Staj danışmanı olarak atanan öğretim üyesi onayı gereklidir. Uluslararası staj başvuruları için, ikili anlaşmalar kapsamında **minimum 4 hafta** süresi zorunludur. Başvuru için **şubat ayından itibaren** özgeçmiş, transkript ve ek belgeler gönderilmelidir. Başvurular, öğretim üyesi mülak",
+      "latency": 94.848,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.3081,
+        "answer_correctness": 0.173,
+        "context_recall": 1.0,
+        "composite_score": 0.6481
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q41",
+      "category": "Internship",
+      "question": "Staj derslerine kayıt nasıl yapılır?",
+      "expected": "Staj derslerine kayıt, bahar dönemi ders kayıtları veya ders ekleme-bırakma tarihlerinde Bilgi Sistemi üzerinden yapılır. Öğrencilerin PROJ 102 veya PROJ 201 derslerini tamamlamış olması gerekir. Staj kayıtları ÖK tarafından duyurulur ve akademik takvime göre gerçekleştirilir.",
+      "actual": "Staj derslerine kayıt, \"Bilgi Sistemi\" üzerinden bahar dönemi ders kayıtları veya ders ekleme-bırakma tarihlerinde yapılır. Öğrenciler, PROJ 102 veya PROJ 201 dersinden birini tamamlamış olmak ve Güz Dönemi sonunda 64 SU kredisini tamamlamış olmak koşuluyla kaydolabilir. Çift Anadal Programı öğrencileri, kayıtlı oldukları anadal ve çift anadal diploma programlarının her iki staj dersine de kayıt olmalıdır. Geçerli bir mazereti olan öğrenciler için, Fakülte Yönetim Kurulu onayı alındığında yaz okulu final not girişlerinin son gününe kadar kayıt düzenlemesi yapılabilir. Staj dersi, SSBF, MDBF veya YBF lisans diploma programlarına yerleştirilmiş öğrenciler için geçerlidir.",
+      "latency": 64.095,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4061,
+        "answer_correctness": 0.5088,
+        "context_recall": 1.0,
+        "composite_score": 0.7636
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q42",
+      "category": "Internship",
+      "question": "IAESTE ile uluslararası staj nasıl yapılır?",
+      "expected": "IAESTE ile uluslararası staj başvurusu, Kariyer Geliştirme ve Staj Ofisi tarafından duyurulan tarihlerde yapılır. Öğrenciler başvuru belgelerini tamamlayarak IAESTE programı kapsamında yurtdışında staj yapar. Kabul edilen öğrenciler Zorunlu Staj Belgesi alır ve stajı tamamladıktan sonra değerlendirme formlarını sunar.",
+      "actual": "IAESTE ile uluslararası staj yapmak için öncelikle başvuru kriterlerine uygun olunmalıdır: Lisans öğrencileri en az 2. sınıfta, Lisansüstü öğrencileri ise Yüksek Lisans düzeyinde olmak koşuluyla Genel Not Ortalaması (GNO) 2,00 ve üzeri, Diller Okulu tarafından yapılan yabancı dil sınavından 100 üzerinden en az 70 puan alınmalıdır. Başvurular her yıl Staj Ofisi tarafından ilan edilen son tarihe kadar yapılmalıdır, bu tarih genellikle Kasım ayının sonu olarak belirtilmiştir. Ekim ortasında Diller Okulu ile birlikte yabancı dil sınavı (İngilizce, Almanca, Fransızca) tarihleri belirlenir ve öğrenciler özgeçmişleriyle birlikte transkript göndererek başvururlar. Kasım sonuna kadar, ev sahibi kuruluşların doldurduğu İş Teklifi Formu ve üst yazı ile birlikte öğrenci listesi IAESTE Merkez’e gönderilir. Şubat sonuna kadar kontenjanlar istenilen özelliklere göre en yüksek puanlı öğrencilere eşleştirilir ve onay alınır. Onaylanmayan öğrenciler staja gidemez. Staj süresi en az 4 hafta olmak üzere, ev sahibi kuruluşun belirlediği maksimum süreye göre değişir. Staja giden öğrencilere ev sahibi kuruluşun öngördüğü meblağ kadar aylık ödeme yapılır.",
+      "latency": 81.41,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.9412,
+        "answer_relevancy": 0.6473,
+        "answer_correctness": 0.2033,
+        "context_recall": 0.6667,
+        "composite_score": 0.6071
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q43",
+      "category": "Internship",
+      "question": "Öğrenci belgesi nereden alınır?",
+      "expected": "Öğrenci belgesi, Öğrenci Kaynakları (ÖK) birimi tarafından hazırlanır. MySU'daki online Belge Talep Formu doldurularak başvuru yapılır. Belge 2 iş günü içinde hazırlanır ve en fazla 2 hafta muhafaza edilir; bu sürede teslim alınmazsa imha edilir.",
+      "actual": "Öğrenci Belgesi, Öğrenci Kaynakları (ÖK) biriminden alınır. İstek, ÖK'nın online belge talep formu aracılığıyla yapılır. Belge, 2 iş günü içinde hazırlanır ve öğrenci en geç 2 hafta içinde ÖK'dan teslim almalıdır. 2 hafta içinde teslim alınmazsa belge imha edilir. Öğrenci, belgenin bir kişiye veya kuruma posta ile gönderilmesini istiyorsa, bunu yazılı olarak ÖK'ya bildirmeli ve ilgili adresi belirtmelidir. Belge teslimi sırasında fotoğraf isteniyorsa, öğrenci fotoğrafı ÖK'ya sunmalıdır. Öğrenci Belgesi ücretsizdir, ancak posta ile gönderimi durumunda karşı ödemeli kargo veya normal posta seçenekleri uygulanabilir.",
+      "latency": 98.083,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7417,
+        "answer_correctness": 0.4957,
+        "context_recall": 1.0,
+        "composite_score": 0.81
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q44",
+      "category": "English",
+      "question": "What is the minimum GPA requirement for Erasmus?",
+      "expected": "Minimum GPA is 2.20 for undergrad and 2.5 for graduate students.",
+      "actual": "The minimum GPA requirement for Erasmus+ Internship Mobility is **2.20 for undergraduate students** and **2.5 for graduate students**. For exchange programs, the requirement is the same: **2.20 for undergraduates** and **2.5 for graduates**. These thresholds apply to eligibility for participation and are part of the Erasmus+ Score calculation, which combines 50% GPA and 50% language proficiency score.",
+      "latency": 76.435,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.375,
+        "answer_relevancy": 0.8601,
+        "answer_correctness": 0.6505,
+        "context_recall": 1.0,
+        "composite_score": 0.6867
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q45",
+      "category": "English",
+      "question": "How many books can I borrow from the library?",
+      "expected": "Undergraduate, graduate, and exchange students can borrow 60 books for 60 days, 5 multimedia items for 7 days, and 2 bound periodicals for 7 days.",
+      "actual": "Undergraduate, graduate, and exchange students at Sabancı University can borrow up to 60 books for a period of 60 days. Book loans can be renewed unlimitedly for the same duration, provided no other user has requested the item. This limit applies specifically to the \"General Book Collection\" and \"Large-Size Book Collection,\" as students cannot access the \"Faculty Reserve Collection\" or \"Student Reserve Collection.\" Non-student groups, such as Package 2 or Package 3 users, have lower borrowing limits (e.g., 10 books for 30 days), but these do not pertain to regular student accounts.",
+      "latency": 55.025,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.7778,
+        "answer_relevancy": 0.3822,
+        "answer_correctness": 0.3619,
+        "context_recall": 1.0,
+        "composite_score": 0.6492
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q46",
+      "category": "English",
+      "question": "What are the disciplinary penalties for students?",
+      "expected": "Warning, reprimand, suspension, and expulsion from university.",
+      "actual": "The disciplinary penalties for students at Sabancı University include warnings, reprimands, temporary suspensions (1 week to 1 month or 1–2 semesters), and dismissal. For warnings, reprimands, or short suspensions (up to one month), disciplinary proceedings must begin within **1 month** of the offense; for suspensions of 1–2 semesters or dismissal, proceedings must start within **3 months**. Students receiving suspension (1 week to 1 month) or dismissal are **prohibited from entering the campus** during the penalty period and must **pay tuition for suspended semesters**. Repeated violations escalate penalties by one grade (e.g., a second offense results in a heavier punishment, but dismissal cannot be repeated). Dormitory-specific penalties include warnings, reprimands, or removal from dorms, with appeals to the Disciplinary Board allowed within **5 working days** of notification. Suspension periods do not count toward the maximum study duration, and scholarship continuation is evaluated under separate procedures.",
+      "latency": 66.442,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7738,
+        "answer_correctness": 0.253,
+        "context_recall": 1.0,
+        "composite_score": 0.742
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q47",
+      "category": "Numeric",
+      "question": "Lisans mezuniyeti için kaç kredi gerekiyor?",
+      "expected": "Lisans mezuniyeti için belirli bir sabit kredi sayısı yoktur. Kayıtlı olunan diploma programının gerektirdiği tüm ders ve kredi yükümlülüklerinin tamamlanması ve SÜ kredilerine göre hesaplanan genel not ortalamasının en az 2.00 olması gerekir.",
+      "actual": "Bu konuda bilgim yok. Verilen belgelerde lisans mezuniyeti için gerekli toplam kredi miktarı doğrudan belirtilmemiştir. Ancak, ders muafiyet prosedürlerinde \"özel öğrenci olarak alınan dersler ve öğrenci değişim programları kapsamında alınan derslerin kredi toplamının mezuniyet kredisinin %33'ünü geçmemesi\" gerektiği ifade edilmiştir. Lisans mezuniyeti kredisinin tam değerini öğrenmek için Sabancı Üniversitesi Lisans Eğitim ve Öğretim Yönetmeliği'ne başvurulması gerekir.",
+      "latency": 108.469,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.0,
+        "answer_correctness": 0.1758,
+        "context_recall": 1.0,
+        "composite_score": 0.4527
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q48",
+      "category": "Numeric",
+      "question": "Bir dersin kaç kez tekrar edilebilir?",
+      "expected": "Lisans öğrencileri daha önce geçer not aldıkları dersi, aldıkları dönemi izleyen en çok 3 dönem içinde tekrarlayabilir (izinli dönemler ve yaz dönemleri hariç). Başarısız olunan zorunlu dersler mezuniyete kadar tekrar edilerek başarılmalıdır. Lisansüstü öğrenciler için belirli bir tekrar sayısı sınırlaması yoktur; C, C+ veya B- notu aldıkları dersleri programdaki dersleri tamamlama süresinin sonuna kadar tekrar alabilir.",
+      "actual": "Lisans öğrencileri, daha önce geçer not aldıkları dersleri **en fazla 3 dönem** (izinli dönemler ve yaz dönemleri hariç) içinde tekrarlayabilir. Bu süre, dersin geçildiği dönemi izleyen dönemler için geçerlidir. \n\nLisansüstü öğrencileri için tekrar kriterleri farklıdır: \n- **\"C\", \"C+\" veya \"B-\"** notu alan dersler, program tamamlama süresinin sonuna kadar tekrarlanabilir. \n- **\"B\", \"B+\", \"A-\", \"A\"** notu alan dersler tekrarlanamaz. \n- Zorunlu derslerde **\"F\", \"U\", \"NA\", \"D\", \"D+\", \"C-\"** notu alanlar tekrar almak zorundadır. \n\nSeçmeli derslerin tekrarı, lisans öğrencileri için herhangi bir dönemde mümkündür (akademik kurul kararı hariç). Lisansüstü öğrencilerin seçmeli dersleri tekrar alabilmek için **danışman onayı** gerekebilir. \n\nTranskripte tekrar edilen dersler kaydedilir, ancak GNO hesaplamalarında sadece son not dikkate alınır.",
+      "latency": 72.668,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5239,
+        "answer_correctness": 0.575,
+        "context_recall": 1.0,
+        "composite_score": 0.8011
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q49",
+      "category": "Numeric",
+      "question": "Çift anadal programı için minimum kaç ek kredi gerekir?",
+      "expected": "Çift anadal diploma programlarında anadal diploma programı yükümlülükleri dışındaki fark derslerle en az 30 SÜ ve 60 AKTS kredisi tamamlanması gerekir.",
+      "actual": "Çift anadal programına kabul edilen öğrencilerin, anadal programı yükümlülükleri dışında en az **30 SÜ (başarılı birim)** ve **60 AKTS kredisi** tamamlaması gerekir. Bu kredi ve birim gereklilikleri, çift anadal programının mezuniyet koşullarına ek olarak, anadal programının zorunluluklarını da yerine getirmek şartıyla uygulanır.",
+      "latency": 64.728,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.4082,
+        "answer_correctness": 0.717,
+        "context_recall": 1.0,
+        "composite_score": 0.6763
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q50",
+      "category": "Numeric",
+      "question": "Rektörlük Araştırma Fonu bütçe limiti ne kadardır?",
+      "expected": "Rektörlük Araştırma Fonu bütçesi deneysel olmayan projeler için 300.000 TL, deneysel projeler için 600.000 TL'dir. Proje süresi en fazla 36 aydır. Laboratuvar ekipmanı, sarf malzemesi ve deneysel saha çalışmalarının maliyetleri toplam proje bütçesinin %30'undan fazlasını oluşturması durumunda proje deneysel olarak değerlendirilir.",
+      "actual": "Rektörlük Araştırma Fonu bütçe limiti, araştırma türüne göre değişir. Teorik araştırma alanları için bütçe en fazla 300.000 TL, deneysel araştırma alanları için ise en fazla 600.000 TL olur. Ayrıca, laboratuvar ekipmanı, sarf malzemesi ve deneysel saha maliyetlerinin toplam proje bütçesinin %30'unu aşması durumunda proje \"deneysel\" olarak değerlendirilir. Bu durum, bütçe sınırlarının uygulanmasında belirleyicidir.",
+      "latency": 51.111,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.6667,
+        "answer_relevancy": 0.6241,
+        "answer_correctness": 0.3625,
+        "context_recall": 1.0,
+        "composite_score": 0.6524
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q51",
+      "category": "Procedure",
+      "question": "Araç talep prosedürü nasıl işler?",
+      "expected": "Araç talep prosedürü, SUForm üzerinden Vehicle Request / Temporary Replacement Car Request Form doldurularak başlar. Talep eden kişi araç kullanım amacını, tarihini ve güzergahını belirtir. Talep en az 5 iş günü önceden yapılmalıdır. Onay süreci birim amiri ve İdari İşler koordinasyonuyla yürütülür. Shuttle güzergahındaki rotalar için araç talep edilmemelidir.",
+      "actual": "Araç talep prosedürü şu şekilde işler: \n1. Talep eden kişi, araç kullanım amacını belirterek **SUForm > Services > Transportation Form** altındaki **Vehicle Request / Temporary Replacement Car Request Form** doldurur. Talep, SÜ Yetkilisi tarafından onaylanır. \n2. Araç en fazla **2 iş günü** süreyle tahsis edilir. Talep eden kişi, araç müsaitliği hakkında **1 iş gün önceden SÜ Yetkilisi ile iletişime geçer** ve rezervasyonu planlar. \n3. **Shuttle güzergahı** için araç talebi yapılmaz. Talep sebebi dışında araç kullanımı ya da üçüncü kişiye devretme yasaktır. \n4. Aynı birimden birden fazla talep varsa, **ilk talep edene öncelik verilir**. \n5. **Özel amaçlı araç talepleri** için **SUForm üzerinden Özel Amaçlı Araç Talep Formu** doldurulur. Talep eden birim, Ulaşım Hizmetleri'ne (UH) bilgi vermezse, sorumluluk ona aittir. \n6. İptal durumunda: \n - Hizmet günü **24 saat önceden iptal** edilirse ücret talep edilmez. \n - Hizmet saati **3 saat önceden iptal** edilirse fiyatın yarısı, saatten sonra iptal edilirse tam bedel faturaya konur. \n7. Aracın teslimi genellikle sabah yapılır. Akşam mesaisi veya onaylı şehir dışı seyahatler hariç, diğer rotalar için araç sabah teslim edil",
+      "latency": 84.977,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5898,
+        "answer_correctness": 0.5642,
+        "context_recall": 0.8,
+        "composite_score": 0.7577
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q52",
+      "category": "Procedure",
+      "question": "Yurtlardan ayrılma prosedürü nasıl işler?",
+      "expected": "Üniversiteden 1 ayı aşan süre için ayrılan öğrencilerin yurt kaydı Öğrenci Kaynakları Birimi tarafından bildirilir ve yurt yönetimi tarafından silinir. Öğrenciye bildirim sonrası 2 gün içinde yurtla ilişkilerini kesmesi gerekir. Öğrenci Yurt Odası Teslim Formu doldurulur. Depozito iadesi hasar yoksa kesintisiz yapılır.",
+      "actual": "Yurtlardan ayrılma prosedürü, öğrencinin Üniversite’den 1 ayı aşan süre için ayrılması durumunda uygulanır. Öğrenci Kaynakları Birimi’nden gelen bilgi doğrultusunda yurt kaydı silinir ve öğrenciye bildirilir. Yurt kaydı silinen öğrenciler, bildirimden sonra 2 gün içinde yurtla tüm ilişkilerini kesmek zorundadır. İlişkinin kesilmesi kapsamında öğrenci, yurt odasını teslim etmek ve gerekli formları doldurmakla yükümlüdür. Yurtta kalan eşyalar öğrenci tarafından alınmazsa, bu eşyalar atık olarak değerlendirilir. Lisansüstü öğrenciler, ayrılmaları sırasında yatırdıkları depozito ücretini, yurtta herhangi bir zarar bırakmadıkları takdirde tam olarak iade alırlar.",
+      "latency": 72.844,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.7778,
+        "answer_relevancy": 0.4479,
+        "answer_correctness": 0.7779,
+        "context_recall": 0.5,
+        "composite_score": 0.6589
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q53",
+      "category": "Procedure",
+      "question": "Acil durumlarda kampüste ambulans nasıl çağrılır?",
+      "expected": "Ambulans gereken durumlarda en yakın telefondan Sağlık Merkezi Acil Hattı (6666) aranmalıdır. Telefona cevap veren sağlık personeline 5N Kuralına uygun şekilde cevap verilir. Ambulans yalnızca SÜ kampüsünde yaşayanlar ve kampüsün çok yakın çevresindeki acil durumlar için görevlendirilir.",
+      "actual": "Acil durumlarda kampüste ambulans, en yakın telefondan **6666** numaralı Sağlık Merkezi Acil Hattı aranarak çağrılır. Çağrıya cevap veren sağlık personeli, 5N Kuralına (Ne, Nerede, Ne zaman, Nasıl, Neden) uygun şekilde bilgi alır. Acil Çağrı Karşılama Formu doldurulur ve ambulans hızlı bir şekilde kampa çıkar. Vakanın durumuna göre müdahale kampüs içinde",
+      "latency": 166.293,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0,
+        "answer_correctness": 0.5469,
+        "context_recall": 1.0,
+        "composite_score": 0.8641
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q54",
+      "category": "Procedure",
+      "question": "Donanım ve yazılım arızası durumunda ne yapılmalı?",
+      "expected": "Dizüstü bilgisayarlardaki donanım ve yazılım arızalarında teknik destek ofisine şahsen başvuru yapılır ve sorunu açıklayan Teknik Destek Talep Formu (FIT-S14004-02) doldurulur. Başvuru BT Çağrılarının Yönetimi prosedürüne göre kaynak planlaması yapılarak değerlendirilir.",
+      "actual": "Donanım veya yazılım arızası durumunda öğrenci, teknik destek ofisine şahsen başvurmalı ve sorunu açıklayan \"Teknik Destek Talep Formu\" doldurmalıdır. Garanti kapsamına giren donanım arızaları (2 yıl süreyle) ücretsiz olarak giderilirken, hatalı kullanım, ihmal veya kasti davranış sonucu oluşan hasarlar için öğrenci hasar bedelini ödemelidir. Yazılım sorunları ve ağ erişimiyle ilgili destek öğrenim süresince sağlanır. Cihazın çalınması halinde öğrenci, resmi makamlardan alınan belgelerle birlikte teknik destek ofisine başvurmalı ve olayı açıklayan bir beyan hazırlamalıdır. Bilgilerin yedeklenmesi öğrencinin sorumluluğundadır.",
+      "latency": 81.683,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5341,
+        "answer_correctness": 0.4285,
+        "context_recall": 1.0,
+        "composite_score": 0.7587
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q55",
+      "category": "Procedure",
+      "question": "How does the graduation audit process work?",
+      "expected": "Graduation audit begins with students submitting applications through SIS within academic calendar dates. SR collaborates with Faculties/Institutes to verify graduation requirements (courses, credits, GPA). For thesis programs, the thesis advisor and Institute oversee proposal, defense, and submission stages. GPA calculations are based on grades submitted up to 2 business days before the graduation ceremony. Diplomas are issued after all conditions are fulfilled.",
+      "actual": "The graduation audit process at Sabancı University requires students to apply via SIS within the academic calendar's specified dates. Students must meet all graduation requirements, including completing required courses, credits, and GPA thresholds, which are monitored by both the student and their institute each semester. For thesis-based programs, stages like proposal, defense, and submission are tracked collaboratively. Institutes submit approved graduation lists to the Student Resources (SR) unit. If students fail to qualify in a semester, they must reapply the following semester. The SR and faculties must agree on audit outcomes, and diplomas are issued only after fulfilling all procedural steps, including registration or exchange program participation.",
+      "latency": 64.769,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7464,
+        "answer_correctness": 0.6034,
+        "context_recall": 0.8,
+        "composite_score": 0.793
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q56",
+      "category": "Edge",
+      "question": "Cinsel taciz şikayeti nasıl yapılır?",
+      "expected": "Cinsel taciz veya ayrımcılık şikayetleri, herhangi bir zamanda Komiteye veya Üniversite Yönetimine sunulabilir. Komite, şikayetçinin akademik/çalışma hayatının olumsuz etkilenmemesini güvence altına alır. Şikayetler; çalışanlar, öğrenciler veya üniversite topluluğunun herhangi bir üyesi tarafından yapılabilir. Özel bir komite, iddiaları belirlenen süreler içinde inceler.",
+      "actual": "Cinsel taciz şikayeti için başvuran, olayı yaşadığını düşündüğü anda, olayın niteliğinden emin olmasa dahi, Cinsel Tacize Karşı Önlem ve Destek Komitesi veya güvenilen bir kişiyle iletişime geçebilir. Başvuran, yaşadığı durumu anlatır ve kendisine destek mekanizmaları, şikâyet süreci ve ilgili disiplin süreçleri hakkında bilgi verilir. Şikâyetçi tarafın onayı olmadan hiçbir işlem başlatılamaz. Başvuru süresi için bir zaman sınırı yoktur; ancak resmi şikayet süreci başladıktan sonra Ceza Kanunu’na göre en geç 6 ay içinde şikayetçi olmazsa soruşturma yapılamaz. Başvuran, güvenilen bir kişi ya da birime (akademik danışman, psikolog, dekanlık vb.) danışarak süreci başlatabilir. Ayrıca, cinsel tacize uğradığını düşünen kişi, delil olarak e-posta, mesaj gibi belgeleri saklamalı ve bu süreçte yalnız olmadığını bilmelidir.",
+      "latency": 72.221,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.8889,
+        "answer_relevancy": 0.0,
+        "answer_correctness": 0.178,
+        "context_recall": 0.25,
+        "composite_score": 0.3826
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q57",
+      "category": "Edge",
+      "question": "Sabancı Üniversitesi nerede?",
+      "expected": "Sabancı Üniversitesi İstanbul Tuzla'da bulunmaktadır.",
+      "actual": "Sabancı Üniversitesi Tuzla-İstanbul'da, Orhanlı bölgesinde yer alır. Üniversitenin adresi: **Orta Mahalle, Üniversite Caddesi No: 27, 34956 Tuzla, İstanbul** olarak belirtilmiştir. Bu bilgi, belgede yer alan tüm ilgili bölümlerde (kalite, çevre, iş sağlığı ve güvenliği el kitapları) aynı şekilde tekrarlanmaktadır.",
+      "latency": 55.946,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.7703,
+        "answer_correctness": 0.5781,
+        "context_recall": 1.0,
+        "composite_score": 0.689
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q58",
+      "category": "Edge",
+      "question": "Kampüs içi trafik cezası itirazı nasıl yapılır?",
+      "expected": "Trafik kurallarının ihlali halinde Güvenlik Müdürlüğünce e-mail yoluyla ilgili kişi uyarılır ve ceza puanı durumu bildirilir. Sürücünün itiraz hakkı vardır.",
+      "actual": "Kampüs içi trafik cezasına itiraz edilmesi durumunda, sürücü Güvenlik Müdürlüğüne başvurmalıdır. Güvenlik Müdürlüğü, itirazı inceleyerek karar verir. Ayrıca, verilen cezaya karşı itiraz hakkı kullanılmadan idari yargıya da başvurulabilir. Üniversite Yönetim Kurulu, itirazları onbeş gün içinde karara bağlamakla yükümlüdür. Trafik kurallarına uymayan sürücülerin araçları, yasak yerlere bırakılması durumunda kampüsten çekilebilir. Uygun olmayan davranışlar tekrar ederse ceza puanı iki katına çıkarılır. Puan kayıtları ve taşıt pullarının iptali Güvenlik Yöneticiliği tarafından yapılır.",
+      "latency": 85.307,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.8571,
+        "answer_relevancy": 0.5018,
+        "answer_correctness": 0.4343,
+        "context_recall": 0.5,
+        "composite_score": 0.5877
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q59",
+      "category": "Edge",
+      "question": "How does the lost and found procedure work on campus?",
+      "expected": "Lost property found on campus is turned over to the Security Directorate. The Security Directorate records the items and attempts to return them to their owners. Items that remain unclaimed within 30 days are processed in accordance with the relevant procedure.",
+      "actual": "The lost and found procedure on campus involves reporting found items by calling extension 3565 or delivering them to the Security Office in Building D2. Security officers prepare a two-copy Found Item Return Form, signed by both the finder and the officer, with the original retained by the Security Unit and the second copy given to the finder. Items are numbered (e.g., \"01-24/01/01\" format) and stored, with valuables separated into labeled bags. Unclaimed items are kept for one year. In cases of loss or theft on campus, individuals must notify the Security Unit via phone (5555) and the IT Unit through their ticketing system.",
+      "latency": 61.009,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9213,
+        "answer_correctness": 0.1884,
+        "context_recall": 0.6667,
+        "composite_score": 0.6614
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q60",
+      "category": "Negation",
+      "question": "Can audience students borrow books from the library?",
+      "expected": "No, audience students cannot use borrowing services. They can only access the Information Center and use information resources on-site. They also cannot access electronic resources from off-campus.",
+      "actual": "Audience students cannot use the borrowing services of the Information Center. They are restricted to on-site use of services and facilities but are not permitted to borrow physical or electronic resources. This is explicitly stated in the context, which clarifies that only specific groups (e.g., academic staff, alumni with membership, or proxy borrowers authorized by faculty) have borrowing privileges, while audience students are excluded from such access.",
+      "latency": 76.691,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.8571,
+        "answer_relevancy": 0.7744,
+        "answer_correctness": 0.7911,
+        "context_recall": 1.0,
+        "composite_score": 0.8606
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q61",
+      "category": "Negation",
+      "question": "Üniversiteden uzaklaştırma cezası alan öğrenci yurtta kalabilir mi?",
+      "expected": "Üniversiteden uzaklaştırma cezası alan öğrenciler, ceza süresi boyunca yurtlarda konaklayamaz. Yurtlar Yönergesi'ne göre disiplin suçu nedeniyle uzaklaştırma durumunda yurt kaydı iptal edilir ve öğrenci bildirildikten sonra 2 gün içinde yurtla ilişkisini kesmek zorundadır.",
+      "actual": "Üniversite'den uzaklaştırma cezası alan öğrenciler, ceza süresi boyunca yurtlarda konaklayamaz. Yurtlar Yönergesi'ne göre, uzaklaştırma cezası süresi içinde yurtta kalma talepleri kabul edilmez. Ayrıca, disiplin cezası nedeniyle uzaklaştırılan öğrencilerin yurtta kalma durumu, \"Yurtlardan Ayrılma Prosedürü\" kapsamında değerlendirilir. Bu sürede üniversite kampüsüne girmelerine izin verilmediğinden, yurtta kalma imkânı doğrudan ortadan kalkar. Uzaklaştırma cezası alındığında, öğrenci yurtlardan ayrılır ve ceza süresi boyunca tekrar kabul edilmez.",
+      "latency": 79.347,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.8333,
+        "answer_relevancy": 0.5464,
+        "answer_correctness": 0.3916,
+        "context_recall": 0.5,
+        "composite_score": 0.5745
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q62",
+      "category": "Negation",
+      "question": "Kafeteryadan paket yemek servisi yapılır mı?",
+      "expected": "Hayır, kafeteryada paket yemek servisi yapılmaz. Bu kural yalnızca pandemi veya doğal afet gibi olağanüstü durumlarda esnetilebilir.",
+      "actual": "Kafeteryada paket yemek servisi yapılmaz. Üniversite Merkezi kafeteryasında, yemek saatleri dışında özel durumlar (afet, pandemi vb.) hariç paket servis yasaktır. Yemek hizmeti sadece kafeterya içindeki bankolarda sunulur.",
+      "latency": 68.317,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.408,
+        "answer_correctness": 0.49,
+        "context_recall": 1.0,
+        "composite_score": 0.7582
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q63",
+      "category": "Negation",
+      "question": "Can students access the Faculty Reserve Collection?",
+      "expected": "No, students cannot benefit from the Faculty Reserve Collection. Only academic staff and emeritus faculty can access it.",
+      "actual": "Students cannot access the Faculty Reserve Collection. Undergraduate, graduate, and exchange students are explicitly prohibited from borrowing or benefiting from this collection, as stated in the context. Only Academic and teaching \"Emeritus\" employees have access to the Faculty Reserve Collection within the Information Center and can borrow items using their university ID. Students may only access other designated collections like the General Book Collection, Large-Size Book Collection, and Multimedia Collection under specified conditions.",
+      "latency": 57.474,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.8182,
+        "answer_relevancy": 0.9272,
+        "answer_correctness": 0.527,
+        "context_recall": 1.0,
+        "composite_score": 0.7926
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q64",
+      "category": "Negation",
+      "question": "Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu nedir?",
+      "expected": "Adayların uyarma cezası dışında disiplin cezası almamış olması gerekir. Ayrıca siyasi parti organlarında üye veya görevli olmaması zorunludur.",
+      "actual": "Öğrenci Konseyi seçimlerine aday olmak için disiplin koşulu, adayın \"uyarma cezası dışında disiplin cezası almamış olması\"dır. Bu kural, Öğrenci Konseyi İşleyiş Organlarına Üyelik için Temel Koşullar başlıklı bölümde açıkça belirtilmiştir. Ayrıca, adaylık başvuruları sırasında yüklenen belgelerin doğruluğu beyan edilir ve sonradan gönderilen belgeler değerlendirme dışı bırakılır. Disiplin cezası alma durumu, üyelikten düşme sebeplerinden biri olarak da 7. maddede tekrar vurgulanmıştır.",
+      "latency": 70.749,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.509,
+        "answer_correctness": 0.3595,
+        "context_recall": 1.0,
+        "composite_score": 0.7342
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q65",
+      "category": "Negation",
+      "question": "Uzaklaştırma cezası alan öğrenci ücret iadesi alabilir mi?",
+      "expected": "Uzaklaştırma cezası alan öğrencilere herhangi bir ücret iadesi yapılmaz. Disiplin suçu nedeniyle uzaklaştırılan öğrenciler, ceza dönemindeki öğrenim ücretini ödemekle yükümlüdür. Burs alan öğrencilerin bursu uzaklaştırma süresince dondurulur.",
+      "actual": "Uzaklaştırma cezası alan öğrencilere herhangi bir ücret iadesi yapılmaz. Disiplin suçu nedeniyle Üniversiteden uzaklaştırılan öğrenciler, ödemekle yükümlü oldukları dönem öğrenim ücretini tamamıyla ödemek zorundadır. Bu durum, Sabancı Üniversitesi Temel Geliştirme Yılı Eğitim ve Öğretim Yönetmeliği'nde açıkça belirtilmiştir. Ayrıca, burs ve mali destek yönergesine göre, bir dönem uzaklaştırma cezası alan öğrencilerin bursu kesilir ve bu dönem için öğrenim ücretinin %25’i ödenir; ancak bu ödeme, ücret iadesi değil, bir yükümlülük olarak kalmaktadır.",
+      "latency": 70.945,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.8333,
+        "answer_relevancy": 0.5232,
+        "answer_correctness": 0.5851,
+        "context_recall": 0.6667,
+        "composite_score": 0.6707
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q66",
+      "category": "List",
+      "question": "How many types of disciplinary penalties exist for students?",
+      "expected": "There are 5 types: (1) Warning, (2) Reprimand, (3) Suspension from university for 1 week to 1 month, (4) Suspension from university for 1 or 2 semesters, (5) Dismissal from the higher education institution.",
+      "actual": "The disciplinary penalties for students include six types: **Warning**, **Reprimand**, **Suspension (1 week to 1 month)**, **Suspension for 1 semester**, **Suspension for 2 semesters**, and **Dismissal from the Higher Education Institution**. These penalties are categorized based on severity, with warnings and reprimands being the least severe, followed by short-term suspensions, longer-term suspensions, and finally dismissal. The Disciplinary Supervisor decides on the first three penalties directly, while the latter two (suspension for semesters and dismissal) require review by the Disciplinary Board. Notifications to relevant units and institutions are mandatory for all penalties.",
+      "latency": 61.581,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.4444,
+        "answer_relevancy": 0.858,
+        "answer_correctness": 0.728,
+        "context_recall": 1.0,
+        "composite_score": 0.7304
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q67",
+      "category": "List",
+      "question": "Sabancı Üniversitesi'nde kaç fakülte vardır?",
+      "expected": "Sabancı Üniversitesi'nde üç fakülte vardır: Mühendislik ve Doğa Bilimleri Fakültesi (FENS), Sanat ve Sosyal Bilimler Fakültesi (FASS) ve Yönetim Bilimleri Fakültesi (SOM).",
+      "actual": "Sabancı Üniversitesi'nde üç fakülte vardır. Bu fakülteler; Mühendislik ve Doğa Bilimleri Fakültesi, Sanat ve Sosyal Bilimler Fakültesi ile Yönetim Bilimleri Fakültesi'dir. Tüm belgelerde bu üç fakülte birlikte listelenmiştir. Ek bir fakülteye dair bilgi bulunmamaktadır.",
+      "latency": 75.236,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.7107,
+        "answer_correctness": 0.5562,
+        "context_recall": 1.0,
+        "composite_score": 0.6735
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q68",
+      "category": "List",
+      "question": "Araştırma projeleri yönetiminde hangi süreç adımları vardır?",
+      "expected": "Araştırma projeleri yönetiminde şu süreç adımları vardır: projelerin başlatılması, projelerin yönetilmesi, proje revizyonları, raporlama, proje kapanışı ve bütçe transferi, dış denetimler.",
+      "actual": "Araştırma projeleri yönetimi süreci, proje başlatılması, yönetimi, raporlanması, denetlenmesi ve kapatılması aşamalarını kapsar. Proje süreci, proje sözleşmesinin Proje Yönetim Ofisi'ne (PYO) devredilmesiyle başlar ve PYO bu süreçleri takip eder. Proje onayından sonra, projenin açılması, kaynak ve ihtiyaçların temini, gelişim raporlamaları, revizyon yönetimi, tarafların koordinasyonu ve resmi kapatma işlemleri yer alır. Proje gelişim raporları, 6 aylık dönemlerde 5 sayfaya kadar olmak üzere hazırlanmalıdır. Ayrıca, projenin başlatılması ve yönetimi, Sabancı Üniversitesi'nin (SÜ) ve %100 iştiraki firmaların taraf olduğu hibe, kontrat gibi projeler için fon veren kurumun esasları ile SÜ'nün ilgili yönergeleri doğrultusunda yürütülür. Kontratlı projelerde bütçe teklifleri \"Overhead Hesaplama Kılavuzu\" esas alınarak hazırlanır.",
+      "latency": 115.965,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5705,
+        "answer_correctness": 0.7339,
+        "context_recall": 1.0,
+        "composite_score": 0.8557
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q69",
+      "category": "List",
+      "question": "Kampüste hangi yemek servisi türleri sunulur?",
+      "expected": "Kampüste catering, çay ofisleri ve üniversite merkezinde yemek hizmetleri sunulur. Yemek servisi akşam yemeği seçmeli ve indirimli set menülerden oluşur. Kumanya içeriği her gün değişen kahvaltılık malzemelerden oluşur. Menü YİH tarafından onaylanır ve aylık olarak yayımlanır.",
+      "actual": "Kampüste sunulan yemek servisi türleri şunlardır: \n- **Sabah kahvaltısı**: Kahvaltı tabağı, poğaça, sandviç, sıcak kahvaltılık gruplar, kekler ve sıcak/soğuk içeceklerle birlikte servis edilir. \n- **Öğle yemeği**: Günlük değişen seçmeli yemekler ve öğünlük olarak değişen indirimli set menülerden oluşur. \n- **Akşam yemeği**: Seçmeli ve indirimli set menüler sunulur. \n- **Kumanya**: Vardiyalı çalışanlar için içeriği her gün değişen kahvaltılık malzemelerden oluşur. \n- **İçme suyu hizmetleri**: Kampüs genelinde belirlenen alanlarda su sebilleri yer alır. \n- **Kira işletmeleri**: Belirlenen saatlerde yiyecek, içecek ve paket servisi hizmetleri sunulur. Bu işletmelerin hijyeni, bağımsız laboratuvar firması tarafından aylık olarak denetlenir. \n\nYemek ve içecek servis saatleri **YİH** (Yiyecek ve İçecek Hizmetleri) tarafından belirlenir ve gerektiğinde değiştirilebilir.",
+      "latency": 84.661,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.9375,
+        "answer_relevancy": 0.533,
+        "answer_correctness": 0.404,
+        "context_recall": 1.0,
+        "composite_score": 0.7324
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q70",
+      "category": "List",
+      "question": "What are the research project fund types at Sabancı University?",
+      "expected": "Research fund types include: (1) Integration Projects (EPD) — 1 year for newly hired faculty, (2) Rectorate Research Fund — up to 36 months, 300K-600K TL, (3) Internal Research Grant (İç Araştırma Desteği), (4) Internal Grant for Academic Activities, (5) ERC Support Package, (6) SU President's Office Research Fund, and (7) Project Research Fund (PAF).",
+      "actual": "Sabancı University offers several research project fund types, including: \n1. **President’s Office Research Fund**: For full-time faculty who started at SU within the last two years and completed six months, aiming to support preliminary research for national/international grant applications. \n2. **Project Research Fund (PAF)**: Accumulated from project budgets (e.g., remaining funds after contracted projects) and used for research purposes, managed by SUATT. \n3. **SOP Fund**: Supports undergraduate courses (ENS 491/492) in the Industry-Focused Projects Program, involving student-led projects with industry partners. \n4. **Personal Research Fund (PRF)**: For individual researchers, governed by principles ensuring SU’s research leadership, though details on eligibility are not specified in the context. \n\nThese funds target faculty, undergraduates, and individual researchers, with distinct scopes and application criteria.",
+      "latency": 74.185,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.8333,
+        "answer_relevancy": 0.95,
+        "answer_correctness": 0.7422,
+        "context_recall": 0.4286,
+        "composite_score": 0.7223
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q71",
+      "category": "List",
+      "question": "What types of shuttle services are provided?",
+      "expected": "Personnel shuttles are provided for university employees, interns, and subcontractors. The service follows the Transportation Services Procedure and adheres to relevant traffic laws including Highway Traffic Law No. 2918 and Road Transport Law No. 4925.",
+      "actual": "Sabancı University provides several types of shuttle services: \n1. **University Shuttle Services** for all members (students, staff) to and from the campus, operating on routes and schedules determined by Transportation Services (TS). \n2. **Private Student Shuttles** to coordinate student transportation with external companies. \n3. **On-Campus Ring Service** for internal campus transportation at designated times and routes. \n4. **Special Purpose Shuttles** for academic, artistic, sports, or social activities requested by university units. \n5. **Personnel Shuttles** for employees, interns, and subcontractors, adhering to TS regulations. \n6. **Shift and Collection Services** for workers based on announced hours and routes. \n7. **Temporary Vehicle Allocations** for short-term duties, managed under specific procedures. \nGuests without SUCards must contact TS for shuttle access, and route/schedule changes require requests via SUTicket.",
+      "latency": 67.781,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6861,
+        "answer_correctness": 0.2548,
+        "context_recall": 1.0,
+        "composite_score": 0.7294
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q72",
+      "category": "MultiHop",
+      "question": "Can a suspended student take courses at another university and transfer credits back to Sabancı?",
+      "expected": "No, a suspended student cannot take courses at another university and transfer credits back to Sabancı University. According to the Disciplinary Regulation, students under suspension lose the right to attend classes and use university services. Course equivalencies and credit transfers require active enrollment status.",
+      "actual": "A student who has received a suspension or dismissal punishment from Sabancı University cannot have courses taken at another university during that period substituted into their program at SU. This is explicitly stated in the disciplinary procedure guidelines, which clarify that such courses are not recognized for credit transfer or program requirements. The decision regarding disciplinary actions, including suspension, is finalized by the Disciplinary Supervisor or Board, and their ruling directly affects the eligibility of course transfers. No exceptions are made for students under suspension or dismissal to transfer credits from external institutions.",
+      "latency": 76.767,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9137,
+        "answer_correctness": 0.5282,
+        "context_recall": 1.0,
+        "composite_score": 0.8455
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q73",
+      "category": "MultiHop",
+      "question": "Kütüphane gecikme borcu mezuniyeti engeller mi?",
+      "expected": "Evet, gecikme borcu olan öğrencilerin öğrenci belgesi, transkript ve mezuniyet için gerekli diğer belgeleri alması engellenir. Gecikme ücreti ödenene kadar ödünç alma hizmetleri de askıya alınır.",
+      "actual": "Evet, kütüphane gecikme borcu mezuniyeti engeller. Mezuniyet için gerekli işlemler, öğrenci üzerinde iade edilmesi gereken kitaplar veya gecikme/ödeme borçları varsa askıya alınır. Bu borçlar ödenene kadar mezuniyet formu imzalanmaz ve mezuniyet işlemi tamamlanmaz. Ders seçim dönemi haricinde gecikme bedeli 50 TL'yi aşan öğrenciler için, öğrenci belgesi, transkript ve mezuniyet belgelerinin alımı engellenir. Küt",
+      "latency": 127.875,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0,
+        "answer_correctness": 0.863,
+        "context_recall": 1.0,
+        "composite_score": 0.9589
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q74",
+      "category": "MultiHop",
+      "question": "Hangi disiplin cezaları Öğrenci Konseyi adaylığına engel olur?",
+      "expected": "Uyarma dışındaki tüm disiplin cezaları Öğrenci Konseyi adaylığına engel olur. Yani kınama, uzaklaştırma (kısa ve uzun süreli) ve yükseköğretim kurumundan çıkarma cezası alan öğrenciler aday olamaz.",
+      "actual": "Öğrenci Konseyi adaylığına UYARMA CEZASI dışındaki disiplin cezaları engel olur. Adaylar, \"yüz kızartıcı suçlardan dolayı adli sicil kaydı bulunmaması\" ve \"uyarma cezası dışında disiplin cezası almamış olması\" koşullarını yerine getirmek zorundadır. Bu kapsamda, bir öğrenciye bir yarıyıl uzaklaştırma veya daha ağır disiplin cezası verilmişse aday olamaz. Ayrıca, terör örgütleriyle irtibatı veya aidiyeti bulunması durumu da adaylık dışı bırakır. Adaylık belgeleri online sistemde yüklenir ve yüklenen belgelerin doğruluğu adaylar tarafından kabul edilir. Seçim kurallarının ihlali tespit edilirse adaylar seçim listesinden çıkarılır ve disiplin soruşturması başlatılabilir.",
+      "latency": 75.921,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4999,
+        "answer_correctness": 0.5535,
+        "context_recall": 1.0,
+        "composite_score": 0.791
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q75",
+      "category": "MultiHop",
+      "question": "Kayıt donduran öğrencinin yurt ve ikamet izni durumu ne olur?",
+      "expected": "Kayıt dondurma nedeniyle 1 ayı aşan süre için ayrılan öğrencilerin yurt kaydı sonlandırılır. Ayrıca kayıt dondurma durumunda ikamet izninin iptali işlemi başlatılır.",
+      "actual": "Kayıt donduran öğrencinin yurt kaydı, Öğrenci Kaynakları Birimi tarafından silinir ve öğrenciye bildirildikten sonra **en fazla 2 gün içinde yurtla tüm ilişiklerini kesmesi gerekir**. İkamet izni konusunda, kayıt dondurma tarihinden itibaren **ikamet kartı iptal edilir** ve öğrenciye bu bilgi Öğrenci Kaynakları Birimi tarafından iletilecektir. Mezuniyet sonrası gibi durumlarla benzer şekilde, öğrenci **10 gün içinde kalış amacına uygun yeni bir ikamet başvurusu yapmalı ya da Türkiye’den ayrılmalıdır**. Bu süreç, öğrencinin kendi sorumluluğundadır.",
+      "latency": 65.227,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.0,
+        "answer_correctness": 0.6337,
+        "context_recall": 1.0,
+        "composite_score": 0.7401
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q76",
+      "category": "MultiHop",
+      "question": "Entegrasyon Projesi almış bir öğretim üyesi Rektörlük Araştırma Fonuna başvurabilir mi?",
+      "expected": "Evet, daha önce Entegrasyon Projesi almış olan öğretim üyeleri de Rektörlük Araştırma Fonundan yararlanabilir. Ancak öğretim üyeleri bu fona sadece bir kez başvurabilirler.",
+      "actual": "Daha önce Entegrasyon Projesi almış olan öğretim üyeleri Rektörlük Araştırma Fonu’na başvurabilir. Sabancı Üniversitesinde son iki yılda göreve başlayan ve kurumda en az altı ay tam zamanlı çalışan öğretim üyeleri bu fona uygun kimselerdir. Başvuru sadece bir kez yapılabilir. Fonun amacı, öğretim üyelerinin dış kaynaklı hibe (ERC, Horizon Europe, TÜBİTAK vb.) alabilmeleri için ön kaynak ve zaman sağlamaktır. Başvurulan projenin, öğretim üyesinin diğer araştırma faaliyetleriyle uyumlu olması gerekir.",
+      "latency": 92.771,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.7496,
+        "answer_correctness": 0.6351,
+        "context_recall": 1.0,
+        "composite_score": 0.853
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q77",
+      "category": "MultiHop",
+      "question": "Kayıt donduran öğrenci dizüstü bilgisayarını iade etmeli mi?",
+      "expected": "Evet, öğrenimlerine ara veren veya kayıt donduran öğrencilerin dizüstü bilgisayarlarını iade etmesi gerekir.",
+      "actual": "Kayıt donduran öğrenci, dizüstü bilgisayarını tüm aksesuarlarıyla birlikte destek ofisine teslim etmelidir. Bu işlem, mezuniyet, kayıt silme veya eğitime ara verme durumlarında geçerlidir. Teslim sırasında eksik veya hasarlı parçalar saptanırsa, öğrenci ilgili parçaların bedelini ödemek zorundadır. Ayrıca, 3 iş günü içinde teslim edilmezse ceza uygulanabilir. 2015-2016 akademik yılından sonra yeni kayıt yaptıran öğrencilere bilgisayar verilmemektedir.",
+      "latency": 78.201,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5253,
+        "answer_correctness": 0.6177,
+        "context_recall": 1.0,
+        "composite_score": 0.8141
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q78",
+      "category": "Housing",
+      "question": "Yurt başvuru ve kabul koşulları nelerdir?",
+      "expected": "Yurt başvurusu https://dormapp.sabanciuniv.edu sistemi üzerinden yapılır. Kabul öncelik sırasına göre değerlendirme yapılır. Burs tipi odalarda burs alan öğrenciler konaklar. Yaz dönemi için ayrıca başvuru alınır. Ödeme koşulları Student Housing Instruction Letter ile belirlenir.",
+      "actual": "Yurt başvurusu ve kabul koşulları şunlardır: \n1. **Başvuru Süreci**: Yurt başvuruları online sistem üzerinden (https://dormapp.sabanciuniv.edu) yapılır. Türk öğrenciler evrak yükleme zorunluluğu taşımaz, ancak yurt başvurusu sırasında Yurt Giriş Formu doldurulur. \n2. **Yaz Dönemi Başvuru**: Yaz döneminde yurtta kalacak öğrenciler, bahar dönemi sona ermeden 3 hafta önce online başvuruda bulunmalıdır. \n3. **Kabul Kriterleri**: Üniversite Yönetimi tarafından belirlenen öncelik sıralaması (burs sahipleri öncelikli), yurt binası kapasitesi ve bakım-onarım durumları dikkate alınır. \n4. **Hukuki Şartlar**: 6 aydan fazla hapis cezası almış (taksirli suçlar hariç) ve kesinleşmiş mahkumiyeti bulunan öğrenciler kabul edilmez. \n5. **Kabul Süresi**: Yurt kabulü en fazla bir akademik yıl için geçerlidir. Yeni dönem için yeniden başvuruda bulunulması gerekir. \n6. **Devam Koşulu**: Güz dönemi yurta yerleşen öğrenciler,",
+      "latency": 91.831,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.9286,
+        "answer_relevancy": 0.493,
+        "answer_correctness": 0.4794,
+        "context_recall": 0.8,
+        "composite_score": 0.6964
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q79",
+      "category": "Housing",
+      "question": "What are the rules for students staying at the dormitory?",
+      "expected": "Students staying in dormitories must adhere to the following rules: Smoking is prohibited in all closed areas; violations result in notification to the Disciplinary Committee. Visitors must register and leave before curfew. Pets are not allowed. Room changes require written approval. Students must keep rooms clean and report maintenance issues.",
+      "actual": "Students staying in Sabancı University dormitories must adhere to the following rules: \n- They are required to comply with all rules and regulations set by the Accommodation Services Unit, with violations potentially leading to disciplinary action. \n- Students must not make noise or disturb others’ study/rest periods and cannot prevent another resident or staff from entering/exiting their room or offices. \n- Unauthorized visitors or other students must not stay in their room after 23:00, and all visitors must leave campus by the last shuttle time. \n- Dormitories open 2 days before each academic term and must be vacated within 2 days after the term ends; failure to vacate twice without justification results in exclusion from dormitories in the next term. \n- Students must use their assigned bunk, wardrobe, and cabinet, and any changes require prior approval from Dormitory Management to avoid responsibility for damages or losses. \n- Departures must be notified via email to the Dormitories Unit with the exact date, locker, and caisson numbers; unreported vacancies after the deadline may result in belongings being discarded.",
+      "latency": 102.727,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8018,
+        "answer_correctness": 0.7853,
+        "context_recall": 0.6,
+        "composite_score": 0.8059
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q80",
+      "category": "Housing",
+      "question": "Yurtta kalan öğrencilerin sağlık prosedürleri nelerdir?",
+      "expected": "Yurtta kalan öğrenciler yurda giriş tarihinden en fazla 6 ay önce çekilmiş akciğer film raporu teslim etmelidir. Rapor radyoloji veya göğüs hastalıkları uzmanı tarafından imzalanmış olmalıdır. Sağlık Merkezi (VSD) dışındaki kuruluşlardan alınan filmler için uzman onayı gerekir.",
+      "actual": "Yurtta kalan öğrencilerin sağlık prosedürlerinde akciğer film raporu temel gereklilik olarak belirtilmiştir. Öğrenciler, yurda giriş tarihinden en fazla 6 ay önce çekilmiş bir akciğer filmi raporu sunmalıdır. VSD dışındaki sağlık kuruluşlarından alınan raporlar, radyoloji uzmanı veya göğüs hastalıkları uzmanı tarafından imzalanmış olmak zorundadır. Yurda girişte rapor, yurt görevlisine teslim edilir ve bu rapor, yurda girişten itibaren 2 gün içinde Sağlık Merkezi'ne (SM) iletilir. SM doktoru, raporu teslim edildiği gün değerlendirir ve sorunlu raporlar için öğrenci, teslimden itibaren 2 gün içinde SM'ye davet edilir. Davet edilen öğrenci, ilgili hastaneye yönlendirilir. Tüm raporlar, SM arşivinde teslimden itibaren 1 hafta içinde dosyalanır. Pandemi gibi özel durumlarda Sağlık Bakanlığı kararları doğrultusunda kampüs sakinleri bilgilendirilir ve giriş-çıkış kontrolleri uygulanır.",
+      "latency": 178.119,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4894,
+        "answer_correctness": 0.4422,
+        "context_recall": 1.0,
+        "composite_score": 0.7561
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q81",
+      "category": "Housing",
+      "question": "Yurtlarda acil müdahale gerektiren durumlarda ne yapılır?",
+      "expected": "Elektrik kesintisi, su kesintisi ya da kaçağı gibi acil müdahale gerektiren çağrılara 7 gün 24 saat müdahale edilebilmektedir. Teknik ekibe çağrı açıldığı takdirde yurt odalarında kimse yokken de müdahale yapılabilir.",
+      "actual": "Yurtlarda acil müdahale gerektiren durumlarda (elektrik kesintisi, su kaçağı vb.) Üniversite teknik ekibi 7/24 saat müdahale eder. Bu tür çağrılarda yurt odalarında kimse yokken de teknik personel çalışabilir. Acil durumlar için 5555 numarası aranır ve sağlık/ilk yardım gerektiren durumlarda 6666 dahili numarası kullanılır. Mekanik işler veya mimari inşaatla ilgili olmayan acil durumlar, SuTicket sistemi üzerinden ilgili birime yönlendirilir. Güvenlik ekibi, kampüs hizmetlerinin aksamaması için müdahaleyi dış yardım gelene kadar sürdürüp sonrasında bu ekiplere devredilir. Yoğun kar yağışı gibi durumlarda acil durum koordinatörü firma ile iletişimi sağlar.",
+      "latency": 80.407,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4241,
+        "answer_correctness": 0.4808,
+        "context_recall": 1.0,
+        "composite_score": 0.7579
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q82",
+      "category": "Housing",
+      "question": "Mezuniyet veya kayıt dondurma durumunda yurt kaydı ne olur?",
+      "expected": "Kayıt dondurma, mezuniyet, izin ya da disiplin cezası gibi sebeplerle 1 ayı aşan süre için ayrılan öğrencilerin yurt kaydı Öğrenci Kaynakları Birimi bilgisi doğrultusunda silinir. Yurt kaydı silinen öğrenci bildirildikten sonra 2 gün içinde yurtla ilişkisini keser. Depozito iadesi hasar yoksa yapılır.",
+      "actual": "Mezuniyet durumunda öğrenci yurt kaydı, mezuniyet tarihinden itibaren yurt yönetimi tarafından silinir ve öğrenci 2 gün içinde yurtla tüm ilişiklerini kesmek zorundadır. Kayıt dondurma durumunda ise öğrenci, kayıt dondurma tarihinden itibaren yurt kaydı silinir ve aynı 2 günlük sürede yurtla ilişkisini sona erdirmek gerekir. Ayrıca, mezuniyet veya kayıt dondurma nedeniyle üniversiteden ayrılan öğrencilerin ikamet izinleri de ilgili tarihten itibaren iptal edilir. Yurt ücreti iadesi için barınma süresi ve içinde bulunduğu ayın ücreti tamamen alınır, kalan ayların %50'si iade edilir. Yurt yönetimi ve mali işler, ücret iadesini hesap dökümüne göre yapar.",
+      "latency": 98.287,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.432,
+        "answer_correctness": 0.4323,
+        "context_recall": 0.6667,
+        "composite_score": 0.6611
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q83",
+      "category": "FoodServices",
+      "question": "Kampüste yemek hizmetleri nerede sunulur?",
+      "expected": "Sabancı Üniversitesi çalışanları, öğrencileri ve ziyaretçileri için yemek ve içecek hizmetleri Üniversite Merkezi'nde ve Kiralama Sözleşmesi kapsamında hizmet veren işletmelerin mekanlarında sunulur.",
+      "actual": "Kampüste yemek hizmetleri **Üniversite Merkezi** ve **Kira Sözleşmesi kapsamındaki işletmelerin mekanlarında** sunulur. Üniversite Merkezi'nde, kahvaltı, öğle ve akşam yemeği servisleri kafeterya bankolarında, kumanya hizmeti ise vardiyalı çalışanlar için sağlanır. Özel etkinliklerde kampüste yemek talebi varsa, bu bilgi Yiyecek-İçecek Sorumlusuna e-posta ile iletilebilir.",
+      "latency": 56.865,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.4663,
+        "answer_correctness": 0.5272,
+        "context_recall": 1.0,
+        "composite_score": 0.7781
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q84",
+      "category": "FoodServices",
+      "question": "Üniversite Merkezinde uyulması gereken yemek kuralları nelerdir?",
+      "expected": "SÜ çalışanları ve öğrencileri kendi yemeğini almakla ve boş tepsisini tepsi toplama bandına bırakmakla yükümlüdür. Üniversite Merkezinden masalardaki tabak, çatal, bıçak, tepsi, fincan, tuzluk gibi malzemelerin dışarıya çıkarılması yasaktır. Paket yemek servisi yapılmaz.",
+      "actual": "Üniversite Merkezinde uyulması gereken yemek kuralları şunlardır: \n1. Öğrenciler ve çalışanlar kendi yemeğini almakla, boş tepsilerini toplama bandına bırakmakla yükümlüdür. \n2. Masalardaki tabak, çatal, bıçak, tepsi, fincan gibi malzemelerin dışarıya çıkarılması yasaktır. \n3. Kafeterya, yemek saatleri dışında SER'in izni olmadan kişisel amaçlar için kullanılamaz. \n4. Paket yemek servisi yapılmaz; ancak afet, pandemi gibi özel durumlarda YİH tarafından istisna uygulanabilir. \n5. Öğrenciler, kafeterya girişindeki stanttan veya mobil uygulamadan kimlik kartına en az tutarı yükleyerek hizmetten yararlanır. \n6. Kimlik kartı olmadan yemek almak için QR kod okutulması, nakit ödeme veya misafir fişi kullanılabilir. \n7. Kimlik kartı, kafeterya bankolarında tüm ürün gruplarına uygulanır. \n8. Çalışanlar yıllık izin veya idari izin süreleri içinde kimlik kartı ile yemek hakkı kullanamaz.",
+      "latency": 99.243,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5971,
+        "answer_correctness": 0.5279,
+        "context_recall": 1.0,
+        "composite_score": 0.7979
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q85",
+      "category": "FoodServices",
+      "question": "How are special event and catering services arranged?",
+      "expected": "Special event and catering services are arranged through the Special Event and Catering Services Procedure. Requests are coordinated with the Food and Beverage Services department.",
+      "actual": "Special event and catering services are arranged through the Food and Beverage Services (FBS) unit. The requesting unit must submit the \"Special Event and Catering Request Form\" on SUForm at least 30 days before the event. FBS prepares preliminary offers, including menus and specifications, based on the request. The unit approves the offer and initiates a procurement request. The Procurement and Operations Unit (POP) then selects an appropriate company and communicates the details to the unit and FBS. FBS coordinates with the selected company to ensure the event's operational needs are met. All events must comply with hygiene and service standards, and companies are evaluated every three years for suitability.",
+      "latency": 50.103,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0,
+        "answer_correctness": 0.3147,
+        "context_recall": 1.0,
+        "composite_score": 0.7944
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q86",
+      "category": "Transportation",
+      "question": "Kampüs servis hizmetleri nasıl düzenlenir?",
+      "expected": "İlgili yasa ve yönetmeliklere bağlı kalarak üniversite çalışanları, stajyerler ve üniversite tarafından belirlenen alt yüklenici firmaların çalışanlarının mesai için işyerine geliş ve gidiş ulaşımlarını sağlamak üzere hizmet verilmektedir. Hizmet Ulaşım Hizmetleri Prosedürüne göre sağlanır.",
+      "actual": "Kampüs içi ulaşım hizmetleri, Ulaşım Hizmetleri (UH) tarafından belirlenen saat ve güzergâhlara göre düzenlenir. Günlük ring servisleri, Ana Kapı > Spor Merkezi/Gösteri Merkezi > DO > YBF Önü (Üniversite Merkezi) > Yurtlar > SUNUM > Shuttle Alanı > Ana Kapı > Spor Merkezi/Gösteri Merkezi rotasında sefer yapar. Hafta içi ve hafta sonu sefer saatleri farklılık gösterir. Üniversite shuttle servisleri, ilgili yasalar ve yönetmeliklere uygun olarak kampüs ile şehir arasında düzenli olarak sağlanır. Özel amaçlı servis talepleri (sanatsal, sportif, akademik etkinlikler gibi) üniversitenin birim ve fakülteleri tarafından ücret karşılığında yapılır. Özel öğrenci servislerinde öğrenci ile firma arasındaki koordinasyon UH tarafından sağlanır. Seyir halinde sürücüye müdahale, tartışmaya girmek veya dikkatini dağıtıcı davranışlar yasaktır ve bu durumlarda sözlü/yazılı uyarı uygulanır.",
+      "latency": 127.551,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.3578,
+        "answer_correctness": 0.4142,
+        "context_recall": 1.0,
+        "composite_score": 0.7279
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q87",
+      "category": "Transportation",
+      "question": "Kampüs içi araç kullanım kuralları nelerdir?",
+      "expected": "Kampüs içi araç kullanım kuralları: Alkollü araç kullanımı yasaktır. Araç içinde sigara içilmez. Trafik kurallarına uyulmak zorunludur; klakson çalma, konvoy oluşturma ve yaya trafiğini tehlikeye atmak yasaktır. Hasar meydana geldiğinde derhal SÜ yetkilisine bildirilir. Trafik cezası personelin bordrosuna yansıtılır.",
+      "actual": "Kampüs içi araç kullanım kuralları şunlardır: \n1. Araç sürücüleri, Güvenlik Müdürlüğü'nün uyarılarına ve trafik işaretlerine uymak zorundadır. \n2. Kampüs içinde klakson çalma, konvoy oluşturma, yaya trafiğini tehlikeye atmak ve araç sollaması yasaktır. \n3. Motosiklet ve bisiklet sürücüleri kask takmadan kampüs yollarında seyretmez. \n4. Alkollü araç kullanımı kesinlikle yasaktır; bu durumda araç kampüse alınmaz. \n5. Araç hızı 30 km/saate sınırlıdır. \n6. Yasak yerlere bırakılan araçlar Güvenlik Müdürlüğü tarafından çekilebilir. \n7. Sürücü belgesi olmayan veya plakasız araçlar kampüse alınmaz. \n8. Trafik kurallarına aykırı davranışlar, sürü",
+      "latency": 101.257,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.9333,
+        "answer_relevancy": 0.5816,
+        "answer_correctness": 0.4789,
+        "context_recall": 0.8,
+        "composite_score": 0.7109
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q88",
+      "category": "Transportation",
+      "question": "How does the electric vehicle charging process work?",
+      "expected": "Electric vehicles must be used in ECO mode. When the charge indicator is at 45% or below, the vehicle must be plugged in for charging before returning the key. If the vehicle is charged off-campus at a non-contracted station, the expense must be declared with an invoice issued in the name of SU.",
+      "actual": "The electric vehicle charging process at Sabancı University involves the use of Electric Vehicle Charging Stations located within the SU Tuzla campus. These stations are part of the electrical systems managed by the Electrical Works Department, which ensures their maintenance and operational functionality. Vehicles must be registered with the Security Directorate for entry, and registered vehicles can freely access the campus, including charging stations, through Gate A. However, if there is suspicion about the driver’s identity (e.g., student or parent) or if visitors are present in the vehicle, the driver must stop for identity verification. Vehicles are required to be used solely for the purpose stated in their request, and the process of returning a vehicle includes ensuring it is charged. Specific technical or procedural details about the charging operation itself (e.g., payment methods, charging duration) are not outlined in the provided context.",
+      "latency": 91.718,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.5958,
+        "answer_correctness": 0.1614,
+        "context_recall": 0.0,
+        "composite_score": 0.3628
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q89",
+      "category": "HealthSafety",
+      "question": "Kampüsteki sağlık merkezinin acil hattı numarası nedir?",
+      "expected": "Kampüsteki Sağlık Merkezi Acil Hattı 6666'dır. Ambulans gereken durumlarda en yakın telefondan bu hat aranmalıdır.",
+      "actual": "Kampüs içinde acil durumlar için Sağlık Merkezi Acil Hattı **6666** numarası aranmalıdır. Kampüs dışından arama yapılıyorsa, numara **0216 568 7666** olarak kullanılır. Bu bilgi, tüm belgelerde (ambulans prosedürleri, sağlık hizmetleri ve acil durum planları) aynı şekilde teyit edilmiştir.",
+      "latency": 79.75,
+      "passed": false,
+      "scores": {
+        "faithfulness": 0.6667,
+        "answer_relevancy": 0.5546,
+        "answer_correctness": 0.5055,
+        "context_recall": 1.0,
+        "composite_score": 0.6848
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q90",
+      "category": "HealthSafety",
+      "question": "Kampüs ambulansı hangi durumlarda görevlendirilir?",
+      "expected": "Ambulans yalnızca SÜ kampüsünde yaşayanlar ve kampüsün çok yakın çevresindeki acil durumlar için görevlendirilir. Ambulansın herhangi bir şekilde SÜ kampüsünden ayrılması durumunda, özel sağlık şirketi en yakında bulunan tam teşekküllü hastaneye sevk yapar.",
+      "actual": "Kampüs ambulansı, SÜ kampüsünde yaşayanlar ve kampüsün çok yakın çevresindeki acil durumlarda görevlendirilir. Ambulans, acil olmayan durumlarda medikal hizmet veya tedavi aracı olarak kullanılmaz. Acil durumlar, 5N kuralına uygun şekilde 6666 numaralı Sağlık Merkezi Acil Hattı ile bildirilir. Ambulans, kampüs dışı bir sağlık kuruluşuna nakil gerektiren vakalarda da kullanılır. Ancak ambulansın kampüsten ayrılması durumunda, özel sağlık şirketi en yakın tam teşekküllü ambulansı en kısa sürede üniversiteye gönderir. Acil olmayan muayeneler için Sağlık Merkezi'ne yönlendirilir.",
+      "latency": 95.338,
+      "passed": true,
+      "scores": {
+        "faithfulness": 0.8333,
+        "answer_relevancy": 0.8847,
+        "answer_correctness": 0.3564,
+        "context_recall": 1.0,
+        "composite_score": 0.7396
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q91",
+      "category": "HealthSafety",
+      "question": "What health services are available on campus?",
+      "expected": "The Health Center (Sağlık Merkezi) provides occupational physician consultations, IM/SC/IV injections, ambulance services, emergency response, and periodic health screenings. It coordinates with Food and Beverage Services for food safety inspections. The center also handles work-entry medical examinations for new employees and chest X-ray evaluations for dormitory residents.",
+      "actual": "The Health Center (HC) at Sabancı University provides psychiatric and psychological examinations for students and employees, accessible via appointment by calling 9923 or emailing healthcenter@sabanciuniv.edu. Students (excluding Exchange and Project Management undergraduates) are covered by health insurance from enrollment until graduation, allowing access to contracted institutions for private services with an HC Physician referral, though inpatient treatments (e.g., surgery) do not require referral. Preventive health services include mandatory chest X-rays and blood tests (e.g., Hepatitis A/B, MMR) during enrollment, with results recorded in the Health Information Form. Emergency services involve ambulance transportation to designated pandemic hospitals for urgent cases. Chronic disease medication previously prescribed by the HC can be reordered in person or via email. Foreign students have a 40% participation rate in insurance, and coverage does not extend abroad.",
+      "latency": 87.085,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6726,
+        "answer_correctness": 0.1756,
+        "context_recall": 1.0,
+        "composite_score": 0.7036
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q92",
+      "category": "HealthSafety",
+      "question": "Yeni çalışanlar için sağlık prosedürü nasıl işler?",
+      "expected": "Yeni çalışanlar işe başladıkları hafta içinde Sağlık Merkezi'ne (9954) randevu alarak işe giriş muayenesine katılır. Muayene kapsamında akciğer film raporu gerekir. Rapor radyoloji veya göğüs hastalıkları uzmanı tarafından imzalanmış olmalıdır. İş sağlığı ve güvenliği kapsamında gerekli değerlendirmeler yapılır.",
+      "actual": "Yeni çalışanlar için sağlık prosedürü şu adımları içerir: \n1. **İşe başladığın gün** içinde, **Sağlık Merkezi'ne (9954)** randevu alarak işe giriş muayenesi yapılır. \n2. **İş Sağlığı ve Güvenliği (İSG) eğitimi** (2 saatlik, yüz yüze) katılmak **kanunen zorunludur**. Eğitim tarihleri duyurularda belirtilir. \n3. **İlk hafta içinde** Güvenlik Soruşturması ve Arşiv Araştırması Formu doldurulup İnsan Kaynaklarına (İK) gönderilir. \n4. **Tüberküloz (Tbc) önleme** kapsamında, akciğer film raporu **radyoloji veya göğüs hastalıkları uzmanı tarafından imzalanmış** ve **işe giriş tarihinden en fazla 1 yıl önce çekilmiş** olmalıdır. \n5. **Özel sağlık sigortası** başvurusu için, eski sigorta sertifikası fotokopisi **işe başlandığı ilk günlerde** doldurulur ve broker şirkete gönderilir. \n6. **Asgari Geçim İndirimi (AGİ)** başvurusu için, Aile Durum Bildirimi formu **işe başlanan ilk hafta** ıslak imzalı olarak İK'ye iletilmelidir. \n\nBu prosedürler, çalışanların sağlık durumunu değerlendirirken işe uygunluk ve güvenlik standartlarını da sağlar.",
+      "latency": 114.147,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9848,
+        "answer_correctness": 0.4192,
+        "context_recall": 1.0,
+        "composite_score": 0.8235
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q93",
+      "category": "Research",
+      "question": "Entegrasyon Projelerine nasıl başvurulur?",
+      "expected": "EPD başvurusu tam zamanlı öğretim üyelerinin işe başlama tarihinden itibaren 1 yıl içinde yapılmalıdır. PY, EPD Teklif Formunu doldurur ve proje partnerine yönlendirir. Proje partneri teknik uygunluğu değerlendirir. Bütçe 50.000 TL'ye kadardır. Başvuru formu proje özeti, yönetim planı ve harcama kalemlerinin gerekçesini içerir.",
+      "actual": "Entegrasyon Projeleri Desteği (EPD) başvurusu, Sabancı Üniversitesi'ne tam zamanlı öğretim üyesi olarak atananlar tarafından, işe başlama tarihinden itibaren **1 yıl içinde** yapılır. Başvuru süreci **başvuru, değerlendirme ve kabul** aşamalarını kapsar. Proje bütçesi **50.000 TL** olup, makine/teçhizat alımı, seyahat giderleri (yurtdışı için günlük 300 USD), öğrenci çalışma giderleri (30 TL/saat) ve temsil/tanıtma masrafları gibi kalemlerle detaylandırılır. Başvuruda proje özeti, iş-zaman çizelgesi ve bütçe gerekçesi zorunludur. Desteği alan projelerin sonunda **en az iki dış kaynaklı hibe başvurusu** veya bir garantili dış finansman sağlanması beklenir. Proje yürütücülerinin bu koşulları karşılayamaması, akademik performans değerlendirmesine yansır.",
+      "latency": 65.74,
+      "passed": false,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5611,
+        "answer_correctness": 0.4917,
+        "context_recall": 0.6,
+        "composite_score": 0.6817
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q94",
+      "category": "Research",
+      "question": "Araştırma Etik Kurulu başvurusu nasıl yapılır?",
+      "expected": "Araştırma Etik Kurulu başvurusu, araştırma veya tez çalışmasına başlamadan önce yapılır. Başvuru PSUATT-A610-01-10 prosedürüne göre yürütülür. İnsan denekleri içeren araştırmalar için etik kurul onayı zorunludur. Başvuru formu ve araştırma protokolü sunularak kurul değerlendirmesine alınır. Onay olmadan araştırma başlatılamaz.",
+      "actual": "Araştırma Etik Kurulu başvurusu, eksiksiz doldurulmuş AEK Ulusal veya Uluslararası Başvuru Formu (Türkçe/İngilizce) ile yapılır. Formda gönüllülük esasına uygun onam belgesi, gizlilik koşulları ve araştırma başlığı gibi temel etik kriterler yer almalıdır. Başvuru, proje başlangıç tarihinden önce ve ilgili fakülte AEK değerlendirme periyoduna göre kabul edilir. Yürütücü, öğretim üyesi veya eşdeğeri olmak zorunda olup, başvuruda araştırma sorumluluğunu üstlenmesi gerekir. Başvuru, FİT (Fakülte Etik Kurulu) tarafından EBYS sistemi üzerinden yürütülür ve gerektiğinde ARYİT ile koordinasyon sağlanır. AEK başkanı ve en az üç üyenin imzası alınarak onay süreci tamamlanır. Toplantıya gerek kalmadan PGO tarafından onaylanan başvurular, AEK üyelerine imzaya açılır. Onay, e-imza ile verilir ve protokol numarası ile belirlenen süre boyunca geçerlidir.",
+      "latency": 78.352,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5482,
+        "answer_correctness": 0.6894,
+        "context_recall": 0.8,
+        "composite_score": 0.789
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    },
+    {
+      "question_id": "Q95",
+      "category": "Research",
+      "question": "What are the requirements for the Rectorate Research Fund?",
+      "expected": "Faculty members can apply once. Previous Integration Project recipients are also eligible. Project duration is up to 36 months. Requirements include at least two documented external grant project applications or at least one guaranteed external financing and high-impact scientific article publications. Application deadline is April 30 (once per year).",
+      "actual": "To be eligible for the SU President’s Office Research Fund, full-time faculty members must have started their activities at the university within the last two years and completed at least six months of service. They must propose projects compatible with their ongoing or initial research activities and ensure the budget prioritizes infrastructure investments (e.g., devices, consumables, outsourcing) over personnel salaries. Applicants must commit to submitting at least two new documented external grant applications or securing one guaranteed external financing by the project’s end and publishing high-impact scientific articles. The project duration cannot exceed 36 months, with a maximum theoretical research budget of 300,000 TL and experimental research budget of 600,000 TL. Faculty members are limited to applying only once for this fund.",
+      "latency": 55.471,
+      "passed": true,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.699,
+        "answer_correctness": 0.534,
+        "context_recall": 0.8,
+        "composite_score": 0.7651
+      },
+      "notes": [
+        "ragas_ok: all 4 metrics computed successfully"
+      ]
+    }
+  ]
+}

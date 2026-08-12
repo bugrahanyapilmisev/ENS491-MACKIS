@@ -396,10 +396,9 @@ def validate_triples():
         if idx % 200 == 0 and idx > 0:
             save_progress(99999, idx, {}, validated_triples)
     
-    # Save validated triples
+    # Save validated triples — NO entity_embeddings (they go in kg_index.pkl)
     validated_data = {
-        "triples": validated_triples,
-        "entity_embeddings": triples_data.get("entity_embeddings", {})
+        "triples": validated_triples
     }
     
     with open(KG_TRIPLES_VALIDATED_PATH, "w", encoding="utf-8") as f:

@@ -9,19 +9,26 @@ Usage:
 """
 
 import os
+import sys
 import json
 import pickle
-import requests
+import time
 import numpy as np
 from typing import Dict, List
 from dotenv import load_dotenv
 
-load_dotenv()
+# Add parent directory to path so we can import services
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env"))
 
 # =================== CONFIG ===================
 
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text:latest")
+from services.config.settings import RAGConfig
+from services.core.embedding_service import EmbeddingService
+
+_config = RAGConfig.from_env()
+_embed_service = EmbeddingService(_config.ollama)
 
 PREPROCESSING_DIR = os.path.dirname(os.path.abspath(__file__))
 KG_DIR = os.path.join(PREPROCESSING_DIR, "knowledge_graph")
@@ -36,22 +43,23 @@ KG_INDEX_PATH = os.path.join(KG_LLM_DIR, "kg_index_llm_validated.pkl")
 
 # =================== EMBEDDING ===================
 
-def embed_text(text: str) -> np.ndarray:
-    """Embed text using Ollama."""
-    url = f"{OLLAMA_HOST}/api/embeddings"
-    try:
-        r = requests.post(
-            url,
-            json={"model": EMBED_MODEL, "prompt": text},
-            timeout=60
-        )
-        r.raise_for_status()
-        vec = np.array(r.json()["embedding"], dtype=np.float32)
-        vec /= (np.linalg.norm(vec) + 1e-12)  # Normalize
-        return vec
-    except Exception as e:
-        print(f"[Embed error] {e}")
-        return None
+def embed_text(text: str, max_retries: int = 3) -> np.ndarray:
+    """Embed text using the configured provider (OpenRouter/Ollama)."""
+    for attempt in range(max_retries):
+        try:
+            vec = _embed_service.embed(text, is_query=True)
+            norm = np.linalg.norm(vec)
+            if norm > 0:
+                vec /= norm
+            return vec
+        except Exception as e:
+            if attempt < max_retries - 1:
+                wait = 2 ** (attempt + 1)  # Exponential backoff: 2s, 4s
+                print(f"  [Embed retry {attempt+1}/{max_retries}] {e} — waiting {wait}s")
+                time.sleep(wait)
+            else:
+                print(f"  [Embed error] {e}")
+                return None
 
 
 # =================== MAIN ===================
@@ -79,11 +87,9 @@ def rebuild_index():
     if os.path.exists(KG_TRIPLES_PATH):
         with open(KG_TRIPLES_PATH, "r", encoding="utf-8") as f:
             triples_data = json.load(f)
-        for triple in triples_data.get("triples", []):
-            entities.add(triple.get("head", ""))
-            entities.add(triple.get("tail", ""))
-        entities.discard("")
-        print(f"[OK] Found {len(entities)} unique entities from triples")
+    # Load validated triples just for verification (optional)
+    if os.path.exists(KG_TRIPLES_PATH):
+        print(f"[OK] Triples file found, but skipping entity embeddings (unused in RAG pipeline).")
     
     # Build topic embeddings
     print(f"\n[Building topic embeddings...]")
@@ -99,25 +105,10 @@ def rebuild_index():
     
     print(f"[OK] Created embeddings for {len(topic_embeddings)} topics")
     
-    # Build entity embeddings (sample - top 500 most common)
-    print(f"\n[Building entity embeddings (top 500)...]")
-    entity_embeddings: Dict[str, List[float]] = {}
-    
-    entity_list = list(entities)[:500]  # Limit to 500 for speed
-    for i, entity in enumerate(entity_list):
-        if i % 100 == 0:
-            print(f"  Progress: {i}/{len(entity_list)} entities...")
-        
-        emb = embed_text(entity)
-        if emb is not None:
-            entity_embeddings[entity] = emb.tolist()
-    
-    print(f"[OK] Created embeddings for {len(entity_embeddings)} entities")
-    
-    # Save index
+    # Save index (entity_embeddings is empty because it's not used)
     index_data = {
         "topic_embeddings": topic_embeddings,
-        "entity_embeddings": entity_embeddings,
+        "entity_embeddings": {},
         "topic_list": topics
     }
     
@@ -126,7 +117,7 @@ def rebuild_index():
     
     print(f"\n[DONE] Index saved to: {KG_INDEX_PATH}")
     print(f"  - Topics: {len(topic_embeddings)}")
-    print(f"  - Entities: {len(entity_embeddings)}")
+    print(f"  - Entities: 0 (Disabled)")
     
     return True
 

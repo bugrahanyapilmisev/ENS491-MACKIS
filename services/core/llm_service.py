@@ -203,6 +203,9 @@ class LLMService:
         """
         Chat with conversation history.
 
+        Supports both Ollama (local) and OpenRouter (cloud) backends,
+        matching the same branching logic as chat().
+
         Args:
             prompt: Current user prompt.
             history: List of previous messages with 'role' and 'content'.
@@ -231,26 +234,51 @@ class LLMService:
         payload = {
             "model": model or self.config.chat_model,
             "messages": messages,
-            "stream": False,
-            "options": {
+            "temperature": temperature,
+            "top_p": 0.9,
+        }
+
+        headers = {}
+        if self.is_openrouter:
+            # OpenRouter format: standard OpenAI-compatible payload
+            headers = {
+                "Authorization": f"Bearer {self.config.openrouter_api_key}",
+                "HTTP-Referer": "http://localhost:3000",
+                "X-Title": "MACKIS RAG Eval"
+            }
+        else:
+            # Ollama format: move temperature/top_p into options, add stream flag
+            payload["stream"] = False
+            payload["options"] = {
                 "temperature": temperature,
                 "top_p": 0.9,
-            },
-        }
+            }
+            del payload["temperature"]
+            del payload["top_p"]
 
         try:
             response = requests.post(
                 self._url,
                 json=payload,
+                headers=headers,
                 timeout=self.config.chat_timeout
             )
 
             if response.status_code != 200:
-                return f"Ollama Error: {response.text}"
+                provider = "OpenRouter" if self.is_openrouter else "Ollama"
+                return f"{provider} Error: {response.text}"
 
             data = response.json()
-            return data.get("message", {}).get("content", "Empty response.")
+            if self.is_openrouter:
+                content = data.get("choices", [{}])[0].get("message", {}).get("content")
+                return content or "Empty response from LLM."
+            else:
+                return data.get("message", {}).get("content", "Empty response.")
 
+        except requests.exceptions.Timeout:
+            return "Connection timeout: LLM request took too long."
+        except requests.exceptions.ConnectionError:
+            return "Connection error: Could not connect to LLM."
         except Exception as e:
             return f"LLM error: {e}"
 

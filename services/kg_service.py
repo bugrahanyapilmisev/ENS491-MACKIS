@@ -77,21 +77,26 @@ _loaded = False
 
 # =================== EMBEDDING HELPER ===================
 from services.core.embedding_service import EmbeddingService
+import time
 
 _embed_service = EmbeddingService(_config.ollama)
 
-def embed_text(text: str) -> np.ndarray:
-    """Embed text using configured provider."""
-    try:
-        vec = _embed_service.embed(text, is_query=True)
-        norm = np.linalg.norm(vec)
-        if norm > 0:
-            vec /= norm
-        return vec
-    except Exception as e:
-        print(f"[KG Service embed error] {e}")
-        return None
-
+def embed_text(text: str, max_retries: int = 3) -> np.ndarray:
+    """Embed text using configured provider, with automatic retry for API limits."""
+    for attempt in range(max_retries):
+        try:
+            vec = _embed_service.embed(text, is_query=True)
+            norm = np.linalg.norm(vec)
+            if norm > 0:
+                vec /= norm
+            return vec
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"[KG Service] Embed warning (attempt {attempt+1}/{max_retries}): {e}. Retrying in 2s...")
+                time.sleep(2)
+            else:
+                print(f"[KG Service] Embed ERROR: All {max_retries} attempts failed: {e}")
+                return None
 
 def cosine_sim(a: np.ndarray, b: np.ndarray) -> float:
     """Compute cosine similarity between two vectors."""

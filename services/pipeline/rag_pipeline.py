@@ -190,7 +190,7 @@ class RAGPipeline:
 
         # Debug: Print top candidates
         print("=== TOP CANDIDATES AFTER RERANK ===")
-        for i, c in enumerate(reranked[:10], start=1):
+        for i, c in enumerate(reranked[:20], start=1):
             meta = c.get("meta") or {}
             print(f"{i:2d}. score={c.get('hybrid_score', 0):.3f} "
                   f"ce={c.get('ce_score', 0):.3f} | {meta.get('title', '')[:50]}")
@@ -246,11 +246,12 @@ class RAGPipeline:
             print(f"[RAGPipeline] After neighbor expansion: {len(retrieved)} chunks")
 
         # 6c. Context Precision: filter noise chunks and sort by relevance
-        # Academic basis: CS 455/555 §8.6 "lost in the middle" — irrelevant
+        # Academic basis: CS 455/555 §03 "lost in the middle" — irrelevant
         # context confuses the LLM. Presenting highest-scoring chunks first
         # ensures the most relevant information is at the top of the prompt.
         ce_threshold = 0.05  # very low bar — only filters truly irrelevant
         before_filter = len(retrieved)
+        pre_filter_chunks = list(retrieved)  # snapshot before filtering
         retrieved = [
             ch for ch in retrieved
             if ch.get("ce_score", 0.5) >= ce_threshold  # neighbors get 0.5 default
@@ -258,6 +259,19 @@ class RAGPipeline:
         if len(retrieved) < before_filter:
             print(f"[RAGPipeline] Context precision: filtered {before_filter - len(retrieved)} "
                   f"noise chunks (CE < {ce_threshold})")
+
+        # Minimum context guarantee: never leave the model with fewer than 3 chunks.
+        # When the noise filter is too aggressive (e.g. library, vehicle docs where
+        # CE scores are systematically low), restore the top-N by CE score.
+        MIN_CONTEXT_CHUNKS = 3
+        if len(retrieved) < MIN_CONTEXT_CHUNKS and before_filter >= MIN_CONTEXT_CHUNKS:
+            retrieved = sorted(
+                pre_filter_chunks,
+                key=lambda c: c.get("ce_score", 0.0),
+                reverse=True
+            )[:MIN_CONTEXT_CHUNKS]
+            print(f"[RAGPipeline] Minimum context guarantee: restored to "
+                  f"{len(retrieved)} chunks (top by CE)")
 
         # Sort by CE score descending — highest relevance first
         retrieved.sort(key=lambda ch: ch.get("ce_score", 0.0), reverse=True)
@@ -283,6 +297,20 @@ class RAGPipeline:
             language=language,
             kg_facts=kg_facts
         )
+
+        # Add KG facts to context chunks so that they are visible in citations and evaluations
+        if kg_facts:
+            kg_chunk = {
+                "text": kg_facts,
+                "meta": {
+                    "title": "Knowledge Graph Facts",
+                    "source_path": "knowledge_graph.json",
+                    "section_header": "Verified Facts"
+                },
+                "chunk_id": "kg_0",
+                "ce_score": 1.0
+            }
+            retrieved.append(kg_chunk)
 
         return {
             "answer": answer,

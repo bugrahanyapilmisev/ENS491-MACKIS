@@ -1,7 +1,8 @@
 """
-select_focused_docs.py - Select documents for focused hybrid KG testing
+select_focused_docs.py - Select ALL documents for full KG building
 
-Creates selected_docs.json with key documents + noise documents.
+Creates selected_docs.json with ALL documents categorized by topic.
+No documents are excluded — the KG should cover the entire corpus.
 """
 
 import os
@@ -10,10 +11,9 @@ import pandas as pd
 from collections import defaultdict
 
 # Load chunks
-# Load chunks
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(CURRENT_DIR)
-CHUNKS_PATH = os.path.join(ROOT_DIR, "creating_database", "checkpoints_v2", "chunks_v2.parquet")
+CHUNKS_PATH = os.path.join(ROOT_DIR, "creating_database", "checkpoints_v2", "chunks_v3.parquet")
 
 print("Loading chunks...")
 df = pd.read_parquet(CHUNKS_PATH)
@@ -24,81 +24,90 @@ docs = df.groupby('source_path').agg({
     'title': 'first',
     'content': lambda x: ' '.join(x.astype(str)),
     'doc_type': 'first',
-    'tags': 'first',
     'chunk_id': 'count'
 }).reset_index()
-docs.columns = ['source_path', 'title', 'content_preview', 'doc_type', 'tags', 'chunk_count']
+docs.columns = ['source_path', 'title', 'content_preview', 'doc_type', 'chunk_count']
 docs['content_preview'] = docs['content_preview'].str[:500]
 
 print(f"Unique documents: {len(docs)}")
 
-# Keywords for each category
+# Expanded keywords for comprehensive categorization
 CATEGORY_KEYWORDS = {
-    "erasmus": ["erasmus", "staj", "internship", "exchange", "hareketlilik", "mobility"],
-    "library": ["kütüphane", "library", "ödünç", "kitap", "ill", "borrowing"],
-    "discipline": ["disiplin", "discipline", "ceza", "penalty", "soruşturma"],
-    "scholarship": ["burs", "scholarship", "mali destek", "financial"],
-    "registration": ["kayıt", "mezuniyet", "registration", "graduation"],
-    "graduate": ["lisansüstü", "graduate", "yüksek lisans", "doktora", "tez"],
+    "erasmus": ["erasmus", "staj", "internship", "exchange", "hareketlilik",
+                "mobility", "değişim programı", "exchange program"],
+    "library": ["kütüphane", "library", "ödünç", "kitap", "ill", "borrowing",
+                "bilgi merkezi", "information center", "circulation"],
+    "discipline": ["disiplin", "discipline", "ceza", "penalty", "soruşturma",
+                   "investigation", "uzaklaştırma", "suspension"],
+    "scholarship": ["burs", "scholarship", "mali destek", "financial aid",
+                    "bağış", "donation"],
+    "registration": ["kayıt", "mezuniyet", "registration", "graduation",
+                     "diploma", "transkript", "transcript", "ilişik kesme"],
+    "graduate": ["lisansüstü", "graduate", "yüksek lisans", "doktora", "tez",
+                 "thesis", "enstitü", "institute", "master", "phd"],
+    "undergraduate": ["lisans", "undergraduate", "çift anadal", "yandal",
+                      "minor", "double major", "ders", "course", "kredi"],
+    "housing": ["yurt", "dormitory", "konaklama", "housing", "residence",
+                "lojman"],
+    "food_services": ["yemek", "kafeterya", "cafeteria", "food", "yiyecek",
+                      "içecek"],
+    "transportation": ["ulaşım", "servis", "shuttle", "araç", "transport",
+                       "otopark", "parking"],
+    "health_safety": ["sağlık", "güvenlik", "isg", "acil", "safety", "health",
+                      "iş sağlığı", "occupational", "yangın", "fire"],
+    "it_services": ["bilgi teknoloji", "bilişim", "yazılım", "laptop",
+                    "network", "ağ", "e-posta", "mysu"],
+    "hr_employment": ["insan kaynakları", "personel", "atama", "izin",
+                      "çalışan", "human resources", "appointment", "leave"],
+    "procurement": ["satın alma", "ihale", "procurement", "tender", "tedarik",
+                    "supply"],
+    "research": ["araştırma", "proje", "research", "fund", "fon", "patent",
+                 "sınai mülkiyet", "intellectual property"],
+    "quality_management": ["kalite", "quality", "iso", "akreditasyon",
+                          "accreditation", "iç denetim", "audit"],
+    "student_council": ["öğrenci konseyi", "student council", "öğrenci birliği",
+                       "student union", "kulüp", "club"],
+    "environment": ["çevre", "environment", "atık", "waste", "sera gazı",
+                    "greenhouse", "enerji", "energy", "sürdürülebilirlik"],
 }
-
-# Noise categories (unrelated to test questions)
-NOISE_KEYWORDS = ["ihale", "satın alma", "insan kaynakları", "it", "bilgi teknoloji", "ulaşım", "araç"]
 
 def match_category(title, content_preview):
     """Match document to category based on keywords."""
     text = f"{title} {content_preview}".lower()
-    
+
     for category, keywords in CATEGORY_KEYWORDS.items():
         for kw in keywords:
             if kw in text:
                 return category
-    
-    # Check if noise
-    for kw in NOISE_KEYWORDS:
-        if kw in text:
-            return "noise"
-    
+
     return "other"
 
 # Categorize documents
-docs['category'] = docs.apply(lambda row: match_category(row['title'], row['content_preview']), axis=1)
+docs['category'] = docs.apply(
+    lambda row: match_category(row['title'], row['content_preview']), axis=1
+)
 
 # Print category distribution
 print("\nCategory distribution:")
 for cat, count in docs['category'].value_counts().items():
     print(f"  {cat}: {count}")
 
-# Select documents
+# Select ALL documents — no filtering, no limits
 selected = defaultdict(list)
 
-# Select key documents (max 15 per category)
-for category in CATEGORY_KEYWORDS.keys():
-    cat_docs = docs[docs['category'] == category].head(15)
-    for _, row in cat_docs.iterrows():
-        selected[category].append({
-            "source_path": row['source_path'],
-            "title": row['title'],
-            "chunk_count": int(row['chunk_count'])
-        })
-    print(f"Selected {len(selected[category])} docs for {category}")
-
-# Select noise documents (max 30)
-noise_docs = docs[docs['category'] == 'noise'].head(30)
-for _, row in noise_docs.iterrows():
-    selected['noise'].append({
+for _, row in docs.iterrows():
+    category = row['category']
+    selected[category].append({
         "source_path": row['source_path'],
         "title": row['title'],
         "chunk_count": int(row['chunk_count'])
     })
-print(f"Selected {len(selected['noise'])} noise docs")
 
 # Create output
 output = {
-    "description": "Selected documents for focused hybrid KG testing",
+    "description": "ALL documents for full KG building",
     "total_categories": len(CATEGORY_KEYWORDS),
-    "total_key_docs": sum(len(v) for k, v in selected.items() if k != 'noise'),
-    "total_noise_docs": len(selected['noise']),
+    "total_docs": sum(len(v) for v in selected.values()),
     "documents": dict(selected)
 }
 
@@ -112,9 +121,10 @@ total_chunks = df[df['source_path'].isin(all_paths)]['chunk_id'].count()
 output['total_chunks'] = int(total_chunks)
 
 # Save
-output_path = os.path.join(PREPROCESSING_DIR, "selected_docs.json")
+output_path = os.path.join(CURRENT_DIR, "selected_docs.json")
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
 print(f"\nSaved to {output_path}")
+print(f"Total documents: {output['total_docs']}")
 print(f"Total chunks to process: {total_chunks}")

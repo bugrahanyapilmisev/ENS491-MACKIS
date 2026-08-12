@@ -42,7 +42,7 @@ EMBED_MODEL = os.getenv("EMBED_MODEL", "bge-m3")
 PREPROCESSING_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(PREPROCESSING_DIR)
 CHECKPOINT_DIR = os.path.join(ROOT_DIR, "creating_database", "checkpoints_v2")
-CHUNK_PARQUET = os.path.join(CHECKPOINT_DIR, "chunks_v2.parquet")
+CHUNK_PARQUET = os.path.join(CHECKPOINT_DIR, "chunks_v3.parquet")
 SELECTED_DOCS_PATH = os.path.join(PREPROCESSING_DIR, "selected_docs.json")
 
 # Output paths
@@ -52,6 +52,10 @@ KG_TRIPLES_PATH = os.path.join(KG_OUTPUT_DIR, "kg_triples.json")
 KG_INDEX_PATH = os.path.join(KG_OUTPUT_DIR, "kg_index.pkl")
 
 os.makedirs(KG_OUTPUT_DIR, exist_ok=True)
+
+# Checkpoint for crash recovery
+KG_CHECKPOINT_PATH = os.path.join(KG_OUTPUT_DIR, "_build_checkpoint.json")
+CHECKPOINT_INTERVAL = 200  # Save every N chunks
 
 
 # =================== DATA CLASSES ===================
@@ -208,23 +212,10 @@ JSON:"""
 
 
 # =================== EMBEDDING HELPER ===================
+# Uses EmbeddingService which routes to OpenRouter (qwen/qwen3-embedding-8b)
+# or Ollama (bge-m3) based on EMBED_PROVIDER in .env
 
-def embed_text(text: str) -> np.ndarray:
-    """Embed text using Ollama."""
-    url = f"{OLLAMA_HOST}/api/embeddings"
-    try:
-        r = requests.post(
-            url,
-            json={"model": EMBED_MODEL, "prompt": text},
-            timeout=60
-        )
-        r.raise_for_status()
-        vec = np.array(r.json()["embedding"], dtype=np.float32)
-        vec /= (np.linalg.norm(vec) + 1e-12)
-        return vec
-    except Exception as e:
-        print(f"[embed error] {e}")
-        return np.zeros(1024, dtype=np.float32)
+from services.core.embedding_service import EmbeddingService
 
 
 # =================== HYBRID KG BUILDER ===================
@@ -234,6 +225,11 @@ class HybridKGBuilder:
     
     def __init__(self):
         self.extractor = LLMHybridExtractor()
+        
+        # Embedding service — uses EMBED_PROVIDER from .env
+        # (openrouter → qwen/qwen3-embedding-8b, ollama → bge-m3)
+        settings = RAGConfig.from_env()
+        self.embed_service = EmbeddingService(settings.ollama)
         
         # Storage
         self.facts_by_topic: Dict[str, List[Dict]] = defaultdict(list)
@@ -252,9 +248,39 @@ class HybridKGBuilder:
         unique_topics: Set[str] = set()
         unique_entities: Set[str] = set()
         
+        # Check for checkpoint to resume from
+        start_idx = 0
+        if os.path.exists(KG_CHECKPOINT_PATH):
+            try:
+                with open(KG_CHECKPOINT_PATH, "r", encoding="utf-8") as f:
+                    ckpt = json.load(f)
+                start_idx = ckpt.get("last_idx", 0) + 1
+                self.facts_by_topic = defaultdict(list, ckpt.get("facts_by_topic", {}))
+                self.all_triples = ckpt.get("all_triples", [])
+                unique_topics = set(ckpt.get("unique_topics", []))
+                unique_entities = set(ckpt.get("unique_entities", []))
+                print(f"[KG] RESUMING from chunk {start_idx}/{total} (checkpoint found)")
+                print(f"     {len(self.facts_by_topic)} topics, {len(self.all_triples)} triples so far")
+            except Exception as e:
+                print(f"[KG] Checkpoint corrupted, starting fresh: {e}")
+                start_idx = 0
+        
+        import_start = time.time()
+        
         for idx, (_, row) in enumerate(filtered_df.iterrows()):
+            if idx < start_idx:
+                continue
+            
+            # Progress with ETA
             if idx % 20 == 0:
-                print(f"[KG] Progress: {idx}/{total} ({100*idx/total:.1f}%)")
+                elapsed = time.time() - import_start
+                processed = idx - start_idx + 1
+                rate = processed / elapsed if elapsed > 0 else 0
+                remaining = total - idx
+                eta_min = remaining / rate / 60 if rate > 0 else 0
+                eta_hr = eta_min / 60
+                print(f"[KG] Progress: {idx}/{total} ({100*idx/total:.1f}%) | "
+                      f"ETA: {eta_hr:.1f}h ({eta_min:.0f}min)")
             
             chunk_id = str(row.get("chunk_id", f"chunk_{idx}"))
             content = str(row.get("content", ""))
@@ -263,8 +289,28 @@ class HybridKGBuilder:
             if len(content) < 50:
                 continue
             
-            # LLM extraction
-            facts, triples = self.extractor.extract(content, title, chunk_id)
+            # LLM extraction (with connection-loss guard)
+            consecutive_errors = 0
+            max_consecutive = 5
+            facts, triples = [], []
+            while True:
+                try:
+                    facts, triples = self.extractor.extract(content, title, chunk_id)
+                    break  # Success
+                except requests.exceptions.ConnectionError:
+                    consecutive_errors += 1
+                    if consecutive_errors >= max_consecutive:
+                        print(f"\n[!] Connection lost — waiting 30s before retry (chunk {idx})...")
+                        # Save checkpoint before waiting
+                        if idx > 0:
+                            self._save_checkpoint(idx - 1, unique_topics, unique_entities)
+                        time.sleep(30)
+                        consecutive_errors = 0
+                    else:
+                        time.sleep(2)
+                except Exception as e:
+                    print(f"      [!] Extraction error at chunk {idx}: {e}")
+                    break
             
             # Store facts
             for fact in facts:
@@ -283,20 +329,65 @@ class HybridKGBuilder:
                 unique_entities.add(triple.head)
                 unique_entities.add(triple.tail)
                 self.all_triples.append(asdict(triple))
+            
+            # CHECKPOINT: Save every N chunks for crash recovery
+            if idx > 0 and idx % CHECKPOINT_INTERVAL == 0:
+                self._save_checkpoint(idx, unique_topics, unique_entities)
         
         # Deduplicate
         self._deduplicate()
         
-        # Build embeddings for semantic search
-        print(f"[KG] Building embeddings for {len(unique_topics)} topics...")
-        for topic in unique_topics:
-            self.topic_embeddings[topic] = embed_text(topic.replace("_", " ")).tolist()
+        # Build embeddings via EmbeddingService (OpenRouter or Ollama per .env)
+        print(f"[KG] Building embeddings for {len(unique_topics)} topics + {len(unique_entities)} entities...")
         
-        print(f"[KG] Building embeddings for {min(len(unique_entities), 100)} entities...")
-        for entity in list(unique_entities)[:100]:  # Limit to 100 for speed
-            self.entity_embeddings[entity] = embed_text(entity).tolist()
+        # Embed topics (batch)
+        topic_list = sorted(unique_topics)
+        print(f"  Embedding {len(topic_list)} topics...")
+        topic_texts = [t.replace("_", " ") for t in topic_list]
+        topic_vecs = self.embed_service.embed_batch(topic_texts, is_query=False, batch_size=64)
+        for topic, vec in zip(topic_list, topic_vecs):
+            self.topic_embeddings[topic] = vec.tolist()
+        print(f"  [OK] {len(topic_list)} topic embeddings done")
+        
+        # Embed entities (batch)
+        entity_list = sorted(unique_entities)
+        print(f"  Embedding {len(entity_list)} entities...")
+        entity_vecs = self.embed_service.embed_batch(entity_list, is_query=False, batch_size=64)
+        for entity, vec in zip(entity_list, entity_vecs):
+            self.entity_embeddings[entity] = vec.tolist()
+        print(f"  [OK] {len(entity_list)} entity embeddings done")
+        
+        # Clean up checkpoint after successful completion
+        if os.path.exists(KG_CHECKPOINT_PATH):
+            os.remove(KG_CHECKPOINT_PATH)
+            print("[KG] Checkpoint cleaned up")
         
         print(f"[KG] Done: {len(self.facts_by_topic)} topics, {len(self.all_triples)} triples")
+    
+    def _save_checkpoint(self, idx: int, unique_topics: Set[str], unique_entities: Set[str]):
+        """Save checkpoint for crash recovery (atomic write to prevent corruption)."""
+        ckpt = {
+            "last_idx": idx,
+            "facts_by_topic": dict(self.facts_by_topic),
+            "all_triples": self.all_triples,
+            "unique_topics": list(unique_topics),
+            "unique_entities": list(unique_entities),
+        }
+        # Atomic write: serialize to string first, write to temp file, then rename
+        tmp_path = KG_CHECKPOINT_PATH + ".tmp"
+        ckpt_json = json.dumps(ckpt, ensure_ascii=False)
+        with open(tmp_path, "w", encoding="utf-8") as f:
+            f.write(ckpt_json)
+            f.flush()
+            os.fsync(f.fileno())
+        # Atomic rename (overwrites existing checkpoint safely)
+        if os.path.exists(KG_CHECKPOINT_PATH):
+            os.replace(tmp_path, KG_CHECKPOINT_PATH)
+        else:
+            os.rename(tmp_path, KG_CHECKPOINT_PATH)
+        total_facts = sum(len(v) for v in self.facts_by_topic.values())
+        print(f"  [CHECKPOINT] Saved at chunk {idx} | {len(self.facts_by_topic)} topics, "
+              f"{total_facts} facts, {len(self.all_triples)} triples")
     
     def _deduplicate(self):
         """Remove duplicates and apply quality filters."""
@@ -435,16 +526,15 @@ class HybridKGBuilder:
             json.dump(dict(self.facts_by_topic), f, ensure_ascii=False, indent=2)
         print(f"[OK] Facts saved to {KG_FACTS_PATH}")
         
-        # Save triples
+        # Save triples — NO entity_embeddings here (prevents 990MB bloat!)
         triples_data = {
-            "triples": self.all_triples,
-            "entity_embeddings": self.entity_embeddings
+            "triples": self.all_triples
         }
         with open(KG_TRIPLES_PATH, "w", encoding="utf-8") as f:
             json.dump(triples_data, f, ensure_ascii=False, indent=2)
         print(f"[OK] Triples saved to {KG_TRIPLES_PATH}")
         
-        # Save index
+        # Save index — entity_embeddings go HERE (binary, compact)
         index_data = {
             "topic_embeddings": self.topic_embeddings,
             "entity_embeddings": self.entity_embeddings,
@@ -454,7 +544,8 @@ class HybridKGBuilder:
         }
         with open(KG_INDEX_PATH, "wb") as f:
             pickle.dump(index_data, f)
-        print(f"[OK] Index saved to {KG_INDEX_PATH}")
+        idx_size = os.path.getsize(KG_INDEX_PATH) / (1024*1024)
+        print(f"[OK] Index saved to {KG_INDEX_PATH} ({idx_size:.1f} MB)")
 
 
 # =================== MAIN ===================
