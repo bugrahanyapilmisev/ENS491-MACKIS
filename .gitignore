@@ -61,3 +61,7 @@ fine_tuning/gguf/
 # ── Misc local state ──────────────────────────────────────────────────────────
 session.json
 
+
+creating_kg/knowledge_graph/kg_index.pkl
+creating_kg/knowledge_graph/llm_validated/kg_index_llm_validated.pkl
+
